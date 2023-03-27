@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- Meta data -->
+	<meta charset="UTF-8">
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="Dashtic - Bootstrap Webapp Responsive Dashboard Simple Admin Panel Premium HTML5 Template">
+	<meta name="author" content="Spruko Technologies Private Limited">
+	<meta name="keywords"
+		content="admin, dashboard, backend, flat, jquery, Ui, crm, admin template, responsive , bootstrap, clean, scss, modern, minimal, panel">
+	<!-- Title -->
+	<title>Dashtic - Bootstrap Webapp Responsive Dashboard Simple Admin Panel Premium HTML5 Template</title>
+	<link rel="icon" href="assets/images/favicon.png" type="image/x-icon">
+	<link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+	<link href="assets/plugins/iconfonts/icons.css" rel="stylesheet" />
+	<!-- Custom Css -->
+	<link href="assets/css/main.css" rel="stylesheet">
+	<!---Internal  Prism css-->
+	<link href="assets/plugins/prism/prism.css" rel="stylesheet">
+	<link href="assets/plugins/treeview-prism/prism.css" rel="stylesheet">
+	<link href="assets/plugins/treeview-prism/prism-treeview.css" rel="stylesheet">
+	<link href="assets/css/themes/all-themes.css" rel="stylesheet" />
+</head>
+
+<body class="theme-blush">
+	<!-- Page Loader -->
+	<div class="page-loader-wrapper">
+		<div class="loader">
+			<div class="preloader">
+				<div class="spinner-layer pl-blush">
+					<div class="circle-clipper left">
+						<div class="circle"></div>
+					</div>
+					<div class="circle-clipper right">
+						<div class="circle"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- #END# Page Loader -->
+
+	<!-- Overlay For Sidebars -->
+	<div class="overlay"></div>
+	<!-- #END# Overlay For Sidebars -->
+
+
+	<!-- Sidebarover lay -->
+	<div class="sidebar-overlay" data-toggle="sidebar"></div>
+	<section>
+		<!-- Left Sidebar -->
+		<aside id="leftsidebar" class="sidebar">
+			<!-- User Info -->
+			<div class="admin-image"> <img src="assets/images/logo.png" alt=""> </div>
+			<!-- Menu -->
+			<div class="menu main-sidebar">
+				<ul class="list" id="documenter_nav">
+					<li class="nav-item">
+						<a class="nav-link" href="index.html"><i class="fe fe-airplay sidemenu-icon"></i><span
+								class="sidemenu-label">Introduction</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="folder-structure.html"><i class="fe fe-folder sidemenu-icon"></i><span
+								class="sidemenu-label">Folder structure</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="layouts.html"><i class="fe fe-layout sidemenu-icon"></i><span
+								class="sidemenu-label">Layouts</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="faqs.html"><i
+								class="fe fe-help-circle sidemenu-icon text-primary"></i><span
+								class="sidemenu-label text-primary fw-bold mr-5">Faqs </span><i
+								class="fa fa-star float-right sidemenu-icon-2 text-warning"></i></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="switcher.html"><i class="fe fe-grid sidemenu-icon"></i><span
+								class="sidemenu-label">Switcher</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="gulp.html"><i class="fe fe-settings sidemenu-icon"></i><span
+								class="sidemenu-label">Gulp</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="html-structure.html"><i class="fe fe-code sidemenu-icon"></i><span
+								class="sidemenu-label">html-structure</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="apps.html"><i class="fe fe-briefcase sidemenu-icon"></i><span
+								class="sidemenu-label">Apps</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="elements.html"><i class="fe fe-aperture sidemenu-icon"></i><span
+								class="sidemenu-label">Elements</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="form-elements.html"><i class="fe fe-file-text sidemenu-icon"></i><span
+								class="sidemenu-label">Form-elements</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="form-advanced.html"><i class="fe fe-cpu sidemenu-icon"></i><span
+								class="sidemenu-label">Form-advanced</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="treeview.html"><i class="fe fe-lock sidemenu-icon"></i><span
+								class="sidemenu-label">Treeview</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="form-wizard.html"><i class="fe fe-hard-drive sidemenu-icon"></i><span
+								class="sidemenu-label">Form-wizard</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="form-editor.html"><i class="fe fe-edit sidemenu-icon"></i><span
+								class="sidemenu-label">Form-editor</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="form-validation.html"><i
+								class="fe fe-file-plus sidemenu-icon"></i><span
+								class="sidemenu-label">Form-validation</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="maps.html"><i class="fe fe-map-pin sidemenu-icon"></i><span
+								class="sidemenu-label">Maps</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="charts.html"><i class="fe fe-pie-chart sidemenu-icon"></i><span
+								class="sidemenu-label">Charts</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="tables.html"><i class="fe fe-database sidemenu-icon"></i><span
+								class="sidemenu-label">Tables</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="icons.html"><i class="fe fe-anchor sidemenu-icon"></i><span
+								class="sidemenu-label">Icons</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="others.html"><i class="fe fe-link sidemenu-icon"></i><span
+								class="sidemenu-label">Others</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="plugins.html"><i class="fe fe-droplet sidemenu-icon"></i><span
+								class="sidemenu-label">Plugins</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" target="_blank" href=" https://spruko.com/licenses.html"><i
+								class="fe fe-file sidemenu-icon"></i><span class="sidemenu-label">Licenses</span></a>
+					</li>
+				</ul>
+			</div>
+			<!-- #Menu -->
+		</aside>
+		<!-- #END# Left Sidebar -->
+	</section>
+
+	<section class="content home">
+		<div class="container-fluid">
+			<div class="block-header mt-4">
+				<h4><span class="text-primary">Dashtic</span> - Bootstrap Webapp Responsive Dashboard Simple Admin Panel Premium HTML5 Template</h4>
+			</div>
+			<div class="">
+				<div class="alert alert-success">
+					<button type="button" class="btn-close" data-dismiss="alert" aria-hidden="true">×</button>
+					<strong>Note:-</strong>
+					<hr class="message-inner-separator">
+					<p>Please refer <b class="text-dark">Faq's </b>page in documentation itself for queries and
+						customization like Colors, RTL, Dark style..etc.</p>
+				</div>
+			</div>
+			<div class="row clearfix">
+				<div class="col-sm-12 col-md-12 col-lg-12 col-xl-9">
+					<div class="row clearfix">
+						<div class="col-sm-12">
+							<div class="card section" id="About">
+								<div class="body">
+									<h5 class="mt-0 mb-2">Dashboard</h5>
+									<span class="mt-2 text-muted fs-15 font-weight-normal">Welcome to Dashtic – Bootstrap5
+										Admin & Dashboard Template</span>
+									<div id="documenter_buttons">
+									</div>
+									<ul class="documenter-list mt-2">
+										<li>Updated Date: 20/05/2022</li>
+										<li>Author: Spruko</li>
+										<li>Company: Spruko Technologies Private Limited</li>
+										<li>Support: <a href="mailto:support@spruko.com">support@spruko.com</a></li>
+									</ul>
+									<p>Thank you for purchasing our admin template. Feel free to contact us any time. We
+										have a dedicated team to provide you the best support. If you want any queries
+										please contact live chat or email : sprukotechnologies@gmail.com</p>
+									<p class="mb-0">If You Love Our Template Design <strong>Please don't forgot to rate
+											it.</strong> Thank you so much! </p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row clearfix">
+						<div class="col-sm-12">
+							<div class="card section" id="Introduction">
+								<div class="body">
+									<h5 class="mt-0 mb-2">Introduction</h5>
+									<span class="mt-2 text-muted fs-15 font-weight-normal mb-5">Welcome to Dashtic –
+										Bootstrap Webapp Responsive Dashboard Simple Admin Panel Premium HTML5 Template</span>
+									<p>Dashtic - Admin Template, With these template formats, it's very easy to create a
+										presence and grab someone's attention around the web page
+										Because the template is built using HTML5, CSS3, Bootstrap 5 framework and with
+										Sass. So please before you start working with the template take a quick look on
+										the documentation so that you can easily built your website.</p>
+									<p class="mb-0">If You Love Our Template Design <strong>Please don't forgot to rate
+											it.</strong> Thank you so much! 😊</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row clearfix">
+						<div class="col-sm-12">
+							<div class="card section" id="Template_Description">
+								<div class="body">
+									<h5 class="mt-0 mb-2">Template Description</h5>
+									<p> Dashtic– is a Bootstrap Admin & Dashboard template using modern and minimal
+										design. It is fully flexible user-friendly and responsive. Dashtic admin template
+										is powered with HTML 5, SASS, & Bootstrap 5 which looks great on Desktops,
+										Tablets, and Mobile Devices. This Template Includes 150+ HTML Pages & 50+
+										Plugins more UI elements . No Need to do hard work for this template
+										customization. We already designed it and you can easily design your website
+										just how you like it.
+										Advanced Form-Elements like Date pickers, form elements are included. This
+										template using Bootstrap5 framework. This template is fully 100% Premium
+										Admin Template quality. This template designed for using HTML5,CSS3,Jquery.
+										After Purchased this template you will get All HTML files,CSS, Scss and JS
+										Files.
+									</p>
+									<p> It has super clean flat user interface admin Backend design, easy customizable
+										components and widgets.The Template comes with a awesome unique design also we
+										ensure you can easily design admin template.</p>
+									<p>it is a fully responsive layout for all type of devices. Works on all major web
+										browsers, Desktop, iPhone, iPad, Tablet and all other smart phone devices</p>
+									<P class="mb-0"> Once you Purchase Dashtic , you will be able to get free download of
+										all future updates.</P>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card">
+						<div class="body">
+							<h5 class="mt-0 mb-2">Dependencies</h5>
+							<ul class="mt-4 mb-0 pl-0">
+								<li><a href="https://getbootstrap.com/" target="_blank">Bootstrap v5.1.3</a></li>
+								<li><a href="http://sass-lang.com/" target="_blank">Sass</a></li>
+								<li><a href="http://gulpjs.com/" target="_blank">Gulp</a></li>
+								<li><a href="https://jquery.com/" target="_blank">JQuery v3.6.0</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="row clearfix">
+						<div class="col-sm-12">
+							<div class="card section" id="Advanced_Features">
+								<div class="body">
+									<h5 class="mt-0 mb-2">Template Features</h5>
+									<div class="row">
+										<div class="table-responsive">
+											<table class="table border text-nowrap text-md-nowrap table-bordered mb-0">
+												<tbody>
+													<tr>
+														<td>Vertical-menu</td>
+														<td>Horizontal click menu</td>
+														<td>Horizontal hover menu</td>
+														<td>RTL ready</td>
+													</tr>
+													<tr>
+														<td>150 Plus HTML Pages</td>
+														<td>Bootstrap 5 Responsive Framework</td>
+														<td>Well Commented Code</td>
+														<td>24 * 7 Professional Company Support</td>
+													</tr>
+													<tr>
+														<td>Regular Updates</td>
+														<td>50+ Plugins</td>
+														<td>7 types of Charts</td>
+														<td>Select2</td>
+													</tr>
+													<tr>
+														<td>About us</td>
+														<td>Blog</td>
+														<td>File Manager</td>
+														<td>Gallery</td>
+													</tr>
+													<tr>
+														<td>Image-Comparision</td>
+														<td>Ecommerce Pages</td>
+														<td>Settings Page</td>
+														<td>Blog Details</td>
+													</tr>
+													<tr>
+														<td>Calendar</td>
+														<td>Mail Inbox</td>
+														<td>12 Types of Icon sets</td>
+														<td>File upload</td>
+													</tr>
+													<tr>
+														<td>Message Chat</td>
+														<td>Form Elements</td>
+														<td>Month & Date & Year Range Pickers</td>
+														<td>FormAdvanced Elements</td>
+													</tr>
+													<tr>
+														<td>Data Tables</td>
+														<td>Lockscreen Page</td>
+														<td>Error Page</td>
+														<td>User Profile</td>
+													</tr>
+													<tr>
+														<td>Invoice Page</td>
+														<td>Advanced Pricing Tables</td>
+														<td>Easy to customize</td>
+														<td>More Widgets</td>
+													</tr>
+													<tr>
+														<td>Very Easy to Create your Own Site</td>
+														<td>Neat, clean and simple design</td>
+														<td>W3C Validated</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row clearfix">
+						<div class="col-sm-12">
+							<div class="card section" id="css">
+								<div class="body">
+									<h5 class="mt-0 mb-3">CSS Structure</h5>
+									<p> style.css is the main CSS file located in assets/css folder of the package.
+										Whole CSS file is well indexed with topic and its related code.</p>
+									<!-- Prism Code -->
+									<pre class="language-css line-numbers">
+    <code class="language-css">
+		:root {
+			--primary-bg-color: #4454c3;
+			--primary-bg-hover: #3d4bb7;
+			--primary-bg-border: #3d4bb7;
+			--dark-theme: #10163a;
+			--dark-theme2: rgba(0, 0, 0, 0.2);
+			--dark-body: #262b48;
+			--dark-color: #edf0f5;
+			--dark-color2: #ffffff66;
+			--dark-border: rgba(255, 255, 255, 0.1);
+			--dark-shadow: #262b481c;
+			--blue: var(--primary-bg-color);
+			--indigo: var(--primary-bg-color);
+			--purple: $purple;
+			--pink: $pink;
+			--red: $danger;
+			--orange: $orange;
+			--yellow: $warning;
+			--green: $success;
+			--teal: $teal;
+			--cyan: $info;
+			--white: $white;
+			--gray: #8587a7;
+			--gray-dark: $dark;
+			--primary: var(--primary-bg-color);
+			--secondary: $secondary;
+			--success: $success;
+			--info: $info;
+			--warning: $warning;
+			--danger: $danger;
+			--light: #f4f5f8;
+			--dark: $dark;
+			--breakpoint-xs: 0;
+			--breakpoint-sm: 576px;
+			--breakpoint-md: 768px;
+			--breakpoint-lg: 992px;
+			--breakpoint-xl: 1200px;
+			--font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+			--font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+		}
+
+		#area-chart,
+		#line-chart,
+		#bar-chart,
+		#stacked,
+		#pie-chart {
+			min-height: 250px;
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		*::before,
+		*::after {
+			box-sizing: border-box;
+		}
+
+		html {
+			line-height: 1.15;
+			-webkit-text-size-adjust: 100%;
+			-ms-text-size-adjust: 100%;
+			-ms-overflow-style: scrollbar;
+			-webkit-tap-highlight-color: transparent;
+		}
+
+		@-ms-viewport {
+			width: device-width;
+		}
+
+		article,
+		aside,
+		dialog,
+		figcaption,
+		figure,
+		footer,
+		header,
+		hgroup,
+		main,
+		nav,
+		section {
+			display: block;
+		}
+
+		.nav-sidebar li ul {
+			background: #eeeeee;
+		}
+
+		.nav-sidebar li ul li:last-child {
+			border-bottom: 0px;
+		}
+
+		body {
+			margin: 0;
+			font-family: "Roboto", sans-serif;
+			font-size: 14px;
+			font-weight: 400;
+			line-height: 1.5;
+			color: #424e79;
+			text-align: left;
+			background: #f2f6f9;
+		}
+
+		[tabindex="-1"]:focus {
+			outline: 0 !important;
+		}
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			margin-top: 0;
+			margin-bottom: 0.66em;
+		}
+
+		.overflow-auto {
+			overflow: auto;
+		}
+
+		p {
+			margin-top: 0;
+			margin-bottom: 1rem;
+			font-weight: 400;
+		}
+
+		abbr[title],
+		abbr[data-original-title] {
+			text-decoration: underline;
+			-webkit-text-decoration: underline dotted;
+			text-decoration: underline dotted;
+			cursor: help;
+			border-bottom: 0;
+		}
+
+		address {
+			margin-bottom: 1rem;
+			font-style: normal;
+			line-height: inherit;
+		}
+
+		ol,
+		ul,
+		dl {
+			margin-top: 0;
+			margin-bottom: 1rem;
+		}
+
+		ol ol,
+		ul ul,
+		ol ul,
+		ul ol {
+			margin-bottom: 0;
+		}
+
+		dt {
+			font-weight: 700;
+		}
+
+		dd {
+			margin-bottom: 0.5rem;
+			margin-left: 0;
+		}
+
+		blockquote {
+			margin: 0 0 1rem;
+		}
+
+		dfn {
+			font-style: italic;
+		}
+
+		b,
+		strong {
+			font-weight: bolder;
+		}
+
+		small {
+			font-size: 80%;
+		}
+
+		sub,
+		sup {
+			position: relative;
+			font-size: 75%;
+			line-height: 0;
+			vertical-align: baseline;
+		}
+
+		sub {
+			bottom: -0.25em;
+		}
+
+		sup {
+			top: -0.5em;
+		}
+
+		a {
+			color: #424e79;
+			text-decoration: none;
+			background-color: transparent;
+			-webkit-text-decoration-skip: objects;
+		}
+
+		a:hover {
+			color: var(--primary-bg-color);
+			text-decoration: none;
+		}
+
+		a:not([href]):not([tabindex]) {
+			color: inherit;
+			text-decoration: none;
+		}
+
+
+ </code>
+</pre>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row clearfix">
+						<div class="col-sm-12">
+							<div class="card section" id="javascript">
+								<div class="body">
+									<h5 class="mt-0 mb-3">JS Structure</h5>
+									<p><b>custom.js</b> is the main javascript file having all the js code. File is
+										located in assets/js/ folder. This file code is also well formatted and section
+										in different respective function names.</p>
+									<p class="m-b-30">Along with this chart library based js code and dashboard based js
+										code are added in separate files for ease of use of user.</p>
+									<pre title="jQuery" class="javascript" data-codetype="JQueryku"><code class="language-javascript ">
+		(function($) {
+			"use strict";
+
+			// ______________ Page Loading
+			$(window).on("load", function(e) {
+				$("#global-loader").fadeOut("slow");
+			})
+
+			$('.fc-month-button').addClass('fc-state-active');
+			$('.fc-agendaWeek-button').removeClass('fc-state-active');
+			// ______________Cover Image
+			$(".cover-image").each(function() {
+				var attr = $(this).attr('data-image-src');
+				if (typeof attr !== typeof undefined && attr !== false) {
+					$(this).css('background', 'url(' + attr + ') center center');
+				}
+			});
+
+			$('.table-subheader').click(function() {
+				$(this).nextUntil('tr.table-subheader').slideToggle(100);
+			});
+
+			// ______________ Horizonatl
+			$(document).ready(function() {
+				$("a[data-theme]").click(function() {
+					$("head link#theme").attr("href", $(this).data("theme"));
+					$(this).toggleClass('active').siblings().removeClass('active');
+				});
+				$("a[data-bs-effect]").click(function() {
+					$("head link#effect").attr("href", $(this).data("effect"));
+					$(this).toggleClass('active').siblings().removeClass('active');
+				});
+			});
+
+		})(jQuery);
+								</code>
+							</pre>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-3 col-lg-12 d-none d-xl-block custom-leftnav">
+					<div class="main-content-left-components">
+						<div class="card custom-card">
+							<div class="card-body component-item">
+								<div class="collapse  navbar-collapse justify-content-end" id="main-menu">
+									<ul class="navbar-nav">
+										<li class="nav-item active">
+											<a class="nav-link" href="#About">About</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="#Introduction">Introduction</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="#Template_Description">Template Description</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="#Advanced_Features">Template Features</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="#css">Css</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="#javascript">Javascript</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Footer opened -->
+		<div class="main-footer ht-40">
+			<div class="pd-t-0-f ht-100p">
+				<span>Copyright &copy; 2022 <a href="javascript:void(0);">Dashtic</a>. Designed by <a
+						href="https://www.spruko.com/">Spruko</a> All rights reserved.</span>
+			</div>
+		</div>
+		<!-- Footer closed -->
+	</section>
+
+	<div class="color-bg">
+		<div class="sidebar__toggle" data-toggle="sidebar">
+			<a class="open-toggle" href="javascript:void(0);"><i class="fe fe-menu"></i></a>
+		</div>
+		<ul class="nav navbar-nav">
+			<li class="nav-item mr-8"><a class="btn btn-info text-white" href=" https://spruko.com/licenses.html" target="_blank"><i
+						class="icon-help2"></i>Licenses</a></li>
+			<li class="nav-item mr-8"><a class="btn btn-primary "
+					href="https://themeforest.net/item/dashtic-html-admin-template/27368151"
+					target="_blank"><i class="icon-help2"></i>Buy Now</a></li>
+			<li class="nav-item"><a class="btn btn-warning mr-3" href="https://1.envato.market/MGEaN"><i
+						class="icon-bag3"></i> Portfolio</a></li>
+		</ul>
+	</div>
+
+	<!-- Jquery Core Js -->
+
+	<!-- Lib Scripts Plugin Js -->
+	<script src="assets/bundles/libscripts.bundle.js"></script>
+
+
+	<!-- Lib Scripts Plugin Js -->
+	<script src="assets/bundles/vendorscripts.bundle.js"></script>
+
+	<!-- Custom Js -->
+	<script src="assets/bundles/mainscripts.bundle.js"></script>
+
+	<!-- Internal Prism js-->
+	<script src="assets/plugins/prism/prism.js"></script>
+
+
+	<!-- Treeview js-->
+	<script src="assets/plugins/treeview-prism/prism.js"></script>
+	<script src="assets/plugins/treeview-prism/prism-treeview.js"></script>
+
+	<!-- Perfectscroll js-->
+	<script src="assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script src="assets/plugins/perfect-scrollbar/p-scroll.js"></script>
+
+	<!-- Custom js-->
+	<script src="assets/js/custom.js"></script>
+	<script src="assets/js/menuspy.min.js.js"></script>
+
+	<script>
+		var elm = document.querySelector('#main-menu');
+		var ms = new MenuSpy(elm);
+
+		(function () {
+
+			if (typeof self === 'undefined' || !self.Prism || !self.document) {
+				return;
+			}
+
+			/**
+			 * Class name for <pre> which is activating the plugin
+			 * @type {String}
+			 */
+			var PLUGIN_CLASS = 'line-numbers';
+
+			/**
+			 * Resizes line numbers spans according to height of line of code
+			 * @param  {Element} element <pre> element
+			 */
+			var _resizeElement = function (element) {
+				var codeStyles = getStyles(element);
+				var whiteSpace = codeStyles['white-space'];
+
+				if (whiteSpace === 'pre-wrap' || whiteSpace === 'pre-line') {
+					var codeElement = element.querySelector('code');
+					var lineNumbersWrapper = element.querySelector('.line-numbers-rows');
+					var lineNumberSizer = element.querySelector('.line-numbers-sizer');
+					var codeLines = element.textContent.split('\n');
+
+					if (!lineNumberSizer) {
+						lineNumberSizer = document.createElement('span');
+						lineNumberSizer.className = 'line-numbers-sizer';
+
+						codeElement.appendChild(lineNumberSizer);
+					}
+
+					lineNumberSizer.style.display = 'block';
+
+					codeLines.forEach(function (line, lineNumber) {
+						lineNumberSizer.textContent = line || '\n';
+						var lineSize = lineNumberSizer.getBoundingClientRect().height;
+						lineNumbersWrapper.children[lineNumber].style.height = lineSize + 'px';
+					});
+
+					lineNumberSizer.textContent = '';
+					lineNumberSizer.style.display = 'none';
+				}
+			};
+
+			/**
+			 * Returns style declarations for the element
+			 * @param {Element} element
+			 */
+			var getStyles = function (element) {
+				if (!element) {
+					return null;
+				}
+
+				return window.getComputedStyle ? getComputedStyle(element) : (element.currentStyle || null);
+			};
+
+			window.addEventListener('resize', function () {
+				Array.prototype.forEach.call(document.querySelectorAll('pre.' + PLUGIN_CLASS), _resizeElement);
+			});
+
+			Prism.hooks.add('complete', function (env) {
+				if (!env.code) {
+					return;
+				}
+
+				// works only for <code> wrapped inside <pre> (not inline)
+				var pre = env.element.parentNode;
+				// Original regex check for class, leaving it here
+				// for its redundancy check
+				var clsReg = /\s*\bline-numbers\b\s*/;
+				// New regex check for opt-out class
+				var clsRegB = /\s*\bno-line-numbers\b\s*/;
+
+				if (env.element.querySelector(".line-numbers-rows")) {
+					// Abort if line numbers already exists
+					return;
+				}
+
+				// Added to facilitate opting out
+				if (clsRegB.test(pre.className)) {
+					// Respect the opt-out
+					return;
+				}
+
+				if (clsReg.test(env.element.className)) {
+					// Remove the class "line-numbers" from the <code>
+					env.element.className = env.element.className.replace(clsReg, ' ');
+				}
+				if (!clsReg.test(pre.className)) {
+					// Add the class "line-numbers" to the <pre>
+					pre.className += ' line-numbers';
+				}
+
+				var match = env.code.match(/\n(?!$)/g);
+				var linesNum = match ? match.length + 1 : 1;
+				var lineNumbersWrapper;
+
+				var lines = new Array(linesNum + 1);
+				lines = lines.join('<span></span>');
+
+				lineNumbersWrapper = document.createElement('span');
+				lineNumbersWrapper.setAttribute('aria-hidden', 'true');
+				lineNumbersWrapper.className = 'line-numbers-rows';
+				lineNumbersWrapper.innerHTML = lines;
+
+				if (pre.hasAttribute('data-start')) {
+					pre.style.counterReset = 'linenumber ' + (parseInt(pre.getAttribute('data-start'), 10) - 1);
+				}
+
+				env.element.appendChild(lineNumbersWrapper);
+
+				_resizeElement(pre);
+			});
+
+		}());
+	</script>
+
+
+</body>
+
+</html>

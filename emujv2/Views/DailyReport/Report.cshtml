@@ -1,0 +1,91 @@
+﻿@{
+    ViewBag.Title = "Daily Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="app-content main-content">
+    <div class="side-app">
+        <div class="container-fluid main-container">
+
+            <!--Page header-->
+            <div class="page-header">
+                <div class="page-leftheader">
+                    <h4 class="page-title">Report</h4>
+                </div>
+                <div class="page-rightheader ms-auto d-lg-flex d-none">
+                    <ol class="breadcrumb">
+                        <li></li>
+                        <li class="breadcrumb-item"><a href="/Home/Form"><span class="breadcrumb-icon">Form</span></a></li>
+                        <li class="breadcrumb-item active font-weight-bold" aria-current="page">Report</li>
+                        <li class="breadcrumb-item"><a href="/Home/Checklist"><span class="breadcrumb-icon">Checklist</span></a></li>
+                    </ol>
+                </div>
+            </div>
+            <!--End Page header-->
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Daily Report</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3 m-0">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label class="mt-3 form-label">Date</label>
+                                        <input type="text" class="form-control" id="datepicker">
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="mt-3 form-label">Date To</label>
+                                        <input type="text" class="form-control" id="datepicker2">
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="mt-5 form-label">Region</label>
+                                        <select class="form-control form-select select2">
+                                            <option value="">Select Region</option>
+                                            <option value="2014">2014</option>
+                                            <option value="2013">2013</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="mt-5 form-label">KMUJ</label>
+                                        <select class="form-control form-select select2">
+                                            <option value="">Select KMUJ</option>
+                                            <option value="2014">2014</option>
+                                            <option value="2013">2013</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="mt-5 form-label">Section</label>
+                                        <select class="form-control form-select select2">
+                                            <option value="">Select Section</option>
+                                            <option value="2014">2014</option>
+                                            <option value="2013">2013</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section scripts{
+
+
+    <script>
+        $(function () {
+            $("#datepicker").datepicker();
+            $("#datepicker2").datepicker();
+        });
+    </script>
+}
+
+

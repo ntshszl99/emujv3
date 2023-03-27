@@ -1,0 +1,172 @@
+
+********************************************************************************************************
+Project Name: Dashtic - Bootstrap Webapp Responsive Dashboard Simple Admin Panel Premium HTML5 Template
+
+Version : V.9
+
+Updated-date:  20-June-2022 
+
+
+Updates :- 
+
+	1) Updated Switcher.
+	2) Added New Switcher Page. 
+	3) Removed Plugins from plugins folder and converted into scss in scss folder.
+	4) Added some Html Pages.
+	5) ui issues fixed.
+	6) Added and updated some js files in js folder.
+	7) Update all plugins in plugins folder.
+	8) Removed plugins css links and added plugins.css link in all html pages .
+	9) Updated Documentation and Gulp File.
+	10) Docomentation is updated.
+
+********************************************************************************************************
+----------------------------------------------------------------------
+1) Updated Switcher
+----------------------------------------------------------------------
+	New switcher styles are added like changing primary color ,background color,single rtl, light theme and dark theme.
+
+----------------------------------------------------------------------
+2) Added New Switcher Page. 
+----------------------------------------------------------------------
+	New switcher page is added to Dashtic .
+	In this switcher we have added new features like 
+
+		1) Single switch Rtl 
+		2) Single switch menus
+		3) Changing Primary color
+		4) Dark mode 
+		5) Background color and many more 
+
+	for Detailed information please go through documentation.
+
+	To add swicher page replace complete assets folder and Switcher.html file in html folder and add link in all html pages.
+
+-----------------------------------------------------------------------------------
+3) Removed Plugins from plugins folder and converted into scss in scss folder.
+-----------------------------------------------------------------------------------
+	All plugins css are removed from plugins folder and converted into scss files in scss folder (Dashtic/assets/scss/plugins/).
+	The scss files are watched upon and plugins.css file is generated in css folder (Dashtic/assets/css/plugins.css).
+	so for plugins scss files Update complete assets folder.
+
+----------------------------------------------------------------------
+4) Added some Html Pages.
+----------------------------------------------------------------------
+	New Html pages are added in Dashtic .please follow below
+
+		1) blog-post.html
+		2) about.html
+		3) settings.html
+		4) Switcher.html
+		5) check-out.html
+		6) file-manager-details.html
+		7) file-attachments.html
+
+----------------------------------------------------------------------
+5) ui issues fixed.
+----------------------------------------------------------------------
+	Please replace complete assets folder.
+
+----------------------------------------------------------------------
+6) Added and updated some js files in js folder.
+----------------------------------------------------------------------
+	please add ,removed and replaced below files in js (root:-assets/js/..)
+
+		1)  custom.js
+		2)  theme-color.js
+		3)  switcher-styles
+		4)  app-calendar.js
+		5)  index1.js
+		6)  index2.js
+		7)  index3.js
+		8)  index4.js
+		9)  index5.js
+	   10)  file-upload.js
+	   11)  file-details.js
+	   12)  echarts.js
+	   13)  chart.js
+	   14)  widgets.js
+	   15)  datatables.js
+	   16)  handleCounter.js
+	   17)  sweet-alert.js
+	   18)  img-crop.js
+	   19)  sticky.js
+	   20)  charts.js
+	   21)  form-editor2.js
+	   22)  blog-post.js
+	   23)  checkout-jquery-steps.js
+	   24)  app-calendar-events.js -->removed
+
+----------------------------------------------------------------------
+7) Update all plugins in plugins folder.
+----------------------------------------------------------------------
+	Please replace complete scss,css,plugins folders.
+
+-----------------------------------------------------------------------------------
+8) Removed plugins folder css links and added plugins.css link in all html pages .
+-----------------------------------------------------------------------------------
+	/////////
+	step-1:-
+	/////////
+
+		please remove plugins folder css links  
+
+		ex:-<link href="../assets/plugins/**/**.css" rel="stylesheet"> links except boostrap link.
+
+	/////////
+	step-2:-
+	/////////
+
+		please add plugins.css link below style.css link in all html pages
+
+		i.e 
+		<link href="../assets/css/style.css" rel="stylesheet">
+		<link href="../assets/css/plugins.css" rel="stylesheet">
+
+---------------------------------------
+9) Updated Documentation and Gulp File.
+---------------------------------------
+	Gulp file is updates. so, replace gulp file.
+
+----------------------------------------------------------------------
+10) Docomentation is updated
+----------------------------------------------------------------------
+	Documentation is Updated please go through it .
+
+Thanking you,
+@spruko.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
