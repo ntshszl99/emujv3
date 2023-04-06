@@ -1,0 +1,5 @@
+C:\Users\natashas\source\repos\e-MUJ\ConnectionDB\obj\Debug\net6.0\ConnectionDB.csproj.AssemblyReference.cache
+C:\Users\natashas\source\repos\e-MUJ\ConnectionDB\obj\Debug\net6.0\ConnectionDB.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\natashas\source\repos\e-MUJ\ConnectionDB\obj\Debug\net6.0\ConnectionDB.AssemblyInfoInputs.cache
+C:\Users\natashas\source\repos\e-MUJ\ConnectionDB\obj\Debug\net6.0\ConnectionDB.AssemblyInfo.cs
+C:\Users\natashas\source\repos\e-MUJ\ConnectionDB\obj\Debug\net6.0\ConnectionDB.csproj.CoreCompileInputs.cache

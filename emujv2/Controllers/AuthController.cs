@@ -11,17 +11,16 @@ using emujv2.Models;
 namespace emujv2.Controllers
 {
     public class AuthController : Controller
-    {
-      
-        public ActionResult Login()
-
-            
+    {   
+        public ActionResult Index()          
         {
             return View();
         }
 
-    
-
+        public ActionResult Home()
+        {
+            return View();
+        }
 
     }
 
