@@ -1,25 +1,63 @@
-﻿//linkDepan = "https://webapi.ktmb.com.my/ccadapi/api/webapi/";
-linkDepan = "http://localhost:58704/api/webapi/";
+﻿//linkDepan = "https://webapi.ktmb.com.my/emujv2api/api/webapi/";
+linkDepan = "http://localhost:16049/api/webapi/";
 
 $(document).ready(function () {
     var x = localStorage.getItem("usrN");
-    $("#tempekNamaUsr").html(x + ' <i class="mdi mdi-chevron-down"></i> ');
-    var I = localStorage.getItem("usrI");
-    var D = localStorage.getItem("depN");
-    //var L = localStorage.getItem("locI");
-    //var E = localStorage.getItem("eml");
-    //var J = localStorage.getItem("jobD");
-    $("#profModNama").html(x);
-    $("#profModJwtn").html(I);
-    //$("#profModEmel").html(E);
-    //$("#profModLoc").html(L);
-    $("#profModJbtn").html(D);
+    $("#tempekNamaUsr").html(x);
+    $("#profNama").html(x);
+    $("#Nama").html(x);
+
+    var UI = localStorage.getItem("usrI");
+    $("#tempekUsrId").html(UI);
+
+    var UR = localStorage.getItem("usrR");
+    $("#tempekUsrRegion").html(UR);
+
+    var UD = localStorage.getItem("usrD");
+    $("#tempeUsrDesig").html(UD);
+    $("#UsrDesig").html(UD);
+
+    var yrs = localStorage.getItem("usrY");
+    $("#tempekYrs").html(yrs + ' Years');
+
+    var IC = localStorage.getItem("IC");
+    $("#tempekIC").html(IC);
+
+    var age = localStorage.getItem("age");
+    $("#tempekAge").html(age);
+
+    var PN = localStorage.getItem("phoneNum");
+    $("#tempekNombor").html(PN);
+
+    var DL = localStorage.getItem("depL");
+    $("#tempekDeptLoc").html(DL);
+
+    var DI = localStorage.getItem("depI");
+    $("#tempekDeptId").html(DI);
+
+    var DN = localStorage.getItem("depN");
+    $("#tempekNamaDept").html(DN);
+
+    var LI = localStorage.getItem("lvlI");
+    $("#tempekLvlId").html(LI);
+
+    var UL = localStorage.getItem("usrLvl");
+    $("#tempekUsrLvl").html(UL);
+
+    var US = localStorage.getItem("usrS");
+    $("#tempekUsrStatus").html(US);
+
+   
 
     $('#nakBlajar').click(function () {
         salertSave('Start Learn.');
         hopscotch.startTour(jalan2());
     });
+
+
 });
+
+
 
 function jenisTarikhJSON(valx) {
     //var arrBuln = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
@@ -71,9 +109,9 @@ function salertSave(ayats) {
 }
 function swarning(ayats) {
     if (ayats === undefined) {
-        ayats = 'Something Wrong Happen!';
+        ayats = 'Something Wrong !';
     }
-    
+
     Swal.fire({
         title: 'Warning!',
         html: ayats,
@@ -124,7 +162,7 @@ function checkSess() {
     if (!value) {
         localStorage.clear();// alert(pnjg);
         if (pnjg <= 3) {
-            setTimeout(window.location.replace("CCAD/Auth/Index"), 20000);
+            setTimeout(window.location.replace("emujv2/Auth/Index"), 20000);
         }
         else if (pnjg == 4) {
             setTimeout(window.location.replace("../Auth/Index"), 20000);
@@ -135,14 +173,14 @@ function checkSess() {
     }
 }
 function checkStore() {
-    localStorage.removeItem("invDP");
-    localStorage.removeItem("invDPT");
-    localStorage.removeItem("jnsV");
-    localStorage.removeItem("valV");
-    localStorage.removeItem("invCHT");
     localStorage.removeItem("selHar");
     localStorage.removeItem("selHarE");
-    localStorage.removeItem("spotV"); 
+    localStorage.removeItem("spotV");
+    localStorage.removeItem("selScn");
+    localStorage.removeItem("selKmj");
+    localStorage.removeItem("selGng");
+    localStorage.removeItem("selRgn");
+    localStorage.removeItem("stfID");
 }
 function setWithExpiry(key, value, minutes) {
     var now = new Date();//var minutes = 1;
@@ -172,10 +210,10 @@ function checkExt() {
     pnjg = ptgs.length;
     if (localStorage.getItem("main") === null) {
         if (pnjg == 2) {
-            setTimeout(window.location.replace("CCAD/Auth/Index"), 20000);
+            setTimeout(window.location.replace("emujv2/Auth/Index"), 20000);
         }
         else if (pnjg > 2) {
-            setTimeout(window.location.replace("../CCAD/Auth/Index"), 20000);
+            setTimeout(window.location.replace("../emujv2/Auth/Index"), 20000);
         }
     }
 }
@@ -226,218 +264,5 @@ function deltrow(idcol) {
         $("#" + idcol).remove();
     });
 }
-function senaraiManualChrg() {
-    $("#statIdvN").html(localStorage.getItem('usrN'));
-    $("#statDepN").html(localStorage.getItem('depN'));
-    $.fn.dataTable.ext.errMode = 'throw';
-    $.ajax({
-        url: linkDepan1 + "/ListCharge",
-        type: 'GET',
-        dataType: 'json',
-        data: {},
-        beforeSend: function (request) {
-            request.setRequestHeader("Token", localStorage.getItem('main'));
-        },
-        success: function (data) {
-            $("#statIdv").html(data['data1'].length);
-            $("#statDep").html(data['depart'].length);
 
-            tebals = ''; rmindv = 0;
-            if (data['data1'].length >= 1) {
-                $.each(data['data1'], function (index, value) {
-                    datesn = "-"; rmindv += parseFloat(value.sender_amount);
-                    if (value.sender_dateInvoice != null) {
-                        datesn = jenisTarikhJSON(value.sender_dateInvoice.date);
-                    }
-                    detInvoice = ptongAyat(value.sender_detailInvoice, 100, '...');
-                    tebals += '<div class="col-md-3"><div class="card report-card"><h5 class="card-header bg-success text-white mt-0"><i class="fas fa-calendar-check mr-2 font-16"></i>' +
-                        datesn + '</h5><div class="card-body"><div class="float-right"><i class="fas fa-lock text-success report-main-icon"></i></div><h4 class="title-text mt-0">' +
-                        value.receive_department + '</h4><h3 class="my-3" >RM ' +
-                        value.sender_amount + '</h3><h4 class=""><i class="fas fa-info-circle mr-2 text-info font-14"></i>' +
-                        detInvoice + '</h4><p><span class="btn btn-secondary btn-circle">' + value.jmlhserv + '</span> Service </p>' +
-                        //'<p class="mb-0 text-muted text-truncate">Services</p><ul class="list-unstyled mb-0 text-muted"><li class=""><span></span>serv1</li></ul>'+
-                        '</div><button type="button" data-id="' + value.id + '" data-toggle="modal" data-animation="bounce" data-target=".modRekodManCharge" class="btn btn-primary float-right">Details</button></div></div>';
-                });
-                $("#tempekGrid").html(tebals);
 
-                var counter = 1;
-                $('#tableList').DataTable({
-                    dom: 'Bfrtip',
-                    buttons: [
-                        'copy', 'csv', 'excel', 'pdf', 'print'
-                    ],
-                    responsive: true,
-                    data: data['data1'],
-                    columns: [
-                        { data: "id" },
-                        { data: "sender_department" },
-                        { data: "sender_costcentre" },
-                        { data: "receive_department" },
-                        { data: "receive_costcentre" },
-                        { data: "sender_amount" },
-                        { data: "sender_detailInvoice" },
-                        { data: "id" }
-                    ],
-                    columnDefs: [
-                        {
-                            targets: -8,
-                            render: function (data, type, full, meta) {
-                                return counter++;
-                            },
-                        },
-                        {
-                            targets: -2,
-                            render: function (data, type, full, meta) {
-                                return ptongAyat(data, 50, '...');
-                            },
-                        },
-                        {
-                            targets: -1,
-                            orderable: false,
-                            render: function (data, type, full, meta) {
-                                return '<button class="btn btn-info" data-id="' + data + '" data-toggle="modal" data-animation="bounce" data-target=".modRekodManCharge" ><i class="fa fa-info"></i> </button>';
-                            },
-                        }],
-                });
-            }
-            else {
-                tebals += '<div class="alert alert-outline-warning alert-warning-shadow mb-0 alert-dismissible fade show" role="alert"><button type = "button" class="close" data - dismiss="alert" aria - label="Close" ><span aria-hidden="true"><i class="mdi mdi-close"></i></span></button ><strong>Sorry!</strong> No Charge Individual.</div > ';
-                $("#tempekGrid").html(tebals);
-            }
-
-            tebalDs = ''; rmdepart = 0;
-            if (data['depart'].length >= 1) {
-                $.each(data['depart'], function (index, value) {
-                    datesn = "-"; rmdepart += parseFloat(value.sender_amount);
-                    if (value.sender_dateInvoice != null) {
-                        datesn = jenisTarikhJSON(value.sender_dateInvoice.date);
-                    }
-                    detInvoice = ptongAyat(value.sender_detailInvoice, 100, '...');
-                    tebalDs += '<div class="col-md-3"><div class="card report-card"><h5 class="card-header bg-info text-white mt-0"><i class="fas fa-calendar-check mr-2 font-16"></i>' +
-                        datesn + '</h5><div class="card-body"><div class="float-right"><i class="fas fa-unlock-alt text-primary report-main-icon"></i></div>' +
-                        '<h4 class="title-text mt-0">' + value.receive_department + '</h4>' + '<h3 class="my-3">RM ' +
-                        value.sender_amount + '</h3><h4><i class="fas fa-info-circle mr-2 text-info font-14"></i>' +
-                        value.sender_detailInvoice + '</h4><p><span class="btn btn-secondary btn-circle">' + value.jmlhserv + '</span> Service </p>' +
-                        //'<p class="mb-0 text-muted text-truncate">Services</p><ul class="list-unstyled mb-0 text-muted"><li class=""><span></span>serv1</li></ul>' +
-                        '</div></div></div> ';
-                });
-                $("#tempekGridDepart").html(tebalDs);
-
-                var counter = 1;
-                $('#tableListDepart').DataTable({
-                    dom: 'Bfrtip',
-                    buttons: [
-                        'copy', 'csv', 'excel', 'pdf', 'print'
-                    ],
-                    responsive: true,
-                    data: data['depart'],
-                    columns: [
-                        { data: "id" },
-                        { data: "sender_department" },
-                        { data: "sender_costcentre" },
-                        { data: "receive_department" },
-                        { data: "receive_costcentre" },
-                        { data: "sender_amount" },
-                        { data: "sender_detailInvoice" },
-                        { data: "id" }
-                    ],
-                    columnDefs: [
-                        {
-                            targets: -8,
-                            render: function (data, type, full, meta) {
-                                return counter++;
-                            },
-                        },
-                        {
-                            targets: -2,
-                            render: function (data, type, full, meta) {
-                                return ptongAyat(data, 50, '...');
-                            },
-                        },
-                        {
-                            targets: -1,
-                            orderable: false,
-                            render: function (data, type, full, meta) {
-                                return '';//'<button class="btn btn-info" data-id="' + data + '" data-toggle="modal" data-animation="bounce" data-target=".modRekodManCharge" ><i class="fa fa-info"></i> </button>';
-                            },
-                        }],
-                });
-            }
-            else {
-                tebalDs += '<div class="alert alert-outline-warning alert-warning-shadow mb-0 alert-dismissible fade show" role="alert"><button type = "button" class="close" data - dismiss="alert" aria - label="Close" ><span aria-hidden="true"><i class="mdi mdi-close"></i></span></button ><strong>Sorry!</strong> No Charge Department.</div > ';
-                $("#tempekGridDepart").html(tebalDs);
-            }
-            $("#statIdvRM").html('RM ' + rmindv);
-            $("#statDepRM").html('RM ' + rmdepart);
-        },
-        error: function (xhr) {
-            swarning();
-            window.setTimeout(senaraiManualChrg, 10000);
-        },
-        complete: function () {
-        }
-    });
-}
-function listDepart(pages) {
-    dept = localStorage.getItem("invDP");
-    $('#lsDepart').empty().append('<option value="-0">Please Select</option>');
-    auxArr = [];
-    if (pages == 'reportManual') {
-        $('#lsDepart').append("<option value='A'>Select All</option>");
-        localStorage.setItem("invDPT", "Select All");
-    }
-    $.ajax({
-        url: linkDepan + "GetDepartmentList",
-        type: 'GET',
-        dataType: 'json',
-        data: {},
-        beforeSend: function (request) {
-            request.setRequestHeader("Token", localStorage.getItem('main'));
-        },
-        success: function (data) {
-            $.each(data, function (index, value) {
-                auxArr[index] = "<option value='" + value.gdc_id + "'>" + value.DeptName + "</option>";                
-                if (dept == value.gdc_id) {
-                    dept = value.gdc_id;
-                    localStorage.setItem("invDPT", value.DeptName);
-                }
-            });
-            $('#lsDepart').append(auxArr.join(''));
-            $('#lsDepart option[value="' + dept + '"]').attr('selected', 'selected');
-        },
-        error: function (xhr) {
-            swarning();
-        },
-        complete: function () {
-        }
-    });
-}
-function listCharge() {
-    idxs = localStorage.getItem("valV");
-    $('#lsCharge').empty().append('<option value="-0">Please Select</option>');
-    $.ajax({
-        url: linkDepan + "GetChargeListGroup",
-        type: 'GET',
-        dataType: 'json',
-        data: {},
-        beforeSend: function (request) {
-            request.setRequestHeader("Token", localStorage.getItem('main'));
-        },
-        success: function (data) {
-            auxArr = [];
-            $.each(data, function (index, value) {
-                auxArr[index] = "<option value='" + value.CD_REF_GROUP + "'>" + value.CD_NAME + "</option>";
-                if (idxs == value.CD_REF_GROUP) {
-                    localStorage.setItem("invCHT", value.CD_NAME);
-                }
-            });
-            $('#lsCharge').append(auxArr.join(''));
-            $('#lsCharge option[value="' + idxs + '"]').attr('selected', 'selected');
-        },
-        error: function (xhr) {
-            swarning();
-        },
-        complete: function () {
-        }
-    });
-}

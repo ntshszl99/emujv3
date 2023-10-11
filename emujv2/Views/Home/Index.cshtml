@@ -1,41 +1,17 @@
-﻿@{
-    ViewBag.Title = "Profile";
+﻿@{ ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_layout.cshtml"; }
 
-}
+<link rel="stylesheet" href="~/assets/plugins/morris/morris.css">
 
 <div class="app-content main-content">
     <div class="side-app">
         <div class="container-fluid main-container">
             <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <div class="card col-xl">
-                        <div class="widget-user-image mx-auto mt-5 text-center"><img alt="User Avatar" class="rounded-circle" src="../assets/images/users/16.jpg"></div>
-                        <div class="card-body text-center">
-                            <div class="pro-user">
-                                <div class="table-responsive">
-                                    <table class="table mb-0">
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <span class="font-weight-semibold w-50">Meow meow meow</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span class="font-weight-semibold w-50">IT Manager</span>
-                                                </td>
-                                            </tr>                                      
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
                 <div class="col-lg-12 col-xl-6 col-md-12 col-sm-12">
                     <div class="card">
                         <div class="card-body ">
-                            <h4 class="card-title">Personal Details</h4>
+                            <h4 class="card-title">Staff Details</h4>
                             <div class="table-responsive">
                                 <table class="table mb-0">
                                     <tbody>
@@ -43,19 +19,25 @@
                                             <td class="py-2 px-2">
                                                 <span class="font-weight-semibold w-50">Staff ID </span>
                                             </td>
-                                            <td class="py-2 px-2">Jacob Smith</td>
+                                            <td class="py-2 px-2" id="tempekUsrId">-</td>
                                         </tr>
                                         <tr>
                                             <td class="py-2 px-2">
                                                 <span class="font-weight-semibold w-50">Name </span>
                                             </td>
-                                            <td class="py-2 px-2">USA</td>
+                                            <td class="py-2 px-2" id="Nama">-</td>
                                         </tr>
                                         <tr>
                                             <td class="py-2 px-2">
                                                 <span class="font-weight-semibold w-50">Designation </span>
                                             </td>
-                                            <td class="py-2 px-2">English, German</td>
+                                            <td class="py-2 px-2" id="UsrDesig">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 px-2">
+                                                <span class="font-weight-semibold">Location </span>
+                                            </td>
+                                            <td class="py-2 px-2" id="tempekDeptLoc">-</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -72,39 +54,27 @@
                                     <tbody>
                                         <tr>
                                             <td class="py-2 px-2">
-                                                <span class="font-weight-semibold">Year of Service </span>
+                                                <span class="font-weight-semibold">Year of Service</span>
                                             </td>
-                                            <td class="py-2 px-2">Jacob Smith</td>
+                                            <td class="py-2 px-2" id="tempekYrs">-</td>
                                         </tr>
                                         <tr>
                                             <td class="py-2 px-2">
-                                                <span class="font-weight-semibold">IC Number </span>
+                                                <span class="font-weight-semibold">IC Number</span>
                                             </td>
-                                            <td class="py-2 px-2">USA</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="py-2 px-2">
-                                                <span class="font-weight-semibold">Location </span>
-                                            </td>
-                                            <td class="py-2 px-2">English, German</td>
+                                            <td class="py-2 px-2" id="tempekIC">-</td>
                                         </tr>
                                         <tr>
                                             <td class="py-2 px-2">
                                                 <span class="font-weight-semibold">Age </span>
                                             </td>
-                                            <td class="py-2 px-2">smithabgd.com</td>
+                                            <td class="py-2 px-2" id="tempekAge">-</td>
                                         </tr>
                                         <tr>
                                             <td class="py-2 px-2">
-                                                <span class="font-weight-semibold">Email </span>
+                                                <span class="font-weight-semibold">Phone Number </span>
                                             </td>
-                                            <td class="py-2 px-2">georgemestayer@gmail.com</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="py-2 px-2">
-                                                <span class="font-weight-semibold">Phone </span>
-                                            </td>
-                                            <td class="py-2 px-2">+125 254 3562s</td>
+                                            <td class="py-2 px-2" id="tempekNombor">-</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -116,3 +86,20 @@
         </div>
     </div>
 </div>
+
+
+@section scripts{
+    <script src="~/assets/scripts/dashboard.js"></script>
+    <script src="~/assets/plugins/morris/morris.min.js"></script>
+    <script src="~/assets/plugins/raphael/raphael.min.js"></script>
+    @*<script src="~/assets/pages/jquery.morris.init.js"></script>*@
+    <script src="~/assets/scripts/semua.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            checkSess();
+            checkStore();
+
+       
+    </script>
+}

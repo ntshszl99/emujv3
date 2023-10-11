@@ -12,36 +12,21 @@ namespace emujv2.Controllers
 {
     public class HomeController : Controller
     {
-        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["mujDB"].ConnectionString);
+    
         public ActionResult Index()
         {
             return View();
         }
 
-
         public ActionResult User()
         {
-
-            DataSet ds = new DataSet();
-            con.Open();
-            SqlCommand cmd = new SqlCommand("SELECT staff_name, staff_id, dept FROM login_staff", con);
-            using (SqlDataAdapter da = new SqlDataAdapter())
-            {
-                    cmd.Connection = con;
-                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
-                    {
-                        sda.Fill(ds);
-                    }
-                
-            }
-
-            return View(ds);
-
-            
-
+            return View();
         }
 
-
+        public ActionResult UserDetails()
+        {
+            return View();
+        }
 
         public ActionResult Manual()
         {

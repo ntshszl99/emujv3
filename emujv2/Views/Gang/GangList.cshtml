@@ -1,5 +1,525 @@
 ﻿@{
+    ViewBag.Title = "GangList";
     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="app-content main-content">
+    <div class="side-app">
+        <div class="container-fluid main-container">
+
+            <!--Page header-->
+            <div class="page-header">
+                <div class="page-leftheader">
+                    <h4 class="page-title">Gang List</h4>
+                </div>
+                <div class="page-rightheader ms-auto d-lg-flex d-none">
+                    <ol class="breadcrumb">
+                        <li></li>
+                        <li class="breadcrumb-item"><a href="/Gang/GangRegistration"><span class="breadcrumb-icon">Gang Registration</span></a></li>
+                        <li class="breadcrumb-item active font-weight-bold" aria-current="page">Gang List</li>
+                    </ol>
+                </div>
+            </div>
+            <!--End Page header-->
+
+            <div class="" id="tempekList">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3 m-0">
+                            <div class="row">
+                                <div class="col-3">
+                                    <label class="mt-3 form-label">KMUJ</label>
+                                    <select id="kmuj" class="form-control form-select select2">
+                                        <option value="-0">Select KMUJ</option>
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-3 form-label">Section</label>
+                                    <select id="section" class="form-control form-select select2">
+                                        <option value="-0">Select Section</option>
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-3 form-label">Gang</label>
+                                    <select id="gang" class="form-control form-select select2">
+                                        <option value="-0">Select Gang</option>
+                                    </select>
+                                </div>
+                                <div class="col-2">
+                                    <label class="mt-3 form-label">.</label>
+                                    <button type="button" name="Cari" id="Cari" class="btn btn-purple waves-effect waves-light"><i class="fa fa-search"></i></button>
+                                </div>
+                                <div class="card-body">
+                                    <div class="col-lg-12">
+                                        <div class="table-responsive table-lg">
+                                            <table id="tableRep" class="table card-table table-vcenter text-nowrap border">
+                                                <thead>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Modal User Details-->
+            <div class="modal" id="modalDetails">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Staff Details</h5><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="card-body">
+                                <div class="mb-0 m-0">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-label">Staff ID</div>
+                                            <input readonly id="staffID" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="mt-5 form-label">Staff Name</div>
+                                            <input readonly id="staffname" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="mt-5 form-label">Department</div>
+                                            <input readonly id="dept" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="mt-5 form-label">Designation</div>
+                                            <input readonly id="position" type="text" class="form-control">
+                                        </div>
+                                        <div class="mb-5"></div>
+                                        <div class="card-body bg-success-transparent-2">
+                                            <div class="mb-0 m-0">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="mt-2 form-label">Update Status</div>
+                                                        <select id="cuti" class="form-control form-select select2" required="required">
+                                                            <option value="-0">.: Select Reason :.</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer pd-20">
+                                    <button class="btn btn-success" type="button">Update</button> <button class="btn btn-light" data-bs-dismiss="modal" ria-label="Close" type="button">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Modal Delete User-->
+            <div class="modal" id="modalDelete">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Delete Staff</h5><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="card-body">
+                                <div class="mb-0 m-0">
+                                    <div class="row">
+                                        <div class="col-12 bg-danger-transparent-2">
+                                            <h5 class="mt-5 mb-5 text-danger text-center">Are you sure want to delete?</h5>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="mt-5 form-label">Staff ID</div>
+                                            <input readonly id="staffID2" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="mt-5 form-label">Staff Name</div>
+                                            <input readonly id="staffname2" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="mt-5 form-label">Department</div>
+                                            <input readonly id="dept2" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="mt-5 form-label">Designation</div>
+                                            <input readonly id="position2" type="text" class="form-control">
+                                        </div>
+                                        <div class="mb-5"></div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer pd-20">
+                                    <button class="btn btn-danger" type="button">Delete</button> <button class="btn btn-light" data-bs-dismiss="modal" ria-label="Close" type="button">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script src="~/assets/plugins/select2/select2.min.js"></script>
+    <script src="~/assets/scripts/semua.js"></script>
+    <script src="~/assets/scripts/dashboard.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            checkSess();
+            listSection();
+            listKMUJ();
+            listGang();
+            listCuti();
+            listReports();
+
+            $('#modalDetails').on('show.bs.modal', function (e) {
+                var ids = $(e.relatedTarget).data('id');
+                stfDetails(ids);
+            });
+
+            $('#modalDelete').on('show.bs.modal', function (e) {
+                var ids = $(e.relatedTarget).data('id');
+                stfDelete(ids);
+            });
+
+        });
+
+
+        $("#Cari").click(function () {
+
+            checkStore();
+            kmj = $("#kmuj option:selected").text();
+            localStorage.setItem("selKmj", kmj, this.value);
+
+            scn = $("#section option:selected").text();
+            localStorage.setItem("selScn", scn, this.value);
+
+            gng = $("#gang option:selected").text();
+            localStorage.setItem("selGng", gng, this.value);
+
+            var error = 'Please : '; count = 0;
+            if ($("#gang option:selected").val() == '-0') {
+                error += '<br/> Select Gang '; count++;
+                swarning(error);
+            }
+            else if ($("#kmuj option:selected").val() == '-0') {
+                salertSave('List Gang : ' + scn + ' of ' + gng + ' ');
+            }
+            else if ($("#section option:selected").val() == '-0') {
+                salertSave('List Gang : ' + kmj + ' of ' + gng + ' ');
+            }
+            else {
+                salertSave('List Gang : ' + kmj + ' and ' + scn + ' of ' + gng + ' ');
+            }
+            listReports(localStorage.getItem("selKmj", this.value), localStorage.getItem("selScn", this.value), localStorage.getItem("selGng", this.value));
+
+        });
+
+        function stfDetails(ids) {
+            var staffID = $(".staffID" + ids).html();
+            $.ajax({
+                url: linkDepan + "GetGangDetails?StaffId=" + ids,
+                type: 'GET',
+                dataType: 'json',
+                data: {},
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    $('#staffID').val(data[0].staff_no);
+                    $('#staffname').val(data[0].staff_name);
+                    $('#dept').val(data[0].section_id);
+                    $('#position').val(data[0].position);
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+        function stfDelete(ids) {
+            var staffID = $(".staffID" + ids).html();
+            $.ajax({
+                url: linkDepan + "GetGangDetails?StaffId=" + ids,
+                type: 'GET',
+                dataType: 'json',
+                data: {},
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    $('#staffID2').val(data[0].staff_no);
+                    $('#staffname2').val(data[0].staff_name);
+                    $('#dept2').val(data[0].section_id);
+                    $('#position2').val(data[0].position);
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+
+        function listCuti() {
+            $.ajax({
+                url: linkDepan + "GetCutiList",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.cuti_id + "'>" + value.cuti_name + "</option>";
+                        });
+                        $('#cuti').append(auxArr.join(''));
+                    } else {
+                        $("#cuti").addClass(" is-invalid");
+
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+        function listSection() {
+            $.ajax({
+                url: linkDepan + "GetSectionList",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.section_id + "'>" + value.section_name + "</option>";
+                        });
+                        $('#section').append(auxArr.join(''));
+                    } else {
+                        $("#section").addClass(" is-invalid");
+
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+        function listKMUJ() {
+            $.ajax({
+                url: linkDepan + "KMUJList",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.kmuj_id + "'>" + value.kmuj_name + "</option>";
+                        });
+                        $('#kmuj').append(auxArr.join(''));
+                    } else {
+                        $("#kmuj").addClass(" is-invalid");
+
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+        function listGang() {
+            $.ajax({
+                url: linkDepan + "GangList",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.id + "'>" + value.gang + "</option>";
+                        });
+                        $('#gang').append(auxArr.join(''));
+                    } else {
+                        $("#gang").addClass(" is-invalid");
+
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+        function listUsrLevel() {
+            $.ajax({
+                url: linkDepan + "GetUserLevelList",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.ref_level_no + "'>" + value.ref_level_name + "</option>";
+                        });
+                        $('#userlevel, #userlevel2').append(auxArr.join(''));
+                    } else {
+                        $("#userlevel, #userlevel2").addClass(" is-invalid");
+
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+
+        function listReports(kmuj, section, gang) {
+            $.ajax({
+                url: linkDepan + "GetGList?Kmuj=" + kmuj + "&Section=" + section + "&Gang=" + gang,
+                type: 'GET',
+                dataType: 'json',
+                data: {},
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    console.log('mana : ' + data);
+                    var counter = 1, countStf = 0, countID = 0;
+                    $.fn.dataTable.ext.errMode = 'throw';
+                    if ($.fn.dataTable.isDataTable('#tableRep')) {
+                        $('#tableRep').DataTable().destroy();
+                    }
+                    $('#tableRep').DataTable({
+                        dom: 'Bfrtip',
+                        buttons: [
+                            'copy', 'csv', 'excel', 'pdf', 'print'
+                        ],
+                        responsive: true,
+                        data: data,
+                        columns: [
+                            { data: "Emplid" },
+                            { data: "kmuj_name" },
+                            { data: "section_name" },
+                            { data: "Nama" },
+                            { data: "JobGrade" },
+                            { data: "JobDesc" },
+                            { data: "cuti_name" },
+                            { data: "Emplid" },
+                        ],
+                        columnDefs: [{
+                            targets: -1,
+                            title: "Actions",
+                            render: function (data, type, full, meta) {
+                                countStf++;
+
+                                /*return '<a href="..' + data + '" id="BviewRes" class="btn btn-primary"><i class="fe fe-edit font-16"></i>';*/
+                                return '<a class="btn btn-primary" data-id="' + data + '" data-bs-target="#modalDetails" data-bs-toggle="modal" ><i class="fe fe-edit font-16"></i></a>' + "   " + '<a class="btn btn-danger" data-id="' + data + '" data-bs-target="#modalDelete" data-bs-toggle="modal" ><i class="fe fe-trash font-16"></i></a>'
+
+
+                            },
+                        },
+                        {
+                            targets: -2,
+                            title: "Status",
+                            render: function (data, type, full, meta) {
+                                var status = '';
+                                if (data == 'VALID') { status = '<a class="text-success">' + data + ' <i class="ion-checkmark-circled"></i></a></p >'; }
+                                else {
+                                    status = '<a class="text-danger">' + data + ' <i class="ion-close-circled"></i></a></p >';
+                                }
+                                return status;
+                            },
+                        },
+                        {
+                            targets: -3,
+                            title: "Position",
+                            render: function (data, type, full, meta) {
+                                return data;
+                            },
+                        },
+                        {
+                            targets: -4,
+                            title: "Grade",
+                            render: function (data, type, full, meta) {
+                                return data;
+                            },
+                        },
+                        {
+                            targets: -5,
+                            title: "Name",
+                            render: function (data, type, full, meta) {
+                                return data;
+                            },
+                        },
+                        {
+                            targets: -6,
+                            title: "Section",
+                            render: function (data, type, full, meta) {
+                                return data;
+                            },
+                        },
+                        {
+                            targets: -7,
+                            title: "KMUJ",
+                            render: function (data, type, full, meta) {
+                                return data;
+                            },
+                        },
+                        {
+                            targets: -8,
+                            title: "Staff ID",
+                            render: function (data, type, full, meta) {
+                                return data;
+                            },
+                        },
+                        ],
+                        rowId: function (a) {
+                            return countID++;
+                        },
+                    });
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+
+
+    </script>
 }
 
 

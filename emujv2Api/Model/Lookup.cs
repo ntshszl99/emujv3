@@ -1,0 +1,566 @@
+﻿using ConnectionModule;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using emujv2Api.Constructor;
+using static System.Collections.Specialized.BitVector32;
+
+namespace emujv2Api.Model
+{
+    public class Lookup
+    {
+        public UserCons ValidateUser(string Userid, string Password)
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            UserCons User = new UserCons();
+            Dictionary<String, Object> TokenMain = new Dictionary<String, Object>();
+            ConnectionModule.TokenFunc GenToken = new ConnectionModule.TokenFunc();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+
+            User.Userid = Userid;
+
+
+            SqlStr.Append(" Select status ");
+            SqlStr.Append(" from HR_MAIN as a, [muj].[dbo].[login_staff] as b");
+            SqlStr.Append(" where a.Emplid = b.staff_id ");
+            SqlStr.Append(" and Emplid = @Emplid ");
+            SqlStr.Append(" and status = @Status ");
+
+            //SqlStr.Append(" select a.staff_id, b.Status ");
+            //SqlStr.Append(" from login_staff as a, [HR_MAIN].[dbo].[HR_MAIN] as b ");
+            //SqlStr.Append(" where a.staff_id = b.Emplid ");
+            //SqlStr.Append(" Where Emplid = @Emplid ");
+            //SqlStr.Append(" And Status = @Status ");
+
+
+            ParamTmp.Add("@Emplid", User.Userid);
+            ParamTmp.Add("@Status", 'A');
+
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.HRCon, ref Salah);
+            if (Recc.Rows.Count > 0)
+            {
+                if (ValidateUser(ref User))
+                {
+                    CheckUserRoles(ref User);
+                    TokenMain.Add("exp", DateTimeOffset.UtcNow.AddHours(5).ToUnixTimeSeconds());
+                    TokenMain.Add("Userid", Userid);
+                    TokenMain.Add("Nama", User.Nama);
+
+                    User.TokenAdmin = GenToken.CreateToken(TokenMain);
+                    
+                }
+                else
+                {
+                    User.ErrCode = "99";
+                    User.ErrDtl = "User not register in system";
+                }
+            }
+            else
+            {
+                User.ErrCode = "99";
+                User.ErrDtl = "User Not Found / Inactive";
+            }
+            return User;
+        }
+
+        private void CheckUserRoles(ref UserCons User)
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+
+            SqlStr.Append(" Select a.usrlevel, b.ref_level_name From login_staff a inner join Ref_userlevel b on a.usrlevel = b.ref_level_no ");
+            SqlStr.Append(" Where staff_id = @Emplid ");
+            SqlStr.Append(" And staff_status = 'active' ");
+
+            ParamTmp.Add("@Emplid", User.Userid);
+
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+            if (Recc.Rows.Count > 0)
+            {
+                foreach (DataRow row in Recc.Rows)
+                {
+                    User.Levelid = row["usrlevel"].ToString();
+                    User.UserLevel = row["ref_level_name"].ToString();
+                }
+            }
+            else
+            {
+                User.Levelid = "Unregistered";
+                User.UserLevel = "Unregistered";
+            }
+        }
+
+        private bool ValidateUser(ref UserCons User)
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+
+            SqlStr.Append(" Select Nama, DeptDesc, YOS, IC_New, Age, PhoneNumber, LocDesc, RegDesc, JobDesc, Deptid, Status ");
+            SqlStr.Append(" From HR_Main ");
+            SqlStr.Append(" Where Emplid = @Emplid ");
+            SqlStr.Append(" And Status = 'A' ");
+
+            ParamTmp.Add("@Emplid", User.Userid);
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.HRCon, ref Salah);
+
+            if (Recc.Rows.Count > 0)
+            {
+                foreach (DataRow row in Recc.Rows)
+                {
+                    User.Nama = row["Nama"].ToString();
+                    User.Designation = row["JobDesc"].ToString();
+                    User.YrsService = row["YOS"].ToString();
+                    User.IC = row["IC_New"].ToString();
+                    User.Age = row["Age"].ToString();
+                    User.PhoneNumber = row["PhoneNumber"].ToString();
+                    User.Location = row["LocDesc"].ToString();
+                    User.Region = row["RegDesc"].ToString();
+                    User.Deptid = row["Deptid"].ToString();
+                    User.DeptName = row["DeptDesc"].ToString();
+                    User.Status = row["Status"].ToString();
+                }
+                return true;
+            }
+            else { return false; }
+        }
+
+
+        public string GetUser()
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            DataTable Recc = new DataTable();
+            DataTable Recc2 = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+            CommonFunc Conn2 = new CommonFunc();
+            Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
+
+            //SqlStr.Append(" select a.staff_id, a.staff_name, a.position, a.section, a.staff_status, b.ref_level_name ");
+            //SqlStr.Append(" from login_staff a ");
+            //SqlStr.Append(" inner join Ref_userlevel b ");
+            //SqlStr.Append(" on a.usrlevel = b.ref_level_no ");
+
+            SqlStr.Append(" select a.Emplid, a.Nama, a.JobDesc, a.LocDesc, a.RegDesc, a.Grade, c.ref_level_name, a.Status ");
+            SqlStr.Append(" from [HR_MAIN].[dbo].[HR_MAIN] as a, login_staff as b, Ref_userlevel as c ");
+            SqlStr.Append(" where a.Emplid = b.staff_id ");
+            SqlStr.Append(" and b.usrlevel = c.ref_level_no ");
+            //SqlStr.Append(" and Status = 'A' ");
+            SqlStr.Append(" order by staff_id asc ");
+
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+            return JsonConvert.SerializeObject(Recc, Formatting.Indented);
+        }
+
+
+        public string GetUserDetails(string StaffId)
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            DataTable Recc = new DataTable();
+            DataTable Recc2 = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+            CommonFunc Conn2 = new CommonFunc();
+            Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
+
+            //SqlStr.Append(" select a.staff_id, a.staff_name, a.position, a.section, a.staff_status, b.ref_level_name ");
+            //SqlStr.Append(" from login_staff a ");
+            //SqlStr.Append(" inner join Ref_userlevel b ");
+            //SqlStr.Append(" on a.usrlevel = b.ref_level_no ");
+
+            SqlStr.Append(" select a.Emplid, a.Nama, a.JobDesc, a.DeptDesc, a.LocDesc, a.RegDesc, a.Grade, c.ref_level_name, a.Status ");
+            SqlStr.Append(" from [HR_MAIN].[dbo].[HR_MAIN] as a, login_staff as b, Ref_userlevel as c ");
+            SqlStr.Append(" where a.Emplid = b.staff_id ");
+            SqlStr.Append(" and b.usrlevel = c.ref_level_no ");
+            SqlStr.Append(" and Status = 'A' ");
+            SqlStr.Append(" and Emplid = @StaffId ");
+
+            ParamTmp.Add("@StaffId", StaffId);
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+            return JsonConvert.SerializeObject(Recc, Formatting.Indented);
+        }
+
+        public string GetGangDetails(string StaffId)
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            DataTable Recc = new DataTable();
+            DataTable Recc2 = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+            CommonFunc Conn2 = new CommonFunc();
+            Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
+
+            SqlStr.Append(" SELECT staff_no, staff_name, section_id, upd_by, upd_date, position, staff_status ");
+            SqlStr.Append(" FROM gang_details ");
+            SqlStr.Append(" where staff_no = @StaffId ");
+
+            ParamTmp.Add("@StaffId", StaffId);
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+            return JsonConvert.SerializeObject(Recc, Formatting.Indented);
+        }
+
+
+
+        public string GetGList(string Kmuj, string Section, string Gang)
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+
+
+            SqlStr.Append(" select b.Emplid, e.kmuj_name, d.section_name, b.Nama, b.JobGrade, UPPER(b.JobDesc) as JobDesc, UPPER(f.cuti_name) as cuti_name ");
+            SqlStr.Append(" from gang_details as a, [HR_MAIN].[dbo].[HR_MAIN] as b, STAFFSECTION as c, section as d, kmuj as e, Ref_Cuti as f, Gang as g ");
+            SqlStr.Append(" where b.Emplid = ");
+            SqlStr.Append(" (select distinct(c.no_perkh) ");
+            SqlStr.Append(" where e.kmuj_name = @Kmuj ");
+            SqlStr.Append(" and d.section_name = @Section) ");
+            SqlStr.Append(" and c.no_muj = e.kmuj_value ");
+            SqlStr.Append(" and c.no_section = d.section_val ");
+            SqlStr.Append(" and d.section_kmuj = e.kmuj_value ");
+            SqlStr.Append(" and g.gang = @Gang ");
+            SqlStr.Append(" and a.gang_id = g.id ");
+            SqlStr.Append(" and a.staff_no = b.Emplid ");
+            SqlStr.Append(" and b.Status = 'A' ");
+            SqlStr.Append(" and a.staff_status = f.cuti_code ");
+            SqlStr.Append(" order by b.Nama asc ");
+
+            ParamTmp.Add("@Section", Section);
+            ParamTmp.Add("@Kmuj", Kmuj);
+            ParamTmp.Add("@Gang", Gang);
+
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+            return JsonConvert.SerializeObject(Recc, Formatting.Indented);
+        }
+
+
+        public string GetGangPax(string Kmuj, string Section, string Gang)
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+
+            SqlStr.Append(" select concat(count(*), ' pax') as count ");
+            SqlStr.Append(" from(select a.staff_no, e.kmuj_name, d.section_name, b.Nama, b.JobGrade ");
+            SqlStr.Append(" from gang_details as a, [HR_MAIN].[dbo].[HR_MAIN] as b, STAFFSECTION as c, section as d, kmuj as e, Gang as g ");
+            SqlStr.Append(" where a.staff_no = ");
+            SqlStr.Append(" (select distinct(c.no_perkh) ");
+            SqlStr.Append(" where e.kmuj_name = @Kmuj ");
+            SqlStr.Append(" and d.section_name = @Section) ");
+            SqlStr.Append(" and c.no_muj = e.kmuj_value ");
+            SqlStr.Append(" and c.no_section = d.section_val ");
+            SqlStr.Append(" and d.section_kmuj = e.kmuj_value ");
+            SqlStr.Append(" and g.gang = @Gang ");
+            SqlStr.Append(" and a.gang_id = g.id ");
+            SqlStr.Append(" and a.staff_no = b.Emplid ");
+            SqlStr.Append(" and b.Status = 'A' ");
+            SqlStr.Append(" ) tbl ");
+
+            ParamTmp.Add("@Section", Section);
+            ParamTmp.Add("@Kmuj", Kmuj);
+            ParamTmp.Add("@Gang", Gang);
+
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+            return JsonConvert.SerializeObject(Recc, Formatting.Indented);
+        }
+
+        public string GetCutiList()
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+
+            SqlStr.Append("select cuti_id, cuti_code, UPPER(LEFT(cuti_name,1))+LOWER(SUBSTRING(cuti_name,2,LEN(cuti_name))) as cuti_name ");
+            SqlStr.Append(" from Ref_Cuti ");
+            SqlStr.Append(" order by cuti_name asc ");
+
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), Conn.emujConn, ref Salah);
+            return JsonConvert.SerializeObject(Recc, Formatting.Indented);
+        }
+
+        public string GetRegionList()
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+
+            SqlStr.Append("select region_id, region_name from region order by region_name asc");
+
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), Conn.emujConn, ref Salah);
+            return JsonConvert.SerializeObject(Recc, Formatting.Indented);
+        }
+
+        public string GetSectionList()
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+
+            SqlStr.Append("select section_id, section_name, section_val from section order by section_name asc ");
+
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), Conn.emujConn, ref Salah);
+            return JsonConvert.SerializeObject(Recc, Formatting.Indented);
+        }
+
+        public string KMUJList()
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+
+            SqlStr.Append("select kmuj_id, kmuj_name, kmuj_value from kmuj order by kmuj_name");
+
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), Conn.emujConn, ref Salah);
+            return JsonConvert.SerializeObject(Recc, Formatting.Indented);
+        }
+
+        public string GangList()
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+
+            SqlStr.Append("select id, gang from gang ");
+
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), Conn.emujConn, ref Salah);
+            return JsonConvert.SerializeObject(Recc, Formatting.Indented);
+        }
+
+
+        public string GetUserLevelList()
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+
+            SqlStr.Append("select ref_level_id, ref_level_no, ref_level_name from Ref_userlevel");
+
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), Conn.emujConn, ref Salah);
+            return JsonConvert.SerializeObject(Recc, Formatting.Indented);
+        }
+
+        public string GetLineConditionList()
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+
+            SqlStr.Append("select cond_id, cond_name from condition");
+
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), Conn.emujConn, ref Salah);
+            return JsonConvert.SerializeObject(Recc, Formatting.Indented);
+        }
+
+        public string GetCategory()
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+
+            SqlStr.Append("select category_id, category_name from category");
+
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), Conn.emujConn, ref Salah);
+            return JsonConvert.SerializeObject(Recc, Formatting.Indented);
+        }
+
+        public string GetCategoryDetails()
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+
+            SqlStr.Append("select id, details, details_code from category_details order by details asc");
+
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), Conn.emujConn, ref Salah);
+            return JsonConvert.SerializeObject(Recc, Formatting.Indented);
+        }
+
+        public string GetWorkType()
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+
+            SqlStr.Append("select id, unit, work_name from work_type");
+
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), Conn.emujConn, ref Salah);
+            return JsonConvert.SerializeObject(Recc, Formatting.Indented);
+        }
+
+
+        public string GetWorkUnit(string WorkUnit)
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+
+            SqlStr.Append(" select unit from work_type ");
+            SqlStr.Append(" where work_name = @WorkUnit ");
+            
+            ParamTmp.Add("@WorkUnit", WorkUnit);
+
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+            return JsonConvert.SerializeObject(Recc, Formatting.Indented);
+        }
+
+        public string GetReportDetails(string RptCode)
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+
+            SqlStr.Append(" select rpt_code from daily ");
+            SqlStr.Append(" where rpt_code = @RptCode ");
+
+            ParamTmp.Add("@RptCode", RptCode);
+
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+            return JsonConvert.SerializeObject(Recc, Formatting.Indented);
+        }
+
+        //public string GetDailyReport(string Region, string Kmuj, string Section, string SDate, string EDate)
+        //{
+        //    StringBuilder SqlStr = new StringBuilder();
+        //    Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
+        //    DataTable Recc = new DataTable();
+        //    MsSql DbCon = new MsSql();
+        //    string Salah = "";
+        //    CommonFunc Conn = new CommonFunc();
+        //    string MulaTarikh = SDate;
+        //    string AkhirTarikh = EDate;
+
+        //    SqlStr.Append(" select daily_section, daily_kmuj, daily_sec, (select concat('Gang ', daily_gang)) as Gang,  ");
+        //    SqlStr.Append(" daily_date,  daily_worktype,  ");
+        //    SqlStr.Append(" (select concat(daily_total, ' ', daily_unit)) as output,  ");
+        //    SqlStr.Append(" effect_kmfrom, effect_kmto, daily_condition, daily_workers,  ");
+        //    SqlStr.Append(" (select concat(daily_category, ' ( ', category_details, ' )')) as daily_category,  ");
+        //    SqlStr.Append(" (select concat(daily_timestart, ' - ', daily_timelast, ' ', '(', daily_timetaken, ')')) as Time,  ");
+        //    SqlStr.Append(" daily_additional, rpt_code ");
+        //    SqlStr.Append(" from daily ");
+        //    SqlStr.Append(" where daily_date >= @MulaTarikh ");
+        //    SqlStr.Append(" and daily_date < @AkhirTarikh ");
+        //    SqlStr.Append(" or daily_section = @Region ");
+        //    SqlStr.Append(" or daily_kmuj = @Kmuj ");
+        //    SqlStr.Append(" or daily_sec = @Section ");
+
+        //    ParamTmp.Add("@Region", Region);
+        //    ParamTmp.Add("@Kmuj", Kmuj);
+        //    ParamTmp.Add("@Section", Section);
+        //    ParamTmp.Add("@MulaTarikh", MulaTarikh);
+        //    ParamTmp.Add("@AkhirTarikh", AkhirTarikh);
+
+
+        //    Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+        //    return JsonConvert.SerializeObject(Recc, Formatting.Indented);
+        //}
+
+        public string GetDailyReport(string Region, string Kmuj, string Section, string SDate, string EDate)
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+            string MulaTarikh = SDate;
+            string AkhirTarikh = EDate;
+
+            //SqlStr.Append(" select daily_section, daily_kmuj, daily_sec, (select concat('Gang ', daily_gang)) as Gang,  ");
+            //SqlStr.Append(" daily_date,  daily_worktype,  ");
+            //SqlStr.Append(" (select concat(daily_total, ' ', daily_unit)) as output,  ");
+            //SqlStr.Append(" effect_kmfrom, effect_kmto, daily_condition, daily_workers,  ");
+            //SqlStr.Append(" (select concat(daily_category, ' ( ', category_details, ' )')) as daily_category,  ");
+            //SqlStr.Append(" (select concat(daily_timestart, ' - ', daily_timelast, ' ', '(', daily_timetaken, ')')) as Time,  ");
+            //SqlStr.Append(" daily_additional, rpt_code ");
+            //SqlStr.Append(" from daily ");
+            //SqlStr.Append(" where convert(datetime, daily_date, 103) >= @MulaTarikh ");
+            //SqlStr.Append(" and convert(datetime, daily_date, 103) <= @AkhirTarikh ");
+            //SqlStr.Append(" and daily_section = @Region ");
+            //SqlStr.Append(" and daily_kmuj = @Kmuj ");
+            //SqlStr.Append(" and daily_sec = @Section ");
+            //SqlStr.Append(" order by convert(datetime, daily_date, 103) asc ");
+
+            SqlStr.Append(" select b.region_name, c.kmuj_name, d.section_name, (select concat('Gang ', a.daily_gang)) as Gang, ");  
+            SqlStr.Append(" a.daily_date,  a.daily_worktype, ");  
+            SqlStr.Append(" (select concat(a.daily_total, ' ', a.daily_unit)) as output, ");  
+            SqlStr.Append(" a.effect_kmfrom, a.effect_kmto, a.daily_condition, a.daily_workers, ");
+            SqlStr.Append(" (select concat(a.daily_category, ' ( ', a.category_details, ' )')) as daily_category, ");
+            SqlStr.Append(" (select concat(a.daily_timestart, ' - ', a.daily_timelast, ' ', '(', a.daily_timetaken, ')')) as Time, ");
+            SqlStr.Append(" a.daily_additional, a.rpt_code ");
+            SqlStr.Append(" from daily as a, region as b, kmuj as c, section as d ");
+            SqlStr.Append(" where convert(datetime, daily_date, 103) >= @MulaTarikh ");
+            SqlStr.Append(" and convert(datetime, daily_date, 103) <= @AkhirTarikh ");
+            SqlStr.Append(" and b.region_name = @Region ");
+            SqlStr.Append(" and c.kmuj_name = @Kmuj ");
+            SqlStr.Append(" and d.section_name = @Section ");
+            SqlStr.Append(" and a.daily_section = b.region_id ");
+            SqlStr.Append(" and a.daily_kmuj = c.kmuj_value ");
+            SqlStr.Append(" and a.daily_sec = d.section_val ");
+            SqlStr.Append(" order by convert(datetime, daily_date, 103) asc ");
+
+
+
+            ParamTmp.Add("@Region", Region);
+            ParamTmp.Add("@Kmuj", Kmuj);
+            ParamTmp.Add("@Section", Section);
+            ParamTmp.Add("@MulaTarikh", MulaTarikh);
+            ParamTmp.Add("@AkhirTarikh", AkhirTarikh);
+
+
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+            return JsonConvert.SerializeObject(Recc, Formatting.Indented);
+        }
+
+
+
+    }
+}

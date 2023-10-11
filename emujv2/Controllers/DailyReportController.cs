@@ -8,6 +8,11 @@ namespace emujv2.Controllers
 {
     public class DailyReportController : Controller
     {
+        public ActionResult R1Form()
+        {
+            return View();
+        }
+        
         public ActionResult Form()
         {
             return View();

@@ -16,7 +16,7 @@
                     <ol class="breadcrumb">
                         <li></li>
                         <li class="breadcrumb-item active font-weight-bold" aria-current="page">Gang Registration</li>
-                        <li class="breadcrumb-item"><a href="/Home/GangList"><span class="breadcrumb-icon">Gang List</span></a></li>
+                        <li class="breadcrumb-item"><a href="/Gang/GangList"><span class="breadcrumb-icon">Gang List</span></a></li>
                     </ol>
                 </div>
             </div>
@@ -31,317 +31,56 @@
                         <div class="card-body">
                             <div class="mb-3 m-0">
                                 <div class="row">
-                                    <div class="col-6">
-                                        <label class="mt-3 form-label">Gang</label>
-                                        <select class="form-control form-select select2">
-                                            <option value="">Select Gang</option>
-                                            <option value="1">Gang 1</option>
-                                            <option value="1">Gang 2</option>
-                                            <option value="1">Gang 3</option>
-                                            <option value="1">Gang 4</option>
-                                            <option value="1">Gang Khas 1</option>
-                                            <option value="1">Gang Khas 2</option>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label">Gang</label>
+                                        <select id="gang" class="form-control form-select select2" required>
+                                            <option value="-0">.: Select Gang :.</option>
                                         </select>
                                     </div>
-                                    <div class="e-table">
+                                </div>
+                                <div class="card-body">
+                                    <div class="col-lg-12">
                                         <div class="table-responsive table-lg">
-                                            <table class="table card-table table-vcenter text-nowrap border" id="example1">
+                                            <table id="tableWork" class="table card-table table-vcenter text-nowrap border" width="100%">
                                                 <thead>
                                                     <tr>
-                                                        <th></th>
-                                                        <th>Invoice</th>
-                                                        <th>Amount</th>
-                                                        <th>Generate Date</th>
-                                                        <th>Due Date</th>
-                                                        <th>Bill to</th>
-                                                        <th>Options</th>
+                                                        @*<th><input type="checkbox" id="chkSelectAll" /></th>*@
+                                                        @*<th><input class="check_all" type="checkbox" id="chkSelectAll" onclick="select_all()" /></th>*@
+                                                        <th><input class="check_all" type="checkbox" /></th>
+                                                        <th>Staff ID</th>
+                                                        <th>Staff Name</th>
+                                                        <th>Grade</th>
+                                                        <th>Position</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td class="align-middle w-5">
-                                                            <label class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" name="example-checkbox2" value="option2">
-                                                                <span class="custom-control-label"></span>
-                                                            </label>
-                                                        </td>
-                                                        <td class="align-middle">
-                                                            <div class="d-flex">
-                                                                <img src="../assets/images/files/file.png" alt="img" class="w-5 h-5 me-2">
-                                                                <div class="mt-1">
-                                                                    <a class="btn-link" href="javascript:void(0)">INVOICE #23543</a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="text-nowrap align-middle"><span class="font-weight-bold">$230</span></td>
-                                                        <td class="text-nowrap align-middle"><span>10 Jan 2020</span></td>
-                                                        <td class="text-nowrap align-middle">
-                                                            25 Jan 2020
-                                                        </td>
-                                                        <td class="text-nowrap align-middle">
-                                                            Daneil Robert
+                                                        <td>
+                                                            <input type="checkbox" />
                                                         </td>
                                                         <td>
-                                                            <div class="">
-                                                                <a href="javascript:void(0)" class="btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false">Options <i class="fa fa-angle-down"></i></a>
-                                                                <div class="dropdown-menu">
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-eye me-2"></i> View</a>
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-share me-2"></i> Send</a>
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-edit me-2"></i> Edit</a>
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-trash me-2"></i> Delete</a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="align-middle w-5">
-                                                            <label class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" name="example-checkbox2" value="option2">
-                                                                <span class="custom-control-label"></span>
-                                                            </label>
-                                                        </td>
-                                                        <td class="align-middle">
-                                                            <div class="d-flex">
-                                                                <img src="../assets/images/files/file.png" alt="img" class="w-5 h-5 me-2">
-                                                                <div class="mt-1">
-                                                                    <a class="btn-link" href="javascript:void(0)">INVOICE #43245</a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="text-nowrap align-middle"><span class="font-weight-bold">$640</span></td>
-                                                        <td class="text-nowrap align-middle"><span>10 Jan 2020</span></td>
-                                                        <td class="text-nowrap align-middle">
-                                                            25 Jan 2020
-                                                        </td>
-                                                        <td class="text-nowrap align-middle">
-                                                            Daneil Robert
+                                                            <select id="staffID" class="form-control form-select select2" required="required">
+                                                                <option value="-0">.: Select Staff ID :.</option>
+                                                            </select>
                                                         </td>
                                                         <td>
-                                                            <div class="">
-                                                                <a href="javascript:void(0)" class="btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false">Options <i class="fa fa-angle-down"></i></a>
-                                                                <div class="dropdown-menu">
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-eye me-2"></i> View</a>
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-share me-2"></i> Send</a>
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-edit me-2"></i> Edit</a>
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-trash me-2"></i> Delete</a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="align-middle w-5">
-                                                            <label class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" name="example-checkbox2" value="option2">
-                                                                <span class="custom-control-label"></span>
-                                                            </label>
-                                                        </td>
-                                                        <td class="align-middle">
-                                                            <div class="d-flex">
-                                                                <img src="../assets/images/files/file.png" alt="img" class="w-5 h-5 me-2">
-                                                                <div class="mt-1">
-                                                                    <a class="btn-link" href="javascript:void(0)">INVOICE #54323</a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="text-nowrap align-middle"><span class="font-weight-bold">$241</span></td>
-                                                        <td class="text-nowrap align-middle"><span>10 Jan 2020</span></td>
-                                                        <td class="text-nowrap align-middle">
-                                                            25 Jan 2020
-                                                        </td>
-                                                        <td class="text-nowrap align-middle">
-                                                            Daneil Robert
+                                                            <input class="form-control" id="staffname" readonly />
                                                         </td>
                                                         <td>
-                                                            <div class="">
-                                                                <a href="javascript:void(0)" class="btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false">Options <i class="fa fa-angle-down"></i></a>
-                                                                <div class="dropdown-menu">
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-eye me-2"></i> View</a>
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-share me-2"></i> Send</a>
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-edit me-2"></i> Edit</a>
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-trash me-2"></i> Delete</a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="align-middle w-5">
-                                                            <label class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" name="example-checkbox2" value="option2">
-                                                                <span class="custom-control-label"></span>
-                                                            </label>
-                                                        </td>
-                                                        <td class="align-middle">
-                                                            <div class="d-flex">
-                                                                <img src="../assets/images/files/file.png" alt="img" class="w-5 h-5 me-2">
-                                                                <div class="mt-1">
-                                                                    <a class="btn-link" href="javascript:void(0)">INVOICE #52345</a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="text-nowrap align-middle"><span class="font-weight-bold">$543</span></td>
-                                                        <td class="text-nowrap align-middle"><span>10 Jan 2020</span></td>
-                                                        <td class="text-nowrap align-middle">
-                                                            25 Jan 2020
-                                                        </td>
-                                                        <td class="text-nowrap align-middle">
-                                                            Daneil Robert
+                                                            <input class="form-control" id="grade" readonly />
                                                         </td>
                                                         <td>
-                                                            <div class="">
-                                                                <a href="javascript:void(0)" class="btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false">Options <i class="fa fa-angle-down"></i></a>
-                                                                <div class="dropdown-menu">
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-eye me-2"></i> View</a>
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-share me-2"></i> Send</a>
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-edit me-2"></i> Edit</a>
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-trash me-2"></i> Delete</a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="align-middle w-5">
-                                                            <label class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" name="example-checkbox2" value="option2">
-                                                                <span class="custom-control-label"></span>
-                                                            </label>
-                                                        </td>
-                                                        <td class="align-middle">
-                                                            <div class="d-flex">
-                                                                <img src="../assets/images/files/file.png" alt="img" class="w-5 h-5 me-2">
-                                                                <div class="mt-1">
-                                                                    <a class="btn-link" href="javascript:void(0)">INVOICE #65343</a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="text-nowrap align-middle"><span class="font-weight-bold">$654</span></td>
-                                                        <td class="text-nowrap align-middle"><span>10 Jan 2020</span></td>
-                                                        <td class="text-nowrap align-middle">
-                                                            25 Jan 2020
-                                                        </td>
-                                                        <td class="text-nowrap align-middle">
-                                                            Daneil Robert
-                                                        </td>
-                                                        <td>
-                                                            <div class="">
-                                                                <a href="javascript:void(0)" class="btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false">Options <i class="fa fa-angle-down"></i></a>
-                                                                <div class="dropdown-menu">
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-eye me-2"></i> View</a>
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-share me-2"></i> Send</a>
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-edit me-2"></i> Edit</a>
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-trash me-2"></i> Delete</a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="align-middle w-5">
-                                                            <label class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" name="example-checkbox2" value="option2">
-                                                                <span class="custom-control-label"></span>
-                                                            </label>
-                                                        </td>
-                                                        <td class="align-middle">
-                                                            <div class="d-flex">
-                                                                <img src="../assets/images/files/file.png" alt="img" class="w-5 h-5 me-2">
-                                                                <div class="mt-1">
-                                                                    <a class="btn-link" href="javascript:void(0)">INVOICE #23654</a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="text-nowrap align-middle"><span class="font-weight-bold">$523</span></td>
-                                                        <td class="text-nowrap align-middle"><span>10 Jan 2020</span></td>
-                                                        <td class="text-nowrap align-middle">
-                                                            25 Jan 2020
-                                                        </td>
-                                                        <td class="text-nowrap align-middle">
-                                                            Daneil Robert
-                                                        </td>
-                                                        <td>
-                                                            <div class="">
-                                                                <a href="javascript:void(0)" class="btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false">Options <i class="fa fa-angle-down"></i></a>
-                                                                <div class="dropdown-menu">
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-eye me-2"></i> View</a>
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-share me-2"></i> Send</a>
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-edit me-2"></i> Edit</a>
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-trash me-2"></i> Delete</a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="align-middle w-5">
-                                                            <label class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" name="example-checkbox2" value="option2">
-                                                                <span class="custom-control-label"></span>
-                                                            </label>
-                                                        </td>
-                                                        <td class="align-middle">
-                                                            <div class="d-flex">
-                                                                <img src="../assets/images/files/file.png" alt="img" class="w-5 h-5 me-2">
-                                                                <div class="mt-1">
-                                                                    <a class="btn-link" href="javascript:void(0)">INVOICE #53245</a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="text-nowrap align-middle"><span class="font-weight-bold">$324</span></td>
-                                                        <td class="text-nowrap align-middle"><span>10 Jan 2020</span></td>
-                                                        <td class="text-nowrap align-middle">
-                                                            25 Jan 2020
-                                                        </td>
-                                                        <td class="text-nowrap align-middle">
-                                                            Daneil Robert
-                                                        </td>
-                                                        <td>
-                                                            <div class="">
-                                                                <a href="javascript:void(0)" class="btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false">Options <i class="fa fa-angle-down"></i></a>
-                                                                <div class="dropdown-menu">
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-eye me-2"></i> View</a>
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-share me-2"></i> Send</a>
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-edit me-2"></i> Edit</a>
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-trash me-2"></i> Delete</a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="align-middle w-5">
-                                                            <label class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" name="example-checkbox2" value="option2">
-                                                                <span class="custom-control-label"></span>
-                                                            </label>
-                                                        </td>
-                                                        <td class="align-middle">
-                                                            <div class="d-flex">
-                                                                <img src="../assets/images/files/file.png" alt="img" class="w-5 h-5 me-2">
-                                                                <div class="mt-1">
-                                                                    <a class="btn-link" href="javascript:void(0)">INVOICE #34234</a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="text-nowrap align-middle"><span class="font-weight-bold">$543</span></td>
-                                                        <td class="text-nowrap align-middle"><span>10 Jan 2020</span></td>
-                                                        <td class="text-nowrap align-middle">
-                                                            25 Jan 2020
-                                                        </td>
-                                                        <td class="text-nowrap align-middle">
-                                                            Daneil Robert
-                                                        </td>
-                                                        <td>
-                                                            <div class="">
-                                                                <a href="javascript:void(0)" class="btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false">Options <i class="fa fa-angle-down"></i></a>
-                                                                <div class="dropdown-menu">
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-eye me-2"></i> View</a>
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-share me-2"></i> Send</a>
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-edit me-2"></i> Edit</a>
-                                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-trash me-2"></i> Delete</a>
-                                                                </div>
-                                                            </div>
+                                                            <input class="form-control" id="position" readonly />
                                                         </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <button id="addBtn" type="button" class='btn btn-success addmore'>Add More</button>
+                                    <button id="delBtn" type="button" class='btn btn-danger delete'>Delete</button>
                                 </div>
                             </div>
                         </div>
@@ -359,7 +98,121 @@
 
 
 @section scripts{
+    <script src="~/assets/scripts/dashboard.js"></script>
+    <script src="~/assets/scripts/semua.js"></script>
+    <script src="~/assets/scripts/dashboard.js"></script>
+    <script src="~/assets/plugins/morris/morris.min.js"></script>
+    <script src="~/assets/plugins/raphael/raphael.min.js"></script>
+    <script src="~/assets/plugins/select2/select2.min.js"></script>
     <script type="text/javascript">
+
+        $(document).ready(function () {
+            listGang();
+            listStaffDet();
+            listStaff();
+
+
+
+
+        });
+
+
+        //add row
+        $("#addBtn").click(function () {
+            $("table").append($("tr:last").clone(true));
+            $("tr:last input").val("");
+        });
+
+        //delete row of selected checkbox
+        $("#delBtn").click(function () {
+            $('input[type="checkbox"]:checked').closest("tr").remove();
+        });
+
+        //automatic show staffname, grade, position based on staffID
+        $("#staffID").on('change', function () {
+            staffID = $("#staffID option:selected").text();
+            localStorage.setItem("selID", staffID, this.value);
+            listStaffDet(localStorage.getItem("selID", this.value));
+        });
+
+
+
+        function listStaffDet(staffID) {
+            $.ajax({
+                url: linkDepan + "GetUserDetails?StaffId=" + staffID,
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    $('#staffname').val(data[0].Nama);
+                    $('#grade').val(data[0].Grade);
+                    $('#position').val(data[0].JobDesc);
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+
+
+
+        function listStaff() {
+            $.ajax({
+                url: linkDepan + "GetUser",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.Nama + "'>" + value.Emplid + "</option>";
+                        });
+                        $('#staffID').append(auxArr.join(''));
+                    } else {
+                        $("#staffID").addClass(" is-invalid");
+
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+        function listGang() {
+            $.ajax({
+                url: linkDepan + "GangList",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.id + "'>" + value.gang + "</option>";
+                        });
+                        $('#gang').append(auxArr.join(''));
+                    } else {
+                        $("#gang").addClass(" is-invalid");
+
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
 
     </script>
 }
