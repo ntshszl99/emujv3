@@ -11,17 +11,10 @@
                 <div class="page-leftheader">
                     <h4 class="page-title">Gang List</h4>
                 </div>
-                <div class="page-rightheader ms-auto d-lg-flex d-none">
-                    <ol class="breadcrumb">
-                        <li></li>
-                        <li class="breadcrumb-item"><a href="/Gang/GangRegistration"><span class="breadcrumb-icon">Gang Registration</span></a></li>
-                        <li class="breadcrumb-item active font-weight-bold" aria-current="page">Gang List</li>
-                    </ol>
-                </div>
             </div>
             <!--End Page header-->
 
-            <div class="" id="tempekList">
+            <div class="" id="contentAdmin">
                 <div class="card">
                     <div class="card-body">
                         <div class="mb-3 m-0">
@@ -40,7 +33,7 @@
                                 </div>
                                 <div class="col-3">
                                     <label class="mt-3 form-label">Gang</label>
-                                    <select id="gang" class="form-control form-select select2">
+                                    <select id="gangAdmin" class="form-control form-select select2">
                                         <option value="-0">Select Gang</option>
                                     </select>
                                 </div>
@@ -51,10 +44,36 @@
                                 <div class="card-body">
                                     <div class="col-lg-12">
                                         <div class="table-responsive table-lg">
-                                            <table id="tableRep" class="table card-table table-vcenter text-nowrap border">
+                                            <table id="tableAdmin" class="table card-table table-vcenter text-nowrap border">
                                                 <thead>
                                                 </thead>
-                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="" id="contentNormal">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3 m-0">
+                            <div class="row">
+                                <div class="col-3">
+                                    <label class="mt-3 form-label">Gang</label>
+                                    <select id="gangNormal" class="form-control form-select select2">
+                                        <option value="-0">Select Gang</option>
+                                    </select>
+                                </div>
+                                <div class="card-body">
+                                    <div class="col-lg-12">
+                                        <div class="table-responsive table-lg">
+                                            <table id="tableNormal" class="table card-table table-vcenter text-nowrap border">
+                                                <thead>
+                                                </thead>
                                             </table>
                                         </div>
                                     </div>
@@ -176,48 +195,83 @@
             listCuti();
             listReports();
 
-            $('#modalDetails').on('show.bs.modal', function (e) {
-                var ids = $(e.relatedTarget).data('id');
-                stfDetails(ids);
-            });
+            if (localStorage.getItem("lvlI") === "1") {
+                $("#contentAdmin").show();
+                $("#contentNormal").hide();
 
-            $('#modalDelete').on('show.bs.modal', function (e) {
-                var ids = $(e.relatedTarget).data('id');
-                stfDelete(ids);
-            });
+                $("#Cari").click(function () {
 
-        });
+                    checkStore();
 
+                    gng = $("#gangAdmin option:selected").text();
+                    localStorage.setItem("selGng", gng, this.value);
 
-        $("#Cari").click(function () {
+                    kmj = $("#kmuj option:selected").text();
+                    localStorage.setItem("selKmj", kmj, this.value);
 
-            checkStore();
-            kmj = $("#kmuj option:selected").text();
-            localStorage.setItem("selKmj", kmj, this.value);
+                    scn = $("#section option:selected").text();
+                    localStorage.setItem("selScn", scn, this.value);
 
-            scn = $("#section option:selected").text();
-            localStorage.setItem("selScn", scn, this.value);
+                    var error = 'Please : '; count = 0;
+                    if ($("#gangAdmin option:selected").val() == '-0') {
+                        error += '<br/> Select Gang '; count++;
+                        swarning(error);
+                    }
+                    else if ($("#kmuj option:selected").val() == '-0') {
+                        salertSave('List Gang : ' + scn + ' of ' + gng + ' ');
+                    }
+                    else if ($("#section option:selected").val() == '-0') {
+                        salertSave('List Gang : ' + kmj + ' of ' + gng + ' ');
+                    }
+                    else {
+                        salertSave('List Gang : ' + kmj + ' and ' + scn + ' of ' + gng + ' ');
+                    }
+                    listReports(localStorage.getItem("selKmj", this.value), localStorage.getItem("selScn", this.value), localStorage.getItem("selGng", this.value));
 
-            gng = $("#gang option:selected").text();
-            localStorage.setItem("selGng", gng, this.value);
-
-            var error = 'Please : '; count = 0;
-            if ($("#gang option:selected").val() == '-0') {
-                error += '<br/> Select Gang '; count++;
-                swarning(error);
+                });
             }
-            else if ($("#kmuj option:selected").val() == '-0') {
-                salertSave('List Gang : ' + scn + ' of ' + gng + ' ');
-            }
-            else if ($("#section option:selected").val() == '-0') {
-                salertSave('List Gang : ' + kmj + ' of ' + gng + ' ');
+            else if (localStorage.getItem("lvlI") === "4") {
+                $("#contentNormal").show();
+                $("#contentAdmin").hide();
+
+                $("#gangNormal").on('change', function () {
+
+                    checkStore();
+
+                    gng = $("#gangNormal option:selected").text();
+                    localStorage.setItem("selGng", gng, this.value);
+
+                    kmj = localStorage.getItem("kmuj");
+                    localStorage.setItem("selKmj", kmj, this.value);
+
+                    scn = localStorage.getItem("scn");
+                    localStorage.setItem("selScn", scn, this.value);
+
+                    listReports(localStorage.getItem("selKmj", this.value), localStorage.getItem("selScn", this.value), localStorage.getItem("selGng", this.value));
+
+                });
             }
             else {
-                salertSave('List Gang : ' + kmj + ' and ' + scn + ' of ' + gng + ' ');
+                $("#contentAdmin").hide();
+                $("#contentNormal").hide();
             }
-            listReports(localStorage.getItem("selKmj", this.value), localStorage.getItem("selScn", this.value), localStorage.getItem("selGng", this.value));
 
         });
+
+
+
+        $('#modalDetails').on('show.bs.modal', function (e) {
+            var ids = $(e.relatedTarget).data('id');
+            stfDetails(ids);
+        });
+
+        $('#modalDelete').on('show.bs.modal', function (e) {
+            var ids = $(e.relatedTarget).data('id');
+            stfDelete(ids);
+        });
+
+
+
 
         function stfDetails(ids) {
             var staffID = $(".staffID" + ids).html();
@@ -362,9 +416,9 @@
                         $.each(data, function (index, value) {
                             auxArr[index] = "<option value='" + value.id + "'>" + value.gang + "</option>";
                         });
-                        $('#gang').append(auxArr.join(''));
+                        $("#gangAdmin, #gangNormal").append(auxArr.join(''));
                     } else {
-                        $("#gang").addClass(" is-invalid");
+                        $("#gangAdmin, #gangNormal").addClass(" is-invalid");
 
                     }
                 },
@@ -404,6 +458,7 @@
         }
 
 
+
         function listReports(kmuj, section, gang) {
             $.ajax({
                 url: linkDepan + "GetGList?Kmuj=" + kmuj + "&Section=" + section + "&Gang=" + gang,
@@ -417,10 +472,10 @@
                     console.log('mana : ' + data);
                     var counter = 1, countStf = 0, countID = 0;
                     $.fn.dataTable.ext.errMode = 'throw';
-                    if ($.fn.dataTable.isDataTable('#tableRep')) {
-                        $('#tableRep').DataTable().destroy();
+                    if ($.fn.dataTable.isDataTable("#tableAdmin, #tableNormal")) {
+                        $("#tableAdmin, #tableNormal").DataTable().destroy();
                     }
-                    $('#tableRep').DataTable({
+                    $("#tableAdmin, #tableNormal").DataTable({
                         dom: 'Bfrtip',
                         buttons: [
                             'copy', 'csv', 'excel', 'pdf', 'print'
@@ -428,9 +483,8 @@
                         responsive: true,
                         data: data,
                         columns: [
+                            { data: "no" },
                             { data: "Emplid" },
-                            { data: "kmuj_name" },
-                            { data: "section_name" },
                             { data: "Nama" },
                             { data: "JobGrade" },
                             { data: "JobDesc" },
@@ -484,23 +538,16 @@
                         },
                         {
                             targets: -6,
-                            title: "Section",
+                            title: "Staff ID",
                             render: function (data, type, full, meta) {
                                 return data;
                             },
                         },
                         {
                             targets: -7,
-                            title: "KMUJ",
+                            title: "No",
                             render: function (data, type, full, meta) {
-                                return data;
-                            },
-                        },
-                        {
-                            targets: -8,
-                            title: "Staff ID",
-                            render: function (data, type, full, meta) {
-                                return data;
+                                return counter++;
                             },
                         },
                         ],

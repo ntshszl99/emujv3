@@ -23,7 +23,27 @@ namespace emujv2.Controllers
             return View();
         }
 
+        public ActionResult ReportCI()
+        {
+            return View();
+        }
+
+        public ActionResult ReportEngineer()
+        {
+            return View();
+        }
+
+        public ActionResult ReportNormal()
+        {
+            return View();
+        }
+
         public ActionResult Checklist()
+        {
+            return View();
+        }
+
+        public ActionResult Test()
         {
             return View();
         }

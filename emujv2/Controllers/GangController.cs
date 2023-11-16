@@ -17,5 +17,10 @@ namespace emujv2.Controllers
         {
             return View();
         }
+
+        public ActionResult GangListNormal()
+        {
+            return View();
+        }
     }
 }

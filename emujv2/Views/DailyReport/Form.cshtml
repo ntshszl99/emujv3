@@ -12,7 +12,7 @@
                 <div class="page-leftheader">
                     <h4 class="page-title">Update Form</h4>
                 </div>
-                <div class="page-rightheader ms-auto d-lg-flex d-none">
+                @*<div class="page-rightheader ms-auto d-lg-flex d-none">
                     <ol class="breadcrumb">
                         <li></li>
                         <li class="breadcrumb-item"><a href="/DailyReport/R1Form"><span class="breadcrumb-icon">R1 Form</span></a></li>
@@ -20,7 +20,7 @@
                         <li class="breadcrumb-item"><a href="/DailyReport/Report"><span class="breadcrumb-icon">Report</span></a></li>
                         <li class="breadcrumb-item"><a href="/DailyReport/Checklist"><span class="breadcrumb-icon">Checklist</span></a></li>
                     </ol>
-                </div>
+                </div>*@
             </div>
             <!--End Page header-->
 
@@ -392,7 +392,7 @@
                     if (data.length >= 1) {
                         auxArr = [];
                         $.each(data, function (index, value) {
-                            auxArr[index] = "<option value='" + value.kmuj_id + "'>" + value.kmuj_name + "</option>";
+                            auxArr[index] = "<option value='" + value.muj + "'>" + value.kmuj_name + "</option>";
                         });
                         $('#kmuj').append(auxArr.join(''));
                     } else {
@@ -472,7 +472,7 @@
                         ],
                         columnDefs: [
                             {
-                                targets: -1,
+                                targets: 1,
                                 title: "Code",
                                 render: function (data, type, full, meta) {
                                     return data;

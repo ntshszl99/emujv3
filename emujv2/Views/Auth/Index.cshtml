@@ -8,13 +8,12 @@
     <meta charset="UTF-8">
     <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
     <title>e-MUJ@KTMB - Data Management System</title>
-    <link rel="icon" href="../assets/images/brand/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="~/assets/images/users/ktmb_logo.png" type="image/x-icon" />
     <link id="style" href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../assets/css/style.css" rel="stylesheet" />
     <link href="../assets/css/plugin.css" rel="stylesheet" />
     <link href="../assets/css/animated.css" rel="stylesheet" />
     <link href="~/assets/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
-
     <link href="../assets/plugins/web-fonts/icons.css" rel="stylesheet" />
     <link href="../assets/plugins/web-fonts/font-awesome/font-awesome.min.css" rel="stylesheet">
     <link href="../assets/plugins/web-fonts/plugin.css" rel="stylesheet" />
@@ -111,7 +110,7 @@
                 else if (usr != "" && pwd != "" && usr == pwd) {
                     var dataForm = $("#logs").serialize();
                     $.ajax({
-                        url: linkDepan + 'validateuser?userid=' + usr + '&password=' + pwd,//linkDepan1 + "/wheels",
+                        url: linkDepan + 'validateuser?userid=' + usr + '&password=' + pwd,
                         type: 'GET',
                         dataType: "json",
                         //data: dataForm,
@@ -137,10 +136,14 @@
                             localStorage.setItem("lvlI", data.Levelid);
                             localStorage.setItem("usrLvl", data.UserLevel);
                             localStorage.setItem("usrS", data.Status);
+                            localStorage.setItem("scn", data.Section);
+                            localStorage.setItem("kmuj", data.KMUJ);
                             localStorage.setItem("main", data.TokenAdmin);
 
+
                             setWithExpiry('perang', data.Userid, 300);//5jam
-                            setTimeout(window.location.replace("../Home/Index"), 20000);
+                            setTimeout(window.location.replace("/Home/Index"), 20000);
+
                         },
                         error: function (xhr) {
                             $('#masukkk').show();

@@ -11,12 +11,6 @@
                 <div class="page-leftheader">
                     <h4 class="page-title">Registered Users</h4>
                 </div>
-                <div class="page-rightheader ms-auto d-lg-flex d-none">
-                    <ol class="breadcrumb">
-                        <li></li>
-                        <li class="breadcrumb-item active font-weight-bold" aria-current="page">Registered Users' List</li>
-                    </ol>
-                </div>
             </div>
             <!--End Page header-->
 
@@ -107,34 +101,36 @@
             <!--/Modal-->
             <!--Modal User Details-->
             @*<div class="modal fade" id="modalDetails" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-                <div class="modal-dialog modal-xl">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title mt-0">Staff Details</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="table-responsive-sm">
-                                        <table id="tblLsSummaryL" class="table table-bordered mb-0 table-centered table-striped" width="100%">
-                                            <tbody>
-                                            </tbody>
-                                        </table>
-                                    </div>
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title mt-0">Staff Details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive-sm">
+                                    <table id="tblLsSummaryL" class="table table-bordered mb-0 table-centered table-striped" width="100%">
+                                        <tbody>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>*@
+            </div>
+        </div>*@
+
+            <!--Modal User Details-->
             <div class="modal" id="modalDetails">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                                @*<h5 class="modal-title mt-0" id="tblLsSummaryL">Summary</h5>*@
-                                <h5 class="modal-title">Staff Details</h5><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
-                            </div>
+                            @*<h5 class="modal-title mt-0" id="tblLsSummaryL">Summary</h5>*@
+                            <h5 class="modal-title">Staff Details</h5><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                        </div>
                         <div class="modal-body">
                             <div class="card-body">
                                 <div class="mb-0 m-0">
@@ -192,16 +188,16 @@
 
                                 @*<div class="modal-body">*@
                                 @*<div class="row">
-                                            <div class="col-12">
-                                                <div class="table-responsive-sm">
-                                                    <table id="tblLsSummaryL" class="table table-bordered mb-0 table-centered table-striped" width="100%">
-                                                        <tbody>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
+                                    <div class="col-12">
+                                        <div class="table-responsive-sm">
+                                            <table id="tblLsSummaryL" class="table table-bordered mb-0 table-centered table-striped" width="100%">
+                                                <tbody>
+                                                </tbody>
+                                            </table>
                                         </div>
-                                    </div>*@
+                                    </div>
+                                </div>
+                            </div>*@
                                 <div class="modal-footer pd-20">
                                     <button class="btn btn-success" type="button">Submit</button> <button class="btn btn-light" data-bs-dismiss="modal" ria-label="Close" type="button">Cancel</button>
                                 </div>
@@ -260,9 +256,11 @@
                             request.setRequestHeader("Token", localStorage.getItem('main'));
                         },
                         success: function (data) {
-                            $('#staffname').val(data[0].Nama);
-                            $('#region').val(data[0].RegDesc);
-                            $('#position').val(data[0].JobDesc);
+                            if (data && Array.isArray(data) && data.length > 0) {
+                                $('#staffname').val(data[0].Nama);
+                                $('#region').val(data[0].RegDesc);
+                                $('#position').val(data[0].JobDesc);
+                            }
                         },
                         error: function (xhr) {
                             swarning();
@@ -287,11 +285,13 @@
                             request.setRequestHeader("Token", localStorage.getItem('main'));
                         },
                         success: function (data) {
-                            $('#staffID2').val(data[0].Emplid);
-                            $('#staffname2').val(data[0].Nama);
-                            $('#dept2').val(data[0].DeptDesc);
-                            $('#position2').val(data[0].JobDesc);
-                            $('#level2').val(data[0].ref_level_name);
+                            if (data && Array.isArray(data) && data.length > 0) {
+                                $('#staffID2').val(data[0].Emplid);
+                                $('#staffname2').val(data[0].Nama);
+                                $('#dept2').val(data[0].DeptDesc);
+                                $('#position2').val(data[0].JobDesc);
+                                $('#level2').val(data[0].ref_level_name);
+                            }
                         },
                         error: function (xhr) {
                             swarning();

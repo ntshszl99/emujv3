@@ -11,20 +11,20 @@
                 <div class="page-leftheader">
                     <h4 class="page-title">Checklist</h4>
                 </div>
-                <div class="page-rightheader ms-auto d-lg-flex d-none">
-                    <ol class="breadcrumb">
-                        <li></li>
-                        <li class="breadcrumb-item"><a href="/DailyReport/Report"><span class="breadcrumb-icon">Form</span></a></li>
-                        <li class="breadcrumb-item"><a href="/DailyReport/Report"><span class="breadcrumb-icon">Report</span></a></li>
-                        <li class="breadcrumb-item active font-weight-bold" aria-current="page">Checklist</li>
-                    </ol>
-                </div>
+                @*<div class="page-rightheader ms-auto d-lg-flex d-none">
+                        <ol class="breadcrumb">
+                            <li></li>
+                            <li class="breadcrumb-item"><a href="/DailyReport/Report"><span class="breadcrumb-icon">Form</span></a></li>
+                            <li class="breadcrumb-item"><a href="/DailyReport/Report"><span class="breadcrumb-icon">Report</span></a></li>
+                            <li class="breadcrumb-item active font-weight-bold" aria-current="page">Checklist</li>
+                        </ol>
+                    </div>*@
             </div>
             <!--End Page header-->
 
             <div class="row">
                 <div class="col-lg-12 col-md-12">
-                    <div class="card">
+                    <div id="content" class="card">
                         <div class="card-header">
                             <h3 class="card-title">Checklist</h3>
                         </div>
@@ -74,8 +74,29 @@
 
 
 @section scripts{
+    <script src="~/assets/scripts/dashboard.js"></script>
+    <script src="~/assets/plugins/morris/morris.min.js"></script>
+    <script src="~/assets/plugins/raphael/raphael.min.js"></script>
+    @*<script src="~/assets/pages/jquery.morris.init.js"></script>*@
+    <script src="~/assets/scripts/semua.js"></script>
     <script type="text/javascript">
+
+        $(document).ready(function () {
+            checkSess();
+            checkStore();
+
+
+            if (localStorage.getItem("lvlI") === "2" || localStorage.getItem("lvlI") === "3" || localStorage.getItem("lvlI") === "4" || localStorage.getItem("lvlI") === "6") {
+                $("#content").hide();
+
+            }
+            else {
+                $("#content").show();
+            }
+
+        });
+
+
 
     </script>
 }
-

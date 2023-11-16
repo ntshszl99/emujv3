@@ -18,7 +18,17 @@ namespace emujv2.Controllers
             return View();
         }
 
-        public ActionResult User()
+        public ActionResult IndexEngineer()
+        {
+            return View();
+        }
+
+        public ActionResult IndexNormal()
+        {
+            return View();
+        }
+
+        public ActionResult IndexPg()
         {
             return View();
         }

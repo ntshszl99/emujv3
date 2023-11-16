@@ -28,10 +28,10 @@ namespace emujv2Api.Model
             User.Userid = Userid;
 
 
-            SqlStr.Append(" Select status ");
+            SqlStr.Append(" Select status, b.usrlevel ");
             SqlStr.Append(" from HR_MAIN as a, [muj].[dbo].[login_staff] as b");
             SqlStr.Append(" where a.Emplid = b.staff_id ");
-            SqlStr.Append(" and Emplid = @Emplid ");
+            SqlStr.Append(" and b.staff_id = @Emplid ");
             SqlStr.Append(" and status = @Status ");
 
             //SqlStr.Append(" select a.staff_id, b.Status ");
@@ -50,6 +50,7 @@ namespace emujv2Api.Model
                 if (ValidateUser(ref User))
                 {
                     CheckUserRoles(ref User);
+                    Tempat(ref User);
                     TokenMain.Add("exp", DateTimeOffset.UtcNow.AddHours(5).ToUnixTimeSeconds());
                     TokenMain.Add("Userid", Userid);
                     TokenMain.Add("Nama", User.Nama);
@@ -69,6 +70,43 @@ namespace emujv2Api.Model
                 User.ErrDtl = "User Not Found / Inactive";
             }
             return User;
+        }
+
+        private bool ValidateUser(ref UserCons User)
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+
+            SqlStr.Append(" Select Nama, DeptDesc, YOS, IC_New, Age, PhoneNumber, LocDesc, RegDesc, JobDesc, Deptid, Status ");
+            SqlStr.Append(" From HR_Main ");
+            SqlStr.Append(" Where Emplid = @Emplid ");
+            SqlStr.Append(" And Status = 'A' ");
+
+            ParamTmp.Add("@Emplid", User.Userid);
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.HRCon, ref Salah);
+
+            if (Recc.Rows.Count > 0)
+            {
+                foreach (DataRow row in Recc.Rows)
+                {
+                    User.Nama = row["Nama"].ToString();
+                    User.Designation = row["JobDesc"].ToString();
+                    User.YrsService = row["YOS"].ToString();
+                    User.IC = row["IC_New"].ToString();
+                    User.Age = row["Age"].ToString();
+                    User.PhoneNumber = row["PhoneNumber"].ToString();
+                    User.Location = row["LocDesc"].ToString();
+                    User.Deptid = row["Deptid"].ToString();
+                    User.DeptName = row["DeptDesc"].ToString();
+                    User.Status = row["Status"].ToString();
+                }
+                return true;
+            }
+            else { return false; }
         }
 
         private void CheckUserRoles(ref UserCons User)
@@ -102,7 +140,7 @@ namespace emujv2Api.Model
             }
         }
 
-        private bool ValidateUser(ref UserCons User)
+        private void Tempat(ref UserCons User)
         {
             StringBuilder SqlStr = new StringBuilder();
             Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
@@ -111,45 +149,83 @@ namespace emujv2Api.Model
             string Salah = "";
             CommonFunc Conn = new CommonFunc();
 
-            SqlStr.Append(" Select Nama, DeptDesc, YOS, IC_New, Age, PhoneNumber, LocDesc, RegDesc, JobDesc, Deptid, Status ");
-            SqlStr.Append(" From HR_Main ");
-            SqlStr.Append(" Where Emplid = @Emplid ");
-            SqlStr.Append(" And Status = 'A' ");
+            SqlStr.Append(" select a.staff_id, c.section_name, b.kmuj_name, d.region_name ");
+            SqlStr.Append(" from login_staff as a, kmuj as b, section as c, region as d ");
+            SqlStr.Append(" where a.muj = b.kmuj_value ");
+            SqlStr.Append(" and a.kmuj = c.section_val ");
+            SqlStr.Append(" and b.region_id = d.region_id ");
+            SqlStr.Append(" and a.staff_id = @Emplid ");
 
             ParamTmp.Add("@Emplid", User.Userid);
-            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.HRCon, ref Salah);
 
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
             if (Recc.Rows.Count > 0)
             {
                 foreach (DataRow row in Recc.Rows)
                 {
-                    User.Nama = row["Nama"].ToString();
-                    User.Designation = row["JobDesc"].ToString();
-                    User.YrsService = row["YOS"].ToString();
-                    User.IC = row["IC_New"].ToString();
-                    User.Age = row["Age"].ToString();
-                    User.PhoneNumber = row["PhoneNumber"].ToString();
-                    User.Location = row["LocDesc"].ToString();
-                    User.Region = row["RegDesc"].ToString();
-                    User.Deptid = row["Deptid"].ToString();
-                    User.DeptName = row["DeptDesc"].ToString();
-                    User.Status = row["Status"].ToString();
+                    User.Region = row["region_name"].ToString();
+                    User.Section = row["section_name"].ToString();
+                    User.KMUJ = row["kmuj_name"].ToString();                  
                 }
-                return true;
             }
-            else { return false; }
+            else
+            {
+                User.Region = "null";
+                User.Section = "null";
+                User.KMUJ = "null";
+            }
+
         }
 
+        public string Reg(string Region)
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+
+            SqlStr.Append(" select a.kmuj_name, b.region_name ");
+            SqlStr.Append(" from kmuj as a, region as b ");
+            SqlStr.Append(" where b.region_id = a.region_id ");
+            SqlStr.Append(" and region_name = @Region ");
+
+            ParamTmp.Add("@Region", Region);
+
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+            return JsonConvert.SerializeObject(Recc, Formatting.Indented);
+
+        }
+
+        public string Kmuj(string Kmuj)
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+
+            SqlStr.Append(" select a.section_name, b.kmuj_name ");
+            SqlStr.Append(" from section as a, kmuj as b ");
+            SqlStr.Append(" where section_kmuj = b.kmuj_value ");
+            SqlStr.Append(" and kmuj_name = @Kmuj ");
+
+            ParamTmp.Add("@Kmuj", Kmuj);
+
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+            return JsonConvert.SerializeObject(Recc, Formatting.Indented);
+
+        }
 
         public string GetUser()
         {
             StringBuilder SqlStr = new StringBuilder();
-            DataTable Recc = new DataTable();
-            DataTable Recc2 = new DataTable();
+            DataTable Recc = new DataTable();           
             MsSql DbCon = new MsSql();
             string Salah = "";
             CommonFunc Conn = new CommonFunc();
-            CommonFunc Conn2 = new CommonFunc();
             Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
 
             //SqlStr.Append(" select a.staff_id, a.staff_name, a.position, a.section, a.staff_status, b.ref_level_name ");
@@ -168,16 +244,13 @@ namespace emujv2Api.Model
             return JsonConvert.SerializeObject(Recc, Formatting.Indented);
         }
 
-
         public string GetUserDetails(string StaffId)
         {
             StringBuilder SqlStr = new StringBuilder();
             DataTable Recc = new DataTable();
-            DataTable Recc2 = new DataTable();
             MsSql DbCon = new MsSql();
             string Salah = "";
             CommonFunc Conn = new CommonFunc();
-            CommonFunc Conn2 = new CommonFunc();
             Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
 
             //SqlStr.Append(" select a.staff_id, a.staff_name, a.position, a.section, a.staff_status, b.ref_level_name ");
@@ -201,11 +274,10 @@ namespace emujv2Api.Model
         {
             StringBuilder SqlStr = new StringBuilder();
             DataTable Recc = new DataTable();
-            DataTable Recc2 = new DataTable();
             MsSql DbCon = new MsSql();
             string Salah = "";
             CommonFunc Conn = new CommonFunc();
-            CommonFunc Conn2 = new CommonFunc();
+
             Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
 
             SqlStr.Append(" SELECT staff_no, staff_name, section_id, upd_by, upd_date, position, staff_status ");
@@ -216,8 +288,6 @@ namespace emujv2Api.Model
             Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
             return JsonConvert.SerializeObject(Recc, Formatting.Indented);
         }
-
-
 
         public string GetGList(string Kmuj, string Section, string Gang)
         {
@@ -253,7 +323,6 @@ namespace emujv2Api.Model
             return JsonConvert.SerializeObject(Recc, Formatting.Indented);
         }
 
-
         public string GetGangPax(string Kmuj, string Section, string Gang)
         {
             StringBuilder SqlStr = new StringBuilder();
@@ -264,19 +333,21 @@ namespace emujv2Api.Model
             CommonFunc Conn = new CommonFunc();
 
             SqlStr.Append(" select concat(count(*), ' pax') as count ");
-            SqlStr.Append(" from(select a.staff_no, e.kmuj_name, d.section_name, b.Nama, b.JobGrade ");
-            SqlStr.Append(" from gang_details as a, [HR_MAIN].[dbo].[HR_MAIN] as b, STAFFSECTION as c, section as d, kmuj as e, Gang as g ");
+            SqlStr.Append(" from(select a.staff_no, e.kmuj_name, d.section_name, b.Nama, b.JobGrade, UPPER(f.cuti_name) as cuti_name ");
+            SqlStr.Append(" from gang_details as a, [HR_MAIN].[dbo].[HR_MAIN] as b, STAFFSECTION as c, section as d, kmuj as e, Ref_Cuti as f, Gang as g ");
             SqlStr.Append(" where a.staff_no = ");
             SqlStr.Append(" (select distinct(c.no_perkh) ");
-            SqlStr.Append(" where e.kmuj_name = @Kmuj ");
+            SqlStr.Append(" where e.kmuj_name = @Kmuj  ");
             SqlStr.Append(" and d.section_name = @Section) ");
             SqlStr.Append(" and c.no_muj = e.kmuj_value ");
             SqlStr.Append(" and c.no_section = d.section_val ");
             SqlStr.Append(" and d.section_kmuj = e.kmuj_value ");
-            SqlStr.Append(" and g.gang = @Gang ");
+            SqlStr.Append(" and g.gang = @Gang  ");
             SqlStr.Append(" and a.gang_id = g.id ");
             SqlStr.Append(" and a.staff_no = b.Emplid ");
             SqlStr.Append(" and b.Status = 'A' ");
+            SqlStr.Append(" and f.cuti_name = 'VALID' ");
+            SqlStr.Append(" and a.staff_status = f.cuti_code ");
             SqlStr.Append(" ) tbl ");
 
             ParamTmp.Add("@Section", Section);
@@ -359,7 +430,6 @@ namespace emujv2Api.Model
             return JsonConvert.SerializeObject(Recc, Formatting.Indented);
         }
 
-
         public string GetUserLevelList()
         {
             StringBuilder SqlStr = new StringBuilder();
@@ -429,7 +499,6 @@ namespace emujv2Api.Model
             Recc = DbCon.ExecuteReader(SqlStr.ToString(), Conn.emujConn, ref Salah);
             return JsonConvert.SerializeObject(Recc, Formatting.Indented);
         }
-
 
         public string GetWorkUnit(string WorkUnit)
         {
@@ -533,10 +602,10 @@ namespace emujv2Api.Model
             SqlStr.Append(" a.daily_date,  a.daily_worktype, ");  
             SqlStr.Append(" (select concat(a.daily_total, ' ', a.daily_unit)) as output, ");  
             SqlStr.Append(" a.effect_kmfrom, a.effect_kmto, a.daily_condition, a.daily_workers, ");
-            SqlStr.Append(" (select concat(a.daily_category, ' ( ', a.category_details, ' )')) as daily_category, ");
+            SqlStr.Append(" (select concat(e.category_name, ' ( ', a.category_details, ' )')) as daily_category, ");
             SqlStr.Append(" (select concat(a.daily_timestart, ' - ', a.daily_timelast, ' ', '(', a.daily_timetaken, ')')) as Time, ");
             SqlStr.Append(" a.daily_additional, a.rpt_code ");
-            SqlStr.Append(" from daily as a, region as b, kmuj as c, section as d ");
+            SqlStr.Append(" from daily as a, region as b, kmuj as c, section as d, category as e ");
             SqlStr.Append(" where convert(datetime, daily_date, 103) >= @MulaTarikh ");
             SqlStr.Append(" and convert(datetime, daily_date, 103) <= @AkhirTarikh ");
             SqlStr.Append(" and b.region_name = @Region ");
@@ -545,9 +614,8 @@ namespace emujv2Api.Model
             SqlStr.Append(" and a.daily_section = b.region_id ");
             SqlStr.Append(" and a.daily_kmuj = c.kmuj_value ");
             SqlStr.Append(" and a.daily_sec = d.section_val ");
+            SqlStr.Append(" and a.daily_category = e.category_id ");
             SqlStr.Append(" order by convert(datetime, daily_date, 103) asc ");
-
-
 
             ParamTmp.Add("@Region", Region);
             ParamTmp.Add("@Kmuj", Kmuj);
@@ -561,6 +629,104 @@ namespace emujv2Api.Model
         }
 
 
+        public string GetDailyReportEngineer(string Category, string Kmuj, string SDate, string EDate)
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+            string MulaTarikh = SDate;
+            string AkhirTarikh = EDate;
 
+            SqlStr.Append(" select b.region_name, c.kmuj_name, d.section_name, (select concat('Gang ', a.daily_gang)) as Gang, "); 
+            SqlStr.Append(" a.daily_date, a.daily_worktype, ");
+            SqlStr.Append(" (select concat(a.daily_total, ' ', a.daily_unit)) as output,  ");
+            SqlStr.Append(" a.effect_kmfrom, a.effect_kmto, a.daily_condition, a.daily_workers,  ");
+            SqlStr.Append(" (select concat(e.category_name, ' ( ', a.category_details, ' )')) as daily_category, ");
+            SqlStr.Append(" (select concat(a.daily_timestart, ' - ', a.daily_timelast, ' ', '(', a.daily_timetaken, ')')) as Time, ");
+            SqlStr.Append(" a.daily_additional, a.rpt_code ");
+            SqlStr.Append(" from daily as a, region as b, kmuj as c, section as d, category as e ");
+            SqlStr.Append(" where convert(datetime, daily_date, 103) >= @MulaTarikh ");
+            SqlStr.Append(" and convert(datetime, daily_date, 103) <= @AkhirTarikh ");          
+            SqlStr.Append(" and a.daily_section = b.region_id ");
+            SqlStr.Append(" and a.daily_kmuj = c.kmuj_value ");
+            SqlStr.Append(" and a.daily_sec = d.section_val ");
+            SqlStr.Append(" and a.daily_category = e.category_id ");
+            
+            if (Category == "Normal" || Category == "Line Block" || Category == "Emergency" || Category == "Off Track")
+            {
+                SqlStr.Append(" and c.kmuj_name = @Kmuj "); 
+                SqlStr.Append(" and e.category_name = @Category ");
+            }
+
+            else
+            {
+                SqlStr.Append(" and c.kmuj_name = @Kmuj ");
+            }
+
+            SqlStr.Append(" order by convert(datetime, daily_date, 103) asc ");
+
+
+            ParamTmp.Add("@Kmuj", Kmuj);
+            ParamTmp.Add("@Category", Category);
+            ParamTmp.Add("@MulaTarikh", MulaTarikh);
+            ParamTmp.Add("@AkhirTarikh", AkhirTarikh);
+
+
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+            return JsonConvert.SerializeObject(Recc, Formatting.Indented);
+        }
+
+        public string GetDailyReportCI(string Category, string Section, string SDate, string EDate)
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+            string MulaTarikh = SDate;
+            string AkhirTarikh = EDate;
+
+            SqlStr.Append(" select b.region_name, c.kmuj_name, d.section_name, (select concat('Gang ', a.daily_gang)) as Gang, ");
+            SqlStr.Append(" a.daily_date, a.daily_worktype, ");
+            SqlStr.Append(" (select concat(a.daily_total, ' ', a.daily_unit)) as output,  ");
+            SqlStr.Append(" a.effect_kmfrom, a.effect_kmto, a.daily_condition, a.daily_workers,  ");
+            SqlStr.Append(" (select concat(e.category_name, ' ( ', a.category_details, ' )')) as daily_category, ");
+            SqlStr.Append(" (select concat(a.daily_timestart, ' - ', a.daily_timelast, ' ', '(', a.daily_timetaken, ')')) as Time, ");
+            SqlStr.Append(" a.daily_additional, a.rpt_code ");
+            SqlStr.Append(" from daily as a, region as b, kmuj as c, section as d, category as e ");
+            SqlStr.Append(" where convert(datetime, daily_date, 103) >= @MulaTarikh ");
+            SqlStr.Append(" and convert(datetime, daily_date, 103) <= @AkhirTarikh ");
+            SqlStr.Append(" and a.daily_section = b.region_id ");
+            SqlStr.Append(" and a.daily_kmuj = c.kmuj_value ");
+            SqlStr.Append(" and a.daily_sec = d.section_val ");
+            SqlStr.Append(" and a.daily_category = e.category_id ");
+
+            if (Category == "Normal" || Category == "Line Block" || Category == "Emergency" || Category == "Off Track")
+            {
+                SqlStr.Append(" and d.section_name = @Section ");
+                SqlStr.Append(" and e.category_name = @Category ");
+            }
+
+            else
+            {
+                SqlStr.Append(" and d.section_name = @Section ");
+            }
+
+            SqlStr.Append(" order by convert(datetime, daily_date, 103) asc ");
+
+
+            ParamTmp.Add("@Section", Section);
+            ParamTmp.Add("@Category", Category);
+            ParamTmp.Add("@MulaTarikh", MulaTarikh);
+            ParamTmp.Add("@AkhirTarikh", AkhirTarikh);
+
+
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+            return JsonConvert.SerializeObject(Recc, Formatting.Indented);
+        }
     }
 }

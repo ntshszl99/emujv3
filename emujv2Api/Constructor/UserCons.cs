@@ -9,7 +9,6 @@ namespace emujv2Api.Constructor
     {
         public string Userid { get; set; }
         public string Nama { get; set; }
-        public string Region { get; set; }
         public string Designation { get; set; }
         public string YrsService { get; set; }
         public string IC { get; set; }
@@ -21,6 +20,9 @@ namespace emujv2Api.Constructor
         public string Levelid { get; set; }
         public string UserLevel { get; set; }
         public string Status { get; set; }
+        public string Region { get; set; }
+        public string KMUJ { get; set; }
+        public string Section { get; set; }
         public string TokenAdmin { get; set; }
         public string ErrCode { get; set; }
         public string ErrDtl { get; set; }

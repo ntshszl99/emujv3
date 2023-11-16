@@ -3074,11 +3074,12 @@
     <Content Include="Views\Gang\GangRegistration.cshtml" />
     <Content Include="Views\User\UserList.cshtml" />
     <Content Include="Views\Auth\Index.cshtml" />
-    <Content Include="Views\Gang\GangList.cshtml" />
     <Content Include="Views\Auth\Home.cshtml" />
     <Content Include="Views\User\UserDetails.cshtml" />
     <Content Include="Views\DailyReport\R1Form.cshtml" />
     <Content Include="Views\User\UserRegistration.cshtml" />
+    <Content Include="Views\DailyReport\R1Form - Copy.cshtml" />
+    <Content Include="Views\Gang\GangList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include=".vs\themeforest-0yBMtiGd-dashtic-html-admin-template\FileContentIndex\merges\" />

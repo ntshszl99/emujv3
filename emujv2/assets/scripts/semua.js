@@ -10,9 +10,6 @@ $(document).ready(function () {
     var UI = localStorage.getItem("usrI");
     $("#tempekUsrId").html(UI);
 
-    var UR = localStorage.getItem("usrR");
-    $("#tempekUsrRegion").html(UR);
-
     var UD = localStorage.getItem("usrD");
     $("#tempeUsrDesig").html(UD);
     $("#UsrDesig").html(UD);
@@ -44,9 +41,14 @@ $(document).ready(function () {
     var UL = localStorage.getItem("usrLvl");
     $("#tempekUsrLvl").html(UL);
 
-    var US = localStorage.getItem("usrS");
-    $("#tempekUsrStatus").html(US);
+    var UR = localStorage.getItem("usrR");
+    $("#tempekUsrRegion").html(UR);
 
+    var SCN = localStorage.getItem("scn");
+    $("#tempekScn").html(SCN);
+
+    var M = localStorage.getItem("kmuj");
+    $("#tempekKMUJ").html(M);
    
 
     $('#nakBlajar').click(function () {
@@ -172,6 +174,7 @@ function checkSess() {
         }
     }
 }
+
 function checkStore() {
     localStorage.removeItem("selHar");
     localStorage.removeItem("selHarE");

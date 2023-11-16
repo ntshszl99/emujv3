@@ -12,13 +12,6 @@
                 <div class="page-leftheader">
                     <h4 class="page-title">Gang Registration</h4>
                 </div>
-                <div class="page-rightheader ms-auto d-lg-flex d-none">
-                    <ol class="breadcrumb">
-                        <li></li>
-                        <li class="breadcrumb-item active font-weight-bold" aria-current="page">Gang Registration</li>
-                        <li class="breadcrumb-item"><a href="/Gang/GangList"><span class="breadcrumb-icon">Gang List</span></a></li>
-                    </ol>
-                </div>
             </div>
             <!--End Page header-->
 
@@ -79,8 +72,9 @@
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-end">
-                                    <button id="addBtn" type="button" class='btn btn-success addmore'>Add More</button>
-                                    <button id="delBtn" type="button" class='btn btn-danger delete'>Delete</button>
+                                    <button id="sbmtBtn" type="button" class='btn btn-success submit m-1'>Submit Gang</button>
+                                    <button id="addBtn" type="button" class='btn btn-primary addmore m-1'>Add More</button>
+                                    <button id="delBtn" type="button" class='btn btn-danger delete m-1'>Delete</button>
                                 </div>
                             </div>
                         </div>
@@ -112,20 +106,47 @@
             listStaff();
 
 
-
-
         });
 
-
-        //add row
-        $("#addBtn").click(function () {
-            $("table").append($("tr:last").clone(true));
-            $("tr:last input").val("");
+        //check all row
+        $('.check_all').click(function () {
+            var isChecked = $(this).prop('checked');
+            $('#tableWork tbody input[type="checkbox"]').prop('checked', isChecked);
+            $(this).prop('checked', false);
         });
 
         //delete row of selected checkbox
-        $("#delBtn").click(function () {
-            $('input[type="checkbox"]:checked').closest("tr").remove();
+        $('#delBtn').click(function () {
+            $('#tableWork tbody input[type="checkbox"]:checked').each(function () {
+                $(this).closest('tr').remove();
+            });
+        });
+
+        //add new row
+        //$('#addBtn').click(function () {
+        //    var newRow = $('#tableWork tbody tr:first').clone();
+        //    newRow.find('input').val('');
+        //    $('#tableWork tbody').append(newRow);
+
+        //});
+
+
+
+
+        //$('#addBtn').click(function () {
+        //    // Generate a unique ID for the new row
+        //    var newRowID = 'row-' + Date.now();
+
+        //    // Create a new row with a unique ID
+        //    var newRow = '<tr class="child" id="' + newRowID + '"><td><input type="checkbox" /></td><td><select id="staffID2' + newRowID + '" class="form-control form-select select2" required="required"><option value="-0">.: Select Staff ID :.</option></select></td><td><input class="form-control" id="staffname" readonly /></td><td><input class="form-control" id="grade" readonly /></td><td><input class="form-control" id="position" readonly /></td></tr>';
+
+        //    // Append the new row to the table body
+        //    $('#tableWork tbody').append(newRow);
+        //});
+
+        $('#addBtn').click(function () {
+            var newRow = '<tr class="child"><td><input type="checkbox" /></td><td><select id="staffID" class="form-control form-select select2" required="required"><option value="-0">.: Select Staff ID :.</option></select></td><td><input class="form-control" id="staffname" readonly /></td><td><input class="form-control" id="grade" readonly /></td><td><input class="form-control" id="position" readonly /></td></tr>';
+            $('#tableWork tbody').append(newRow);
         });
 
         //automatic show staffname, grade, position based on staffID
@@ -135,8 +156,7 @@
             listStaffDet(localStorage.getItem("selID", this.value));
         });
 
-
-
+        //fetch staff details based on staff ID
         function listStaffDet(staffID) {
             $.ajax({
                 url: linkDepan + "GetUserDetails?StaffId=" + staffID,
@@ -145,9 +165,16 @@
                     request.setRequestHeader("Token", localStorage.getItem('main'));
                 },
                 success: function (data) {
-                    $('#staffname').val(data[0].Nama);
-                    $('#grade').val(data[0].Grade);
-                    $('#position').val(data[0].JobDesc);
+                    if (data && Array.isArray(data) && data.length > 0) {
+                        $('#staffname').val(data[0].Nama);
+                        $('#grade').val(data[0].Grade);
+                        $('#position').val(data[0].JobDesc);
+                    }
+                    else {
+                        $('#staffname').val(' ');
+                        $('#grade').val(' ');
+                        $('#position').val(' ');
+                    }
                 },
                 error: function (xhr) {
                     swarning();
@@ -158,8 +185,7 @@
         }
 
 
-
-
+        //list emplid
         function listStaff() {
             $.ajax({
                 url: linkDepan + "GetUser",
@@ -187,6 +213,7 @@
             });
         }
 
+        //list gang
         function listGang() {
             $.ajax({
                 url: linkDepan + "GangList",

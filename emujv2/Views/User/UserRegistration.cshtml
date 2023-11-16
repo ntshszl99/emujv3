@@ -13,13 +13,6 @@
                 <div class="page-leftheader">
                     <h4 class="page-title">Add User</h4>
                 </div>
-                <div class="page-rightheader ms-auto d-lg-flex d-none">
-                    <ol class="breadcrumb">
-                        <li></li>
-                        <li class="breadcrumb-item active font-weight-bold" aria-current="page">Add New User</li>
-                        <li class="breadcrumb-item"><a href="/User/UserList"><span class="breadcrumb-icon">Registered Users' List</span></a></li>
-                    </ol>
-                </div>
             </div>
             <!--End Page header-->
 
@@ -99,7 +92,7 @@
             listUsrLevel();
             listReports();
 
-
+            //delete user modal
             $('#usrDet').on('show.bs.modal', function (e) {
                 var dataid = $(e.relatedTarget).data('Emplid');
                 //console.log('baca ' + dataid);
@@ -114,13 +107,13 @@
             listStaffDet(localStorage.getItem("selID", this.value));
         });
 
-
         function listStaffDet(staffID) {
             $.ajax({
                 url: linkDepan + "GetUserDetails?StaffId=" + staffID,
                 dataType: "json",
                 beforeSend: function (request) {
-                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                    request.setRequestHeader("Token", 
+                    );
                 },
                 success: function (data) {
                     $('#staffname').val(data[0].Nama);
@@ -135,7 +128,7 @@
             });
         }
 
-
+        //user level
         function listUsrLevel() {
             $.ajax({
                 url: linkDepan + "GetUserLevelList",
@@ -163,6 +156,7 @@
             });
         }
 
+        //show user name based on id
         function listStaff() {
             $.ajax({
                 url: linkDepan + "GetUser",
@@ -190,6 +184,7 @@
             });
         }
 
+        //list kmuj
         function listKMUJ() {
             $.ajax({
                 url: linkDepan + "KMUJList",
@@ -217,6 +212,7 @@
             });
         }
 
+        //list section
         function listSection() {
             $.ajax({
                 url: linkDepan + "GetSectionList",
@@ -243,8 +239,6 @@
                 }
             });
         }
-
-
 
         function listReports() {
             $.ajax({

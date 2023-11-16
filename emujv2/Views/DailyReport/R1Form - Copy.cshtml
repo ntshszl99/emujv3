@@ -1,0 +1,638 @@
+﻿
+@{
+    ViewBag.Title = "R1Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="app-content main-content">
+    <div class="side-app">
+        <div class="container-fluid main-container">
+
+            <!--Page header-->
+            <div class="page-header">
+                <div class="page-leftheader">
+                    <h4 class="page-title">Weekly Work Planning</h4>
+                </div>
+                <div class="page-rightheader ms-auto d-lg-flex d-none">
+                    <ol class="breadcrumb">
+                        <li></li>
+                        <li class="breadcrumb-item active font-weight-bold" aria-current="page">R1 Form</li>
+                        <li class="breadcrumb-item"><a href="/DailyReport/Form"><span class="breadcrumb-icon">Update Form</span></a></li>
+                        <li class="breadcrumb-item"><a href="/DailyReport/Report"><span class="breadcrumb-icon">Report</span></a></li>
+                        <li class="breadcrumb-item"><a href="/DailyReport/Checklist"><span class="breadcrumb-icon">Checklist</span></a></li>
+                    </ol>
+                </div>
+            </div>
+            <!--End Page header-->
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">R1 Form</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3 m-0">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label">Region</label>
+                                        <select id="region" class="form-control form-select select2" required>
+                                            <option value="-0">.: Select Region :.</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label">KMUJ</label>
+                                        <select disabled class="form-control form-select select2" required="required">
+                                            <option value="-0">.: Select KMUJ :.</option>
+                                            <option id="tempekKMUJ" value="1">.: Select KMUJ :.</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label">Section</label>
+                                        <select disabled class="form-control form-select select2" required="required">
+                                            <option value="-0">.: Select Section :.</option>
+                                            <option id="tempekScn" value="1">.: Select Section :.</option>
+                                        </select>
+                                    </div>
+                                    <div></div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label">Gang</label>
+                                        <select disabled id="gang" type="text" class="form-control form-select select2" required>
+                                            <option value="-0">.: Select Gang :.</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label">No. of Staff (Valid)</label>
+                                        <input readonly id="gangno" type="text" class="form-control">
+                                    </div>
+
+                                    <div class="col-lg-12">
+                                        <div class="table-responsive table-lg">
+                                            <table id="tableRep" class="table card-table table-vcenter text-nowrap border">
+                                                <thead>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div></div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label">Work Date</label>
+                                        <input type="text" id="datepicker" class="form-control">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label">Line</label>
+                                        <select id="linecond" class="form-control form-select select2" required="required">
+                                            <option value="-0">.: Select Condition :.</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label">Category</label>
+                                        <select id="category" class="form-control form-select select2" required="required">
+                                            <option value="-0">.: Select Category :.</option>
+                                        </select>
+                                    </div>
+                                    <div id="catEmer" class="col-3" style='display:none;'>
+                                        <label class="mt-5 form-label">Category</label>
+                                        <select id="catdet" class="form-control form-select select2" required="required">
+                                            <option value="-0">.: Select Emergency :.</option>
+                                        </select>
+                                    </div>
+                                    <div></div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label">Work Type</label>
+                                        <select id="worktype" class="form-control form-select select2" required="required">
+                                            <option value="-0">.: Select Work Type :.</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label">Total</label>
+                                        <input type="text" class="form-control" placeholder="Total">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label">Unit</label>
+                                        <input id="unit" class="form-control" placeholder="Unit" readonly>
+                                    </div>
+                                    <div></div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label">Effected KM (Start)</label>
+                                        <input type="text" class="form-control" placeholder="Start KM">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label">Effected KM (End)</label>
+                                        <input type="text" class="form-control" placeholder="End KM">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label">Effected KM</label>
+                                        <input type="text" class="form-control" placeholder="Total KM">
+                                    </div>
+                                    <div></div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label">Time Start </label>
+                                        <input type="text" class="form-control" placeholder="Start Time">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label">Time End</label>
+                                        <input type="text" class="form-control" placeholder="End Time">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label">Time Taken KM</label>
+                                        <input type="text" class="form-control" placeholder="Total KM">
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <div class="mb-3 mt-5">
+                                            <div class="form-label">Work at Station?</div>
+                                            <div class="custom-controls-stacked">
+                                                <label class="custom-control custom-radio">
+                                                    <input type="radio" class="custom-control-input" name="example-radios" value="option1" checked="">
+                                                    <span class="custom-control-label">Yes</span>
+                                                </label>
+                                                <label class="custom-control custom-radio">
+                                                    <input type="radio" class="custom-control-input" name="example-radios" value="option2">
+                                                    <span class="custom-control-label">No</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-8">
+                                        <label class="mt-5 form-label">Additional Information</label>
+                                        <textarea class="mb-5 form-control" placeholder="Textarea" rows="3"></textarea>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <button type="button" class='btn btn-success'>Save</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- end app-content-->
+
+
+
+@section scripts{
+    <script src="~/assets/scripts/dashboard.js"></script>
+    <script src="~/assets/scripts/semua.js"></script>
+    <script src="~/assets/scripts/dashboard.js"></script>
+    <script src="~/assets/plugins/morris/morris.min.js"></script>
+    <script src="~/assets/plugins/raphael/raphael.min.js"></script>
+    <script src="~/assets/plugins/select2/select2.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            listRegion();
+            listKMUJ();
+            listSection();
+            listGang();
+            listLnCondition();
+            listCategory();
+            listWorkType();
+            listCatDetails();
+            listWorkUnit();
+            listReports();
+
+
+
+        });
+
+        $(function () {
+            $("#datepicker").datepicker();
+        });
+
+        //disabled selection 
+
+        $("#region").on('change', function () {
+            if ($("#region").val() == '-0') {
+                $('#kmuj').prop('disabled', true);
+            }
+            else {
+                $('#kmuj').prop('disabled', false);
+            }
+        });
+
+        $("#kmuj").on('change', function () {
+            if ($("#kmuj").val() == '-0') {
+                $('#section').prop('disabled', true);
+            }
+            else {
+                $('#section').prop('disabled', false);
+            }
+        });
+
+        $("#section").on('change', function () {
+            if ($("#section").val() == '-0') {
+                $('#gang').prop('disabled', true);
+            }
+            else {
+                $('#gang').prop('disabled', false);
+            }
+        });
+
+        //show table and gang pax value according to gang kmuj and section
+        checkStore();
+        $("#gang, #kmuj, #section").on('change', function () {
+            kmj = $("#kmuj option:selected").text();
+            localStorage.setItem("selKmj", kmj, this.value);
+
+            scn = $("#section option:selected").text();
+            localStorage.setItem("selScn", scn, this.value);
+
+            gng = $("#gang option:selected").text();
+            localStorage.setItem("selGng", gng, this.value);
+
+            listReports(localStorage.getItem("selKmj", this.value), localStorage.getItem("selScn", this.value), localStorage.getItem("selGng", this.value));
+
+            listGangPax(localStorage.getItem("selKmj", this.value), localStorage.getItem("selScn", this.value), localStorage.getItem("selGng", this.value));
+        });
+
+
+        //automatic show workunit when select worktype
+        $("#worktype").on('change', function () {
+            wrk = $("#worktype option:selected").text();
+            localStorage.setItem("selWrk", wrk, this.value);
+            listWorkUnit(localStorage.getItem("selWrk", this.value));
+        });
+
+
+        //show/hide work catergory - emegergency 
+        $("#category").on('change', function () {
+            if ($("#category option:selected").val() == '1') {
+                $("#catEmer").show();
+            }
+            else {
+                $("#catEmer").hide();
+            }
+        });
+
+        function listReports(kmuj, section, gang) {
+            $.ajax({
+                url: linkDepan + "GetGList?Kmuj=" + kmuj + "&Section=" + section + "&Gang=" + gang,
+                type: 'GET',
+                dataType: 'json',
+                data: {},
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    console.log('mana : ' + data);
+                    var counter = 1;
+                    $.fn.dataTable.ext.errMode = 'throw';
+                    if ($.fn.dataTable.isDataTable('#tableRep')) {
+                        $('#tableRep').DataTable().destroy();
+                    }
+                    $('#tableRep').DataTable({
+                        responsive: true,
+                        data: data,
+                        columns: [
+                            { data: "Emplid" },
+                            { data: "Emplid" },
+                            { data: "Nama" },
+                            { data: "JobGrade" },
+                            { data: "JobDesc" },
+                            { data: "cuti_name" },
+                            { data: "Emplid" },
+                        ],
+                        columnDefs: [{
+                            targets: -1,
+                            title: "Actions",
+                            render: function (data, type, full, meta) {
+                                return '<a class="btn btn-primary"><i class="fa fa-minus fa-rotate-90 font-16"></i>';
+                                //return '<a class="btn btn-primary" data-id="' + data + '" data-bs-target="#modalDetails" data-bs-toggle="modal" class="btn btn-primary"><i class="fe fe-edit font-16"></i></a>'
+                            //    return data;
+                            },
+                        },
+                        {
+                            targets: -2,
+                            title: "Status",
+                            render: function (data, type, full, meta) {
+                                var status = '';
+                                if (data == 'VALID') { status = '<a class="text-success">' + data + ' <i class="ion-checkmark-circled"></i></a></p >'; }
+                                else {
+                                    status = '<a class="text-danger">' + data + ' <i class="ion-close-circled"></i></a></p >';
+                                }
+                                return status;
+                            },
+                        },
+                        {
+                            targets: -3,
+                            title: "Position",
+                            render: function (data, type, full, meta) {
+                                return data;
+                            },
+                        },
+                        {
+                            targets: -4,
+                            title: "Grade",
+                            render: function (data, type, full, meta) {
+                                return data;
+                            },
+                        },
+                        {
+                            targets: -5,
+                            title: "Name",
+                            render: function (data, type, full, meta) {
+                                return data;
+                            },
+                        },
+                        {
+                            targets: -6,
+                            title: "Staff ID",
+                            render: function (data, type, full, meta) {
+                                return data;
+                            },
+                        },
+                        {
+                            targets: -7,
+                            title: "No",
+                            render: function (data, type, full, meta) {
+                                return counter++;
+                            },
+                        }]
+
+                    });
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+        function listWorkUnit(workunit) {
+            $.ajax({
+                url: linkDepan + "GetWorkUnit?WorkUnit=" + workunit,
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    $('#unit').val(data[0].unit);
+                 
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+
+        function listGangPax(kmuj, section, gang) {
+            $.ajax({
+                url: linkDepan + "GetGangPax?Kmuj=" + kmuj + "&Section=" + section + "&Gang=" + gang,
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    $('#gangno').val(data[0].count);
+                    ///*$('#gangno').JSON.stringify(data);*/
+                    // $('#gangno').console.log(data[0].count);
+                    /* $('#gangno').console.log(data[0].count);*/
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+
+
+        function listRegion() {
+            $.ajax({
+                url: linkDepan + "GetRegionList",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.region_id + "'>" + value.region_name + "</option>";
+                        });
+                        $('#region').append(auxArr.join(''));
+                    } else {
+                        $("#region").addClass(" is-invalid");
+
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+        //function listKMUJ() {
+        //    $.ajax({
+        //        url: linkDepan + "KMUJList",
+        //        dataType: "json",
+        //        beforeSend: function (request) {
+        //            request.setRequestHeader("Token", localStorage.getItem('main'));
+        //        },
+        //        success: function (data) {
+        //            if (data.length >= 1) {
+        //                auxArr = [];
+        //                $.each(data, function (index, value) {
+        //                    auxArr[index] = "<option value='" + value.kmuj_id + "'>" + value.kmuj_name + "</option>";
+        //                });
+        //                $('#kmuj').append(auxArr.join(''));
+        //            } else {
+        //                $("#kmuj").addClass(" is-invalid");
+
+        //            }
+        //        },
+        //        error: function (xhr) {
+        //            swarning();
+        //        },
+        //        complete: function () {
+        //        }
+        //    });
+        //}
+
+        function listSection() {
+            $.ajax({
+                url: linkDepan + "GetSectionList",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.section_id + "'>" + value.section_name + "</option>";
+                        });
+                        $('#section').append(auxArr.join(''));
+                    } else {
+                        $("#section").addClass(" is-invalid");
+
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+
+        function listGang() {
+            $.ajax({
+                url: linkDepan + "GangList",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.id + "'>" + value.gang + "</option>";
+                        });
+                        $('#gang').append(auxArr.join(''));
+                    } else {
+                        $("#gang").addClass(" is-invalid");
+
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+        function listLnCondition() {
+            $.ajax({
+                url: linkDepan + "GetLineConditionList",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.cond_id + "'>" + value.cond_name + "</option>";
+                        });
+                        $('#linecond').append(auxArr.join(''));
+                    } else {
+                        $("#linecond").addClass(" is-invalid");
+
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+        function listCategory() {
+            $.ajax({
+                url: linkDepan + "GetCategory",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.category_id + "'>" + value.category_name + "</option>";
+                        });
+                        $('#category').append(auxArr.join(''));
+                    } else {
+                        $("#category").addClass(" is-invalid");
+
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+
+        function listCatDetails() {
+            $.ajax({
+                url: linkDepan + "GetCategoryDetails",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.id + "'>" + value.details + "</option>";
+                        });
+                        $('#catdet').append(auxArr.join(''));
+                    } else {
+                        $("#catdet").addClass(" is-invalid");
+
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+
+        function listWorkType() {
+            $.ajax({
+                url: linkDepan + "GetWorkType",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.id + "'>" + value.work_name + "</option>";
+                        });
+                        $('#worktype').append(auxArr.join(''));
+                    } else {
+                        $("#worktype").addClass(" is-invalid");
+
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+
+    </script>
+}
+
+
+
+
