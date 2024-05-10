@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.IO;
+using System.Data;
+using System.Text;
 
 namespace emujv2Api.Controller
 {
@@ -21,12 +23,95 @@ namespace emujv2Api.Controller
     {
         private readonly IConfiguration _config;
         private readonly IHttpContextAccessor httpContextAccessor;
-        
+
         public WebApiController(IConfiguration config, IHttpContextAccessor _httpContextAccessor)
         {
             _config = config;
             httpContextAccessor = _httpContextAccessor;
-        }   
+        }
+
+
+        [HttpPost]
+        public string UpdateUser(UserCons data)
+        {
+            TokenFunc Token = new TokenFunc();
+            PublicCons RetDat = new PublicCons();
+            string conn = _config.GetValue<string>("KTMBParam:DbConnection");
+            string Salah = "";
+            String Data = Token.ValidateToken(httpContextAccessor.HttpContext.Request.Headers["Token"], ref Salah);
+            InsertUpdate ret = new InsertUpdate();
+            if (string.IsNullOrEmpty(Data))
+            {
+                HttpContext.Response.StatusCode = 401;
+                return null;
+            }
+            UserCons User = JsonConvert.DeserializeObject<UserCons>(Data);
+
+            if (!string.IsNullOrEmpty(User.Userid))
+            {
+                Salah = ret.UpdateUser(data.Status, data.UserLevel, data.Userid);
+                if (Salah == "0")
+                {
+                    RetDat.status = "00";
+                    RetDat.StatusDetail = "Update Save.";
+                    return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+                }
+                else
+                {
+                    RetDat.status = "99";
+                    RetDat.StatusDetail = Salah;
+                    return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+                }
+            }
+            else
+            {
+                RetDat.status = "99";
+                RetDat.StatusDetail = "Error : Not Authorize User.";
+                return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+            }
+        }
+
+        [HttpPost]
+        public string NewUser(UserCons data)
+        {
+            TokenFunc Token = new TokenFunc();
+            PublicCons RetDat = new PublicCons();
+            string conn = _config.GetValue<string>("KTMBParam:DbConnection");
+            string Salah = "";
+            String Data = Token.ValidateToken(httpContextAccessor.HttpContext.Request.Headers["Token"], ref Salah);
+            InsertUpdate ret = new InsertUpdate();
+            if (string.IsNullOrEmpty(Data))
+            {
+                HttpContext.Response.StatusCode = 401;
+                return null;
+            }
+            UserCons User = JsonConvert.DeserializeObject<UserCons>(Data);
+
+            if (!string.IsNullOrEmpty(User.Userid))
+            {
+                Salah = ret.NewUser(data.DeptName, data.UserLevel, data.Nama, data.Designation, data.Userid,
+            data.Status, data.Region, data.KMUJ, data.Section);
+                if (Salah == "0")
+                {
+                    RetDat.status = "00";
+                    RetDat.StatusDetail = "Update Save.";
+                    return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+                }
+                else
+                {
+                    RetDat.status = "99";
+                    RetDat.StatusDetail = Salah;
+                    return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+                }
+            }
+            else
+            {
+                RetDat.status = "99";
+                RetDat.StatusDetail = "Error : Not Authorize User.";
+                return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+            }
+        }
+
 
 
         [HttpGet]
@@ -64,35 +149,6 @@ namespace emujv2Api.Controller
             if (!string.IsNullOrEmpty(User.Userid))
             {
                 return ret.GetUser();
-            }
-            else
-            {
-                RetDat.status = "99";
-                RetDat.StatusDetail = "Error : Not Authorize User.";
-                return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
-            }
-        }
-
-        [HttpGet]
-        public string GetUserDetails(string StaffId)
-        {
-            TokenFunc Token = new TokenFunc();
-            PublicCons RetDat = new PublicCons();
-            string conn = _config.GetValue<string>("KTMBParam:DbConnection");
-            string Salah = "";
-            String Data = Token.ValidateToken(httpContextAccessor.HttpContext.Request.Headers["Token"], ref Salah);
-            Lookup ret = new Lookup();
-
-            if (string.IsNullOrEmpty(Data))
-            {
-                HttpContext.Response.StatusCode = 401;
-                return null;
-            }
-            UserCons User = JsonConvert.DeserializeObject<UserCons>(Data);
-
-            if (!string.IsNullOrEmpty(User.Userid))
-            {
-                return ret.GetUserDetails(StaffId);
             }
             else
             {
@@ -304,7 +360,6 @@ namespace emujv2Api.Controller
         }
 
 
-
         [HttpGet]
         public string KMUJList()
         {
@@ -503,6 +558,90 @@ namespace emujv2Api.Controller
         }
 
         [HttpGet]
+        public string GetEngDetails()
+        {
+            TokenFunc Token = new TokenFunc();
+            PublicCons RetDat = new PublicCons();
+            string conn = _config.GetValue<string>("KTMBParam:DbConnection");
+            string Salah = "";
+            String Data = Token.ValidateToken(httpContextAccessor.HttpContext.Request.Headers["Token"], ref Salah);
+            Lookup ret = new Lookup();
+            if (string.IsNullOrEmpty(Data))
+            {
+                HttpContext.Response.StatusCode = 401;
+                return null;
+            }
+            UserCons User = JsonConvert.DeserializeObject<UserCons>(Data);
+
+            if (!string.IsNullOrEmpty(User.Userid))
+            {
+                return ret.GetEngDetails();
+            }
+            else
+            {
+                RetDat.status = "99";
+                RetDat.StatusDetail = "Error : Not Authorize User.";
+                return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+            }
+        }
+
+        [HttpGet]
+        public string Get(string StaffId)
+        {
+            TokenFunc Token = new TokenFunc();
+            PublicCons RetDat = new PublicCons();
+            string conn = _config.GetValue<string>("KTMBParam:DbConnection");
+            string Salah = "";
+            String Data = Token.ValidateToken(httpContextAccessor.HttpContext.Request.Headers["Token"], ref Salah);
+            Lookup ret = new Lookup();
+            if (string.IsNullOrEmpty(Data))
+            {
+                HttpContext.Response.StatusCode = 401;
+                return null;
+            }
+            UserCons User = JsonConvert.DeserializeObject<UserCons>(Data);
+
+            if (!string.IsNullOrEmpty(User.Userid))
+            {
+                return ret.Get(StaffId);
+            }
+            else
+            {
+                RetDat.status = "99";
+                RetDat.StatusDetail = "Error : Not Authorize User.";
+                return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+            }
+        }
+
+        [HttpGet]
+        public string GetUserDetails(string StaffId)
+        {
+            TokenFunc Token = new TokenFunc();
+            PublicCons RetDat = new PublicCons();
+            string conn = _config.GetValue<string>("KTMBParam:DbConnection");
+            string Salah = "";
+            String Data = Token.ValidateToken(httpContextAccessor.HttpContext.Request.Headers["Token"], ref Salah);
+            Lookup ret = new Lookup();
+            if (string.IsNullOrEmpty(Data))
+            {
+                HttpContext.Response.StatusCode = 401;
+                return null;
+            }
+            UserCons User = JsonConvert.DeserializeObject<UserCons>(Data);
+
+            if (!string.IsNullOrEmpty(User.Userid))
+            {
+                return ret.GetUserDetails(StaffId);
+            }
+            else
+            {
+                RetDat.status = "99";
+                RetDat.StatusDetail = "Error : Not Authorize User.";
+                return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+            }
+        }
+
+        [HttpGet]
         public string GetWorkType()
         {
             TokenFunc Token = new TokenFunc();
@@ -643,7 +782,7 @@ namespace emujv2Api.Controller
         }
 
         [HttpGet]
-        public string GetDailyReportCI(string Category, string Section, string SDate, string EDate)
+        public string GetDailyReportCI(string Gang, string Category, string Section, string SDate, string EDate)
         {
             TokenFunc Token = new TokenFunc();
             PublicCons RetDat = new PublicCons();
@@ -660,7 +799,7 @@ namespace emujv2Api.Controller
 
             if (!string.IsNullOrEmpty(User.Userid))
             {
-                return ret.GetDailyReportEngineer(Category, Section, SDate, EDate);
+                return ret.GetDailyReportCI(Gang, Category, Section, SDate, EDate);
             }
             else
             {

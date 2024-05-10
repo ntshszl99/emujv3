@@ -84,6 +84,21 @@
                 </div>
             </div>
 
+            <div class="" id="contentOthers">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3 m-0">
+                            <div class="row">
+                                <div class="card-body">
+                                    <h4 class="text-muted">Alert</h4>
+                                    <p class="text-muted">Sorry, no data found.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!--Modal User Details-->
             <div class="modal" id="modalDetails">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -198,6 +213,7 @@
             if (localStorage.getItem("lvlI") === "1") {
                 $("#contentAdmin").show();
                 $("#contentNormal").hide();
+                $("#contentOthers").hide();
 
                 $("#Cari").click(function () {
 
@@ -233,6 +249,7 @@
             else if (localStorage.getItem("lvlI") === "4") {
                 $("#contentNormal").show();
                 $("#contentAdmin").hide();
+                $("#contentOthers").hide();
 
                 $("#gangNormal").on('change', function () {
 
@@ -320,7 +337,6 @@
                 }
             });
         }
-
 
         function listCuti() {
             $.ajax({
@@ -476,10 +492,6 @@
                         $("#tableAdmin, #tableNormal").DataTable().destroy();
                     }
                     $("#tableAdmin, #tableNormal").DataTable({
-                        dom: 'Bfrtip',
-                        buttons: [
-                            'copy', 'csv', 'excel', 'pdf', 'print'
-                        ],
                         responsive: true,
                         data: data,
                         columns: [
@@ -496,11 +508,8 @@
                             title: "Actions",
                             render: function (data, type, full, meta) {
                                 countStf++;
-
                                 /*return '<a href="..' + data + '" id="BviewRes" class="btn btn-primary"><i class="fe fe-edit font-16"></i>';*/
                                 return '<a class="btn btn-primary" data-id="' + data + '" data-bs-target="#modalDetails" data-bs-toggle="modal" ><i class="fe fe-edit font-16"></i></a>' + "   " + '<a class="btn btn-danger" data-id="' + data + '" data-bs-target="#modalDelete" data-bs-toggle="modal" ><i class="fe fe-trash font-16"></i></a>'
-
-
                             },
                         },
                         {
@@ -551,9 +560,9 @@
                             },
                         },
                         ],
-                        rowId: function (a) {
-                            return countID++;
-                        },
+                        //rowId: function (a) {
+                        //    return countID++;
+                        //},
                     });
                 },
                 error: function (xhr) {
@@ -561,6 +570,7 @@
                 },
                 complete: function () {
                 }
+                
             });
         }
 

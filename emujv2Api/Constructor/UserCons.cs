@@ -21,6 +21,8 @@ namespace emujv2Api.Constructor
         public string UserLevel { get; set; }
         public string Status { get; set; }
         public string Region { get; set; }
+        public string RegionEng { get; set; }
+        public string kmujEng { get; set; }
         public string KMUJ { get; set; }
         public string Section { get; set; }
         public string TokenAdmin { get; set; }

@@ -44,6 +44,12 @@ $(document).ready(function () {
     var UR = localStorage.getItem("usrR");
     $("#tempekUsrRegion").html(UR);
 
+    var URE = localStorage.getItem("usrRE");
+    $("#tempekUsrRegionE").html(URE);
+
+    var kmu = localStorage.getItem("usrKmu");
+    $("#tempekUsrKMUJE").html(kmu);
+
     var SCN = localStorage.getItem("scn");
     $("#tempekScn").html(SCN);
 

@@ -18,9 +18,6 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Gang Registration</h3>
-                        </div>
                         <div class="card-body">
                             <div class="mb-3 m-0">
                                 <div class="row">
@@ -37,9 +34,6 @@
                                             <table id="tableWork" class="table card-table table-vcenter text-nowrap border" width="100%">
                                                 <thead>
                                                     <tr>
-                                                        @*<th><input type="checkbox" id="chkSelectAll" /></th>*@
-                                                        @*<th><input class="check_all" type="checkbox" id="chkSelectAll" onclick="select_all()" /></th>*@
-                                                        <th><input class="check_all" type="checkbox" /></th>
                                                         <th>Staff ID</th>
                                                         <th>Staff Name</th>
                                                         <th>Grade</th>
@@ -48,9 +42,6 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td>
-                                                            <input type="checkbox" />
-                                                        </td>
                                                         <td>
                                                             <select id="staffID" class="form-control form-select select2" required="required">
                                                                 <option value="-0">.: Select Staff ID :.</option>
@@ -65,6 +56,9 @@
                                                         <td>
                                                             <input class="form-control" id="position" readonly />
                                                         </td>
+                                                        <td>
+                                                            <button id ="btn" class="delBtn btn btn-danger delete m-1">Delete</button>
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -74,7 +68,6 @@
                                 <div class="d-flex justify-content-end">
                                     <button id="sbmtBtn" type="button" class='btn btn-success submit m-1'>Submit Gang</button>
                                     <button id="addBtn" type="button" class='btn btn-primary addmore m-1'>Add More</button>
-                                    <button id="delBtn" type="button" class='btn btn-danger delete m-1'>Delete</button>
                                 </div>
                             </div>
                         </div>
@@ -104,60 +97,43 @@
             listGang();
             listStaffDet();
             listStaff();
-
-
         });
 
-        //check all row
-        $('.check_all').click(function () {
-            var isChecked = $(this).prop('checked');
-            $('#tableWork tbody input[type="checkbox"]').prop('checked', isChecked);
-            $(this).prop('checked', false);
+      //delete 
+        $('#tableWork').on('click', '.delBtn', function (e) {
+            e.preventDefault();
+            var $row = $(this).closest('tr');
+            if ($row.siblings().length > 0) {
+                $row.remove();
+            } else {
+                $row.find('input').val(''); 
+                $row.find('select').val($row.find('select option:first').val()); 
+                $row.find('select').trigger('change');
+            }
         });
 
-        //delete row of selected checkbox
-        $('#delBtn').click(function () {
-            $('#tableWork tbody input[type="checkbox"]:checked').each(function () {
-                $(this).closest('tr').remove();
-            });
-        });
-
-        //add new row
-        //$('#addBtn').click(function () {
-        //    var newRow = $('#tableWork tbody tr:first').clone();
-        //    newRow.find('input').val('');
-        //    $('#tableWork tbody').append(newRow);
-
-        //});
-
-
-
-
-        //$('#addBtn').click(function () {
-        //    // Generate a unique ID for the new row
-        //    var newRowID = 'row-' + Date.now();
-
-        //    // Create a new row with a unique ID
-        //    var newRow = '<tr class="child" id="' + newRowID + '"><td><input type="checkbox" /></td><td><select id="staffID2' + newRowID + '" class="form-control form-select select2" required="required"><option value="-0">.: Select Staff ID :.</option></select></td><td><input class="form-control" id="staffname" readonly /></td><td><input class="form-control" id="grade" readonly /></td><td><input class="form-control" id="position" readonly /></td></tr>';
-
-        //    // Append the new row to the table body
-        //    $('#tableWork tbody').append(newRow);
-        //});
-
+        //add row
         $('#addBtn').click(function () {
-            var newRow = '<tr class="child"><td><input type="checkbox" /></td><td><select id="staffID" class="form-control form-select select2" required="required"><option value="-0">.: Select Staff ID :.</option></select></td><td><input class="form-control" id="staffname" readonly /></td><td><input class="form-control" id="grade" readonly /></td><td><input class="form-control" id="position" readonly /></td></tr>';
+            var newRow = $('#tableWork tbody tr:first').clone();
+            newRow.find('input').val('');
+            newRow.find('select').val("-0").prop('selectedIndex', 0);
+            var newSelectID = 'staffID' + Date.now(); // unique id using timestamp
+            newRow.find('select[id^="staffID"]').attr('id', newSelectID);
             $('#tableWork tbody').append(newRow);
-        });
+            newRow.find('.select2-container').remove();
+            $('#' + newSelectID).select2();
+            $('#' + newSelectID).trigger('change');
+        });    
 
-        //automatic show staffname, grade, position based on staffID
-        $("#staffID").on('change', function () {
-            staffID = $("#staffID option:selected").text();
-            localStorage.setItem("selID", staffID, this.value);
-            listStaffDet(localStorage.getItem("selID", this.value));
-        });
+        // change according staffid
+        $(document).on('change', 'select[id^="staffID"]', function () {
+            var staffID = $(this).val();
+            var row = $(this).closest('tr');
+            listStaffDet(staffID, row);
+        });     
 
-        //fetch staff details based on staff ID
-        function listStaffDet(staffID) {
+        // Fetch staff details based on staff ID
+        function listStaffDet(staffID, row) {
             $.ajax({
                 url: linkDepan + "GetUserDetails?StaffId=" + staffID,
                 dataType: "json",
@@ -166,24 +142,20 @@
                 },
                 success: function (data) {
                     if (data && Array.isArray(data) && data.length > 0) {
-                        $('#staffname').val(data[0].Nama);
-                        $('#grade').val(data[0].Grade);
-                        $('#position').val(data[0].JobDesc);
-                    }
-                    else {
-                        $('#staffname').val(' ');
-                        $('#grade').val(' ');
-                        $('#position').val(' ');
+                        row.find('#staffname').val(data[0].Nama);
+                        row.find('#grade').val(data[0].Grade);
+                        row.find('#position').val(data[0].JobDesc);
+                    } else {
+                        row.find('#staffname').val('');
+                        row.find('#grade').val('');
+                        row.find('#position').val('');
                     }
                 },
                 error: function (xhr) {
                     swarning();
-                },
-                complete: function () {
                 }
             });
         }
-
 
         //list emplid
         function listStaff() {
@@ -197,7 +169,7 @@
                     if (data.length >= 1) {
                         auxArr = [];
                         $.each(data, function (index, value) {
-                            auxArr[index] = "<option value='" + value.Nama + "'>" + value.Emplid + "</option>";
+                            auxArr[index] = "<option value='" + value.Emplid + "'>" + value.Emplid + "</option>";
                         });
                         $('#staffID').append(auxArr.join(''));
                     } else {
