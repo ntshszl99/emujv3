@@ -71,6 +71,49 @@ namespace emujv2Api.Controller
             }
         }
 
+
+        [HttpPost]
+        public string test(string UserLevel, string Nama, string Designation, string Userid,
+         string Region, string KMUJ, string Section)
+        {
+            TokenFunc Token = new TokenFunc();
+            PublicCons RetDat = new PublicCons();
+            string conn = _config.GetValue<string>("KTMBParam:DbConnection");
+            string Salah = "";
+            String Data = Token.ValidateToken(httpContextAccessor.HttpContext.Request.Headers["Token"], ref Salah);
+            InsertUpdate ret = new InsertUpdate();
+            if (string.IsNullOrEmpty(Data))
+            {
+                HttpContext.Response.StatusCode = 401;
+                return null;
+            }
+            UserCons User = JsonConvert.DeserializeObject<UserCons>(Data);
+
+            if (!string.IsNullOrEmpty(User.Userid))
+            {
+                Salah = ret.test(UserLevel, Nama, Designation, Userid, Region, KMUJ, Section);
+                if (Salah == "0")
+                {
+                    RetDat.status = "00";
+                    RetDat.StatusDetail = "Update Save.";
+                    return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+                }
+                else
+                {
+                    RetDat.status = "99";
+                    RetDat.StatusDetail = Salah;
+                    return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+                }
+            }
+            else
+            {
+                RetDat.status = "99";
+                RetDat.StatusDetail = "Error : Not Authorize User.";
+                return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+            }
+        }
+
+
         [HttpPost]
         public string NewUser(UserCons data)
         {
@@ -89,8 +132,7 @@ namespace emujv2Api.Controller
 
             if (!string.IsNullOrEmpty(User.Userid))
             {
-                Salah = ret.NewUser(data.DeptName, data.UserLevel, data.Nama, data.Designation, data.Userid,
-            data.Status, data.Region, data.KMUJ, data.Section);
+                Salah = ret.NewUser(data.DeptName, data.UserLevel, data.Nama, data.Designation, data.Userid, data.Status, data.Region, data.KMUJ, data.Section);
                 if (Salah == "0")
                 {
                     RetDat.status = "00";
@@ -157,6 +199,36 @@ namespace emujv2Api.Controller
                 return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
             }
         }
+
+        //[HttpGet]
+        //public string RegE(string RegionE)
+        //{
+        //    TokenFunc Token = new TokenFunc();
+        //    PublicCons RetDat = new PublicCons();
+        //    string conn = _config.GetValue<string>("KTMBParam:DbConnection");
+        //    string Salah = "";
+        //    String Data = Token.ValidateToken(httpContextAccessor.HttpContext.Request.Headers["Token"], ref Salah);
+        //    Lookup ret = new Lookup();
+
+        //    if (string.IsNullOrEmpty(Data))
+        //    {
+        //        HttpContext.Response.StatusCode = 401;
+        //        return null;
+        //    }
+        //    UserCons User = JsonConvert.DeserializeObject<UserCons>(Data);
+
+        //    if (!string.IsNullOrEmpty(User.Userid))
+        //    {
+        //        return ret.RegE(RegionE);
+        //    }
+        //    else
+        //    {
+        //        RetDat.status = "99";
+        //        RetDat.StatusDetail = "Error : Not Authorize User.";
+        //        return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+        //    }
+        //}
+
 
         [HttpGet]
         public string GetGangDetails(string StaffId)

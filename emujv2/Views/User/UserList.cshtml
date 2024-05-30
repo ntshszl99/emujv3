@@ -9,7 +9,7 @@
             <!--Page header-->
             <div class="page-header">
                 <div class="page-leftheader">
-                    <h4 class="page-title">Registered Users</h4>
+                    <h4 class="page-title">Registered Users' List</h4>
                 </div>
             </div>
             <!--End Page header-->
@@ -23,7 +23,7 @@
                                     <div class="col-lg-12">
                                         <div class="table-responsive table-lg">
                                             <div class="mb-5 d-flex justify-content-start">
-                                                <a class="btn btn-success" data-bs-target="#modalQuill" data-bs-toggle="modal" href="javascript:void(0)">Add New User</a>
+                                                <a class="btn btn-success" data-bs-target="#modalTambah" data-bs-toggle="modal" href="javascript:void(0)">Add New User</a>
                                             </div>
                                             <table id="tableRep" class="table card-table table-vcenter text-nowrap border">
                                                 <thead>
@@ -40,7 +40,7 @@
             </div>
 
             <!--Modal Add User-->
-            <div class="modal" id="modalQuill">
+            <div class="modal" id="modalTambah">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -50,16 +50,11 @@
                             <div class="card-body">
                                 <div class="mb-0 m-0">
                                     <div class="row">
-                                        <!--<div class="col-12">
-                                        <div class="form-label">Staff ID</div>-->
-                                        @*<input id="staffname" type="text" class="form-control" autocomplete="on">*@
-                                        <!--<select id="staffID" class="form-control form-select select2" required="required">
-                                                <option value="-0">.: Select Staff ID :.</option>
-                                            </select>
-                                        </div>-->
                                         <div class="col-12">
                                             <div class="form-label">Staff ID</div>
-                                            <input id="staffID" type="text" class="form-control" autocomplete="on">
+                                            <select id="staffID" class="form-control form-select select2" required="required">
+                                                <option value="-0">.: Select Staff ID :.</option>
+                                            </select>
                                         </div>
                                         <div class="col-12">
                                             <div class="mt-5 form-label">Staff Name</div>
@@ -75,16 +70,20 @@
                                         </div>
                                         <div></div>
                                         <div class="col-12">
-                                            <div class="mt-5 form-label">KMUJ</div>
-                                            <select id="kmuj" class="form-control form-select select2" required="required">
-                                                <option value="-0">.: Select KMUJ :.</option>
-                                            </select>
+                                            <div id="kmujs" class="mt-5 form-label">KMUJ</div>
+                                            <div id="kmujss">
+                                                <select id="kmuj" class="form-control form-select select2" required="required">
+                                                    <option value="-0">.: Select KMUJ :.</option>
+                                                </select>
+                                            </div>
                                         </div>
                                         <div class="col-12">
-                                            <div class="mt-5 form-label">Section</div>
-                                            <select id="section" class="form-control form-select select2" required="required">
-                                                <option value="-0">.: Select Section :.</option>
-                                            </select>
+                                            <div id="sections" class="mt-5 form-label">Section</div>
+                                            <div id="sectionss">
+                                                <select id="section" class="form-control form-select select2" required="required">
+                                                    <option value="-0">.: Select Section :.</option>
+                                                </select>
+                                            </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="mt-5 form-label">Level Entitle</div>
@@ -103,37 +102,12 @@
                     </div>
                 </div>
             </div>
-            <!--/Modal-->
-            <!--Modal Show Details-->
-            @*<div class="modal fade" id="modalDetails" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-                    <div class="modal-dialog modal-xl">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title mt-0">Staff Details</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="table-responsive-sm">
-                                            <table id="tblLsSummaryL" class="table table-bordered mb-0 table-centered table-striped" width="100%">
-                                                <tbody>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>*@
 
             <!--Modal Update User Details-->
             <div class="modal" id="modalDetails">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            @*<h5 class="modal-title mt-0" id="tblLsSummaryL">Summary</h5>*@
                             <h5 class="modal-title">Staff Details</h5><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                         </div>
                         <div class="modal-body">
@@ -162,36 +136,18 @@
                                         </div>
                                         <div class="mb-5"></div>
                                         <div class="card-body bg-success-transparent-2">
-                                            <div class="mb-0 m-0">
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        <div class="mt-5 form-label">Level Entitle</div>
-                                                        <select id="userlevel2" class="form-control form-select select2" required="required">
-                                                            <option value="-0" id="tempekUsrLvl"></option>
-                                                        </select>
-                                                    </div>
-                                                    @*<div class="col-12">
-                                                            <div class="mb-3 mt-5">
-                                                                <div class="form-label">Staff Status</div>
-                                                                <div class="custom-controls-stacked">
-                                                                    <label class="custom-control custom-radio">
-                                                                        <input type="radio" class="custom-control-input" name="example-radios" value="option1" checked="">
-                                                                        <span class="custom-control-label">Active</span>
-                                                                    </label>
-                                                                    <label class="custom-control custom-radio">
-                                                                        <input type="radio" class="custom-control-input" name="example-radios" value="option2">
-                                                                        <span class="custom-control-label">Inactive</span>
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        </div>*@
-                                                    <div class="col-12">
-                                                        <div class="mt-5 form-label">Staff Status</div>
-                                                        <select id="status2" class="form-control form-select select2" required="required">
-                                                            <option value="active">Active</option>
-                                                            <option value="inactive">Inactive</option>
-                                                        </select>
-                                                    </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-label">Level Entitle</div>
+                                                    <select id="userlevel2" class="form-control form-select select2" required="required">
+                                                    </select>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="mt-5 form-label">Staff Status</div>
+                                                    <select id="status2" class="form-control form-select select2" required="required">
+                                                        <option value="active">Active</option>
+                                                        <option value="inactive">Inactive</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -210,7 +166,7 @@
 </div>
 
 @section scripts{
-    
+
     <script src="~/assets/scripts/dashboard.js"></script>
     <script src="~/assets/plugins/morris/morris.min.js"></script>
     <script src="~/assets/plugins/raphael/raphael.min.js"></script>
@@ -220,42 +176,77 @@
     <script type="text/javascript">
         checkSess();
         $(document).ready(function () {
+
             listKMUJ();
             listSection();
-            listStaff();
+            senaraiStaff();
+            maklumatStf();
             listUsrLevel();
             listReports();
 
+
             $('#modalDetails').on('show.bs.modal', function (e) {
                 var ids = $(e.relatedTarget).data('id');
-                $(this).data('id', ids); // Store id in modal data
+                $(this).data('id', ids);
                 console.log('read ' + ids);
-                stfDet(ids); // Populate the modal with details
+                stfDet(ids);
             });
 
+            //button submit update user
             $("#submitUpdate").click(function () {
-                var ids = $('#modalDetails').data('id'); // Assuming the ID is stored at the modal level when shown
+                var ids = $('#modalDetails').data('id');
                 console.log('read ' + ids);
-                updateUser(ids); // Proceed with the update
+                updateUser(ids);
             });
 
-            $("#submitNew").click(function () {
-                addUser(); // Proceed with the update
+            //button submit add user
+            $('#submitNew').click(function () {
+                tambahUser();
+
             });
 
-            //automatic show staffname, grade, position based on staffID
-            $("#staffID").on('change', function () {
-                var staffID = $("#staffID option:selected").text();
-                localStorage.setItem("selID", staffID);
-                listStaffDet(staffID);
-            });
 
 
         });
 
+        function senaraiStaff() {
+            $.ajax({
+                url: linkDepan + "GetEngDetails", //HC
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.Emplid + "'>" + value.Emplid + "</option>";
+                        });
+                        $('#staffID').append(auxArr.join(''));
+                        $("#staffID").on('change', function () {
+                            var staffID = $("#staffID option:selected").text();
+                            localStorage.setItem("selID", staffID);
+                            console.log(staffID);
+                            maklumatStf(staffID);
 
+                            $("#kmuj").val("-0").trigger("change.select2");
+                            $("#section").val("-0").trigger("change.select2");
+                            $("#userlevel").val("-0").trigger("change.select2");
+                        });
+                    } else {
+                        $("#staffID").addClass(" is-invalid");
 
-        //update user details
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+        //update hal user
         function updateUser(ids) {
             var data = {
                 Userid: ids,
@@ -297,28 +288,55 @@
             });
         }
 
-        //register new user
-        function addUser() {
+        //tamboh user dehh
+        function tambahUser() {
             var data = {
                 Userid: $('#staffID').val(),
-                StaffName: $('#staffname').val(),
-                Position: $('#position').val(),
-                Region: $('#region').val(),
-                Kmuj: $('#kmuj').val(),
-                Section: $('#section').val(),
-                UserLevel: $('#userlevel2').val(),
+                Nama: $('#staffname').val(),
+                Designation: $('#position').val(),
+                Region: $("#region").val(),
+                Kmuj: $("#kmuj option:selected").val(),
+                Section: $("#section option:selected").val(),
+                UserLevel: $("#userlevel option:selected").val(),
             };
 
-            console.log("Staff ID:", $("#staffID option:selected").text());
-            console.log("Staff Name:", $("#staffname option:selected").text());
-            console.log("Position:", $("#position option:selected").text());
-            console.log("Region:", $("#region option:selected").text());
-            console.log("Kmuj:", $("#kmuj option:selected").text());
-            console.log("Section:", $("#section option:selected").text());
-            console.log("User Level:", $("#userlevel2 option:selected").text());
+            if (data.Region == 'HQ') {
+                if ($("#kmuj option:selected").val() == '-0' || $("#section option:selected").val() == '-0') {
+                    data.Kmuj = ' ';
+                    data.Section = ' ';
+                    if ($("#userlevel option:selected").val() == '-0') {
+                        alert('Please select User Level.');
+                    }
+                    else executeUser(data);
+                }
+                
+            }
+            else if (data.Region != 'HQ') {
+                if ($("#kmuj option:selected").val() == '-0') {
+                    alert('Please select KMUJ.');
+                }
+                else if ($("#section option:selected").val() == '-0') {
+                    alert('Please select Section.');
+                }
+                else if ($("#userlevel option:selected").val() == '-0') {
+                    alert('Please select User Level.');
+                }
+                else executeUser(data);
+            }
+        }
+
+        function executeUser(data) {
+
+            console.log("UPDATING USER:", data.Userid);
+            console.log("Nama:", data.Nama);
+            console.log("Designation:", data.Designation);
+            console.log("Region:", data.Region);
+            console.log("KMUJ:", data.Kmuj);
+            console.log("SECTION:", data.Section);
+            console.log("USER LEVEL:", data.UserLevel);
 
             $.ajax({
-                url: linkDepan + "NewUser",
+                url: linkDepan + "test",
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify(data),
@@ -335,11 +353,11 @@
                         return;
                     }
                     if (data && data.status === "00") {
-                        $('#modalDetails').modal('hide');
+                        $('#modalTambah').modal('hide');
                         swal.fire('Success!', 'User details have been updated.', 'success');
                         listReports();
                     } else {
-                        $('#modalDetails').modal('hide');
+                        $('#modalTambah').modal('hide');
                         swarning();
                     }
                     console.log("Response data:", data);
@@ -348,49 +366,45 @@
         }
 
 
-        function listStaffDet(staffID) {
+
+
+
+        function maklumatStf(staffID) {
             $.ajax({
-                url: linkDepan + "GetEngDetails?StaffId=" + staffID,
+                url: linkDepan + "GetUserDetails?StaffId=" + staffID,
                 dataType: "json",
                 beforeSend: function (request) {
                     request.setRequestHeader("Token", localStorage.getItem('main'));
                 },
                 success: function (data) {
-                    console.log(data);
                     if (data && Array.isArray(data) && data.length > 0) {
-                        $('#staffname').val(data[0].Nama);
-                        $('#region').val(data[0].RegDesc);
-                        $('#position').val(data[0].JobDesc);
-                    }
-                },
-                error: function (xhr) {
-                    swarning();
-                },
-                complete: function () {
-                }
-            });
-        }
+                        for (let i = 0; i < 3 && i < data.length; i++) {
+                            console.log("Name:", data[i].Nama);
+                            console.log("Region:", data[i].RegDesc);
+                            console.log("Position:", data[i].JobDesc);
 
-        function saveNewUser() {
-            $.ajax({
-                url: linkDepan + "InsertNewUser",
-                type: 'POST',
-                data: data,
-                mimeType: "multipart/form-data",
-                contentType: false,
-                processData: false,
-                beforeSend: function (request) {
-                    request.setRequestHeader("Token", localStorage.getItem('main'));
-                },
-                success: function (data) {
-                    var data = JSON.parse(data);
-                    console.log(data);
-                    if (data.status == "0") {
-                        salertSave();
-                        $('#modalQuill').trigger("reset");
-                    }
-                    else if (data.status == "99") {
-                        swarning('Invalid Invoice Date');
+                            $('#staffname').val(data[0].Nama);
+                            $('#region').val(data[0].RegDesc);
+                            $('#position').val(data[0].JobDesc);
+
+                            if ((data[i].RegDesc) === 'HQ') {
+                                console.log('Data region is HQ');
+                                $('#kmujs').hide('fast');
+                                $('#kmujss').hide('fast'); // Enable KMUJ dropdown
+                                $('#sections').hide('fast');
+                                $('#sectionss').hide('fast'); // Enable Section dropdown
+                            }
+                            else if ((data[i].RegDesc) !== 'HQ') {
+                                console.log('Data region is not HQ');
+                                $('#kmujs').show('fast');
+                                $('#kmujss').show('fast'); // Disable KMUJ dropdown
+                                $('#sections').show('fast');
+                                $('#sectionss').show('fast'); // Disable Section dropdown
+                            }
+                            else if ($('#userlevel' == '-0')) {
+                                alert('Please select User Level');
+                            }
+                        }
                     }
                 },
                 error: function (xhr) {
@@ -405,7 +419,7 @@
             var staffID = $("staffID" + ids).html();
             console.log(staffID);
             $.ajax({
-                url: linkDepan + "GetUserDetails?StaffId=" + ids,
+                url: linkDepan + "Get?StaffId=" + ids,
                 type: 'GET',
                 dataType: 'json',
                 data: {},
@@ -414,10 +428,10 @@
                 },
                 success: function (data) {
                     if (data && Array.isArray(data) && data.length > 0) {
-                        $('#staffID2').val(data[0].Emplid);
-                        $('#staffname2').val(data[0].Nama);
-                        $('#dept2').val(data[0].DeptDesc);
-                        $('#position2').val(data[0].JobDesc);
+                        $('#staffID2').val(data[0].staff_id);
+                        $('#staffname2').val(data[0].staff_name);
+                        $('#dept2').val(data[0].dept);
+                        $('#position2').val(data[0].position);
                         $('#level2').val(data[0].ref_level_name);
                     }
                 },
@@ -456,60 +470,6 @@
             });
         }
 
-        //function listStaff() {
-        //    $.ajax({
-        //        url: linkDepan + "GetEngDetails",
-        //        dataType: "json",
-        //        beforeSend: function (request) {
-        //            request.setRequestHeader("Token", localStorage.getItem('main'));
-        //        },
-        //        success: function (data) {
-        //            if (data.length >= 1) {
-        //                auxArr = [];
-        //                $.each(data, function (index, value) {
-        //                    auxArr[index] = "<option value='" + value.Emplid + "'>" + value.Emplid + "</option>";
-        //                });
-        //                $('#staffID').append(auxArr.join(''));
-        //            } else {
-        //                $("#staffID").addClass(" is-invalid");
-
-        //            }
-        //        },
-        //        error: function (xhr) {
-        //            swarning();
-        //        },
-        //        complete: function () {
-        //        }
-        //    });
-        //}
-
-        function listStaff() {
-            $.ajax({
-                url: linkDepan + "GetEngDetails",
-                dataType: "json",
-                beforeSend: function (request) {
-                    request.setRequestHeader("Token", localStorage.getItem('main'));
-                },
-                success: function (data) {
-                    if (data.length >= 1) {
-                        var staffIDs = data.map(function (value) {
-                            return value.Emplid;
-                        });
-                        $('#staffID').autocomplete({
-                            source: staffIDs
-                        });
-                    } else {
-                        $("#staffID").addClass("is-invalid");
-                    }
-                },
-                error: function (xhr) {
-                    swarning();
-                },
-                complete: function () { }
-            });
-        }
-
-
         function listKMUJ() {
             $.ajax({
                 url: linkDepan + "KMUJList",
@@ -521,7 +481,7 @@
                     if (data.length >= 1) {
                         auxArr = [];
                         $.each(data, function (index, value) {
-                            auxArr[index] = "<option value='" + value.kmuj_id + "'>" + value.kmuj_name + "</option>";
+                            auxArr[index] = "<option value='" + value.kmuj_value + "'>" + value.kmuj_name + "</option>";
                         });
                         $('#kmuj').append(auxArr.join(''));
                     } else {
@@ -548,7 +508,7 @@
                     if (data.length >= 1) {
                         auxArr = [];
                         $.each(data, function (index, value) {
-                            auxArr[index] = "<option value='" + value.section_id + "'>" + value.section_name + "</option>";
+                            auxArr[index] = "<option value='" + value.section_val + "'>" + value.section_name + "</option>";
                         });
                         $('#section').append(auxArr.join(''));
                     } else {

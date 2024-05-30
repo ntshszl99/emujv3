@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "UserRegistration";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -11,62 +10,89 @@
             <!--Page header-->
             <div class="page-header">
                 <div class="page-leftheader">
-                    <h4 class="page-title">Add User</h4>
+                    <h4 class="page-title">User Registration</h4>
                 </div>
             </div>
             <!--End Page header-->
 
-            <div class="row">
-                <div class="col-lg-12 col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Update New User</h3>
+            <div class="" id="tempekList">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            <div class="table-responsive table-lg">
+                                <div class="card-body">
+                                    <div class="col-lg-12">
+                                        <div class="table-responsive table-lg">
+                                            <table id="tableRep" class="table card-table table-vcenter text-nowrap border">
+                                                <thead>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <div class="mb-3 m-0">
-                                <div class="row">
-                                    <div class="col-3">
-                                        <label class="mt-5 form-label">Staff ID</label>
-                                        @*<input id="staffname" type="text" class="form-control" autocomplete="on">*@
-                                        <select id="staffID" class="form-control form-select select2" required="required">
-                                            <option value="-0">.: Select Staff ID :.</option>
-                                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!--Modal Update User Details-->
+            <div class="modal" id="modalDetails">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Staff Details</h5><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="card-body">
+                                <div class="mb-0 m-0">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-label">Staff ID</div>
+                                            <input readonly id="staffID2" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="mt-5 form-label">Staff Name</div>
+                                            <input readonly id="staffname2" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="mt-5 form-label">Designation</div>
+                                            <input readonly id="position2" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="mt-5 form-label">Region</div>
+                                            <input readonly id="region2" type="text" class="form-control">
+                                        </div>
+
+                                        <div class="mb-5"></div>
+                                        <div class="card-body bg-success-transparent-2">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-label">Kmuj</div>
+                                                    <select id="kmuj2" class="form-control form-select select2" required="required">
+                                                        <option value="-0">.: Select KMUJ :.</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mt-5 col-12">
+                                                    <div class="form-label">Section</div>
+                                                    <select id="section2" class="form-control form-select select2" required="required">
+                                                        <option value="-0">.: Select Section :.</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mt-5 col-12">
+                                                    <div class="form-label">Level Entitle</div>
+                                                    <select id="userlevel2" class="form-control form-select select2" required="required">
+                                                        <option value="-0">.: Select User Level :.</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-3">
-                                        <label class="mt-5 form-label">Staff Name</label>
-                                        <input readonly id="staffname" type="text" class="form-control">
-                                    </div>
-                                    <div class="col-3">
-                                        <label class="mt-5 form-label">Designation</label>
-                                        <input readonly id="position" type="text" class="form-control">
-                                    </div>
-                                    <div class="col-3">
-                                        <label class="mt-5 form-label">Region</label>
-                                        <input readonly id="region" type="text" class="form-control">
-                                    </div>
-                                    <div></div>
-                                    <div class="col-4">
-                                        <label class="mt-5 form-label">KMUJ</label>
-                                        <select id="kmuj" class="form-control form-select select2" required="required">
-                                            <option value="-0">.: Select KMUJ :.</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-4">
-                                        <label class="mt-5 form-label">Section</label>
-                                        <select id="section" class="form-control form-select select2" required="required">
-                                            <option value="-0">.: Select Section :.</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-4">
-                                        <label class="mt-5 form-label">Level Entitle</label>
-                                        <select id="userlevel" class="form-control form-select select2" required="required">
-                                            <option value="-0">.: Select Level :.</option>
-                                        </select>
-                                    </div>
-                                    <div></div>
-                                    <div class="mt-5 d-flex justify-content-end">
-                                        <button type="button" class='btn btn-success'>Save</button>
-                                    </div>
+                                </div>
+                                <div class="modal-footer pd-20">
+                                    <button class="btn btn-success" id="submitUpdate" type="button">Submit</button> <button class="btn btn-light" data-bs-dismiss="modal" ria-label="Close" id="cancelUpdate" type="button">Cancel</button>
                                 </div>
                             </div>
                         </div>
@@ -92,41 +118,74 @@
             listUsrLevel();
             listReports();
 
-            //delete user modal
-            $('#usrDet').on('show.bs.modal', function (e) {
-                var dataid = $(e.relatedTarget).data('Emplid');
-                //console.log('baca ' + dataid);
-                userDetails(dataid);
+            $('#modalDetails').on('show.bs.modal', function (e) {
+                var ids = $(e.relatedTarget).data('id');
+                $(this).data('id', ids);
+                console.log('read ' + ids);
+                stfDet(ids);
             });
-        });
 
-        //automatic show staffname, grade, position based on staffID
-        $("#staffID").on('change', function () {
-            staffID = $("#staffID option:selected").text();
-            localStorage.setItem("selID", staffID, this.value);
-            listStaffDet(localStorage.getItem("selID", this.value));
-        });
+            //check unselected field - modaldetails
+            $('#submitUpdate').click(function () {
+                var ids = $('#staffID2').val();
+                var kmujValue = $('#kmuj2').val();
+                var sectionValue = $('#section2').val();
+                var userLevelValue = $('#userlevel2').val();
 
-        function listStaffDet(staffID) {
-            $.ajax({
-                url: linkDepan + "GetUserDetails?StaffId=" + staffID,
-                dataType: "json",
-                beforeSend: function (request) {
-                    request.setRequestHeader("Token", 
-                    );
-                },
-                success: function (data) {
-                    $('#staffname').val(data[0].Nama);
-                    $('#region').val(data[0].RegDesc);
-                    $('#position').val(data[0].JobDesc);
-                },
-                error: function (xhr) {
-                    swarning();
-                },
-                complete: function () {
+                if (kmujValue === '-0' || sectionValue === '-0' || userLevelValue === '-0') {
+                    alert('Please select all the fields.');
+                } else {
+                    $('#modalDetails').modal('hide');
+                    kemaskiniUser(ids);
                 }
             });
+
+        });
+
+    
+
+        //update hal user
+        function kemaskiniUser(ids) {
+            var ids = $('#staffID2').val();
+            var kmujValue = $('#kmuj2').val();
+            var sectionValue = $('#section2').val();
+            var userLevelValue = $('#userlevel2').val();
+
+            console.log("Updating user:", ids);
+            console.log("Kmuj:", $("#kmuj2 option:selected").text());
+            console.log("Section:", $("#section2 option:selected").text());
+            console.log("User Level:", $("#userlevel2 option:selected").text());
+
+            $.ajax({
+                url: linkDepan + "NewUser",
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (response) {
+                    var data;
+                    try {
+                        data = JSON.parse(response);
+                    } catch (error) {
+                        console.error("Error parsing JSON:", error);
+                        swarning();
+                        return;
+                    }
+                    if (data && data.status === "00") {
+                        $('#modalDetails').modal('hide');
+                        swal.fire('Success!', 'User details have been updated.', 'success');
+                        listReports();
+                    } else {
+                        $('#modalDetails').modal('hide');
+                        swarning();
+                    }
+                    console.log("Response data:", data);
+                },
+            });
         }
+
 
         //user level
         function listUsrLevel() {
@@ -142,9 +201,9 @@
                         $.each(data, function (index, value) {
                             auxArr[index] = "<option value='" + value.ref_level_no + "'>" + value.ref_level_name + "</option>";
                         });
-                        $('#userlevel').append(auxArr.join(''));
+                        $('#userlevel, #userlevel2').append(auxArr.join(''));
                     } else {
-                        $("#userlevel").addClass(" is-invalid");
+                        $("#userlevel, #userlevel2").addClass(" is-invalid");
 
                     }
                 },
@@ -185,9 +244,12 @@
         }
 
         //list kmuj
-        function listKMUJ() {
+        function listKMUJ(reg) {
+            // Remove dynamically generated options, but keep the first option
+            $('#kmuj2 option:not(:first-child)').remove();
+
             $.ajax({
-                url: linkDepan + "KMUJList",
+                url: linkDepan + "Reg?Region=" + reg,
                 dataType: "json",
                 beforeSend: function (request) {
                     request.setRequestHeader("Token", localStorage.getItem('main'));
@@ -196,21 +258,25 @@
                     if (data.length >= 1) {
                         auxArr = [];
                         $.each(data, function (index, value) {
-                            auxArr[index] = "<option value='" + value.kmuj_id + "'>" + value.kmuj_name + "</option>";
+                            auxArr[index] = "<option value='" + value.region_nameE + "'>" + value.kmuj_name + "</option>";
                         });
-                        $('#kmuj').append(auxArr.join(''));
+                        $('#kmuj2').append(auxArr.join(''));
+                        console.log('region ialah :' + reg);
+                        if (reg === 'HQ') {
+                            $('#kmuj2').empty(); // Clear the options if reg is HQ
+                            return;
+                        }
                     } else {
-                        $("#kmuj").addClass(" is-invalid");
-
+                        $("#kmuj2").addClass("is-invalid");
                     }
                 },
                 error: function (xhr) {
                     swarning();
                 },
-                complete: function () {
-                }
+                complete: function () { }
             });
         }
+
 
         //list section
         function listSection() {
@@ -226,10 +292,39 @@
                         $.each(data, function (index, value) {
                             auxArr[index] = "<option value='" + value.section_id + "'>" + value.section_name + "</option>";
                         });
-                        $('#section').append(auxArr.join(''));
+                        $('#section, #section2').append(auxArr.join(''));
                     } else {
-                        $("#section").addClass(" is-invalid");
+                        $("#section, #section2").addClass(" is-invalid");
 
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+        function stfDet(ids) {
+            $.ajax({
+                url: linkDepan + "GetUserDetails?StaffId=" + ids,
+                type: 'GET',
+                dataType: 'json',
+                data: {},
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data && Array.isArray(data) && data.length > 0) {
+                        $('#staffID2').val(data[0].Emplid);
+                        $('#staffname2').val(data[0].Nama);
+                        $('#position2').val(data[0].JobDesc);
+                        $('#region2').val(data[0].RegDesc);
+
+                        var reg = data[0].RegDesc;
+                        console.log('region ' + reg);
+                        listKMUJ(reg);
                     }
                 },
                 error: function (xhr) {
@@ -242,7 +337,7 @@
 
         function listReports() {
             $.ajax({
-                url: linkDepan + "GetUser?",
+                url: linkDepan + "GetEngDetails?",
                 type: 'GET',
                 dataType: 'json',
                 data: {},
@@ -255,6 +350,7 @@
                         $('#tableRep').DataTable().destroy();
                     }
                     $.fn.dataTable.ext.errMode = 'throw';
+                    var counter = 1, countStf = 0, countID = 0;
                     $('#tableRep').DataTable({
                         dom: 'Bfrtip',
                         buttons: [
@@ -268,8 +364,6 @@
                             { data: "JobDesc" },
                             { data: "LocDesc" },
                             { data: "RegDesc" },
-                            { data: "ref_level_name" },
-                            { data: "Status" },
                             { data: "Emplid" },
                         ],
                         columnDefs: [
@@ -277,59 +371,53 @@
                                 targets: -1,
                                 title: "Actions",
                                 render: function (data, type, full, meta) {
-                                    return '<a href="..' + data + '" id="BviewRes" class="btn btn-primary"><i class="fe fe-edit font-16"></i>';
+                                    countStf++;
+
+                                    /*return '<a href="..' + data + '" id="BviewRes" class="btn btn-primary"><i class="fe fe-edit font-16"></i>';*/
+                                    return '<a class="btn btn-primary" data-id="' + data + '" data-bs-target="#modalDetails" data-bs-toggle="modal" class="btn btn-primary"><i class="fe fe-edit font-16"></i></a>'
+                                    //return '<button type="button" data-id="' + data + '" class="btn btn-gradient-secondary waves-effect" data-toggle="modal" data-animation="bounce" data-target="#modalDetails">Late Details</button>';
+
                                 },
                             },
                             {
                                 targets: -2,
-                                title: "Status",
-                                render: function (data, type, full, meta) {
-                                    return data;
-                                },
-                            },
-                            {
-                                targets: -3,
-                                title: "Level",
-                                render: function (data, type, full, meta) {
-                                    return data;
-                                },
-                            },
-                            {
-                                targets: -4,
                                 title: "Region",
                                 render: function (data, type, full, meta) {
                                     return data;
                                 },
                             },
                             {
-                                targets: -5,
+                                targets: -3,
                                 title: "Location",
                                 render: function (data, type, full, meta) {
                                     return data;
                                 },
                             },
                             {
-                                targets: -6,
+                                targets: -4,
                                 title: "Designation",
                                 render: function (data, type, full, meta) {
                                     return data;
                                 },
                             },
                             {
-                                targets: -7,
+                                targets: -5,
                                 title: "Name",
                                 render: function (data, type, full, meta) {
                                     return data;
                                 },
                             },
                             {
-                                targets: -8,
+                                targets: -6,
                                 title: "Staff ID",
                                 render: function (data, type, full, meta) {
                                     return data;
                                 },
-                            }
+                            },
                         ],
+                        rowId: function (a) {
+                            return countID++;
+                        },
 
                     });
                 },

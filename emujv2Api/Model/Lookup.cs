@@ -212,39 +212,6 @@ namespace emujv2Api.Model
 
         }
 
-
-        //public string Reg(ref UserCons User)
-        //{
-        //    StringBuilder SqlStr = new StringBuilder();
-        //    Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
-        //    DataTable Recc = new DataTable();
-        //    MsSql DbCon = new MsSql();
-        //    string Salah = "";
-        //    CommonFunc Conn = new CommonFunc();
-
-        //    SqlStr.Append(" select a.kmuj_name, b.region_nameE, b.region_id, c.staff_id ");
-        //    SqlStr.Append(" from kmuj as a, region as b, login_staff as c ");
-        //    SqlStr.Append(" where b.region_id = a.region_id ");
-        //    SqlStr.Append(" and region_name = @Region ");
-        //    SqlStr.Append(" and staff_id = @StaffId ");
-
-        //    ParamTmp.Add("@Emplid", User.Userid);
-
-        //    Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
-        //    if (Recc.Rows.Count > 0)
-        //    {
-        //        foreach (DataRow row in Recc.Rows)
-        //        {
-        //            User.Region = row["region_name"].ToString();
-        //        }
-        //    }
-        //    else
-        //    {
-        //        User.Region = "null";
-        //    }
-
-        //}
-
         public string Reg(string Region)
         {
             StringBuilder SqlStr = new StringBuilder();
@@ -321,7 +288,6 @@ namespace emujv2Api.Model
             return JsonConvert.SerializeObject(Recc, Formatting.Indented);
         }
 
-
         public string GetEngDetails()
         {
             StringBuilder SqlStr = new StringBuilder();
@@ -331,7 +297,7 @@ namespace emujv2Api.Model
             CommonFunc Conn = new CommonFunc();
             Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
 
-            SqlStr.Append(" SELECT Nama, Emplid, RegDesc, JobDesc FROM HR_MAIN ");
+            SqlStr.Append(" SELECT Nama, Emplid, LocDesc, RegDesc, JobDesc FROM HR_MAIN ");
             SqlStr.Append(" WHERE DeptId = '300000' ");
             SqlStr.Append(" AND Status = 'A' ");
             SqlStr.Append(" order by emplid asc ");
@@ -349,16 +315,13 @@ namespace emujv2Api.Model
             CommonFunc Conn = new CommonFunc();
             Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
 
-            SqlStr.Append(" select a.Emplid, a.Nama, a.JobDesc, a.DeptDesc, a.LocDesc, a.RegDesc, a.Grade, c.ref_level_name, a.Status ");
-            SqlStr.Append(" from [HR_MAIN].[dbo].[HR_MAIN] as a, login_staff as b, Ref_userlevel as c ");
-            SqlStr.Append(" where a.Emplid = b.staff_id ");
-            SqlStr.Append(" and b.usrlevel = c.ref_level_no ");
-            SqlStr.Append(" and DeptId = '300000' AND Status = 'A' ");
-            SqlStr.Append(" and Emplid = @StaffId ");
-            SqlStr.Append(" order by Emplid asc ");
+            SqlStr.Append(" SELECT Nama, Emplid, LocDesc, RegDesc, DeptDesc, JobDesc FROM HR_MAIN ");
+            SqlStr.Append(" WHERE DeptId = '300000' ");
+            SqlStr.Append(" AND Status = 'A' ");
+            SqlStr.Append(" AND Emplid = @StaffId ");
 
             ParamTmp.Add("@StaffId", StaffId);
-            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.HRCon, ref Salah);
             return JsonConvert.SerializeObject(Recc, Formatting.Indented);
         }
 
@@ -372,7 +335,7 @@ namespace emujv2Api.Model
 
             Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
 
-            SqlStr.Append(" SELECT staff_id, dept, b.ref_level_name, staff_name, position, staff_status ");
+            SqlStr.Append(" SELECT staff_id, dept, b.ref_level_name, staff_name, position, staff_status, section ");
             SqlStr.Append(" FROM login_staff, Ref_userlevel as b ");
             SqlStr.Append(" where usrlevel = b.ref_level_no ");
             SqlStr.Append(" and staff_id = @StaffId ");
@@ -382,7 +345,7 @@ namespace emujv2Api.Model
             Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
             return JsonConvert.SerializeObject(Recc, Formatting.Indented);
         }
-        
+
         public string GetGangDetails(string StaffId)
         {
             StringBuilder SqlStr = new StringBuilder();
@@ -649,7 +612,6 @@ namespace emujv2Api.Model
             return JsonConvert.SerializeObject(Recc, Formatting.Indented);
         }
 
-
         public string GetDailyReport(string Region, string Kmuj, string Section, string SDate, string EDate)
         {
             StringBuilder SqlStr = new StringBuilder();
@@ -690,7 +652,6 @@ namespace emujv2Api.Model
             Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
             return JsonConvert.SerializeObject(Recc, Formatting.Indented);
         }
-
 
         public string GetDailyReportEngineer(string Category, string Kmuj, string SDate, string EDate)
         {

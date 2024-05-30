@@ -50,7 +50,7 @@
                                             <option value="-0">Select Gang</option>
                                         </select>
                                     </div>
-                                    <div class="col-3">
+                                    <div class="mb-5 col-3">
                                         <label class="mt-5 form-label">No. of Staff (Valid)</label>
                                         <input readonly id="gangno" type="text" class="form-control">
                                     </div>
@@ -126,23 +126,32 @@
                                     </div>
                                     <div class="col-3">
                                         <label class="mt-5 form-label">Time Taken KM</label>
-                                        <input type="text" class="form-control" placeholder="Total KM">
+                                        <input type="text" class="form-control" placeholder="Total Time Taken">
                                     </div>
                                     <div class="col-xl-6">
                                         <div class="mb-3 mt-5">
                                             <div class="form-label">Work at Station?</div>
                                             <div class="custom-controls-stacked">
                                                 <label class="custom-control custom-radio">
-                                                    <input type="radio" class="custom-control-input" name="example-radios" value="option1" checked="">
+                                                    <input type="radio" class="custom-control-input" name="station_option" id="id_radio1" value="Yes" checked>
                                                     <span class="custom-control-label">Yes</span>
                                                 </label>
                                                 <label class="custom-control custom-radio">
-                                                    <input type="radio" class="custom-control-input" name="example-radios" value="option2">
+                                                    <input type="radio" class="custom-control-input" name="station_option" id="id_radio2" value="No">
                                                     <span class="custom-control-label">No</span>
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
+                                    <div id="station" class="col-3" style="display: none;">
+                                        <label class="mt-5 form-label">Station</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <div id="point" class="col-3" style="display: none;">
+                                        <label class="mt-5 form-label">Point No.</label>
+                                        <input type="text" class="form-control" placeholder="Station's Point">
+                                    </div>
+
                                     <div class="col-xl-8">
                                         <label class="mt-5 form-label">Additional Information</label>
                                         <textarea class="mb-5 form-control" placeholder="Textarea" rows="3"></textarea>
@@ -193,6 +202,24 @@
             else {
                 $("#content").show();
             }
+
+            if ($('#id_radio2').prop('checked')) {
+                $('#station').hide('fast');
+                $('#point').hide('fast');
+            }
+
+            // Handle click events on radio buttons
+            $('#id_radio1').click(function () {
+                $('#station').show('fast');
+                $('#point').show('fast');
+            });
+
+            $('#id_radio2').click(function () {
+                $('#station').hide('fast');
+                $('#point').hide('fast');
+            });
+
+
 
         });
 

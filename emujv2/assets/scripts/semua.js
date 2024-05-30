@@ -21,7 +21,7 @@ $(document).ready(function () {
     $("#tempekIC").html(IC);
 
     var age = localStorage.getItem("age");
-    $("#tempekAge").html(age);
+    $("#tempekAge").html(age + ' Years');
 
     var PN = localStorage.getItem("phoneNum");
     $("#tempekNombor").html(PN);
@@ -64,6 +64,8 @@ $(document).ready(function () {
 
 
 });
+
+
 
 
 

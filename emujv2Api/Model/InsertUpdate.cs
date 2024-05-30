@@ -81,8 +81,7 @@ namespace emujv2Api.Model
 
         }
 
-        public string NewUser(string Dept, string UserLevel, string StaffName, string Position, string Userid,
-            string Status, string RegionID, string Kmuj, string Section)
+        public string NewUser(string UserLevel, string Nama, string Designation, string Userid, string Region, string Kmuj, string Section)
         {
             StringBuilder SqlStr = new StringBuilder();
             DataTable Recc = new DataTable();
@@ -91,44 +90,40 @@ namespace emujv2Api.Model
             CommonFunc Conn = new CommonFunc();
             Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
 
-            SqlStr.Append(" INSERT INTO login_staff ");
-            SqlStr.Append(" (login_id ");
-            SqlStr.Append(" , staff_id ");
-            SqlStr.Append(" , dept ");
-            SqlStr.Append(" , usrlevel ");
-            SqlStr.Append(" , staff_name ");
-            SqlStr.Append(" , position ");
-            SqlStr.Append(" , upd_date ");
-            SqlStr.Append(" , upd_by ");
-            SqlStr.Append(" , staff_status ");
-            SqlStr.Append(" , section ");
-            SqlStr.Append(" , muj ");
-            SqlStr.Append(" , kmuj) ");
+            SqlStr.Append(" INSERT INTO[dbo].[login_staff] ");
+            SqlStr.Append(" ([login_id] ");
+            SqlStr.Append(" ,[staff_id] ");
+            SqlStr.Append(" ,[dept] ");
+            SqlStr.Append(" ,[usrlevel] ");
+            SqlStr.Append(" ,[staff_name] ");
+            SqlStr.Append(" ,[position] ");
+            SqlStr.Append(" ,[upd_date ");
+            SqlStr.Append(" ,[upd_by] ");
+            SqlStr.Append(" ,[staff_status] ");
+            SqlStr.Append(" ,[section] ");
+            SqlStr.Append(" ,[muj] ");
+            SqlStr.Append(" ,[kmuj]) ");
             SqlStr.Append(" VALUES ");
             SqlStr.Append(" ( @LoginID ");
             SqlStr.Append(" , @StaffID ");
-            SqlStr.Append(" , @Dept ");
+            SqlStr.Append(" , 'Permanent Way' ");
             SqlStr.Append(" , @UserLevel ");
-            SqlStr.Append(" , @StaffName ");
-            SqlStr.Append(" , @Position ");
-            SqlStr.Append(" , @UpdDate ");
+            SqlStr.Append(" , @Nama ");
+            SqlStr.Append(" , @Designation ");
+            SqlStr.Append(" , GETDATE() ");
             SqlStr.Append(" , @Userid ");
-            SqlStr.Append(" , @Status ");
-            SqlStr.Append(" , @RegionID ");
+            SqlStr.Append(" , 'active' ");
+            SqlStr.Append(" , @Region ");
             SqlStr.Append(" , @Kmuj ");
             SqlStr.Append(" , @Section ) ");
-            SqlStr.Append(" WHERE upd_date = CONVERT(varchar(10), GETDATE(), 103) + ' ' + REPLACE(CONVERT(varchar(5), GETDATE(), 108), ':', '') ");
-            SqlStr.Append(" AND login_id = staff_id ");
 
             ParamTmp.Add("@LoginID", Userid ?? (object)DBNull.Value);
             ParamTmp.Add("@StaffID", Userid ?? (object)DBNull.Value);
-            ParamTmp.Add("@Dept", Dept ?? (object)DBNull.Value);
             ParamTmp.Add("@UserLevel", UserLevel ?? (object)DBNull.Value);
-            ParamTmp.Add("@StaffName", StaffName ?? (object)DBNull.Value);
-            ParamTmp.Add("@Position", Position ?? (object)DBNull.Value);
+            ParamTmp.Add("@StaffName", Nama ?? (object)DBNull.Value);
+            ParamTmp.Add("@Position", Designation ?? (object)DBNull.Value);
             ParamTmp.Add("@Userid", Userid);
-            ParamTmp.Add("@Status", Status ?? (object)DBNull.Value);
-            ParamTmp.Add("@RegionID", RegionID ?? (object)DBNull.Value);
+            ParamTmp.Add("@Region", Region ?? (object)DBNull.Value);
             ParamTmp.Add("@Kmuj", Kmuj ?? (object)DBNull.Value);
             ParamTmp.Add("@Section", Section ?? (object)DBNull.Value);
 
@@ -136,6 +131,57 @@ namespace emujv2Api.Model
             if (Salah != "") { return Salah; }
             else { return "0"; }
 
+        }
+
+        public string test(string UserLevel, string Nama, string Designation, string Userid,
+           string Region, string KMUJ, string Section)
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+            Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
+
+
+            SqlStr.Append(" INSERT INTO [dbo].[login_staff] ");
+            SqlStr.Append(" ([login_id] ");
+            SqlStr.Append(" ,[staff_id] ");
+            SqlStr.Append(" ,[dept] ");
+            SqlStr.Append(" ,[usrlevel] ");
+            SqlStr.Append(" ,[staff_name] ");
+            SqlStr.Append(" ,[position] ");
+            SqlStr.Append(" ,[upd_date] ");
+            SqlStr.Append(" ,[upd_by] ");
+            SqlStr.Append(" ,[staff_status] ");
+            SqlStr.Append(" ,[section] ");
+            SqlStr.Append(" ,[muj] ");
+            SqlStr.Append(" ,[kmuj]) ");
+            SqlStr.Append(" VALUES ");
+            SqlStr.Append(" ( @LoginID ");
+            SqlStr.Append(" , @StaffID ");
+            SqlStr.Append(" , 'Permanent Way' ");
+            SqlStr.Append(" , @UserLevel ");
+            SqlStr.Append(" , @StaffName ");
+            SqlStr.Append(" , @Designation ");
+            SqlStr.Append(" , CONVERT(varchar(10), GETDATE(), 103) + ' ' + REPLACE(CONVERT(varchar(5), GETDATE(), 108), ':', '') ");
+            SqlStr.Append(" , 'active' "); // Simplified: Inserting 'active' directly
+            SqlStr.Append(" , @Region ");
+            SqlStr.Append(" , @KMUJ ");
+            SqlStr.Append(" , @Section ) ");
+
+            ParamTmp.Add("@LoginID", Userid);
+            ParamTmp.Add("@StaffID", Userid);
+            ParamTmp.Add("@UserLevel", UserLevel);
+            ParamTmp.Add("@StaffName", Nama); // Ensure to add StaffName
+            ParamTmp.Add("@Designation", Designation);
+            ParamTmp.Add("@Region", Region);
+            ParamTmp.Add("@KMUJ", KMUJ);
+            ParamTmp.Add("@Section", Section);
+
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+            if (Salah != "") { return Salah; }
+            else { return "0"; }
         }
     }
 }
