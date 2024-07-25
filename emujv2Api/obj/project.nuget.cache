@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "PuadrWromf+UjtLhfaoYeqHg4Uq9nrNs8pRTNp2/phtykGWtVENp1K8n3Zd5EclNHMCpdjIpusZb4JpKxV6MMw==",
+  "dgSpecHash": "sxtFZ0JfQtE=",
   "success": true,
-  "projectFilePath": "D:\\e-MUJ 3\\emujv2Api\\emujv2Api.csproj",
+  "projectFilePath": "C:\\Users\\natashas\\Documents\\emuj\\emujv2Api\\emujv2Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\natashas\\.nuget\\packages\\jwt\\8.1.6\\jwt.8.1.6.nupkg.sha512",
     "C:\\Users\\natashas\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\5.0.5\\microsoft.aspnetcore.jsonpatch.5.0.5.nupkg.sha512",
@@ -89,5 +89,26 @@
     "C:\\Users\\natashas\\.nuget\\packages\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512",
     "C:\\Users\\natashas\\.nuget\\packages\\system.windows.extensions\\7.0.0\\system.windows.extensions.7.0.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Oracle.ManagedDataAccess.Core' 3.21.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-5pm2-9mr2-3frq",
+      "libraryId": "Oracle.ManagedDataAccess.Core",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'System.Data.SqlClient' 4.8.5 has a known high severity vulnerability, https://github.com/advisories/GHSA-98g6-xh36-x2p7",
+      "libraryId": "System.Data.SqlClient",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    }
+  ]
 }

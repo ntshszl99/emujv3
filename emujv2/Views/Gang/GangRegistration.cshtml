@@ -31,7 +31,7 @@
                                 <div class="card-body">
                                     <div class="col-lg-12">
                                         <div class="table-responsive table-lg">
-                                            <table id="tableWork" class="table card-table table-vcenter text-nowrap border" width="100%">
+                                            <table id="tableWork" class="table table-bordered text-nowrap" width="100%">
                                                 <thead>
                                                     <tr>
                                                         <th>Staff ID</th>
@@ -42,22 +42,21 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td>
-                                                            <select id="staffID" class="form-control form-select select2" required="required">
-                                                                <option value="-0">.: Select Staff ID :.</option>
+                                                        <td class="col-3">
+                                                            <select id="staffID" class="form-control form-select select2">
                                                             </select>
                                                         </td>
-                                                        <td>
+                                                        <td class="col-3">
                                                             <input class="form-control" id="staffname" readonly />
                                                         </td>
-                                                        <td>
+                                                        <td class="col-3">
                                                             <input class="form-control" id="grade" readonly />
                                                         </td>
-                                                        <td>
+                                                        <td class="col-3">
                                                             <input class="form-control" id="position" readonly />
                                                         </td>
                                                         <td>
-                                                            <button id ="btn" class="delBtn btn btn-danger delete m-1">Delete</button>
+                                                            <button class="delBtn btn btn-danger delete deleteBtn">Delete</button>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -95,45 +94,88 @@
 
         $(document).ready(function () {
             listGang();
-            listStaffDet();
-            listStaff();
+            maklumatStf();
+
+            initializeSelect2ForStaffID('#staffID');
+
+            $('#addBtn').click(function () {
+                var newRow = $('#tableWork tbody tr:first').clone();
+                newRow.find('input').val('');
+
+                var staffSelect = newRow.find('select[id^="staffID"]');
+                staffSelect.val('');
+                newRow.find('.select2-container').remove();
+
+                var newStaffID = 'staffID' + Date.now();
+                staffSelect.attr('id', newStaffID);
+
+                $('#tableWork tbody').append(newRow);
+                initializeSelect2ForStaffID('#' + newStaffID);
+
+            });
+
+            $('#tableWork').on('click', '.deleteBtn', function (event) {
+                event.preventDefault();
+                var $row = $(this).closest('tr');
+                var $tableBody = $('#tableWork tbody');
+
+                if ($tableBody.find('tr').length > 1) {
+                    $row.remove();
+                } else {
+                    $row.find('input').val('');
+                    $row.find('select').val('').trigger('change');
+                }
+            });
+
         });
 
-      //delete 
-        $('#tableWork').on('click', '.delBtn', function (e) {
-            e.preventDefault();
-            var $row = $(this).closest('tr');
-            if ($row.siblings().length > 0) {
-                $row.remove();
-            } else {
-                $row.find('input').val(''); 
-                $row.find('select').val($row.find('select option:first').val()); 
-                $row.find('select').trigger('change');
-            }
-        });
+        function initializeSelect2ForStaffID(selector) {
+            $(selector).select2({
+                placeholder: "Type to search for Staff ID",
+                minimumInputLength: 1,
+                ajax: {
+                    url: function (params) {
+                        return linkDepan + "GetEngDetails?StaffId=" + params.term;
+                    },
+                    dataType: 'json',
+                    delay: 250,
+                    beforeSend: function (request) {
+                        request.setRequestHeader("Token", localStorage.getItem('main'));
+                    },
+                    data: function (params) {
+                        return {
+                            StaffId: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    id: item.Emplid,
+                                    text: item.Emplid
+                                };
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            }).on("select2:select", function (e) {
+                var selectedStaffID = e.params.data.id;
+                var row = $(this).closest('tr');
 
-        //add row
-        $('#addBtn').click(function () {
-            var newRow = $('#tableWork tbody tr:first').clone();
-            newRow.find('input').val('');
-            newRow.find('select').val("-0").prop('selectedIndex', 0);
-            var newSelectID = 'staffID' + Date.now(); // unique id using timestamp
-            newRow.find('select[id^="staffID"]').attr('id', newSelectID);
-            $('#tableWork tbody').append(newRow);
-            newRow.find('.select2-container').remove();
-            $('#' + newSelectID).select2();
-            $('#' + newSelectID).trigger('change');
-        });    
+                console.log('selected:' + selectedStaffID);
+                maklumatStf(selectedStaffID, row);
+            });
+        }
 
         // change according staffid
         $(document).on('change', 'select[id^="staffID"]', function () {
             var staffID = $(this).val();
             var row = $(this).closest('tr');
-            listStaffDet(staffID, row);
-        });     
+            maklumatStf(staffID, row);
+        });
 
-        // Fetch staff details based on staff ID
-        function listStaffDet(staffID, row) {
+        function maklumatStf(staffID, row) {
             $.ajax({
                 url: linkDepan + "GetUserDetails?StaffId=" + staffID,
                 dataType: "json",
@@ -141,46 +183,24 @@
                     request.setRequestHeader("Token", localStorage.getItem('main'));
                 },
                 success: function (data) {
+                    console.log("maklumatStf success callback data:", data);
                     if (data && Array.isArray(data) && data.length > 0) {
                         row.find('#staffname').val(data[0].Nama);
                         row.find('#grade').val(data[0].Grade);
                         row.find('#position').val(data[0].JobDesc);
-                    } else {
+                    }
+                    else {
                         row.find('#staffname').val('');
                         row.find('#grade').val('');
                         row.find('#position').val('');
                     }
                 },
                 error: function (xhr) {
-                    swarning();
-                }
-            });
-        }
-
-        //list emplid
-        function listStaff() {
-            $.ajax({
-                url: linkDepan + "GetUser",
-                dataType: "json",
-                beforeSend: function (request) {
-                    request.setRequestHeader("Token", localStorage.getItem('main'));
-                },
-                success: function (data) {
-                    if (data.length >= 1) {
-                        auxArr = [];
-                        $.each(data, function (index, value) {
-                            auxArr[index] = "<option value='" + value.Emplid + "'>" + value.Emplid + "</option>";
-                        });
-                        $('#staffID').append(auxArr.join(''));
-                    } else {
-                        $("#staffID").addClass(" is-invalid");
-
-                    }
-                },
-                error: function (xhr) {
+                    console.error("maklumatStf error callback:", xhr);
                     swarning();
                 },
                 complete: function () {
+                    console.log("maklumatStf complete callback");
                 }
             });
         }

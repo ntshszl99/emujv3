@@ -12,45 +12,32 @@ namespace ConnectionModule
         private OracleConnection Connection = null;
         private readonly object padlock = new Object();
         private readonly object lockpad = new Object();
+
+       
+
+        // Refactored to not require a connection string as a parameter
         private OracleConnection getConnection(string Conn, ref string error)
         {
-            Shared.LogError Salah = new Shared.LogError();
-            /*
-            Oracle.ManagedDataAccess.Client.OracleConfiguration.LoadBalancing = false;
-            Oracle.ManagedDataAccess.Client.OracleConfiguration.HAEvents = false;
-            Oracle.ManagedDataAccess.Client.OracleConfiguration.StatementCacheSize = 25;
-            Oracle.ManagedDataAccess.Client.OracleConfiguration.SelfTuning = false;
-            Oracle.ManagedDataAccess.Client.OracleConfiguration.CommandTimeout = 60;
-            Oracle.ManagedDataAccess.Client.OracleConfiguration.FetchSize = 1024 * 1024;
-            Oracle.ManagedDataAccess.Client.OracleConfiguration.SendBufferSize = 8192;
-            Oracle.ManagedDataAccess.Client.OracleConfiguration.DisableOOB = true;
-            */
             try
             {
                 if (Connection != null)
                     Connection.Dispose();
-                Connection = new OracleConnection(Conn);
+                Connection = new OracleConnection(Conn); // Use the passed-in Conn parameter
                 if (Connection.State == ConnectionState.Closed)
                     Connection.Open();
             }
             catch (Exception ex)
             {
-                Salah.WriteError(ex.ToString());
+                error = ex.Message;
                 if (Connection != null)
                 {
                     Connection.Dispose();
-                    Connection = new OracleConnection(Conn);
+                    Connection = null; // Ensure the connection is null if an error occurs
                 }
-                else { error = ex.Message.ToString(); }
-            }
-            finally
-            {
-                if (Connection.State == ConnectionState.Closed)
-                    Connection.Open();
             }
             return Connection;
         }
-        private void Close()
+        public void Close()
         {
             if (Connection != null)
             {

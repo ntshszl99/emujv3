@@ -37,7 +37,7 @@ namespace ConnectionModule
             }
             finally
             {
-                if (Connection.State == ConnectionState.Closed)
+                if (Connection != null && Connection.State == ConnectionState.Closed)
                     Connection.Open();
             }
             return Connection;

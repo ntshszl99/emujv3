@@ -52,7 +52,7 @@
                                     <div class="card-body">
                                         <div class="col-lg-12">
                                             <div class="table-responsive table-lg">
-                                                <table id="tableAdmin" class="table card-table table-vcenter text-nowrap border">
+                                                <table id="tableAdmin" class="table table-bordered text-nowrap">
                                                     <thead>
                                                     </thead>
                                                     <tbody></tbody>
@@ -500,10 +500,6 @@
         //delete modal
         $('#modalDelete').on('show.bs.modal', function (e) {
             var ids = $(e.relatedTarget).data('id');
-            stfDelete(ids);
-        });
-
-        function stfDelete(ids) {
             var code = $(".code" + ids).html();
             $.ajax({
                 url: linkDepan + "GetReportDetails?RptCode=" + ids,
@@ -522,6 +518,10 @@
                 complete: function () {
                 }
             });
+        });
+
+        function stfDelete(ids) {
+            
         }
 
         function listGang() {

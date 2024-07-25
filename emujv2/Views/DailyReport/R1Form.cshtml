@@ -57,7 +57,7 @@
 
                                     <div class="col-lg-12">
                                         <div class="table-responsive table-lg">
-                                            <table id="tableRep" class="table card-table table-vcenter text-nowrap border">
+                                            <table id="tableRep" class="table table-bordered text-nowrap">
                                                 <thead>
                                                 </thead>
                                                 <tbody></tbody>
@@ -128,12 +128,13 @@
                                         <label class="mt-5 form-label">Time Taken KM</label>
                                         <input type="text" class="form-control" placeholder="Total Time Taken">
                                     </div>
-                                    <div class="col-xl-6">
+                                    <div></div>
+                                    <div class="col-3">
                                         <div class="mb-3 mt-5">
                                             <div class="form-label">Work at Station?</div>
                                             <div class="custom-controls-stacked">
                                                 <label class="custom-control custom-radio">
-                                                    <input type="radio" class="custom-control-input" name="station_option" id="id_radio1" value="Yes" checked>
+                                                    <input type="radio" class="custom-control-input" name="station_option" id="id_radio1" value="Yes">
                                                     <span class="custom-control-label">Yes</span>
                                                 </label>
                                                 <label class="custom-control custom-radio">
@@ -143,16 +144,18 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="station" class="col-3" style="display: none;">
+                                    <div id="station" class="col-3" style="display:none;">
                                         <label class="mt-5 form-label">Station</label>
-                                        <input type="text" class="form-control">
+                                        <select id="stationn" class="form-control form-select select2" required="required">
+                                            <option value="-0">.: Select Station :.</option>
+                                        </select>
                                     </div>
-                                    <div id="point" class="col-3" style="display: none;">
+                                    <div id="point" class="col-3" style="display:none;">
                                         <label class="mt-5 form-label">Point No.</label>
                                         <input type="text" class="form-control" placeholder="Station's Point">
                                     </div>
 
-                                    <div class="col-xl-8">
+                                    <div class="col-xl-12">
                                         <label class="mt-5 form-label">Additional Information</label>
                                         <textarea class="mb-5 form-control" placeholder="Textarea" rows="3"></textarea>
                                     </div>
@@ -185,9 +188,6 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            /*listRegion();*/
-            //listKMUJ();
-            //listSection();
             listGang();
             listLnCondition();
             listCategory();
@@ -195,17 +195,13 @@
             listCatDetails();
             listWorkUnit();
             listReports();
+            listLocation();
 
             if (localStorage.getItem("lvlI") === "2" || localStorage.getItem("lvlI") === "3" || localStorage.getItem("lvlI") === "6") {
                 $("#content").hide();
             }
             else {
                 $("#content").show();
-            }
-
-            if ($('#id_radio2').prop('checked')) {
-                $('#station').hide('fast');
-                $('#point').hide('fast');
             }
 
             // Handle click events on radio buttons
@@ -219,15 +215,11 @@
                 $('#point').hide('fast');
             });
 
-
-
-        });
-
-        $(function () {
             $("#datepicker").datepicker();
+
         });
 
-        //disabled selection 
+        //disabled selection
         $("#region").on('change', function () {
             if ($("#region").val() == '-0') {
                 $('#kmuj').prop('disabled', true);
@@ -271,11 +263,11 @@
         });
 
 
-   
+
 
         function listReports(kmuj, section, gang) {
             $.ajax({
-                url: linkDepan + "GetGList?Kmuj=" + kmuj + "&Section=" + section + "&Gang=" + gang,
+                url: linkDepan + "GetGListNormal?Kmuj=" + kmuj + "&Section=" + section + "&Gang=" + gang,
                 type: 'GET',
                 dataType: 'json',
                 data: {},
@@ -283,7 +275,6 @@
                     request.setRequestHeader("Token", localStorage.getItem('main'));
                 },
                 success: function (data) {
-                    console.log('mana : ' + data);
                     var counter = 1;
                     $.fn.dataTable.ext.errMode = 'throw';
                     if ($.fn.dataTable.isDataTable('#tableRep')) {
@@ -307,7 +298,7 @@
                             render: function (data, type, full, meta) {
                                 return '<a class="btn btn-primary"><i class="fa fa-minus fa-rotate-90 font-16"></i>';
                                 //return '<a class="btn btn-primary" data-id="' + data + '" data-bs-target="#modalDetails" data-bs-toggle="modal" class="btn btn-primary"><i class="fe fe-edit font-16"></i></a>'
-                            //    return data;
+                                //    return data;
                             },
                         },
                         {
@@ -376,7 +367,7 @@
         });
 
 
-        //show/hide work catergory - emegergency 
+        //show/hide work catergory - emegergency
         $("#category").on('change', function () {
             if ($("#category option:selected").val() == '1') {
                 $("#catEmer").show();
@@ -428,10 +419,6 @@
                 }
             });
         }
-
-
-      
-
 
         function listGang() {
             $.ajax({
@@ -514,7 +501,6 @@
             });
         }
 
-
         function listCatDetails() {
             $.ajax({
                 url: linkDepan + "GetCategoryDetails",
@@ -542,7 +528,6 @@
             });
         }
 
-
         function listWorkType() {
             $.ajax({
                 url: linkDepan + "GetWorkType",
@@ -559,6 +544,34 @@
                         $('#worktype').append(auxArr.join(''));
                     } else {
                         $("#worktype").addClass(" is-invalid");
+
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+
+        function listLocation() {
+            $.ajax({
+                url: linkDepan + "GetLocation",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.LCN_CODE + "'>" + value.LCN_NAME + "</option>";
+                        });
+                        $('#stationn').append(auxArr.join(''));
+                    } else {
+                        $("#stationn").addClass(" is-invalid");
 
                     }
                 },

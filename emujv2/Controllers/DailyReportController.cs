@@ -12,7 +12,12 @@ namespace emujv2.Controllers
         {
             return View();
         }
-        
+
+        public ActionResult R1Report()
+        {
+            return View();
+        }
+
         public ActionResult Form()
         {
             return View();

@@ -1,0 +1,263 @@
+﻿
+@{
+    ViewBag.Title = "R1Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="app-content main-content">
+    <div class="side-app">
+        <div class="container-fluid main-container">
+            <!--Page header-->
+            <div class="page-header">
+                <div class="page-leftheader">
+                    <h4 class="page-title">R1 Report</h4>
+                </div>
+            </div>
+            <div class="" id="contentAdmin">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3 m-0">
+                            <div class="row">
+                                <div class="col-3">
+                                    <label class="mt-3 form-label">KMUJ</label>
+                                    <select id="kmuj" class="form-control form-select select2">
+                                        <option value="-0">Select KMUJ</option>
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-3 form-label">Section</label>
+                                    <select id="section" class="form-control form-select select2">
+                                        <option value="-0">Select Section</option>
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-3 form-label">Date (From - To)</label>
+                                    <div class="input-group">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text"><i class=" mt-1 mb-1 fa fa-solid fa fa-calendar font-20"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" id="txtDate" name="txtDate" required="required" autocomplete="off" />
+                                    </div>
+                                </div>
+                                <div class="col-1">
+                                    @*<label class="mt-6 form-label" style="display: none;">.</label>*@
+                                    <button type="button" name="Cari" id="Cari" class="mt-6 btn btn-purple waves-effect waves-light"><i class="fa fa-search"></i></button>
+                                </div>
+                                <div class="card-body">
+                                    <div class="col-lg-12">
+                                        <div class="table-responsive table-lg">
+                                            <table id="tableRep" class="table table-bordered text-nowrap hover">
+                                                <thead></thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+
+    <script src="~/assets/scripts/dashboard.js"></script>
+    <script src="~/assets/plugins/daterangepicker/daterangepicker.js"></script>
+    <script src="~/assets/plugins/select2/select2.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            checkSess();
+            listSection();
+            listKMUJ();
+            listReports();
+
+            $('#txtDate').daterangepicker({
+
+                opens: 'center',
+                minYear: 2021,
+                maxSpan: {
+                    days: 30
+                },
+            }, function (start, end, label) {
+                console.log("A new date selection was made: " + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD'));
+                console.log(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
+
+                sdate = start.format('YYYY/MM/DD');
+                edate = end.format('YYYY/MM/DD');
+                localStorage.setItem("selHar", sdate);
+                localStorage.setItem("selHarE", edate);
+
+                kmj = $("#kmuj option:selected").text();
+                localStorage.setItem("selKmj", kmj, this.value);
+
+                scn = $("#section option:selected").text();
+                localStorage.setItem("selScn", scn, this.value);
+
+                listReports(localStorage.getItem("selKmj", this.value), localStorage.getItem("selScn", this.value), sdate, edate);
+            });
+
+            $("#kmuj, #section, sdate, edate").on('change', function () {
+
+                checkStore();
+
+                var sdate = localStorage.setItem("selHar", sdate);
+                var edate = localStorage.setItem("selHarE", edate);
+
+                kmj = $("#kmuj option:selected").text();
+                localStorage.setItem("selKmj", kmj, this.value);
+
+                scn = $("#section option:selected").text();
+                localStorage.setItem("selScn", scn, this.value);
+
+                listReports(localStorage.getItem("selKmj", this.value), localStorage.getItem("selScn", this.value), sdate, edate);
+
+            });
+
+
+
+        });
+
+
+        function listSection() {
+            $.ajax({
+                url: linkDepan + "GetSectionList",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.section_id + "'>" + value.section_name + "</option>";
+                        });
+                        $('#section').append(auxArr.join(''));
+                    } else {
+                        $("#section").addClass(" is-invalid");
+
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+        function listKMUJ() {
+            $.ajax({
+                url: linkDepan + "KMUJList",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.kmuj_id + "'>" + value.kmuj_name + "</option>";
+                        });
+                        $('#kmuj').append(auxArr.join(''));
+                    } else {
+                        $("#kmuj").addClass(" is-invalid");
+
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+
+        function listReports(kmuj, section, sdate, edate) {
+            $.ajax({
+                url: linkDepan + "GetR1?Kmuj=" + kmuj + "&Section=" + section + "&SDate=" + sdate + "&Edate=" + edate,
+                type: 'GET',
+                dataType: 'json',
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    $.fn.dataTable.ext.errMode = 'throw';
+
+                    if ($.fn.dataTable.isDataTable('#tableRep')) {
+                        $('#tableRep').DataTable().clear().destroy();
+                    }
+
+                    var uniquework_name = [...new Set(data.map(item => item.work_name))];
+                    var thead = '<tr><th rowspan="2">Report ID</th><th rowspan="2">Staff No</th>';
+                    uniquework_name.forEach(desc => {
+                        thead += `<th colspan="7">${desc}</th>`;
+                    });
+                    thead += '</tr><tr>';
+
+                    let startDate = moment(sdate, 'YYYY/MM/DD');
+                    uniquework_name.forEach(() => {
+                        for (let i = 0; i < 7; i++) {
+                            let headerDate = moment(startDate).add(i, 'days').format('D');
+                            thead += `<th>${headerDate}</th>`;
+                        }
+                    });
+                    thead += '</tr>';
+                    $('#tableRep thead').html(thead);
+
+                    var tbody = '';
+                    data.forEach((row, index) => {
+                        tbody += '<tr>';
+                        tbody += `<td>${row.staff_attdno_rpt_id}</td>`;
+                        tbody += `<td>${row.staff_attdno_no}</td>`;
+
+                        for (let i = 0; i < 7; i++) {
+                            let dayDate = moment(startDate).add(i, 'days').format('DD/MM/YYYY');
+                            if (moment(row.daily_date, 'DD/MM/YYYY').isSame(moment(dayDate, 'DD/MM/YYYY'))) {
+                                tbody += '<td>|</td>'; // Right tick symbol
+                            } else {
+                                tbody += '<td></td>'; // Empty cell if no match
+                            }
+                        }
+
+                        tbody += '</tr>';
+                    });
+
+                    tbody += '<tr>';
+                    tbody += '<td colspan="2">TotalKM</td>'; 
+
+                    for (let i = 0; i < 7; i++) {
+                        let dayDate = moment(startDate).add(i, 'days').format('DD/MM/YYYY');
+                        let totalKMValue = getTotalKMForDate(dayDate); 
+                        tbody += `<td>${totalKMValue || ''}</td>`; 
+                    }
+
+                    tbody += '</tr>';
+                    $('#tableRep tbody').html(tbody);
+
+                    $('#tableRep').DataTable({
+                        dom: 'Bfrtip',
+                        buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+                        responsive: true,
+                        autoWidth: false,
+                    });
+                },
+                error: function (xhr) {
+       
+                },
+                complete: function () {
+              
+                }
+            });
+        }
+
+
+    </script>
+}
+
+

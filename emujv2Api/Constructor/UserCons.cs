@@ -8,6 +8,7 @@ namespace emujv2Api.Constructor
     public class UserCons
     {
         public string Userid { get; set; }
+        public string LoginId { get; set; }
         public string Nama { get; set; }
         public string Designation { get; set; }
         public string YrsService { get; set; }
@@ -25,9 +26,12 @@ namespace emujv2Api.Constructor
         public string kmujEng { get; set; }
         public string KMUJ { get; set; }
         public string Section { get; set; }
+        public string StatusCuti { get; set; }
         public string TokenAdmin { get; set; }
         public string ErrCode { get; set; }
         public string ErrDtl { get; set; }
+   
+
     }
 
 }

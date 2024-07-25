@@ -53,11 +53,11 @@
         
         
         
-        (function(){
+        function(){
             $(this).addClass('nav-hover');
          }, function(){
             $(this).removeClass('nav-hover');
-        });
+        };
     }
 
     function initEnlarge() {

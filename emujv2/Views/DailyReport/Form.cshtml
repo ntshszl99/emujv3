@@ -38,12 +38,7 @@
                                         <option value="-0">Select Section</option>
                                     </select>
                                 </div>
-                                <div class="col-6">
-                                    <label class="mt-3 form-label">Gang</label>
-                                    <select id="gang" class="form-control form-select select2">
-                                        <option value="-0">Select Gang</option>
-                                    </select>
-                                </div>
+                             
                                 <div class="col-6">
                                     <label class="mt-3 form-label">Date (From - To)</label>
                                     <div class="input-group">
@@ -60,7 +55,7 @@
                                 <div class="card-body">
                                     <div class="col-lg-12">
                                         <div class="table-responsive table-lg">
-                                            <table id="tableRep" class="table card-table table-vcenter text-nowrap border">
+                                            <table id="tableRep" class="table table-bordered text-nowrap">
                                                 <thead>
                                                 </thead>
                                                 <tbody></tbody>
@@ -184,42 +179,6 @@
             listSection();
             listGang();
 
-            //$(function () {
-            //    $("#datepicker").datepicker();
-            //});
-
-            //$(function () {
-            //    $("#datepicker2").datepicker();
-            //});
-
-
-            //$("#datepicker, #datepicker2").on('change', function() {
-
-            //    console.log(start.format('YYYY/MM/DD'));
-            //    console.log(end.format('YYYY/MM/DD'));
-
-            //    sdate = start.format('YYYY/MM/DD');
-            //    edate = end.format('YYYY/MM/DD');
-            //    localStorage.setItem("selHar", sdate);
-            //    localStorage.setItem("selHarE", edate);
-
-            //    rgn = $("#region option:selected").text();
-            //    localStorage.setItem("selRgn", rgn, this.value);
-
-            //    kmj = $("#kmuj option:selected").text();
-            //    localStorage.setItem("selKmj", kmj, this.value);
-
-            //    scn = $("#section option:selected").text();
-            //    localStorage.setItem("selScn", scn, this.value);
-
-            //    listReports(localStorage.getItem("selRgn", this.value), localStorage.getItem("selKmj", this.value), localStorage.getItem("selScn", this.value), sdate, edate);
-            //   /* listReports(localStorage.getItem("selRgn", this.value), sdate, edate);*/
-            //    salertSave('Update Date : ' + start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
-
-            //});
-
-
-
             $('#txtDate').daterangepicker({
 
                 opens: 'center',
@@ -272,24 +231,6 @@
             });
 
         });
-
-        //$(document).on('click', '.delete', function () {
-        //    var codeid = $(this).attr('id');
-        //    $.ajax({
-        //        type: 'GET',
-        //        url: "process/daily_delete.php",
-        //        data: { codeid: codeid },
-        //        cache: false,
-        //        success: function (data) {
-        //            if (data) {
-        //                location.reload(true);
-        //                $("#1stgrade7").fadeOut("slow");
-        //            } else {
-        //                return false;
-        //            }
-        //        }
-        //    });
-        //});
 
         function listGang() {
             $.ajax({

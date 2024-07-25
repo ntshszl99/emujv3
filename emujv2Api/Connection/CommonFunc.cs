@@ -4,6 +4,7 @@ using System.Data;
 using System.Text;
 using System.IO;
 using System.Linq;
+using Oracle.ManagedDataAccess.Client;
 
 
 namespace ConnectionModule
@@ -11,10 +12,9 @@ namespace ConnectionModule
     public class CommonFunc
     {
         public readonly string CrossConn = "User ID=ktmb;Password=ktmb123!@#;Initial Catalog=ccadprod;Connection Timeout=30;Min Pool Size=0; Max Pool Size=200; Data Source=10.0.150.6";
-        public readonly string OpusConn = "User ID = ktmb; Password=ktmb123!@#;Initial Catalog=Opus;Connection Timeout=30;Min Pool Size=0; Max Pool Size=200; Data Source=10.0.150.3";
         public readonly string emujConn = "User ID=sa;Password=saktmb123!@#;Initial Catalog=muj;Connection Timeout=30;Min Pool Size=0; Max Pool Size=200; Data Source=10.0.150.6";
         public readonly string HRCon = "User ID=sa;Password=saktmb123!@#;Initial Catalog=HR_MAIN;Connection Timeout=30;Min Pool Size=0; Max Pool Size=200; Data Source=10.0.150.6";
-
+        public readonly string spotConn = "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=10.0.150.103)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=SPOTPROD.ktmb.com.my))); User Id=PRODOWN;Password=PRODOWN;";
         public bool isDate(string data)
         {
             DateTime tmp;

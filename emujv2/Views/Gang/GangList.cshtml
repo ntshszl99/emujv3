@@ -18,174 +18,166 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="mb-3 m-0">
-                            <div class="row">
-                                <div class="col-3">
-                                    <label class="mt-3 form-label">KMUJ</label>
-                                    <select id="kmuj" class="form-control form-select select2">
-                                        <option value="-0">Select KMUJ</option>
-                                    </select>
-                                </div>
-                                <div class="col-3">
-                                    <label class="mt-3 form-label">Section</label>
-                                    <select id="section" class="form-control form-select select2">
-                                        <option value="-0">Select Section</option>
-                                    </select>
-                                </div>
-                                <div class="col-3">
-                                    <label class="mt-3 form-label">Gang</label>
-                                    <select id="gangAdmin" class="form-control form-select select2">
-                                        <option value="-0">Select Gang</option>
-                                    </select>
-                                </div>
-                                <div class="col-2">
-                                    <label class="mt-3 form-label">.</label>
-                                    <button type="button" name="Cari" id="Cari" class="btn btn-purple waves-effect waves-light"><i class="fa fa-search"></i></button>
-                                </div>
-                                <div class="card-body">
-                                    <div class="col-lg-12">
-                                        <div class="table-responsive table-lg">
-                                            <table id="tableAdmin" class="table card-table table-vcenter text-nowrap border">
-                                                <thead>
-                                                </thead>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
+                            <h6><i>View the gang list by selecting Kmuj or Section</i></h6>
+                        </div><div class="row">
+                            <div class="col-4">
+                                <label class="mt-3 form-label">KMUJ</label>
+                                <select id="kmuj" class="form-control form-select select2">
+                                    <option value="-0">Select KMUJ</option>
+                                </select>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="" id="contentNormal">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="mb-3 m-0">
-                            <div class="row">
-                                <div class="col-3">
-                                    <label class="mt-3 form-label">Gang</label>
-                                    <select id="gangNormal" class="form-control form-select select2">
-                                        <option value="-0">Select Gang</option>
-                                    </select>
-                                </div>
-                                <div class="card-body">
-                                    <div class="col-lg-12">
-                                        <div class="table-responsive table-lg">
-                                            <table id="tableNormal" class="table card-table table-vcenter text-nowrap border">
-                                                <thead>
-                                                </thead>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-4">
+                                <label class="mt-3 form-label">Section</label>
+                                <select id="section" class="form-control form-select select2">
+                                    <option value="-0">Select Section</option>
+                                </select>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="" id="contentOthers">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="mb-3 m-0">
-                            <div class="row">
-                                <div class="card-body">
-                                    <h4 class="text-muted">Alert</h4>
-                                    <p class="text-muted">Sorry, no data found.</p>
-                                </div>
+                            <div class="col-4">
+                                <label class="mt-3 form-label">Gang</label>
+                                <select id="gangAdmin" class="form-control form-select select2">
+                                    <option value="-0">Select Gang</option>
+                                </select>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!--Modal User Details-->
-            <div class="modal" id="modalDetails">
-                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Staff Details</h5><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
-                        </div>
-                        <div class="modal-body">
                             <div class="card-body">
-                                <div class="mb-0 m-0">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="form-label">Staff ID</div>
-                                            <input readonly id="staffID" type="text" class="form-control">
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="mt-5 form-label">Staff Name</div>
-                                            <input readonly id="staffname" type="text" class="form-control">
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="mt-5 form-label">Department</div>
-                                            <input readonly id="dept" type="text" class="form-control">
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="mt-5 form-label">Designation</div>
-                                            <input readonly id="position" type="text" class="form-control">
-                                        </div>
-                                        <div class="mb-5"></div>
-                                        <div class="card-body bg-success-transparent-2">
-                                            <div class="mb-0 m-0">
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        <div class="mt-2 form-label">Update Status</div>
-                                                        <select id="cuti" class="form-control form-select select2" required="required">
-                                                            <option value="-0">.: Select Reason :.</option>
-                                                        </select>
-                                                    </div>
+                                <div class="col-lg-12">
+                                    <div class="table-responsive table-lg">
+                                        <table id="tableAdmin" class="table table-bordered text-nowrap">
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="" id="contentNormal">
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-3 m-0">
+                        <div class="row">
+                            <div class="col-3">
+                                <label class="mt-3 form-label">Gang</label>
+                                <select id="gangNormal" class="form-control form-select select2">
+                                    <option value="-0">Select Gang</option>
+                                </select>
+                            </div>
+                            <div class="card-body">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive table-lg">
+                                        <table id="tableNormal" class="table card-table table-vcenter text-nowrap border">
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="" id="contentOthers">
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-3 m-0">
+                        <div class="row">
+                            <div class="card-body">
+                                <h4 class="text-muted">Alert</h4>
+                                <p class="text-muted">Sorry, no data found.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Modal User Details-->
+        <div class="modal" id="modalDetails">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Staff Details</h5><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card-body">
+                            <div class="mb-0 m-0">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-label">Staff ID</div>
+                                        <input readonly id="staffID" type="text" class="form-control">
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mt-5 form-label">Staff Name</div>
+                                        <input readonly id="staffname" type="text" class="form-control">
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mt-5 form-label">Department</div>
+                                        <input readonly id="dept" type="text" class="form-control">
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mt-5 form-label">Designation</div>
+                                        <input readonly id="position" type="text" class="form-control">
+                                    </div>
+                                    <div class="mb-5"></div>
+                                    <div class="card-body bg-success-transparent-2">
+                                        <div class="mb-0 m-0">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="mt-2 form-label">Update Status</div>
+                                                    <select id="cuti" class="form-control form-select select2" required="required">
+                                                        <option value="-0">.: Select Reason :.</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="modal-footer pd-20">
-                                    <button class="btn btn-success" type="button">Update</button> <button class="btn btn-light" data-bs-dismiss="modal" ria-label="Close" type="button">Cancel</button>
-                                </div>
+                            </div>
+                            <div class="modal-footer pd-20">
+                                <button class="btn btn-success" id="submitUpdate" type="button">Update</button> <button class="btn btn-light" data-bs-dismiss="modal" ria-label="Close" type="button">Cancel</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!--Modal Delete User-->
-            <div class="modal" id="modalDelete">
-                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Delete Staff</h5><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="card-body">
-                                <div class="mb-0 m-0">
-                                    <div class="row">
-                                        <div class="col-12 bg-danger-transparent-2">
-                                            <h5 class="mt-5 mb-5 text-danger text-center">Are you sure want to delete?</h5>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="mt-5 form-label">Staff ID</div>
-                                            <input readonly id="staffID2" type="text" class="form-control">
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="mt-5 form-label">Staff Name</div>
-                                            <input readonly id="staffname2" type="text" class="form-control">
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="mt-5 form-label">Department</div>
-                                            <input readonly id="dept2" type="text" class="form-control">
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="mt-5 form-label">Designation</div>
-                                            <input readonly id="position2" type="text" class="form-control">
-                                        </div>
-                                        <div class="mb-5"></div>
+        <!--Modal Delete User-->
+        <div class="modal" id="modalDelete">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Delete Staff</h5><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card-body">
+                            <div class="mb-0 m-0">
+                                <div class="row">
+                                    <div class="col-12 bg-danger-transparent-2">
+                                        <h5 class="mt-5 mb-5 text-danger text-center">Are you sure want to delete?</h5>
                                     </div>
+                                    <div class="col-12 mt-5">
+                                        <div class="form-label">Staff ID</div>
+                                        <input readonly id="staffID" type="text" class="form-control">
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mt-5 form-label">Staff Name</div>
+                                        <input readonly id="staffname" type="text" class="form-control">
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mt-5 form-label">Department</div>
+                                        <input readonly id="dept" type="text" class="form-control">
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mt-5 form-label">Designation</div>
+                                        <input readonly id="position" type="text" class="form-control">
+                                    </div>
+                                    <div class="mb-5"></div>
                                 </div>
-                                <div class="modal-footer pd-20">
-                                    <button class="btn btn-danger" type="button">Delete</button> <button class="btn btn-light" data-bs-dismiss="modal" ria-label="Close" type="button">Cancel</button>
-                                </div>
+                            </div>
+                            <div class="modal-footer pd-20">
+                                <button class="btn btn-danger" id="submitDelete" type="button">Delete</button> <button class="btn btn-light" data-bs-dismiss="modal" ria-label="Close" type="button">Cancel</button>
                             </div>
                         </div>
                     </div>
@@ -194,6 +186,7 @@
         </div>
     </div>
 </div>
+
 
 
 @section scripts{
@@ -208,15 +201,15 @@
             listKMUJ();
             listGang();
             listCuti();
-            listReports();
+            listReportsAdmin();
+            listReportsNormal();
 
             if (localStorage.getItem("lvlI") === "1") {
                 $("#contentAdmin").show();
                 $("#contentNormal").hide();
                 $("#contentOthers").hide();
 
-                $("#Cari").click(function () {
-
+                $("#gangAdmin, #kmuj, #section").change(function () {
                     checkStore();
 
                     gng = $("#gangAdmin option:selected").text();
@@ -228,22 +221,18 @@
                     scn = $("#section option:selected").text();
                     localStorage.setItem("selScn", scn, this.value);
 
-                    var error = 'Please : '; count = 0;
-                    if ($("#gangAdmin option:selected").val() == '-0') {
-                        error += '<br/> Select Gang '; count++;
-                        swarning(error);
-                    }
-                    else if ($("#kmuj option:selected").val() == '-0') {
+                    if ($("#kmuj option:selected").val() != '-0' && $("#gangAdmin option:selected").val() != '-0') {
                         salertSave('List Gang : ' + scn + ' of ' + gng + ' ');
                     }
-                    else if ($("#section option:selected").val() == '-0') {
+                    else if ($("#section option:selected").val() != '-0' && $("#gangAdmin option:selected").val() != '-0') {
                         salertSave('List Gang : ' + kmj + ' of ' + gng + ' ');
                     }
-                    else {
+                    else if ($("#kmuj option:selected").val() != '-0' && $("#section option:selected").val() != '-0' && $("#gangAdmin option:selected").val() != '-0') {
                         salertSave('List Gang : ' + kmj + ' and ' + scn + ' of ' + gng + ' ');
                     }
-                    listReports(localStorage.getItem("selKmj", this.value), localStorage.getItem("selScn", this.value), localStorage.getItem("selGng", this.value));
-
+                    listReportsAdmin(localStorage.getItem("selKmj", this.value),
+                        localStorage.getItem("selScn", this.value),
+                        localStorage.getItem("selGng", this.value));
                 });
             }
             else if (localStorage.getItem("lvlI") === "4") {
@@ -264,7 +253,9 @@
                     scn = localStorage.getItem("scn");
                     localStorage.setItem("selScn", scn, this.value);
 
-                    listReports(localStorage.getItem("selKmj", this.value), localStorage.getItem("selScn", this.value), localStorage.getItem("selGng", this.value));
+                    listReportsNormal(localStorage.getItem("selKmj", this.value),
+                        localStorage.getItem("selScn", this.value),
+                        localStorage.getItem("selGng", this.value));
 
                 });
             }
@@ -275,20 +266,28 @@
 
         });
 
-
-
-        $('#modalDetails').on('show.bs.modal', function (e) {
+        //modal user details & delete user
+        $('#modalDetails, #modalDelete').on('show.bs.modal', function (e) {
             var ids = $(e.relatedTarget).data('id');
+            $(this).data('id', ids);
+            console.log('read ' + ids);
             stfDetails(ids);
         });
 
-        $('#modalDelete').on('show.bs.modal', function (e) {
-            var ids = $(e.relatedTarget).data('id');
-            stfDelete(ids);
+
+        //button submit update user
+        $("#submitUpdate").click(function () {
+            var ids = $('#modalDetails').data('id');
+            console.log('read ' + ids);
+            updateUser(ids);
         });
 
-
-
+        //modal delete user
+        $('#submitDelete').click(function () {
+            var ids = $('#modalDelete').data('id');
+            console.log('read ' + ids);
+            stfDelete(ids);
+        });
 
         function stfDetails(ids) {
             var staffID = $(".staffID" + ids).html();
@@ -314,29 +313,83 @@
             });
         }
 
-        function stfDelete(ids) {
-            var staffID = $(".staffID" + ids).html();
+
+        //update hal user
+        function updateUser(ids) {
+            var data = {
+                Userid: ids,
+                StatusCuti: $('#cuti').val(),
+            };
+
+            console.log("Updating user:", ids);
+            console.log("Status Cuti:", $("#cuti option:selected").val());
+
             $.ajax({
-                url: linkDepan + "GetGangDetails?StaffId=" + ids,
-                type: 'GET',
-                dataType: 'json',
-                data: {},
+                url: linkDepan + "UpdateGangDetails",
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
                 beforeSend: function (request) {
                     request.setRequestHeader("Token", localStorage.getItem('main'));
                 },
-                success: function (data) {
-                    $('#staffID2').val(data[0].staff_no);
-                    $('#staffname2').val(data[0].staff_name);
-                    $('#dept2').val(data[0].section_id);
-                    $('#position2').val(data[0].position);
+                success: function (response) {
+                    var data;
+                    try {
+                        data = JSON.parse(response);
+                    } catch (error) {
+                        console.error("Error parsing JSON:", error);
+                        swarning();
+                        return;
+                    }
+                    if (data && data.status === "00") {
+                        $('#modalDetails').modal('hide');
+                        swal.fire('Success!', 'User details have been updated.', 'success');
+                    } else {
+                        $('#modalDetails').modal('hide');
+                        swarning();
+                    }
+                    $('#kmuj').val('-0').trigger('change');
+                    $('#section').val('-0').trigger('change');
+                    $('#gangAdmin').val('-0').trigger('change');
+                    $('#gangNormal').val('-0').trigger('change');
+
+                    console.log("Response data:", data);
                 },
-                error: function (xhr) {
+            });
+        }
+
+        function stfDelete(ids) {
+            console.log('ids ialah :' + ids);
+            $.ajax({
+                url: linkDepan + "DeleteGangDetails?StaffId=" + ids,
+                type: 'DELETE',
+                dataType: 'json',
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (response) {
+                    if (response && response.status === "00") {
+                        $('#modalDelete').modal('hide');
+                        swal.fire('Success!', 'User has been deleted.', 'success');
+                        checkStore()
+                        if (localStorage.getItem("lvlI") === "1") {
+                            listReportsAdmin()
+                        }
+                        else if (localStorage.getItem("lvlI") === "4") {
+                            listReportsNormal()
+                        }                                                                   
+                    } else {
+                        $('#modalDelete').modal('hide');
+                        swarning();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error:", error);
                     swarning();
-                },
-                complete: function () {
                 }
             });
         }
+
 
         function listCuti() {
             $.ajax({
@@ -349,7 +402,7 @@
                     if (data.length >= 1) {
                         auxArr = [];
                         $.each(data, function (index, value) {
-                            auxArr[index] = "<option value='" + value.cuti_id + "'>" + value.cuti_name + "</option>";
+                            auxArr[index] = "<option value='" + value.cuti_code + "'>" + value.cuti_name + "</option>";
                         });
                         $('#cuti').append(auxArr.join(''));
                     } else {
@@ -473,11 +526,9 @@
             });
         }
 
-
-
-        function listReports(kmuj, section, gang) {
+        function listReportsAdmin(kmuj, section, gang) {
             $.ajax({
-                url: linkDepan + "GetGList?Kmuj=" + kmuj + "&Section=" + section + "&Gang=" + gang,
+                url: linkDepan + "GetGListAdmin?Kmuj=" + kmuj + "&Section=" + section + "&Gang=" + gang,
                 type: 'GET',
                 dataType: 'json',
                 data: {},
@@ -485,13 +536,12 @@
                     request.setRequestHeader("Token", localStorage.getItem('main'));
                 },
                 success: function (data) {
-                    console.log('mana : ' + data);
                     var counter = 1, countStf = 0, countID = 0;
                     $.fn.dataTable.ext.errMode = 'throw';
-                    if ($.fn.dataTable.isDataTable("#tableAdmin, #tableNormal")) {
-                        $("#tableAdmin, #tableNormal").DataTable().destroy();
+                    if ($.fn.dataTable.isDataTable("#tableAdmin")) {
+                        $("#tableAdmin").DataTable().destroy();
                     }
-                    $("#tableAdmin, #tableNormal").DataTable({
+                    $("#tableAdmin").DataTable({
                         responsive: true,
                         data: data,
                         columns: [
@@ -570,11 +620,107 @@
                 },
                 complete: function () {
                 }
-                
+
             });
         }
 
+        function listReportsNormal(kmuj, section, gang) {
+            $.ajax({
+                url: linkDepan + "GetGListNormal?Kmuj=" + kmuj + "&Section=" + section + "&Gang=" + gang,
+                type: 'GET',
+                dataType: 'json',
+                data: {},
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    var counter = 1, countStf = 0, countID = 0;
+                    $.fn.dataTable.ext.errMode = 'throw';
+                    if ($.fn.dataTable.isDataTable("#tableNormal")) {
+                        $("#tableNormal").DataTable().destroy();
+                    }
+                    $("#tableNormal").DataTable({
+                        responsive: true,
+                        data: data,
+                        columns: [
+                            { data: "no" },
+                            { data: "Emplid" },
+                            { data: "Nama" },
+                            { data: "JobGrade" },
+                            { data: "JobDesc" },
+                            { data: "cuti_name" },
+                            { data: "Emplid" },
+                        ],
+                        columnDefs: [{
+                            targets: -1,
+                            title: "Actions",
+                            render: function (data, type, full, meta) {
+                                countStf++;
+                                /*return '<a href="..' + data + '" id="BviewRes" class="btn btn-primary"><i class="fe fe-edit font-16"></i>';*/
+                                return '<a class="btn btn-primary" data-id="' + data + '" data-bs-target="#modalDetails" data-bs-toggle="modal" ><i class="fe fe-edit font-16"></i></a>' + "   " + '<a class="btn btn-danger" data-id="' + data + '" data-bs-target="#modalDelete" data-bs-toggle="modal" ><i class="fe fe-trash font-16"></i></a>'
+                            },
+                        },
+                        {
+                            targets: -2,
+                            title: "Status",
+                            render: function (data, type, full, meta) {
+                                var status = '';
+                                if (data == 'VALID') { status = '<a class="text-success">' + data + ' <i class="ion-checkmark-circled"></i></a></p >'; }
+                                else {
+                                    status = '<a class="text-danger">' + data + ' <i class="ion-close-circled"></i></a></p >';
+                                }
+                                return status;
+                            },
+                        },
+                        {
+                            targets: -3,
+                            title: "Position",
+                            render: function (data, type, full, meta) {
+                                return data;
+                            },
+                        },
+                        {
+                            targets: -4,
+                            title: "Grade",
+                            render: function (data, type, full, meta) {
+                                return data;
+                            },
+                        },
+                        {
+                            targets: -5,
+                            title: "Name",
+                            render: function (data, type, full, meta) {
+                                return data;
+                            },
+                        },
+                        {
+                            targets: -6,
+                            title: "Staff ID",
+                            render: function (data, type, full, meta) {
+                                return data;
+                            },
+                        },
+                        {
+                            targets: -7,
+                            title: "No",
+                            render: function (data, type, full, meta) {
+                                return counter++;
+                            },
+                        },
+                        ],
+                        //rowId: function (a) {
+                        //    return countID++;
+                        //},
+                    });
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
 
+            });
+        }
 
     </script>
 }

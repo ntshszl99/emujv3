@@ -21,7 +21,12 @@
     <link href="~/assets/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
 
 
-    @RenderSection("css", false)
+
+</html>
+
+
+
+@RenderSection("css", false)
 </head>
 
 <body class="main-body app sidebar-mini light-mode ltr">
@@ -134,6 +139,9 @@
                         <ul class="slide-menu">
                             <li class="sub-slide">
                                 <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="/DailyReport/R1Form"><span class="sub-side-menu__label">R1 Form</span></a>
+                            </li>
+                            <li class="sub-slide">
+                                <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="/DailyReport/R1Report"><span class="sub-side-menu__label">R1 Report</span></a>
                             </li>
                             <li class="sub-slide">
                                 <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="/DailyReport/Form"><span class="sub-side-menu__label">Form</span></a>
@@ -279,11 +287,12 @@
     </a>
     @*<script src="~/assets/plugins/select2/select2.min.js"></script>*@
     <!-- Jquery js-->
+
     <script src="~/assets/js/vendors/jquery.min.js"></script>
 
 
     <script src="~/assets/js/custom.js"></script>
-    
+
     <script src="~/assets/js/jquery.min.js"></script>
     <script src="~/assets/plugins/bootstrap/js/popper.min.js"></script>
     <script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
@@ -333,6 +342,7 @@
     <script src="~/assets/plugins/moment/moment.js"></script>
     <script src="~/assets/js/app.js"></script>
     <script src="~/assets/scripts/semua.js"></script>
+
     @RenderSection("scripts", false)
 </body>
 

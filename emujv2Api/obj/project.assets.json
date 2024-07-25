@@ -4643,11 +4643,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\e-MUJ 3\\emujv2Api\\emujv2Api.csproj",
+      "projectUniqueName": "C:\\Users\\natashas\\Documents\\emuj\\emujv2Api\\emujv2Api.csproj",
       "projectName": "emujv2Api",
-      "projectPath": "D:\\e-MUJ 3\\emujv2Api\\emujv2Api.csproj",
+      "projectPath": "C:\\Users\\natashas\\Documents\\emuj\\emujv2Api\\emujv2Api.csproj",
       "packagesPath": "C:\\Users\\natashas\\.nuget\\packages\\",
-      "outputPath": "D:\\e-MUJ 3\\emujv2Api\\obj\\",
+      "outputPath": "C:\\Users\\natashas\\Documents\\emuj\\emujv2Api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -4662,6 +4662,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -4674,6 +4675,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -4740,8 +4746,30 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Oracle.ManagedDataAccess.Core' 3.21.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-5pm2-9mr2-3frq",
+      "libraryId": "Oracle.ManagedDataAccess.Core",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'System.Data.SqlClient' 4.8.5 has a known high severity vulnerability, https://github.com/advisories/GHSA-98g6-xh36-x2p7",
+      "libraryId": "System.Data.SqlClient",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    }
+  ]
 }
