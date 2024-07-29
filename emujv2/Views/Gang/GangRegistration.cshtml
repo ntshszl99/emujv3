@@ -65,7 +65,7 @@
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-end">
-                                    <button id="sbmtBtn" type="button" class='btn btn-success submit m-1'>Submit Gang</button>
+                                    <button id="submitGang" type="button" class='btn btn-success submit m-1'>Submit Gang</button>
                                     <button id="addBtn" type="button" class='btn btn-primary addmore m-1'>Add More</button>
                                 </div>
                             </div>
@@ -93,11 +93,13 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
+            checkStore();
             listGang();
             maklumatStf();
 
-            initializeSelect2ForStaffID('#staffID');
+            var updBy = localStorage.getItem('usrI');
 
+            initializeSelect2ForStaffID('#staffID');
             $('#addBtn').click(function () {
                 var newRow = $('#tableWork tbody tr:first').clone();
                 newRow.find('input').val('');
@@ -127,7 +129,123 @@
                 }
             });
 
+            //button submit update user
+            $('#submitGang').click(function () {
+                $('#tableWork tbody tr').each(function () {
+                    var row = $(this);
+                    console.log("Row:", {
+                        staffId: row.find('select[id^="staffID"]').val(),
+                        nama: row.find('#staffname').val(),
+                        grade: row.find('#grade').val(),
+                        designation: row.find('#position').val(),
+                        UpdBy: updBy,
+                    });
+                });
+                if ($("#gang").val() === '-0') {
+                    swarning('Please select Gang', 'error');
+                }
+                else tambahGang();
+            });
+
         });
+
+        function tambahGang() {
+            var data = [];
+            var uniqueStaffIds = new Set();
+            var updBy = localStorage.getItem('usrI');
+            var kmuj = localStorage.getItem('kmujVal');
+            var section = localStorage.getItem('scnVal');
+
+            $('#tableWork tbody tr').each(function () {
+                var row = $(this); // This is a jQuery object
+                var staffId = row.find('select[id^="staffID"]').val();
+                var nama = row.find('#staffname').val();
+                var grade = row.find('#grade').val();
+                var designation = row.find('#position').val();
+
+                // Log each value to ensure it is correctly retrieved
+                console.log("Processing row:");
+                console.log("staffId:", staffId);
+                console.log("nama:", nama);
+                console.log("grade:", grade);
+                console.log("designation:", designation);
+
+                // Check for duplicate StaffId
+                if (uniqueStaffIds.has(staffId)) {
+                    console.warn(`Duplicate StaffId found: ${staffId}`);
+                    return; // Skip this row
+                }
+
+                uniqueStaffIds.add(staffId);
+
+                var rowData = {
+                    GangId: $('#gang').val(),
+                    StaffId: staffId,
+                    Nama: nama,
+                    Grade: grade,
+                    Designation: designation,
+                    UpdBy: updBy,
+                    KMUJ: kmuj,
+                    Section: section,
+                };
+
+                console.log("Row data:", rowData); // Log each row data
+                data.push(rowData);
+            });
+
+            console.log("Collected data:", data); // Log the final collected data
+            executeUser(data);
+        }
+
+
+
+        function executeUser(data) {
+            console.log("UPDATING USERS:", data);
+
+            $.ajax({
+                url: linkDepan + "NewGang",
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (response) {
+                    var responseData;
+                    try {
+                        responseData = JSON.parse(response);
+                    } catch (error) {
+                        console.error("Error parsing JSON:", error);
+                        swarning();
+                        return;
+                    }
+                    if (responseData && responseData.status === "00") {
+                        $('#modalTambah').modal('hide');
+                        swal.fire('Success!', 'New users successfully added.', 'success');
+
+                        $('#gang').val('-0').trigger('change');
+                        var $tableBody = $('#tableWork tbody');
+                        $tableBody.find('tr:gt(0)').remove(); 
+                        var $firstRow = $tableBody.find('tr:first');
+                        $firstRow.find('input').val(''); 
+                        $firstRow.find('select').val('').trigger('change');
+                    } 
+                    else if (responseData && responseData.status === "99") {
+                        $('#modalTambah').modal('hide');
+                        swarning(); ('Error!', 'User already registered', 'error');
+
+                    } 
+                },
+                error: function (xhr) {
+                    console.error("AJAX error:", xhr);
+                    swarning();
+                }
+            });
+        }
+
+
+
+
 
         function initializeSelect2ForStaffID(selector) {
             $(selector).select2({
@@ -168,6 +286,7 @@
             });
         }
 
+
         // change according staffid
         $(document).on('change', 'select[id^="staffID"]', function () {
             var staffID = $(this).val();
@@ -176,6 +295,11 @@
         });
 
         function maklumatStf(staffID, row) {
+            if (!row || !staffID) {
+                console.error("maklumatStf: row or staffID is undefined");
+                return;
+            }
+
             $.ajax({
                 url: linkDepan + "GetUserDetails?StaffId=" + staffID,
                 dataType: "json",
@@ -188,8 +312,7 @@
                         row.find('#staffname').val(data[0].Nama);
                         row.find('#grade').val(data[0].Grade);
                         row.find('#position').val(data[0].JobDesc);
-                    }
-                    else {
+                    } else {
                         row.find('#staffname').val('');
                         row.find('#grade').val('');
                         row.find('#position').val('');
@@ -204,6 +327,7 @@
                 }
             });
         }
+
 
         //list gang
         function listGang() {

@@ -55,6 +55,12 @@ $(document).ready(function () {
 
     var M = localStorage.getItem("kmuj");
     $("#tempekKMUJ").html(M);
+
+    var SCNVal = localStorage.getItem("scnVal");
+    $("#tempekScnVal").html(SCNVal);
+
+    var MVal = localStorage.getItem("kmujVal");
+    $("#tempekKMUJVal").html(MVal);
    
 
     $('#nakBlajar').click(function () {

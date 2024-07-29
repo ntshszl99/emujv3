@@ -112,6 +112,48 @@ namespace emujv2Api.Controller
         }
 
         [HttpPost]
+        public string NewGang(List<UserCons> userConsList)
+        {
+            TokenFunc Token = new TokenFunc();
+            PublicCons RetDat = new PublicCons();
+            string conn = _config.GetValue<string>("KTMBParam:DbConnection");
+            string Salah = "";
+            String Data = Token.ValidateToken(httpContextAccessor.HttpContext.Request.Headers["Token"], ref Salah);
+            InsertUpdate ret = new InsertUpdate();
+            if (string.IsNullOrEmpty(Data))
+            {
+                HttpContext.Response.StatusCode = 401;
+                return null;
+            }
+            UserCons User = JsonConvert.DeserializeObject<UserCons>(Data);
+
+            if (!string.IsNullOrEmpty(User.Userid))
+            {
+                // Call NewGang method once with the entire list
+                Salah = ret.NewGang(userConsList);
+                if (Salah != "0")
+                {
+                    RetDat.status = "99";
+                    RetDat.StatusDetail = Salah;
+                    return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+                }
+
+                RetDat.status = "00";
+                RetDat.StatusDetail = "Update Save.";
+                return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+            }
+            else
+            {
+                RetDat.status = "99";
+                RetDat.StatusDetail = "Error : Not Authorize User.";
+                return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+            }
+        }
+
+
+
+
+        [HttpPost]
         public string UpdateGangDetails(UserCons data)
         {
             TokenFunc Token = new TokenFunc();
@@ -173,7 +215,7 @@ namespace emujv2Api.Controller
                 if (Salah == "0")
                 {
                     RetDat.status = "00";
-                    RetDat.StatusDetail = "Update Save.";
+                    RetDat.StatusDetail = "Data delete successfully.";
                     return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
                 }
                 else

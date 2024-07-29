@@ -144,7 +144,7 @@ namespace emujv2Api.Model
             string Salah = "";
             CommonFunc Conn = new CommonFunc();
 
-            SqlStr.Append(" select a.staff_id, c.section_id, c.section_name, b.kmuj_id, b.kmuj_name, d.region_id, d.region_name, d.region_nameE  ");
+            SqlStr.Append(" select a.staff_id, a.kmuj, a.muj, c.section_id, c.section_name, b.kmuj_id, b.kmuj_name, d.region_id, d.region_name, d.region_nameE  ");
             SqlStr.Append(" from login_staff as a, kmuj as b, section as c, region as d ");
             SqlStr.Append(" where a.muj = b.kmuj_value ");
             SqlStr.Append(" and a.kmuj = c.section_val ");
@@ -161,6 +161,9 @@ namespace emujv2Api.Model
                     User.Region = row["region_name"].ToString();
                     User.Section = row["section_name"].ToString();
                     User.KMUJ = row["kmuj_name"].ToString();
+
+                    User.SectionVal = row["kmuj"].ToString();
+                    User.KMUJVal = row["muj"].ToString();
                 }
             }
             else

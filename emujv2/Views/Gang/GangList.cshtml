@@ -124,7 +124,7 @@
                                         <div class="mb-0 m-0">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <div class="mt-2 form-label">Update Status</div>
+                                                    <div class="form-label">Update Status</div>
                                                     <select id="cuti" class="form-control form-select select2" required="required">
                                                         <option value="-0">.: Select Reason :.</option>
                                                     </select>
@@ -159,19 +159,19 @@
                                     </div>
                                     <div class="col-12 mt-5">
                                         <div class="form-label">Staff ID</div>
-                                        <input readonly id="staffID" type="text" class="form-control">
+                                        <input readonly id="staffID2" type="text" class="form-control">
                                     </div>
                                     <div class="col-12">
                                         <div class="mt-5 form-label">Staff Name</div>
-                                        <input readonly id="staffname" type="text" class="form-control">
+                                        <input readonly id="staffname2" type="text" class="form-control">
                                     </div>
                                     <div class="col-12">
                                         <div class="mt-5 form-label">Department</div>
-                                        <input readonly id="dept" type="text" class="form-control">
+                                        <input readonly id="dept2" type="text" class="form-control">
                                     </div>
                                     <div class="col-12">
                                         <div class="mt-5 form-label">Designation</div>
-                                        <input readonly id="position" type="text" class="form-control">
+                                        <input readonly id="position2" type="text" class="form-control">
                                     </div>
                                     <div class="mb-5"></div>
                                 </div>
@@ -300,10 +300,10 @@
                     request.setRequestHeader("Token", localStorage.getItem('main'));
                 },
                 success: function (data) {
-                    $('#staffID').val(data[0].staff_no);
-                    $('#staffname').val(data[0].staff_name);
-                    $('#dept').val(data[0].section_id);
-                    $('#position').val(data[0].position);
+                    $('#staffID, #staffID2').val(data[0].staff_no);
+                    $('#staffname, #staffname2').val(data[0].staff_name);
+                    $('#dept, #dept2').val(data[0].section_id);
+                    $('#position, #position2').val(data[0].position);
                 },
                 error: function (xhr) {
                     swarning();
@@ -344,52 +344,67 @@
                     if (data && data.status === "00") {
                         $('#modalDetails').modal('hide');
                         swal.fire('Success!', 'User details have been updated.', 'success');
+
                     } else {
                         $('#modalDetails').modal('hide');
                         swarning();
                     }
-                    $('#kmuj').val('-0').trigger('change');
-                    $('#section').val('-0').trigger('change');
-                    $('#gangAdmin').val('-0').trigger('change');
-                    $('#gangNormal').val('-0').trigger('change');
-
-                    console.log("Response data:", data);
+                    if (localStorage.getItem("lvlI") === "1") {
+                        listReportsAdmin(localStorage.getItem("selKmj", this.value),
+                            localStorage.getItem("selScn", this.value),
+                            localStorage.getItem("selGng", this.value));
+                    }
+                    else if (localStorage.getItem("lvlI") === "4") {
+                        listReportsNormal(localStorage.getItem("selKmj", this.value),
+                            localStorage.getItem("selScn", this.value),
+                            localStorage.getItem("selGng", this.value));
+                    }                           
                 },
             });
         }
 
         function stfDelete(ids) {
-            console.log('ids ialah :' + ids);
+            var data = {
+                Userid: ids,
+            };
             $.ajax({
                 url: linkDepan + "DeleteGangDetails?StaffId=" + ids,
                 type: 'DELETE',
-                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
                 beforeSend: function (request) {
                     request.setRequestHeader("Token", localStorage.getItem('main'));
                 },
                 success: function (response) {
-                    if (response && response.status === "00") {
+                    var data;
+                    try {
+                        data = JSON.parse(response);
+                    } catch (error) {
+                        console.error("Error parsing JSON:", error);
+                        swarning();
+                        return;
+                    }
+                    if (data && data.status === "00") {
                         $('#modalDelete').modal('hide');
                         swal.fire('Success!', 'User has been deleted.', 'success');
-                        checkStore()
-                        if (localStorage.getItem("lvlI") === "1") {
-                            listReportsAdmin()
-                        }
-                        else if (localStorage.getItem("lvlI") === "4") {
-                            listReportsNormal()
-                        }                                                                   
+
                     } else {
                         $('#modalDelete').modal('hide');
                         swarning();
                     }
+                    if (localStorage.getItem("lvlI") === "1") {
+                        listReportsAdmin(localStorage.getItem("selKmj", this.value),
+                            localStorage.getItem("selScn", this.value),
+                            localStorage.getItem("selGng", this.value));
+                    }
+                    else if (localStorage.getItem("lvlI") === "4") {
+                        listReportsNormal(localStorage.getItem("selKmj", this.value),
+                            localStorage.getItem("selScn", this.value),
+                            localStorage.getItem("selGng", this.value));
+                    }
                 },
-                error: function (xhr, status, error) {
-                    console.error("Error:", error);
-                    swarning();
-                }
             });
         }
-
 
         function listCuti() {
             $.ajax({
