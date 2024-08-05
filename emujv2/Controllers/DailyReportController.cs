@@ -13,7 +13,7 @@ namespace emujv2.Controllers
             return View();
         }
 
-        public ActionResult R1Report()
+        public ActionResult R1WeeklyProgramme()
         {
             return View();
         }
@@ -24,21 +24,6 @@ namespace emujv2.Controllers
         }
 
         public ActionResult Report()
-        {
-            return View();
-        }
-
-        public ActionResult ReportCI()
-        {
-            return View();
-        }
-
-        public ActionResult ReportEngineer()
-        {
-            return View();
-        }
-
-        public ActionResult ReportNormal()
         {
             return View();
         }

@@ -337,7 +337,7 @@
 
         function listReports() {
             $.ajax({
-                url: linkDepan + "GetEngDetails?",
+                url: linkDepan + "GetRegisteredUser",
                 type: 'GET',
                 dataType: 'json',
                 data: {},
@@ -345,6 +345,7 @@
                     request.setRequestHeader("Token", localStorage.getItem('main'));
                 },
                 success: function (data) {
+                    console.log(data); 
                     $.fn.dataTable.ext.errMode = 'throw';
                     if ($.fn.dataTable.isDataTable('#tableRep')) {
                         $('#tableRep').DataTable().destroy();

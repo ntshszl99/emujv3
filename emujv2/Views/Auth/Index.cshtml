@@ -34,7 +34,7 @@
                                     <hr>
                                     <p class="text-muted">Sign In to your account</p>
                                 </div>
-                                <form class="form-horizontal auth-form my-4" s>
+                                <form class="form-horizontal auth-form my-4" id="loginForm">
                                     <div class="form-group">
                                         <label for="username">Username</label>
                                         <div class="input-group mb-3">
@@ -56,7 +56,7 @@
                                     </div>
                                     <div class="form-group mb-0 row">
                                         <div class="col-12 mt-2">
-                                            <button class="btn btn-lg btn-primary btn-block" type="button" id="masukkk" name="masukkk">Log In <i class="fe fe-arrow-right"></i> </button>
+                                            <button class="btn btn-lg btn-primary btn-block" type="submit" id="masukkk" name="masukkk">Log In <i class="fe fe-arrow-right"></i> </button>
                                         </div>
                                     </div>
                                 </form>
@@ -81,7 +81,9 @@
     <script src="~/assets/scripts/semua.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#masukkk').click(function () {
+            $('#loginForm').submit(function (event) {
+                event.preventDefault(); // Prevent the default form submission
+
                 var Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -93,8 +95,8 @@
                         toast.addEventListener('mouseleave', Swal.resumeTimer)
                     }
                 });
-                usr = $("#usr").val();
-                pwd = $("#pwd").val();
+                var usr = $("#usr").val();
+                var pwd = $("#pwd").val();
                 if (usr == "" || pwd == "") {
                     Toast.fire({
                         icon: 'warning',
@@ -144,7 +146,6 @@
                             localStorage.setItem("kmujVal", data.KMUJVal);
                             localStorage.setItem("main", data.TokenAdmin);
 
-
                             setWithExpiry('perang', data.Userid, 300);//5jam
                             setTimeout(window.location.replace("/Home/Index"), 20000);
 
@@ -164,6 +165,7 @@
             });
         });
     </script>
+
 
 </body>
 

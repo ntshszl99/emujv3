@@ -262,6 +262,15 @@
             listGangPax(localStorage.getItem("selKmj", this.value), localStorage.getItem("selScn", this.value), localStorage.getItem("selGng", this.value));
         });
 
+        $(document).on('click', '.toggle-icon', function () {
+            var icon = $(this).find('i');
+            if (icon.hasClass('fa-minus')) {
+                icon.removeClass('fa-minus').addClass('fa-plus');
+            } else {
+                icon.removeClass('fa-plus').addClass('fa-minus');
+            }
+        });
+
 
 
 
@@ -290,19 +299,20 @@
                             { data: "JobGrade" },
                             { data: "JobDesc" },
                             { data: "cuti_name" },
-                            { data: "Emplid" },
+                       /*     { data: "Emplid" },*/
                         ],
-                        columnDefs: [{
-                            targets: -1,
-                            title: "Actions",
-                            render: function (data, type, full, meta) {
-                                return '<a class="btn btn-primary"><i class="fa fa-minus fa-rotate-90 font-16"></i>';
-                                //return '<a class="btn btn-primary" data-id="' + data + '" data-bs-target="#modalDetails" data-bs-toggle="modal" class="btn btn-primary"><i class="fe fe-edit font-16"></i></a>'
-                                //    return data;
-                            },
-                        },
+                        columnDefs: [
+                        //{
+                        //    targets: -1,
+                        //    title: "Actions",
+                        //    render: function (data, type, full, meta) {
+                        //        return '<a class="btn btn-primary toggle-icon"><i class="fa fa-minus fa-rotate-90 font-16"></i></a>';
+                        //        //return '<a class="btn btn-primary" data-id="' + data + '" data-bs-target="#modalDetails" data-bs-toggle="modal" class="btn btn-primary"><i class="fe fe-edit font-16"></i></a>'
+                        //        //    return data;
+                        //    },
+                        //},
                         {
-                            targets: -2,
+                            targets: -1,
                             title: "Status",
                             render: function (data, type, full, meta) {
                                 var status = '';
@@ -314,35 +324,35 @@
                             },
                         },
                         {
-                            targets: -3,
+                            targets: -2,
                             title: "Position",
                             render: function (data, type, full, meta) {
                                 return data;
                             },
                         },
                         {
-                            targets: -4,
+                            targets: -3,
                             title: "Grade",
                             render: function (data, type, full, meta) {
                                 return data;
                             },
                         },
                         {
-                            targets: -5,
+                            targets: -4,
                             title: "Name",
                             render: function (data, type, full, meta) {
                                 return data;
                             },
                         },
                         {
-                            targets: -6,
+                            targets: -5,
                             title: "Staff ID",
                             render: function (data, type, full, meta) {
                                 return data;
                             },
                         },
                         {
-                            targets: -7,
+                            targets: -6,
                             title: "No",
                             render: function (data, type, full, meta) {
                                 return counter++;

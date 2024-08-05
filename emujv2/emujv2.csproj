@@ -3136,6 +3136,7 @@
     <Content Include="Views\DailyReport\R1Form - Copy.cshtml" />
     <Content Include="Views\Gang\GangList.cshtml" />
     <Content Include="Views\DailyReport\R1Report.cshtml" />
+    <Content Include="Views\DailyReport\R1WeeklyProgramme.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include=".vs\themeforest-0yBMtiGd-dashtic-html-admin-template\FileContentIndex\merges\" />

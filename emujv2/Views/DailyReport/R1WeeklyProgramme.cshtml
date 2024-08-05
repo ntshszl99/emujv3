@@ -1,0 +1,343 @@
+﻿
+@{
+    ViewBag.Title = "R1WeeklyProgramme";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="app-content main-content">
+    <div class="side-app">
+        <div class="container-fluid main-container">
+            <!--Page header-->
+            <div class="page-header">
+                <div class="page-leftheader">
+                    <h4 class="page-title">Weekly Programme (R1)</h4>
+                </div>
+            </div>
+            <div class="" id="contentAdmin">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3 m-0">
+                            <div class="row">
+                                <div class="col-4">
+                                    <label class="mt-3 form-label">KMUJ</label>
+                                    <select id="kmuj" class="form-control form-select select2">
+                                        <option value="-0">Select KMUJ</option>
+                                    </select>
+                                </div>
+                                <div class="col-4">
+                                    <label class="mt-3 form-label">Section</label>
+                                    <select id="section" class="form-control form-select select2">
+                                        <option value="-0">Select Section</option>
+                                    </select>
+                                </div>
+                                <div class="col-4">
+                                    <label class="mt-3 form-label">Date (From - To)</label>
+                                    <div class="input-group">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text"><i class=" mt-1 mb-1 fa fa-solid fa fa-calendar font-20"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" id="txtDate" name="txtDate" required="required" autocomplete="off" />
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="col-lg-12">
+                                        <div class="col 4">
+                                            <div id="selectedValues" class="mb-3"></div>
+                                        </div>
+                                        <div class="table-responsive table-lg">
+                                            <table id="tableRep" class="table table-bordered text-nowrap hover">
+                                                <thead></thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                        <div class="row mt-5">
+                                            <div class="col 3">
+                                                <h6>CA - PUBLIC HOLIDAY</h6>
+                                                <h6>CT - YEARLY LEAVE</h6>
+                                            </div>
+                                            <div class="col 3">
+                                                <h6>TH - NOT PRESENT</h6>
+                                                <h6>S - SICK</h6>
+                                            </div>
+                                            <div class="col 3">
+                                                <h6>BK - TRAINING</h6>
+                                                <h6>CTR - UNRECORDED LEAVE</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script src="~/assets/scripts/dashboard.js"></script>
+    <script src="~/assets/plugins/daterangepicker/daterangepicker.js"></script>
+    <script src="~/assets/plugins/select2/select2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            checkSess();
+            listSection();
+            listKMUJ();
+            listReports();
+
+            $('#txtDate').daterangepicker({
+                singleDatePicker: true,
+                autoUpdateInput: false,
+                minYear: 2021,
+            }, function (start) {
+                // Automatically set end date to 7 days after start date
+                var end = start.clone().add(7, 'days');
+
+                console.log("A new date selection was made: " + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD'));
+                console.log(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
+
+                var sdate = start.format('YYYY/MM/DD');
+                var edate = end.format('YYYY/MM/DD');
+                localStorage.setItem("selHar", sdate);
+                localStorage.setItem("selHarE", edate);
+
+                var kmj = $("#kmuj option:selected").text();
+                localStorage.setItem("selKmj", kmj);
+
+                var scn = $("#section option:selected").text();
+                localStorage.setItem("selScn", scn);
+
+                salertSave('Loading...');
+                listReports(localStorage.getItem("selKmj"), localStorage.getItem("selScn"), sdate, edate);
+                updateSelectedValues();
+
+                // Update the input field with the selected date range
+                $('#txtDate').val(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
+            });
+
+            $("#kmuj, #section").on('change', function () {
+                checkStore();
+
+                var sdate = localStorage.getItem("selHar");
+                var edate = localStorage.getItem("selHarE");
+
+                var kmj = $("#kmuj option:selected").text();
+                localStorage.setItem("selKmj", kmj);
+
+                var scn = $("#section option:selected").text();
+                localStorage.setItem("selScn", scn);
+
+                listReports(localStorage.getItem("selKmj"), localStorage.getItem("selScn"), sdate, edate);
+                updateSelectedValues();
+            });
+
+
+
+            $('#tableRep').on('click', '.toggle-icon-work', function () {
+                var cell = $(this);
+                var currentText = cell.text().trim();
+                if (currentText === '') {
+                    cell.text('CA');
+                } else if (currentText === 'CA') {
+                    cell.text('CT');
+                } else if (currentText === 'CT') {
+                    cell.text('TH');
+                } else if (currentText === 'TH') {
+                    cell.text('S');
+                } else if (currentText === 'S') {
+                    cell.text('BK');
+                } else if (currentText === 'BK') {
+                    cell.text('CTR');
+                } else if (currentText === 'CTR') {
+                    cell.text('');
+                }
+            });
+
+            $('#tableRep').on('click', '.toggle-icon', function () {
+                var icon = $(this).find('i'); // Define the icon variable
+                if (icon.hasClass('fa-minus fa-rotate-90')) {
+                    icon.removeClass('fa-minus fa-rotate-90').addClass('fa-plus');
+                } else if (icon.hasClass('fa-plus')) {
+                    icon.removeClass('fa-plus').addClass('fa-minus');
+                } else if (icon.hasClass('fa-minus')) {
+                    icon.removeClass('fa-minus').addClass('fa-blank');
+                } else if (icon.hasClass('fa-blank')) {
+                    icon.removeClass('mdi-blank').addClass('fa-minus fa-rotate-90');
+                }
+            });
+
+            $('#tableRep').on('click', '.toggle-icon-blank', function () {
+                var icon = $(this).find('i'); // Define the icon variable
+                if (icon.hasClass('fa-blank')) {
+                    icon.removeClass('fa-blank').addClass('fa-minus fa-rotate-90');
+                } else if (icon.hasClass('fa-minus fa-rotate-90')) {
+                    icon.removeClass('fa-minus fa-rotate-90').addClass('fa-plus');
+                } else if (icon.hasClass('fa-plus')) {
+                    icon.removeClass('fa-plus').addClass('fa-minus');
+                } else if (icon.hasClass('fa-minus')) {
+                    icon.removeClass('fa-minus').addClass('fa-blank');
+                }
+            });
+
+
+
+        });
+
+        function updateSelectedValues() {
+            var kmuj = localStorage.getItem("selKmj");
+            var section = localStorage.getItem("selScn");
+            var sdate = localStorage.getItem("selHar");
+            var edate = localStorage.getItem("selHarE");
+
+            var selectedValuesHtml = `
+                                        <p><strong>KMUJ:</strong> ${kmuj}</p>
+                                        <p><strong>Section:</strong> ${section}</p>
+                                        <p><strong>Date (From - To):</strong> ${sdate} - ${edate}</p>`;
+
+            $('#selectedValues').html(selectedValuesHtml);
+        }
+
+        function listSection() {
+            $.ajax({
+                url: linkDepan + "GetSectionList",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.section_id + "'>" + value.section_name + "</option>";
+                        });
+                        $('#section').append(auxArr.join(''));
+                    } else {
+                        $("#section").addClass(" is-invalid");
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () { }
+            });
+        }
+
+        function listKMUJ() {
+            $.ajax({
+                url: linkDepan + "KMUJList",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.kmuj_id + "'>" + value.kmuj_name + "</option>";
+                        });
+                        $('#kmuj').append(auxArr.join(''));
+                    } else {
+                        $("#kmuj").addClass(" is-invalid");
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () { }
+            });
+        }
+
+        function listReports(kmuj, section, sdate, edate) {
+            $.ajax({
+                url: linkDepan + "GetR1?Kmuj=" + kmuj + "&Section=" + section + "&SDate=" + sdate + "&Edate=" + edate,
+                type: 'GET',
+                dataType: 'json',
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    $.fn.dataTable.ext.errMode = 'throw';
+                    if ($.fn.dataTable.isDataTable('#tableRep')) {
+                        $('#tableRep').DataTable().clear().destroy();
+                    }
+
+                    var thead = '<tr><th rowspan="2">Staff No</th><th rowspan="2">Name of Worksman</th><th rowspan="2">Designation</th>';
+                    thead += '<th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>';
+
+                    var uniquework_name = [...new Set(data.map(item => item.work_name))];
+                    uniquework_name.forEach(desc => {
+                        thead += `<th colspan="7">${desc}</th>`;
+                    });
+                    thead += '</tr><tr>';
+
+                    let mulaDate = moment(sdate, 'YYYY/MM/DD');
+                    for (let i = 0; i < 7; i++) {
+                        let kepalaDate = moment(mulaDate).add(i, 'days').format('DD/MM');
+                        thead += `<th>${kepalaDate}</th>`;
+                    }
+                    let startDate = moment(sdate, 'YYYY/MM/DD');
+                    uniquework_name.forEach(() => {
+                        for (let i = 0; i < 7; i++) {
+                            let headerDate = moment(startDate).add(i, 'days').format('D');
+                            thead += `<th>${headerDate}</th>`;
+                        }
+                    });
+                    thead += '</tr>';
+                    $('#tableRep thead').html(thead);
+
+                    var groupedData = data.reduce((acc, item) => {
+                        if (!acc[item.staff_attd_no]) {
+                            acc[item.staff_attd_no] = { Nama: item.Nama, JobDesc: item.JobDesc, work_data: {} };
+                        }
+                        if (!acc[item.staff_attd_no].work_data[item.work_name]) {
+                            acc[item.staff_attd_no].work_data[item.work_name] = {};
+                        }
+                        acc[item.staff_attd_no].work_data[item.work_name][item.daily_date] = item;
+                        return acc;
+                    }, {});
+
+                    var tbody = '';
+                    for (let staffNo in groupedData) {
+                        tbody += '<tr>';
+                        tbody += `<td>${staffNo}</td>`;
+                        tbody += `<td>${groupedData[staffNo].Nama || ''}</td>`;
+                        tbody += `<td>${groupedData[staffNo].JobDesc || ''}</td>`;
+                        for (let i = 0; i < 7; i++) {
+                            tbody += '<td class="toggle-icon-work"></td>';
+                        }
+                        uniquework_name.forEach(work_name => {
+                            for (let i = 0; i < 7; i++) {
+                                let dayDate = moment(startDate).add(i, 'days').format('DD/MM/YYYY');
+                                let cellData = groupedData[staffNo].work_data[work_name] && groupedData[staffNo].work_data[work_name][dayDate];
+                                if (cellData) {
+                                    tbody += '<td><a class="btn toggle-icon"><i class="fa fa-minus fa-rotate-90"></i></a></td>';
+                                } else {
+                                    tbody += '<td><a class="btn toggle-icon-blank"><i class="fa fa-blank"></i></a></td>';
+                                }
+                            }
+                        });
+                        tbody += '</tr>';
+                    }
+
+                    $('#tableRep tbody').html(tbody);
+                    $('#tableRep').DataTable({
+                        dom: '<"selected-values"fB>rtip',
+                        buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+                        responsive: true,
+                        autoWidth: false,
+                    });
+                },
+                error: function (xhr) {
+                    console.error("Error fetching reports:", xhr);
+                    alert("Failed to load reports. Please try again later.");
+                },
+                complete: function () { }
+            });
+        }
+    </script>
+}
+
+
+

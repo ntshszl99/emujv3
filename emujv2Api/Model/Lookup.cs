@@ -269,36 +269,40 @@ namespace emujv2Api.Model
 
             SqlStr.Append(" WITH DailyAttendances AS ( ");
             SqlStr.Append(" SELECT ");
-            SqlStr.Append(" LTRIM(RTRIM(m.n.value('.[1]', 'varchar(8000)'))) AS staff_attdno_no, ");
-            SqlStr.Append(" s.staff_attdno_updatedate, ");
-            SqlStr.Append(" s.staff_attdno_rpt_id ");
-            SqlStr.Append(" FROM ");
-            SqlStr.Append(" ( ");
-            SqlStr.Append(" SELECT  ");
-            SqlStr.Append(" staff_attdno_no, ");
-            SqlStr.Append(" staff_attdno_updatedate, ");
-            SqlStr.Append(" staff_attdno_rpt_id, ");
-            SqlStr.Append(" CAST('<XMLRoot><RowData>' + REPLACE(staff_attdno_no, ',', '</RowData><RowData>') + '</RowData></XMLRoot>' AS XML) AS x ");
-            SqlStr.Append(" FROM   ");
-            SqlStr.Append(" daily_attendencelistno ");
+            SqlStr.Append("    LTRIM(RTRIM(m.n.value('.[1]', 'varchar(8000)'))) AS staff_attd_no, ");
+            SqlStr.Append("    s.staff_attd_updatedate, ");
+            SqlStr.Append("    s.staff_attd_rpt_id ");
+            SqlStr.Append(" FROM( ");
+            SqlStr.Append("     SELECT ");
+            SqlStr.Append("        staff_attd_no, ");
+            SqlStr.Append("        staff_attd_updatedate, ");
+            SqlStr.Append("        staff_attd_rpt_id, ");
+            SqlStr.Append("        CAST('<XMLRoot><RowData>' + REPLACE(staff_attd_no, ',', '</RowData><RowData>') + '</RowData></XMLRoot>' AS XML) AS x ");
+
+            SqlStr.Append("    FROM daily_attendencelist ");
             SqlStr.Append(" ) AS s ");
-            SqlStr.Append(" CROSS APPLY  ");
-            SqlStr.Append(" s.x.nodes('/XMLRoot/RowData') AS m(n) ");
+            SqlStr.Append(" CROSS APPLY s.x.nodes('/XMLRoot/RowData') AS m(n) ");
             SqlStr.Append(" ) ");
-            SqlStr.Append(" SELECT *,  ");
-            SqlStr.Append(" FROM  ");
-            SqlStr.Append(" daily a ");
-            SqlStr.Append(" JOIN  ");
-            SqlStr.Append(" work_type b ON a.daily_worktype = b.id ");
-            SqlStr.Append(" JOIN  ");
-            SqlStr.Append(" kmuj c ON a.daily_kmuj = c.kmuj_value ");
-            SqlStr.Append(" JOIN  ");
-            SqlStr.Append(" section d ON a.daily_sec = d.section_val ");
-            SqlStr.Append(" JOIN ");
-            SqlStr.Append(" DailyAttendances e ON a.daily_id = e.staff_attdno_rpt_id  ");
-            SqlStr.Append(" WHERE convert(datetime, a.daily_date, 103) >= @MulaTarikh AND convert(datetime, a.daily_date, 103) <= @AkhirTarikh ");
-            SqlStr.Append(" AND c.kmuj_name = @Kmuj ");
-            SqlStr.Append(" AND d.section_name = @Section ");
+            SqlStr.Append(" SELECT ");
+            SqlStr.Append("    e.staff_attd_no,  ");
+            SqlStr.Append("    a.daily_date,  ");
+            SqlStr.Append("    ls.Nama,  ");
+            SqlStr.Append("    ls.JobDesc,  ");
+            SqlStr.Append("    b.work_name ");
+            SqlStr.Append(" FROM ");
+            SqlStr.Append("     daily a ");
+            SqlStr.Append(" JOIN work_type b ON a.daily_worktype = b.id ");
+            SqlStr.Append(" JOIN kmuj c ON a.daily_kmuj = c.kmuj_value ");
+            SqlStr.Append(" JOIN section d ON a.daily_sec = d.section_val ");
+            SqlStr.Append(" JOIN DailyAttendances e ON a.daily_id = e.staff_attd_rpt_id ");
+            SqlStr.Append(" LEFT JOIN [HR_MAIN].[dbo].[HR_MAIN] ls ON LTRIM(RTRIM(e.staff_attd_no)) = LTRIM(RTRIM(ls.Emplid)) ");
+            SqlStr.Append(" WHERE ");
+            SqlStr.Append("     CONVERT(datetime, a.daily_date, 103) >= @MulaTarikh ");
+            SqlStr.Append("     AND CONVERT(datetime, a.daily_date, 103) <= @AkhirTarikh ");
+            SqlStr.Append("     AND c.kmuj_name = @Kmuj ");
+            SqlStr.Append("     AND d.section_name = @Section ");
+            SqlStr.Append(" ORDER BY ");
+            SqlStr.Append("     e.staff_attd_no, a.daily_date, b.work_name; ");
 
             ParamTmp.Add("@Kmuj", Kmuj);
             ParamTmp.Add("@Section", Section);
@@ -322,11 +326,16 @@ namespace emujv2Api.Model
             CommonFunc Conn = new CommonFunc();
             Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
 
-            SqlStr.Append(" SELECT *, ");
-            SqlStr.Append(" (SELECT distinct(concat('KM ', effect_kmfrom, ' - ', effect_kmto)))as TotalKM ");
-            SqlStr.Append(" FROM [muj].[dbo].[daily] ");
-            SqlStr.Append(" WHERE convert(datetime, daily_date, 103) >= @MulaTarikh' AND convert(datetime, daily_date, 103) <= @AkhirTarikh ");
-            SqlStr.Append(" and daily_kmuj = @Kmuj and daily_sec = @Section ");
+            SqlStr.Append(" SELECT * , ");
+            SqlStr.Append(" (SELECT distinct(concat('KM ', effect_kmfrom, ' - ', effect_kmto))) as TotalKM ");
+            SqlStr.Append(" FROM daily a ");
+            SqlStr.Append(" JOIN ");
+            SqlStr.Append(" kmuj c ON a.daily_kmuj = c.kmuj_value ");
+            SqlStr.Append(" JOIN ");
+            SqlStr.Append(" section d ON a.daily_sec = d.section_val ");
+            SqlStr.Append(" WHERE convert(datetime, a.daily_date, 103) >= @MulaTarikh AND convert(datetime, a.daily_date, 103) <= @AkhirTarikh ");
+            SqlStr.Append(" AND c.kmuj_name = @Kmuj ");
+            SqlStr.Append(" AND d.section_name = @Section ");
 
             ParamTmp.Add("@Kmuj", Kmuj);
             ParamTmp.Add("@Section", Section);
@@ -387,6 +396,103 @@ namespace emujv2Api.Model
             Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
             return JsonConvert.SerializeObject(Recc, Formatting.Indented);
         }
+
+
+
+        public string GetRegisteredUser()
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+            Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
+
+            // First query
+            SqlStr.Append("SELECT Nama, Emplid, DeptDesc, LocDesc, RegDesc, JobDesc, DeptId, Grade, Age ");
+            SqlStr.Append("FROM HR_MAIN ");
+            SqlStr.Append("WHERE DeptId = '300000' AND Status = 'A' ");
+            SqlStr.Append("ORDER BY Emplid DESC");
+
+            Console.WriteLine("Executing first query: " + SqlStr.ToString());
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.HRCon, ref Salah);
+            Console.WriteLine("Rows returned by first query: " + Recc.Rows.Count);
+
+            DataTable finalResult = new DataTable();
+            finalResult.Columns.Add("no_staff");
+            finalResult.Columns.Add("Nama");
+            finalResult.Columns.Add("JobDesc");
+            finalResult.Columns.Add("LocDesc");
+            finalResult.Columns.Add("RegDesc");
+            finalResult.Columns.Add("staff_status");
+
+            foreach (DataRow row in Recc.Rows)
+            {
+                string no_staff = row["Emplid"].ToString();
+
+                // Second query
+                StringBuilder SqlStr2 = new StringBuilder();
+                SqlStr2.Append("SELECT staff_name, staff_id, dept, usrlevel, staff_status ");
+                SqlStr2.Append("FROM login_staff ");
+                SqlStr2.Append("WHERE staff_id <> @no_staff ");
+                SqlStr2.Append("ORDER BY id DESC");
+
+                ParamTmp.Clear();
+                ParamTmp.Add("@no_staff", no_staff);
+
+                Console.WriteLine("Executing second query for no_staff: " + no_staff);
+                DataTable tempRecc2 = DbCon.ExecuteReader(SqlStr2.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+                Console.WriteLine("Rows returned by second query: " + tempRecc2.Rows.Count);
+
+                if (tempRecc2.Rows.Count > 0)
+                {
+                    DataRow rsql = tempRecc2.Rows[0];
+                    string nameuser = rsql["staff_name"].ToString();
+                    string iduser = rsql["staff_id"].ToString();
+                    string staff_status = rsql["staff_status"].ToString();
+
+                    // Fetch additional user information
+                    StringBuilder SqlStr3 = new StringBuilder();
+                    SqlStr3.Append("SELECT * FROM HR_MAIN WHERE Emplid = @iduser");
+
+                    ParamTmp.Clear();
+                    ParamTmp.Add("@iduser", iduser);
+
+                    Console.WriteLine("Executing third query for iduser: " + iduser);
+                    DataTable tempRecc3 = DbCon.ExecuteReader(SqlStr3.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+                    Console.WriteLine("Rows returned by third query: " + tempRecc3.Rows.Count);
+
+                    if (tempRecc3.Rows.Count > 0)
+                    {
+                        DataRow rUseritms = tempRecc3.Rows[0];
+                        string Nama = rUseritms["Nama"].ToString();
+                        string DeptDesc = rUseritms["DeptDesc"].ToString();
+                        string JobDesc = rUseritms["JobDesc"].ToString();
+                        string LocDesc = rUseritms["LocDesc"].ToString();
+                        string RegDesc = rUseritms["RegDesc"].ToString();
+                        string Grade = rUseritms["Grade"].ToString();
+                        string Age = rUseritms["Age"].ToString();
+
+                        DataRow newRow = finalResult.NewRow();
+                        newRow["no_staff"] = no_staff;
+                        newRow["Nama"] = Nama;
+                        newRow["JobDesc"] = $"{JobDesc} | {Grade}";
+                        newRow["LocDesc"] = LocDesc;
+                        newRow["RegDesc"] = RegDesc;
+                        newRow["staff_status"] = staff_status;
+
+                        finalResult.Rows.Add(newRow);
+                    }
+                }
+            }
+
+            // Calculate the total number of rows in the final result
+            int totalRows = finalResult.Rows.Count;
+            Console.WriteLine($"Total number of rows: {totalRows}");
+
+            return JsonConvert.SerializeObject(finalResult, Formatting.Indented);
+        }
+
 
 
         public string GetUser()
@@ -842,7 +948,7 @@ namespace emujv2Api.Model
             string MulaTarikh = SDate;
             string AkhirTarikh = EDate;
 
-         
+
             SqlStr.Append(" select b.region_name, c.kmuj_name, d.section_name, (select concat('Gang ', a.daily_gang)) as Gang, ");
             SqlStr.Append(" a.daily_date, a.daily_worktype, ");
             SqlStr.Append(" (select concat(a.daily_total, ' ', a.daily_unit)) as output,  ");

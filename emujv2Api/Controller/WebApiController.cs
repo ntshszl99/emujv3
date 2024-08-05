@@ -285,34 +285,6 @@ namespace emujv2Api.Controller
             }
         }
 
-        //[HttpGet]
-        //public string RegE(string RegionE)
-        //{
-        //    TokenFunc Token = new TokenFunc();
-        //    PublicCons RetDat = new PublicCons();
-        //    string conn = _config.GetValue<string>("KTMBParam:DbConnection");
-        //    string Salah = "";
-        //    String Data = Token.ValidateToken(httpContextAccessor.HttpContext.Request.Headers["Token"], ref Salah);
-        //    Lookup ret = new Lookup();
-
-        //    if (string.IsNullOrEmpty(Data))
-        //    {
-        //        HttpContext.Response.StatusCode = 401;
-        //        return null;
-        //    }
-        //    UserCons User = JsonConvert.DeserializeObject<UserCons>(Data);
-
-        //    if (!string.IsNullOrEmpty(User.Userid))
-        //    {
-        //        return ret.RegE(RegionE);
-        //    }
-        //    else
-        //    {
-        //        RetDat.status = "99";
-        //        RetDat.StatusDetail = "Error : Not Authorize User.";
-        //        return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
-        //    }
-        //}
 
         [HttpGet]
         public string GetTotalKM(string Kmuj, string Section, string SDate, string EDate)
@@ -370,6 +342,7 @@ namespace emujv2Api.Controller
                 RetDat.StatusDetail = "Error : Not Authorize User.";
                 return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
             }
+        
         }
 
         [HttpGet]
@@ -392,6 +365,35 @@ namespace emujv2Api.Controller
             if (!string.IsNullOrEmpty(User.Userid))
             {
                 return ret.GetTest();
+            }
+            else
+            {
+                RetDat.status = "99";
+                RetDat.StatusDetail = "Error : Not Authorize User.";
+                return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+            }
+        }
+
+        [HttpGet]
+        public string GetRegisteredUser()
+        {
+            TokenFunc Token = new TokenFunc();
+            PublicCons RetDat = new PublicCons();
+            string conn = _config.GetValue<string>("KTMBParam:DbConnection");
+            string Salah = "";
+            String Data = Token.ValidateToken(httpContextAccessor.HttpContext.Request.Headers["Token"], ref Salah);
+            Lookup ret = new Lookup();
+
+            if (string.IsNullOrEmpty(Data))
+            {
+                HttpContext.Response.StatusCode = 401;
+                return null;
+            }
+            UserCons User = JsonConvert.DeserializeObject<UserCons>(Data);
+
+            if (!string.IsNullOrEmpty(User.Userid))
+            {
+                return ret.GetRegisteredUser();
             }
             else
             {
