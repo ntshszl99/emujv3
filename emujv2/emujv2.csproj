@@ -3110,6 +3110,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include=".gitignore.txt" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -3123,7 +3124,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\DailyReport\Form.cshtml" />
-    <Content Include="Views\DailyReport\Report.cshtml" />
+    <Content Include="Views\DailyReport\DailyReport.cshtml" />
     <Content Include="Views\Home\Manual.cshtml" />
     <Content Include="Views\DailyReport\Checklist.cshtml" />
     <Content Include="Views\Gang\GangRegistration.cshtml" />
@@ -3135,8 +3136,10 @@
     <Content Include="Views\User\UserRegistration.cshtml" />
     <Content Include="Views\DailyReport\R1Form - Copy.cshtml" />
     <Content Include="Views\Gang\GangList.cshtml" />
-    <Content Include="Views\DailyReport\R1Report.cshtml" />
+    <Content Include="Views\DailyReport\R1FormList.cshtml" />
     <Content Include="Views\DailyReport\R1WeeklyProgramme.cshtml" />
+    <Content Include="Views\DailyReport\R2WeeklyProgramme.cshtml" />
+    <Content Include="Views\Home\Inventory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include=".vs\themeforest-0yBMtiGd-dashtic-html-admin-template\FileContentIndex\merges\" />

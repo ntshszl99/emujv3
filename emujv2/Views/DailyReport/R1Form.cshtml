@@ -16,153 +16,166 @@
             </div>
             <!--End Page header-->
 
-            <div class="row">
-                <div class="col-lg-12 col-md-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="mb-3 m-0">
-                                <div class="row">
-                                    <div class="col-3">
-                                        <label class="mt-5 form-label">Region</label>
-                                        <select id="region" class="form-control form-select select2" required>
-                                            <option value="-0">Select Region</option>
-                                            <option id="tempekUsrRegion" value="1"></option>
-                                        </select>
-                                    </div>
-                                    <div class="col-3">
-                                        <label class="mt-5 form-label">KMUJ</label>
-                                        <select disabled id="kmuj" class="form-control form-select select2" required="required">
-                                            <option value="-0">Select KMUJ</option>
-                                            <option id="tempekKMUJ" value="1"></option>
-                                        </select>
-                                    </div>
-                                    <div class="col-3">
-                                        <label class="mt-5 form-label">Section</label>
-                                        <select disabled id="section" class="form-control form-select select2" required="required">
-                                            <option value="-0">Select Section</option>
-                                            <option id="tempekScn" value="1"></option>
-                                        </select>
-                                    </div>
-                                    <div></div>
-                                    <div class="col-3">
-                                        <label class="mt-5 form-label">Gang</label>
-                                        <select disabled id="gang" type="text" class="form-control form-select select2" required>
-                                            <option value="-0">Select Gang</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-5 col-3">
-                                        <label class="mt-5 form-label">No. of Staff (Valid)</label>
-                                        <input readonly id="gangno" type="text" class="form-control">
-                                    </div>
+            <div class="" id="content">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3 m-0">
+                            <div class="row">
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Region</label>
+                                    <select id="region" class="form-control form-select select2" required>
+                                        <option value="-0">Select Region</option>
+                                        <option id="tempekUsrRegion" value="1"></option>
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">KMUJ</label>
+                                    <select disabled id="kmuj" class="form-control form-select select2" required="required">
+                                        <option value="-0">Select KMUJ</option>
+                                        <option id="tempekKMUJ" value="1"></option>
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Section</label>
+                                    <select disabled id="section" class="form-control form-select select2" required="required">
+                                        <option value="-0">Select Section</option>
+                                        <option id="tempekScn" value="1"></option>
+                                    </select>
+                                </div>
+                                <div></div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Gang</label>
+                                    <select disabled id="gang" type="text" class="form-control form-select select2" required>
+                                        <option value="-0">Select Gang</option>
+                                    </select>
+                                </div>
+                                <div class="mb-5 col-3">
+                                    <label class="mt-5 form-label">No. of Staff (Valid)</label>
+                                    <input readonly id="gangno" type="text" class="form-control">
+                                </div>
 
-                                    <div class="col-lg-12">
-                                        <div class="table-responsive table-lg">
-                                            <table id="tableRep" class="table table-bordered text-nowrap">
-                                                <thead>
-                                                </thead>
-                                                <tbody></tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div></div>
-                                    <div class="col-3">
-                                        <label class="mt-5 form-label">Work Date</label>
-                                        <input type="text" id="datepicker" class="form-control">
-                                    </div>
-                                    <div class="col-3">
-                                        <label class="mt-5 form-label">Line</label>
-                                        <select id="linecond" class="form-control form-select select2" required="required">
-                                            <option value="-0">.: Select Condition :.</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-3">
-                                        <label class="mt-5 form-label">Category</label>
-                                        <select id="category" class="form-control form-select select2" required="required">
-                                            <option value="-0">.: Select Category :.</option>
-                                        </select>
-                                    </div>
-                                    <div id="catEmer" class="col-3" style='display:none;'>
-                                        <label class="mt-5 form-label">Category</label>
-                                        <select id="catdet" class="form-control form-select select2" required="required">
-                                            <option value="-0">.: Select Emergency :.</option>
-                                        </select>
-                                    </div>
-                                    <div></div>
-                                    <div class="col-3">
-                                        <label class="mt-5 form-label">Work Type</label>
-                                        <select id="worktype" class="form-control form-select select2" required="required">
-                                            <option value="-0">.: Select Work Type :.</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-3">
-                                        <label class="mt-5 form-label">Total</label>
-                                        <input type="text" class="form-control" placeholder="Total">
-                                    </div>
-                                    <div class="col-3">
-                                        <label class="mt-5 form-label">Unit</label>
-                                        <input id="unit" class="form-control" placeholder="Unit" readonly>
-                                    </div>
-                                    <div></div>
-                                    <div class="col-3">
-                                        <label class="mt-5 form-label">Effected KM (Start)</label>
-                                        <input type="text" class="form-control" placeholder="Start KM">
-                                    </div>
-                                    <div class="col-3">
-                                        <label class="mt-5 form-label">Effected KM (End)</label>
-                                        <input type="text" class="form-control" placeholder="End KM">
-                                    </div>
-                                    <div class="col-3">
-                                        <label class="mt-5 form-label">Effected KM</label>
-                                        <input type="text" class="form-control" placeholder="Total KM">
-                                    </div>
-                                    <div></div>
-                                    <div class="col-3">
-                                        <label class="mt-5 form-label">Time Start </label>
-                                        <input type="text" class="form-control" placeholder="Start Time">
-                                    </div>
-                                    <div class="col-3">
-                                        <label class="mt-5 form-label">Time End</label>
-                                        <input type="text" class="form-control" placeholder="End Time">
-                                    </div>
-                                    <div class="col-3">
-                                        <label class="mt-5 form-label">Time Taken KM</label>
-                                        <input type="text" class="form-control" placeholder="Total Time Taken">
-                                    </div>
-                                    <div></div>
-                                    <div class="col-3">
-                                        <div class="mb-3 mt-5">
-                                            <div class="form-label">Work at Station?</div>
-                                            <div class="custom-controls-stacked">
-                                                <label class="custom-control custom-radio">
-                                                    <input type="radio" class="custom-control-input" name="station_option" id="id_radio1" value="Yes">
-                                                    <span class="custom-control-label">Yes</span>
-                                                </label>
-                                                <label class="custom-control custom-radio">
-                                                    <input type="radio" class="custom-control-input" name="station_option" id="id_radio2" value="No">
-                                                    <span class="custom-control-label">No</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="station" class="col-3" style="display:none;">
-                                        <label class="mt-5 form-label">Station</label>
-                                        <select id="stationn" class="form-control form-select select2" required="required">
-                                            <option value="-0">.: Select Station :.</option>
-                                        </select>
-                                    </div>
-                                    <div id="point" class="col-3" style="display:none;">
-                                        <label class="mt-5 form-label">Point No.</label>
-                                        <input type="text" class="form-control" placeholder="Station's Point">
-                                    </div>
-
-                                    <div class="col-xl-12">
-                                        <label class="mt-5 form-label">Additional Information</label>
-                                        <textarea class="mb-5 form-control" placeholder="Textarea" rows="3"></textarea>
-                                    </div>
-                                    <div class="d-flex justify-content-end">
-                                        <button type="button" class='btn btn-success'>Save</button>
+                                <div class="col-lg-12">
+                                    <div class="table-responsive table-lg">
+                                        <table id="tableRep" class="table table-striped table-bordered text-nowrap">
+                                            <thead>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
                                     </div>
                                 </div>
+                                <div></div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Work Date</label>
+                                    <input type="text" id="datepicker" class="form-control">
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Line</label>
+                                    <select id="linecond" class="form-control form-select select2" required="required">
+                                        <option value="-0">.: Select Condition :.</option>
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Category</label>
+                                    <select id="category" class="form-control form-select select2" required="required">
+                                        <option value="-0">.: Select Category :.</option>
+                                    </select>
+                                </div>
+                                <div id="catEmer" class="col-3" style='display:none;'>
+                                    <label class="mt-5 form-label">Category</label>
+                                    <select id="catdet" class="form-control form-select select2" required="required">
+                                        <option value="-0">.: Select Emergency :.</option>
+                                    </select>
+                                </div>
+                                <div></div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Work Type</label>
+                                    <select id="worktype" class="form-control form-select select2" required="required">
+                                        <option value="-0">.: Select Work Type :.</option>
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Total</label>
+                                    <input type="text" class="form-control" placeholder="Total">
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Unit</label>
+                                    <input id="unit" class="form-control" placeholder="Unit" readonly>
+                                </div>
+                                <div></div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Effected KM (Start)</label>
+                                    <input type="number" id="startKM" class="form-control" placeholder="Start KM">
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Effected KM (End)</label>
+                                    <input type="number" id="endKM" class="form-control" placeholder="End KM">
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Effected KM (meter)</label>
+                                    <input type="text" id="totalKM" class="form-control" placeholder="Total KM" readonly>
+                                </div>
+                                <div></div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Time Start </label>
+                                    <input type="time" id="startTime" class="form-control" placeholder="Start Time">
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Time End</label>
+                                    <input type="time" id="endTime" class="form-control" placeholder="End Time">
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Time Taken KM</label>
+                                    <input type="text" id="totalTime" class="form-control" readonly>
+                                </div>
+                                <div></div>
+                                <div class="col-3">
+                                    <div class="mb-3 mt-5">
+                                        <div class="form-label">Work at Station?</div>
+                                        <div class="custom-controls-stacked">
+                                            <label class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" name="station_option" id="id_radio1" value="Yes">
+                                                <span class="custom-control-label">Yes</span>
+                                            </label>
+                                            <label class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" name="station_option" id="id_radio2" value="No">
+                                                <span class="custom-control-label">No</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="station" class="col-3" style="display:none;">
+                                    <label class="mt-5 form-label">Station</label>
+                                    <select id="stationn" class="form-control form-select select2" required="required">
+                                        <option value="-0">.: Select Station :.</option>
+                                    </select>
+                                </div>
+                                <div id="point" class="col-3" style="display:none;">
+                                    <label class="mt-5 form-label">Point No.</label>
+                                    <input type="text" id="stPoint" class="form-control" placeholder="Station's Point">
+                                </div>
+
+                                <div class="col-xl-12">
+                                    <label class="mt-5 form-label">Additional Information</label>
+                                    <textarea class="mb-5 form-control" id="addnotes" placeholder="Textarea" rows="3"></textarea>
+                                </div>
+                                <div class="text-center">
+                                    <button type="button" id="submitNew" class='btn btn-success center'>Submit Daily Form</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="" id="contentOthers">
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-3 m-0">
+                        <div class="row">
+                            <div class="card-body">
+                                <h4 class="text-muted">Alert</h4>
+                                <p class="text-muted">Sorry, no data found.</p>
                             </div>
                         </div>
                     </div>
@@ -171,6 +184,7 @@
         </div>
     </div>
 </div>
+
 
 
 
@@ -197,11 +211,14 @@
             listReports();
             listLocation();
 
+            console.log(localStorage.getItem("lvlI"));
             if (localStorage.getItem("lvlI") === "2" || localStorage.getItem("lvlI") === "3" || localStorage.getItem("lvlI") === "6") {
                 $("#content").hide();
+                $("#contentOthers").show();
             }
             else {
                 $("#content").show();
+                $("#contentOthers").hide();
             }
 
             // Handle click events on radio buttons
@@ -217,32 +234,63 @@
 
             $("#datepicker").datepicker();
 
-        });
+            //button submit form
+            $('#submitNew').click(function () {
+                submitForm();
 
-        //disabled selection
-        $("#region").on('change', function () {
-            if ($("#region").val() == '-0') {
-                $('#kmuj').prop('disabled', true);
-            }
-            else {
-                $('#kmuj').prop('disabled', false);
-            }
-        });
-        $("#kmuj").on('change', function () {
-            if ($("#kmuj").val() == '-0') {
-                $('#section').prop('disabled', true);
-            }
-            else {
-                $('#section').prop('disabled', false);
-            }
-        });
-        $("#section").on('change', function () {
-            if ($("#section").val() == '-0') {
-                $('#gang').prop('disabled', true);
-            }
-            else {
-                $('#gang').prop('disabled', false);
-            }
+            });
+
+            //disabled selection
+            $("#region").on('change', function () {
+                if ($("#region").val() == '-0') {
+                    $('#kmuj').prop('disabled', true);
+                }
+                else {
+                    $('#kmuj').prop('disabled', false);
+                }
+            });
+            $("#kmuj").on('change', function () {
+                if ($("#kmuj").val() == '-0') {
+                    $('#section').prop('disabled', true);
+                }
+                else {
+                    $('#section').prop('disabled', false);
+                }
+            });
+            $("#section").on('change', function () {
+                if ($("#section").val() == '-0') {
+                    $('#gang').prop('disabled', true);
+                }
+                else {
+                    $('#gang').prop('disabled', false);
+                }
+            });
+
+            //automatic show workunit when select worktype
+            $("#worktype").on('change', function () {
+                wrk = $("#worktype option:selected").text();
+                localStorage.setItem("selWrk", wrk, this.value);
+                listWorkUnit(localStorage.getItem("selWrk", this.value));
+            });
+
+            //show/hide work catergory - emegergency
+            $("#category").on('change', function () {
+                if ($("#category option:selected").val() == '1') {
+                    $("#catEmer").show();
+                }
+                else {
+                    $("#catEmer").hide();
+                }
+            });
+
+            $('#startKM, #endKM').on('change', function () {
+                validateKM();
+            });
+
+            $('#startTime, #endTime').on('change', function () {
+                validateTime();
+            });
+
         });
 
         //show table and gang pax value according to gang kmuj and section
@@ -262,17 +310,50 @@
             listGangPax(localStorage.getItem("selKmj", this.value), localStorage.getItem("selScn", this.value), localStorage.getItem("selGng", this.value));
         });
 
-        $(document).on('click', '.toggle-icon', function () {
-            var icon = $(this).find('i');
-            if (icon.hasClass('fa-minus')) {
-                icon.removeClass('fa-minus').addClass('fa-plus');
+        //$(document).on('click', '.toggle-icon', function () {
+        //    var icon = $(this).find('i');
+        //    if (icon.hasClass('fa-minus')) {
+        //        icon.removeClass('fa-minus').addClass('fa-plus');
+        //    } else {
+        //        icon.removeClass('fa-plus').addClass('fa-minus');
+        //    }
+        //});
+
+        function validateKM() {
+            var startKM = parseFloat($('#startKM').val());
+            var endKM = parseFloat($('#endKM').val());
+            var totalKM = (endKM - startKM)*1000;
+
+            if (endKM < startKM) {
+                alert('End KM must be greater than Start KM');
             } else {
-                icon.removeClass('fa-plus').addClass('fa-minus');
+                $('#totalKM').val(totalKM);
             }
-        });
+        }
 
+        function validateTime() {
+            const startTime = $('#startTime').val();
+            const endTime = $('#endTime').val();
 
+            if (startTime && endTime) {
+                const start = new Date(`1970-01-01T${startTime}:00`);
+                const end = new Date(`1970-01-01T${endTime}:00`);
 
+                let diff = (end - start) / 1000 / 60; // difference in minutes
+
+                if (diff < 0) {
+                    diff += 24 * 60; // handle cases where endTime is past midnight
+                }
+
+                const hours = Math.floor(diff / 60);
+                const minutes = diff % 60;
+
+                const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+                $('#totalTime').val(formattedTime); // Corrected line
+            } else {
+                alert('Please enter both start and end times.');
+            }
+        }
 
         function listReports(kmuj, section, gang) {
             $.ajax({
@@ -299,66 +380,68 @@
                             { data: "JobGrade" },
                             { data: "JobDesc" },
                             { data: "cuti_name" },
-                       /*     { data: "Emplid" },*/
+                            /*     { data: "Emplid" },*/
                         ],
                         columnDefs: [
-                        //{
-                        //    targets: -1,
-                        //    title: "Actions",
-                        //    render: function (data, type, full, meta) {
-                        //        return '<a class="btn btn-primary toggle-icon"><i class="fa fa-minus fa-rotate-90 font-16"></i></a>';
-                        //        //return '<a class="btn btn-primary" data-id="' + data + '" data-bs-target="#modalDetails" data-bs-toggle="modal" class="btn btn-primary"><i class="fe fe-edit font-16"></i></a>'
-                        //        //    return data;
-                        //    },
-                        //},
-                        {
-                            targets: -1,
-                            title: "Status",
-                            render: function (data, type, full, meta) {
-                                var status = '';
-                                if (data == 'VALID') { status = '<a class="text-success">' + data + ' <i class="ion-checkmark-circled"></i></a></p >'; }
-                                else {
-                                    status = '<a class="text-danger">' + data + ' <i class="ion-close-circled"></i></a></p >';
-                                }
-                                return status;
+                            //{
+                            //    targets: -1,
+                            //    title: "Actions",
+                            //    render: function (data, type, full, meta) {
+                            //        return '<a class="btn btn-primary toggle-icon"><i class="fa fa-minus fa-rotate-90 font-16"></i></a>';
+                            //        //return '<a class="btn btn-primary" data-id="' + data + '" data-bs-target="#modalDetails" data-bs-toggle="modal" class="btn btn-primary"><i class="fe fe-edit font-16"></i></a>'
+                            //        //    return data;
+                            //    },
+                            //},
+                            {
+                                targets: -1,
+                                title: "Status",
+                                render: function (data, type, full, meta) {
+                                    var status = '';
+                                    if (data == 'VALID') { status = '<a class="text-success">' + data + ' <i class="ion-checkmark-circled"></i></a></p >'; }
+                                    else {
+                                        status = '<a class="text-danger">' + data + ' <i class="ion-close-circled"></i></a></p >';
+                                    }
+                                    return status;
+                                },
                             },
-                        },
-                        {
-                            targets: -2,
-                            title: "Position",
-                            render: function (data, type, full, meta) {
-                                return data;
+                            {
+                                targets: -2,
+                                title: "Position",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
                             },
-                        },
-                        {
-                            targets: -3,
-                            title: "Grade",
-                            render: function (data, type, full, meta) {
-                                return data;
+                            {
+                                targets: -3,
+                                title: "Grade",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
                             },
-                        },
-                        {
-                            targets: -4,
-                            title: "Name",
-                            render: function (data, type, full, meta) {
-                                return data;
+                            {
+                                targets: -4,
+                                title: "Name",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
                             },
-                        },
-                        {
-                            targets: -5,
-                            title: "Staff ID",
-                            render: function (data, type, full, meta) {
-                                return data;
+                            {
+                                targets: -5,
+                                title: "Staff ID",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
                             },
-                        },
-                        {
-                            targets: -6,
-                            title: "No",
-                            render: function (data, type, full, meta) {
-                                return counter++;
-                            },
-                        }]
-
+                            {
+                                targets: -6,
+                                title: "No",
+                                render: function (data, type, full, meta) {
+                                    return counter++;
+                                },
+                            }],
+                            createdRow: function (row, data, dataIndex) {
+                            $('td', row).addClass('text-nowrap align-middle');
+                        }
                     });
                 },
                 error: function (xhr) {
@@ -368,24 +451,6 @@
                 }
             });
         }
-
-        //automatic show workunit when select worktype
-        $("#worktype").on('change', function () {
-            wrk = $("#worktype option:selected").text();
-            localStorage.setItem("selWrk", wrk, this.value);
-            listWorkUnit(localStorage.getItem("selWrk", this.value));
-        });
-
-
-        //show/hide work catergory - emegergency
-        $("#category").on('change', function () {
-            if ($("#category option:selected").val() == '1') {
-                $("#catEmer").show();
-            }
-            else {
-                $("#catEmer").hide();
-            }
-        });
 
         //show workunit after select worktype
         function listWorkUnit(workunit) {
@@ -564,7 +629,6 @@
                 }
             });
         }
-
 
         function listLocation() {
             $.ajax({

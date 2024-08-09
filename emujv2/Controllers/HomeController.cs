@@ -18,7 +18,7 @@ namespace emujv2.Controllers
             return View();
         }
 
-        public ActionResult IndexEngineer()
+        public ActionResult Inventory()
         {
             return View();
         }

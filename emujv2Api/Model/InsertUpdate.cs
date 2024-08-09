@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using static System.Collections.Specialized.BitVector32;
 
 namespace emujv2Api.Model
 {
@@ -126,7 +127,7 @@ namespace emujv2Api.Model
         }
 
 
-        private (int gangCstaffSecCountount, int staffCount) CheckCounts(string staffId)
+        private (int staffSecCount, int staffCount) CheckCounts(string staffId)
         {
             MsSql DbCon = new MsSql();
             string Salah = "";
@@ -269,6 +270,153 @@ namespace emujv2Api.Model
 
             }
             return "0";
+        }
+
+        //generate rptcode
+        public string GenerateFormattedRptCode()
+        {
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+            Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
+
+            // Query to get the latest daily_id
+            StringBuilder SqlStr = new StringBuilder();
+            SqlStr.Append("SELECT TOP 1 daily_id FROM [dbo].[daily] ORDER BY daily_id DESC");
+
+            DataTable Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+            if (Salah != "")
+            {
+                throw new Exception(Salah);
+            }
+
+            // Fetch the latest daily_id
+            int latestDailyId = 0;
+            if (Recc.Rows.Count > 0)
+            {
+                latestDailyId = Convert.ToInt32(Recc.Rows[0]["daily_id"]);
+            }
+
+            // Increment by 8 and format the report code
+            string formattedRptCode = $"RPTD{latestDailyId + 8:D5} ";
+
+            return formattedRptCode;
+        }
+
+
+        public string NewForm(R1FormCons formCons)
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+            Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
+
+            // Generate the formatted report code
+            string formattedRptCode = GenerateFormattedRptCode();
+
+            SqlStr.Append(" INSERT INTO [dbo].[daily] ");
+            SqlStr.Append(" ([daily_section] ");
+            SqlStr.Append(" , [daily_kmuj] ");
+            SqlStr.Append(" , [daily_sec] ");
+
+            SqlStr.Append(" , [daily_gang] ");
+            SqlStr.Append(" , [daily_date] ");
+            SqlStr.Append(" , [daily_worktype] ");
+            SqlStr.Append(" , [daily_total] "); //total user masukkan
+            SqlStr.Append(" , [daily_unit] ");
+
+            SqlStr.Append(" , [daily_timestart] ");
+            SqlStr.Append(" , [daily_timelast] ");
+
+            SqlStr.Append(" , [daily_category] "); //normal, emergency
+            SqlStr.Append(" , [daily_condition] "); //upline, downline
+            SqlStr.Append(" , [daily_additional] "); //additional notes
+
+            SqlStr.Append(" , [daily_timetaken] ");
+            SqlStr.Append(" , [effect_kmfrom] ");
+            SqlStr.Append(" , [effect_kmto] ");
+            SqlStr.Append(" , [effect_kmtotal] ");
+
+            SqlStr.Append(" , [station] ");
+            SqlStr.Append(" , [station_point] ");
+            SqlStr.Append(" , [category_details] ");
+
+            SqlStr.Append(" , [temperature] ");
+            SqlStr.Append(" , [rpt_code] ");
+            SqlStr.Append(" , [daily_workers] ");
+            SqlStr.Append(" , [upd_user] ");
+            SqlStr.Append(" , [upd_date]) ");
+            SqlStr.Append(" VALUES ");
+            SqlStr.Append(" (' @Region ");
+            SqlStr.Append(" , @Kmuj ");
+            SqlStr.Append(" , @Section ");
+
+            SqlStr.Append(" , @Gang ");
+            SqlStr.Append(" , @Date ");
+            SqlStr.Append(" , @WorkType ");
+            SqlStr.Append(" , @Total ");
+            SqlStr.Append(" , @TotalUnit ");
+
+            SqlStr.Append(" , @TimeStart ");
+            SqlStr.Append(" , @TimeLast ");
+
+            SqlStr.Append(" , @Category ");
+            SqlStr.Append(" , @Condition ");
+            SqlStr.Append(" , @Adds ");
+
+            SqlStr.Append(" , @TimeTaken ");
+            SqlStr.Append(" , @KMFrom ");
+            SqlStr.Append(" , @KMTo ");
+            SqlStr.Append(" , @KMTotal ");
+
+            SqlStr.Append(" , @Station ");
+            SqlStr.Append(" , @SPoint ");
+            SqlStr.Append(" , @CatDetails ");
+
+            SqlStr.Append(" , @Temp ");
+            SqlStr.Append(" , @RptCode ");
+            SqlStr.Append(" , @Workers ");
+            SqlStr.Append(" , @UpdBy ");
+            SqlStr.Append(" , CONVERT(VARCHAR(10), GETDATE(), 103) + ' ' + CONVERT(VARCHAR(8), GETDATE(), 108) + ' ' + RIGHT(CONVERT(VARCHAR(20), GETDATE(), 22), 2) ");
+
+            ParamTmp.Add("@Region", formCons.Region ?? (object)DBNull.Value);
+            ParamTmp.Add("@Kmuj", formCons.Kmuj ?? (object)DBNull.Value);
+            ParamTmp.Add("@Section", formCons.Section ?? (object)DBNull.Value);
+
+            ParamTmp.Add("@Gang", formCons.Gang ?? (object)DBNull.Value);
+            ParamTmp.Add("@Date", formCons.Date ?? (object)DBNull.Value);
+            ParamTmp.Add("@WorkType", formCons.WorkType ?? (object)DBNull.Value);
+            ParamTmp.Add("@Total", formCons.Total ?? (object)DBNull.Value);
+            ParamTmp.Add("@TotalUnit", formCons.TotalUnit ?? (object)DBNull.Value);
+
+            ParamTmp.Add("@TimeStart", formCons.TimeStart ?? (object)DBNull.Value);
+            ParamTmp.Add("@TimeLast", formCons.TimeLast ?? (object)DBNull.Value);
+
+            ParamTmp.Add("@Category", formCons.Category ?? (object)DBNull.Value);
+            ParamTmp.Add("@Condition", formCons.Condition ?? (object)DBNull.Value);
+            ParamTmp.Add("@Adds", formCons.Adds ?? (object)DBNull.Value);
+
+            ParamTmp.Add("@TimeTaken", formCons.TimeTaken ?? (object)DBNull.Value);
+            ParamTmp.Add("@KMFrom", formCons.KMFrom ?? (object)DBNull.Value);
+            ParamTmp.Add("@KMTo", formCons.KMTo ?? (object)DBNull.Value);
+            ParamTmp.Add("@KMTotal", formCons.KMTotal ?? (object)DBNull.Value);
+
+            ParamTmp.Add("@Station", formCons.Station ?? (object)DBNull.Value);
+            ParamTmp.Add("@SPoint", formCons.SPoint ?? (object)DBNull.Value);
+            ParamTmp.Add("@CatDetails", formCons.CatDetails ?? (object)DBNull.Value);
+
+            ParamTmp.Add("@Temp", formCons.Temp ?? (object)DBNull.Value);
+            ParamTmp.Add("@RptCode", formattedRptCode ?? (object)DBNull.Value);
+            ParamTmp.Add("@Workers", formCons.Workers ?? (object)DBNull.Value);
+            ParamTmp.Add("@UpdBy", formCons.UpdBy);
+            ParamTmp.Add("@UpdDate", formCons.UpdDate ?? (object)DBNull.Value);
+
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+            if (Salah != "") { return Salah; }
+            else { return "0"; }
+
         }
 
     }

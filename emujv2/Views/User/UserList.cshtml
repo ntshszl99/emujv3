@@ -25,7 +25,7 @@
                                             <div class="mb-5 d-flex justify-content-start">
                                                 <a class="btn btn-success" data-bs-target="#modalTambah" data-bs-toggle="modal" href="javascript:void(0)">Add New User</a>
                                             </div>
-                                            <table id="tableRep" class="table table-bordered text-nowrap">
+                                            <table id="tableRep" class="table table-striped table-bordered text-nowrap">
                                                 <thead>
                                                 </thead>
                                                 <tbody></tbody>
@@ -102,6 +102,62 @@
                 </div>
             </div>
 
+
+            <!--Modal User Details-->
+            <div class="modal fade" id="modalDetails" tabindex="-1" aria-labelledby="modalUpdateLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body text-center p-4">
+                            <i class="fe fe-check-circle text-success lh-1 mg-t-20 d-inline-block" style="font-size: 5em;"></i>
+                            <h3 class="text-success">Confirm Action</h3>
+                            <p class="mg-b-20 mg-x-20">Are you sure to update this data?</p>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-label">Staff ID</div>
+                                        <input readonly id="staffID2" type="text" class="form-control text-center">
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mt-5 form-label">Staff Name</div>
+                                        <input readonly id="staffname2" type="text" class="form-control text-center">
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mt-5 form-label">Department</div>
+                                        <input readonly id="dept2" type="text" class="form-control text-center">
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mt-5 form-label">Designation</div>
+                                        <input readonly id="position2" type="text" class="form-control text-center">
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mt-5 form-label">Level Entitle</div>
+                                        <input readonly id="level2" type="text" class="form-control text-center">
+                                    </div>
+                                    <div class="mb-5"></div>
+                                    <div class="card-body bg-success-transparent-2">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-label">Level Entitle</div>
+                                                <select id="userlevel2" class="form-control form-select select2" required="required">
+                                                </select>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="mt-5 form-label">Staff Status</div>
+                                                <select id="status2" class="form-control form-select select2" required="required">
+                                                    <option value="active">Active</option>
+                                                    <option value="inactive">Inactive</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button id="submitUpdate" class="btn btn-success mb-5" type="button">Update</button>
+                            <button class="btn btn-light mb-5" data-bs-dismiss="modal" ria-label="Close" type="button">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!--Modal Update User Details-->
             <div class="modal" id="modalDetails">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -631,6 +687,9 @@
                         rowId: function (a) {
                             return countID++;
                         },
+                        createdRow: function (row, data, dataIndex) {
+                            $('td', row).addClass('text-nowrap align-middle');
+                        }
 
                     });
                 },

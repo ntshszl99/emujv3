@@ -13,7 +13,17 @@ namespace emujv2.Controllers
             return View();
         }
 
+        public ActionResult R1FormList()
+        {
+            return View();
+        }
+
         public ActionResult R1WeeklyProgramme()
+        {
+            return View();
+        }
+
+        public ActionResult R2WeeklyProgramme()
         {
             return View();
         }
@@ -23,7 +33,7 @@ namespace emujv2.Controllers
             return View();
         }
 
-        public ActionResult Report()
+        public ActionResult DailyReport()
         {
             return View();
         }
@@ -33,9 +43,6 @@ namespace emujv2.Controllers
             return View();
         }
 
-        public ActionResult Test()
-        {
-            return View();
-        }
+      
     }
 }
