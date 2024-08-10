@@ -675,7 +675,7 @@ namespace emujv2Api.Model
         }
 
         //view ganglist normal
-        public string GetGListNormal(string Kmuj, string Section, string Gang)
+        public string GetGListNormal(string Section, string Gang)
         {
             StringBuilder SqlStr = new StringBuilder();
             Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
@@ -689,11 +689,10 @@ namespace emujv2Api.Model
             SqlStr.Append(" from gang_details as a, [HR_MAIN].[dbo].[HR_MAIN] as b, STAFFSECTION as c, section as d, kmuj as e, Ref_Cuti as f, Gang as g ");
             SqlStr.Append(" where b.Emplid = ");
             SqlStr.Append(" (select distinct(c.no_perkh) ");
-            SqlStr.Append(" where e.kmuj_name = @Kmuj ");
-            SqlStr.Append(" and d.section_name = @Section) ");
+            SqlStr.Append(" where d.section_name = @Section ");
             SqlStr.Append(" and c.no_muj = e.kmuj_value ");
             SqlStr.Append(" and c.no_section = d.section_val ");
-            SqlStr.Append(" and d.section_kmuj = e.kmuj_value ");
+            SqlStr.Append(" and d.section_kmuj = e.kmuj_value ) ");
             SqlStr.Append(" and g.gang = @Gang ");
             SqlStr.Append(" and a.gang_id = g.id ");
             SqlStr.Append(" and a.staff_no = b.Emplid ");
@@ -702,7 +701,6 @@ namespace emujv2Api.Model
             SqlStr.Append(" order by b.Nama asc ");
 
             ParamTmp.Add("@Section", Section);
-            ParamTmp.Add("@Kmuj", Kmuj);
             ParamTmp.Add("@Gang", Gang);
 
             Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);

@@ -129,6 +129,13 @@ namespace emujv2Api.Controller
 
             if (!string.IsNullOrEmpty(User.Userid))
             {
+                // Log the size and content of the input list
+                Console.WriteLine($"Number of users to process: {userConsList.Count}");
+                foreach (var user in userConsList)
+                {
+                    Console.WriteLine($"User: {user.StaffId}, {user.Nama}");
+                }
+
                 // Call NewGang method once with the entire list
                 Salah = ret.NewGang(userConsList);
                 if (Salah != "0")
@@ -149,6 +156,7 @@ namespace emujv2Api.Controller
                 return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
             }
         }
+
 
         [HttpPost]
         public string NewForm(R1FormCons formCons)
@@ -563,7 +571,7 @@ namespace emujv2Api.Controller
 
 
         [HttpGet]
-        public string GetGListNormal(string Kmuj, string Section, string Gang)
+        public string GetGListNormal(string Section, string Gang)
         {
             TokenFunc Token = new TokenFunc();
             PublicCons RetDat = new PublicCons();
@@ -581,7 +589,7 @@ namespace emujv2Api.Controller
 
             if (!string.IsNullOrEmpty(User.Userid))
             {
-                return ret.GetGListNormal(Kmuj, Section, Gang);
+                return ret.GetGListNormal(Section, Gang);
             }
             else
             {

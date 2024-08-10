@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
-using static System.Collections.Specialized.BitVector32;
 
 namespace emujv2Api.Model
 {
@@ -160,14 +159,31 @@ namespace emujv2Api.Model
             string Salah = "";
             CommonFunc Conn = new CommonFunc();
 
+            // Log the size and content of the input list before removing duplicates
+            Console.WriteLine($"Number of users before removing duplicates: {userConsList.Count}");
+            foreach (var user in userConsList)
+            {
+                Console.WriteLine($"User: {user.StaffId}, {user.Nama}");
+            }
+
             // Remove duplicates based on StaffId
             var distinctUserConsList = userConsList
-                .GroupBy(u => u.Userid)
+                .GroupBy(u => u.StaffId)
                 .Select(g => g.First())
                 .ToList();
 
+            // Log the size and content of the distinct list
+            Console.WriteLine($"Number of distinct users to process: {distinctUserConsList.Count}");
+            foreach (var user in distinctUserConsList)
+            {
+                Console.WriteLine($"Distinct User: {user.StaffId}, {user.Nama}");
+            }
+
             foreach (var userCons in distinctUserConsList)
             {
+                // Logging to verify each user is being processed
+                Console.WriteLine($"Processing User: {userCons.StaffId}, {userCons.Nama}");
+
                 var (staffSecCount, staffCount) = CheckCounts(userCons.StaffId);
 
                 if (staffSecCount == 0 && staffCount == 0)
@@ -201,8 +217,8 @@ namespace emujv2Api.Model
                     ParamTmp.Add("@UpdBy", userCons.UpdBy);
                     ParamTmp.Add("@Designation", userCons.Designation ?? (object)DBNull.Value);
 
-                    DataTable Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
-                    if (Salah != "")
+                    bool isSuccess = DbCon.ExecuteNonQuery(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+                    if (!isSuccess)
                     {
                         return Salah;
                     }
@@ -223,8 +239,8 @@ namespace emujv2Api.Model
                     ParamTmpNew.Add("@Kmuj", userCons.KMUJ);
                     ParamTmpNew.Add("@Section", userCons.Section);
 
-                    DataTable ReccNew = DbCon.ExecuteReader(SqlStrNew.ToString(), ParamTmpNew, Conn.emujConn, ref Salah);
-                    if (Salah != "")
+                    isSuccess = DbCon.ExecuteNonQuery(SqlStrNew.ToString(), ParamTmpNew, Conn.emujConn, ref Salah);
+                    if (!isSuccess)
                     {
                         return Salah;
                     }
@@ -260,17 +276,21 @@ namespace emujv2Api.Model
                     ParamTmpNewer.Add("@UpdBy", userCons.UpdBy);
                     ParamTmpNewer.Add("@Designation", userCons.Designation ?? (object)DBNull.Value);
 
-                    DataTable ReccNewer = DbCon.ExecuteReader(SqlStrNewer.ToString(), ParamTmpNewer, Conn.emujConn, ref Salah);
-                    if (Salah != "")
+                    bool isSuccess = DbCon.ExecuteNonQuery(SqlStrNewer.ToString(), ParamTmpNewer, Conn.emujConn, ref Salah);
+                    if (!isSuccess)
                     {
                         return Salah;
                     }
                 }
-
-
             }
             return "0";
         }
+
+
+
+
+
+
 
         //generate rptcode
         public string GenerateFormattedRptCode()

@@ -50,136 +50,136 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="" id="contentNormal">
-            <div class="card">
-                <div class="card-body">
-                    <div class="mb-3 m-0">
-                        <div class="row">
-                            <div class="col-3">
-                                <label class="mt-3 form-label">Gang</label>
-                                <select id="gangNormal" class="form-control form-select select2">
-                                    <option value="-0">Select Gang</option>
-                                </select>
-                            </div>
-                            <div class="card-body">
-                                <div class="col-lg-12">
-                                    <div class="table-responsive table-lg">
-                                        <table id="tableNormal" class="table card-table table-vcenter text-nowrap border">
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="" id="contentOthers">
-            <div class="card">
-                <div class="card-body">
-                    <div class="mb-3 m-0">
-                        <div class="row">
-                            <div class="card-body">
-                                <h4 class="text-muted">Alert</h4>
-                                <p class="text-muted">Sorry, no data found.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!--Modal User Details-->
-        <div class="modal fade" id="modalDetails" tabindex="-1" aria-labelledby="modalUpdateLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-body text-center p-4">
-                        <i class="fe fe-check-circle text-success lh-1 mg-t-20 d-inline-block" style="font-size: 5em;"></i>
-                        <h3 class="text-success">Confirm Action</h3>
-                        <p class="mg-b-20 mg-x-20">Are you sure to update this data?</p>
-                        <div class="modal-body">
+            <div class="" id="contentNormal">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3 m-0">
                             <div class="row">
-                                <div class="col-12">
-                                    <div class="form-label">Staff ID</div>
-                                    <input readonly id="staffID" type="text" class="form-control text-center bg-transparent border-0">
+                                <div class="col-3">
+                                    <label class="mt-3 form-label">Gang</label>
+                                    <select id="gangNormal" class="form-control form-select select2">
+                                        <option value="-0">Select Gang</option>
+                                    </select>
                                 </div>
-                                <div class="col-12">
-                                    <div class="mt-5 form-label">Staff Name</div>
-                                    <input readonly id="staffname" type="text" class="form-control text-center bg-transparent border-0">
-                                </div>
-                                <div class="col-12">
-                                    <div class="mt-5 form-label">Department</div>
-                                    <input readonly id="dept" type="text" class="form-control text-center bg-transparent border-0">
-                                </div>
-                                <div class="col-12">
-                                    <div class="mt-5 form-label">Designation</div>
-                                    <input readonly id="position" type="text" class="form-control text-center bg-transparent border-0">
-                                </div>
-                                <div class="mb-5"></div>
-                                <div class="card-body bg-success-transparent-2">
-                                    <div class="mb-0 m-0">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-label">Update Status</div>
-                                                <select id="cuti" class="form-control form-select select2" required="required">
-                                                    <option value="-0">.: Select Reason :.</option>
-                                                </select>
-                                            </div>
+                                <div class="card-body">
+                                    <div class="col-lg-12">
+                                        <div class="table-responsive table-lg">
+                                            <table id="tableNormal" class="table card-table table-vcenter text-nowrap border">
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-        
-                    <button id="submitUpdate" class="btn btn-success mb-5" type="button">Update</button>
-                    <button class="btn btn-light mb-5" data-bs-dismiss="modal" aria-label="Close" type="button">Cancel</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!--Modal Delete Data-->
-    <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-body text-center p-4">
-                    <i class="fa fa-exclamation-circle fa-5x text-danger lh-1 mg-t-20 d-inline-block"></i>
-                    <h3 class="text-danger">Warning! Are you sure? </h3>
-                    <p class="mg-b-20 mg-x-20">You may not be able to recover this data.</p>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-label">Staff ID</div>
-                                <input readonly id="staffID2" type="text" class="form-control text-center bg-transparent border-0">
+            <div class="" id="contentOthers">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3 m-0">
+                            <div class="row">
+                                <div class="card-body">
+                                    <h4 class="text-muted">Alert</h4>
+                                    <p class="text-muted">Sorry, no data found.</p>
+                                </div>
                             </div>
-                            <div class="col-12">
-                                <div class="mt-5 form-label">Staff Name</div>
-                                <input readonly id="staffname2" type="text" class="form-control text-center bg-transparent border-0">
-                            </div>
-                            <div class="col-12">
-                                <div class="mt-5 form-label">Department</div>
-                                <input readonly id="dept2" type="text" class="form-control text-center bg-transparent border-0">
-                            </div>
-                            <div class="col-12">
-                                <div class="mt-5 form-label">Designation</div>
-                                <input readonly id="position2" type="text" class="form-control text-center bg-transparent border-0">
-                            </div>
-                            <div class="mb-5"></div>
                         </div>
                     </div>
+                </div>
+            </div>
 
-                    <button id="submitDelete" class="btn btn-danger mb-5" type="button">Delete</button>
-                    <button class="btn btn-light mb-5" data-bs-dismiss="modal" aria-label="Close" type="button">Cancel</button>
+            <!--Modal User Details-->
+            <div class="modal fade" id="modalDetails" tabindex="-1" aria-labelledby="modalUpdateLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body text-center p-4">
+                            <i class="fe fe-check-circle text-success lh-1 mg-t-20 d-inline-block" style="font-size: 5em;"></i>
+                            <h3 class="text-success">Confirm Action</h3>
+                            <p class="mg-b-20 mg-x-20">Are you sure to update this data?</p>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-label">Staff ID</div>
+                                        <input readonly id="staffID" type="text" class="form-control text-center bg-transparent border-0">
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mt-5 form-label">Staff Name</div>
+                                        <input readonly id="staffname" type="text" class="form-control text-center bg-transparent border-0">
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mt-5 form-label">Department</div>
+                                        <input readonly id="dept" type="text" class="form-control text-center bg-transparent border-0">
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mt-5 form-label">Designation</div>
+                                        <input readonly id="position" type="text" class="form-control text-center bg-transparent border-0">
+                                    </div>
+                                    <div class="mb-5"></div>
+                                    <div class="card-body bg-success-transparent-2">
+                                        <div class="mb-0 m-0">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-label">Update Status</div>
+                                                    <select id="cuti" class="form-control form-select select2" required="required">
+                                                        <option value="-0">.: Select Reason :.</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button id="submitUpdate" class="btn btn-success mb-5" type="button">Update</button>
+                            <button class="btn btn-light mb-5" data-bs-dismiss="modal" aria-label="Close" type="button">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Modal Delete Data-->
+            <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body text-center p-4">
+                            <i class="fa fa-exclamation-circle fa-5x text-danger lh-1 mg-t-20 d-inline-block"></i>
+                            <h3 class="text-danger">Warning! Are you sure? </h3>
+                            <p class="mg-b-20 mg-x-20">You may not be able to recover this data.</p>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-label">Staff ID</div>
+                                        <input readonly id="staffID2" type="text" class="form-control text-center bg-transparent border-0">
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mt-5 form-label">Staff Name</div>
+                                        <input readonly id="staffname2" type="text" class="form-control text-center bg-transparent border-0">
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mt-5 form-label">Department</div>
+                                        <input readonly id="dept2" type="text" class="form-control text-center bg-transparent border-0">
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mt-5 form-label">Designation</div>
+                                        <input readonly id="position2" type="text" class="form-control text-center bg-transparent border-0">
+                                    </div>
+                                    <div class="mb-5"></div>
+                                </div>
+                            </div>
+
+                            <button id="submitDelete" class="btn btn-danger mb-5" type="button">Delete</button>
+                            <button class="btn btn-light mb-5" data-bs-dismiss="modal" aria-label="Close" type="button">Cancel</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-</div>
-
 
 
 @section scripts{
@@ -228,33 +228,39 @@
                         localStorage.getItem("selGng", this.value));
                 });
             }
-            else if (localStorage.getItem("lvlI") === "4") {
-                $("#contentNormal").show();
-                $("#contentAdmin").hide();
-                $("#contentOthers").hide();
+            else if (localStorage.getItem("lvlI") === "2" ||
+                localStorage.getItem("lvlI") === "3" ||
+                localStorage.getItem("lvlI") === "4" ||
+                localStorage.getItem("lvlI") === "5" ||
+                localStorage.getItem("lvlI") === "6") {
 
-                $("#gangNormal").on('change', function () {
+                scn = localStorage.getItem("scn");
+                localStorage.setItem("selScn", scn, this.value);
+                console.log(scn);
 
-                    checkStore();
+                if (scn == 'null' || scn == ' ') {
+                    $("#contentOthers").show();
+                    $("#contentNormal").hide();
+                    $("#contentAdmin").hide();
+                }
+                else {
+                    $("#contentNormal").show();
+                    $("#contentOthers").hide();
+                    $("#contentAdmin").hide();
 
-                    gng = $("#gangNormal option:selected").text();
-                    localStorage.setItem("selGng", gng, this.value);
+                    $("#gangNormal").on('change', function () {
+                        checkStore();
 
-                    kmj = localStorage.getItem("kmuj");
-                    localStorage.setItem("selKmj", kmj, this.value);
+                        gng = $("#gangNormal option:selected").text();
+                        localStorage.setItem("selGng", gng, this.value);
 
-                    scn = localStorage.getItem("scn");
-                    localStorage.setItem("selScn", scn, this.value);
+                        scn = localStorage.getItem("scn");
+                        localStorage.setItem("selScn", scn, this.value);
 
-                    listReportsNormal(localStorage.getItem("selKmj", this.value),
-                        localStorage.getItem("selScn", this.value),
-                        localStorage.getItem("selGng", this.value));
-
-                });
-            }
-            else {
-                $("#contentAdmin").hide();
-                $("#contentNormal").hide();
+                        listReportsNormal(localStorage.getItem("selScn", this.value),
+                            localStorage.getItem("selGng", this.value));
+                    });
+                }
             }
 
         });
@@ -346,11 +352,24 @@
                         listReportsAdmin(localStorage.getItem("selKmj", this.value),
                             localStorage.getItem("selScn", this.value),
                             localStorage.getItem("selGng", this.value));
-                    }
-                    else if (localStorage.getItem("lvlI") === "4") {
-                        listReportsNormal(localStorage.getItem("selKmj", this.value),
-                            localStorage.getItem("selScn", this.value),
-                            localStorage.getItem("selGng", this.value));
+
+                    } else if (["2", "3", "4", "5", "6"].includes(localStorage.getItem("lvlI"))) {
+                        var scn = localStorage.getItem("scn");
+                        localStorage.setItem("selScn", scn);
+                        console.log(scn);
+
+                        if (scn == 'null' || scn == ' ') {
+                            $("#contentOthers").show();
+                            $("#contentNormal").hide();
+                            $("#contentAdmin").hide();
+                        } else {
+                            $("#contentNormal").show();
+                            $("#contentOthers").hide();
+                            $("#contentAdmin").hide();
+
+                            listReportsNormal(localStorage.getItem("selScn"),
+                                localStorage.getItem("selGng"));
+                        }
                     }
                 },
             });
@@ -380,22 +399,42 @@
                     if (data && data.status === "00") {
                         $('#modalDelete').modal('hide');
                         swal.fire('Success!', 'User has been deleted.', 'success');
-
                     } else {
                         $('#modalDelete').modal('hide');
                         swarning();
                     }
                     if (localStorage.getItem("lvlI") === "1") {
-                        listReportsAdmin(localStorage.getItem("selKmj", this.value),
-                            localStorage.getItem("selScn", this.value),
-                            localStorage.getItem("selGng", this.value));
-                    }
-                    else if (localStorage.getItem("lvlI") === "4") {
-                        listReportsNormal(localStorage.getItem("selKmj", this.value),
-                            localStorage.getItem("selScn", this.value),
-                            localStorage.getItem("selGng", this.value));
+                        listReportsAdmin(localStorage.getItem("selKmj"),
+                            localStorage.getItem("selScn"),
+                            localStorage.getItem("selGng"));
+                    } else if (["2", "3", "4", "5", "6"].includes(localStorage.getItem("lvlI"))) {
+                        var scn = localStorage.getItem("scn");
+                        localStorage.setItem("selScn", scn);
+                        console.log(scn);
+
+                        if (scn == 'null' || scn == ' ') {
+                            $("#contentOthers").show();
+                            $("#contentNormal").hide();
+                            $("#contentAdmin").hide();
+                        } else {
+                            $("#contentNormal").show();
+                            $("#contentOthers").hide();
+                            $("#contentAdmin").hide();
+
+                            listReportsNormal(localStorage.getItem("selScn"),
+                                localStorage.getItem("selGng"));
+                        }
                     }
                 },
+                error: function (xhr, status, error) {
+                    console.error("Error Status:", status);
+                    console.error("Error Thrown:", error);
+                    console.error("Response Text:", xhr.responseText);
+                    swarning();
+                },
+                complete: function () {
+                    console.log("Request completed");
+                }
             });
         }
 
@@ -633,9 +672,9 @@
             });
         }
 
-        function listReportsNormal(kmuj, section, gang) {
+        function listReportsNormal(section, gang) {
             $.ajax({
-                url: linkDepan + "GetGListNormal?Kmuj=" + kmuj + "&Section=" + section + "&Gang=" + gang,
+                url: linkDepan + "GetGListNormal?Section=" + section + "&Gang=" + gang,
                 type: 'GET',
                 dataType: 'json',
                 data: {},
