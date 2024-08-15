@@ -23,29 +23,29 @@
                             <div class="row">
                                 <div class="col-3">
                                     <label class="mt-5 form-label">Region</label>
-                                    <select id="region" class="form-control form-select select2" required>
+                                    <select id="region" class="form-control form-select select2" required="required">
                                         <option value="-0">Select Region</option>
-                                        <option id="tempekUsrRegion" value="1"></option>
+                                        <option id="tempekUsrRegion"></option>
                                     </select>
                                 </div>
                                 <div class="col-3">
                                     <label class="mt-5 form-label">KMUJ</label>
                                     <select disabled id="kmuj" class="form-control form-select select2" required="required">
                                         <option value="-0">Select KMUJ</option>
-                                        <option id="tempekKMUJ" value="1"></option>
+                                        <option id="tempekKMUJ" data="tempekKMUJVal"></option>
                                     </select>
                                 </div>
                                 <div class="col-3">
                                     <label class="mt-5 form-label">Section</label>
                                     <select disabled id="section" class="form-control form-select select2" required="required">
                                         <option value="-0">Select Section</option>
-                                        <option id="tempekScn" value="1"></option>
+                                        <option id="tempekScn"></option>
                                     </select>
                                 </div>
                                 <div></div>
-                                <div class="col-3">
+                                <div class="col-6">
                                     <label class="mt-5 form-label">Gang</label>
-                                    <select disabled id="gang" type="text" class="form-control form-select select2" required>
+                                    <select disabled id="gang" type="text" class="form-control form-select select2" required="required" multiple>
                                         <option value="-0">Select Gang</option>
                                     </select>
                                 </div>
@@ -66,7 +66,7 @@
                                 <div></div>
                                 <div class="col-3">
                                     <label class="mt-5 form-label">Work Date</label>
-                                    <input type="text" id="datepicker" class="form-control">
+                                    <input type="text" id="datepicker" class="form-control" required="required">
                                 </div>
                                 <div class="col-3">
                                     <label class="mt-5 form-label">Line</label>
@@ -82,8 +82,8 @@
                                 </div>
                                 <div id="catEmer" class="col-3" style='display:none;'>
                                     <label class="mt-5 form-label">Category</label>
-                                    <select id="catdet" class="form-control form-select select2" required="required">
-                                        <option value="-0">.: Select Emergency :.</option>
+                                    <select id="catdet" class="form-control form-select select2">
+                                        <option value="-">.: Select Emergency :.</option>
                                     </select>
                                 </div>
                                 <div></div>
@@ -95,7 +95,7 @@
                                 </div>
                                 <div class="col-3">
                                     <label class="mt-5 form-label">Total</label>
-                                    <input type="text" class="form-control" placeholder="Total">
+                                    <input id="total" type="text" class="form-control" placeholder="Total" required="required">
                                 </div>
                                 <div class="col-3">
                                     <label class="mt-5 form-label">Unit</label>
@@ -104,11 +104,11 @@
                                 <div></div>
                                 <div class="col-3">
                                     <label class="mt-5 form-label">Effected KM (Start)</label>
-                                    <input type="number" id="startKM" class="form-control" placeholder="Start KM">
+                                    <input type="number" id="startKM" class="form-control" placeholder="Start KM" required="required">
                                 </div>
                                 <div class="col-3">
                                     <label class="mt-5 form-label">Effected KM (End)</label>
-                                    <input type="number" id="endKM" class="form-control" placeholder="End KM">
+                                    <input type="number" id="endKM" class="form-control" placeholder="End KM" required="required">
                                 </div>
                                 <div class="col-3">
                                     <label class="mt-5 form-label">Effected KM (meter)</label>
@@ -117,11 +117,11 @@
                                 <div></div>
                                 <div class="col-3">
                                     <label class="mt-5 form-label">Time Start </label>
-                                    <input type="time" id="startTime" class="form-control" placeholder="Start Time">
+                                    <input type="time" id="startTime" class="form-control" placeholder="Start Time" required="required">
                                 </div>
                                 <div class="col-3">
                                     <label class="mt-5 form-label">Time End</label>
-                                    <input type="time" id="endTime" class="form-control" placeholder="End Time">
+                                    <input type="time" id="endTime" class="form-control" placeholder="End Time" required="required">
                                 </div>
                                 <div class="col-3">
                                     <label class="mt-5 form-label">Time Taken KM</label>
@@ -145,8 +145,8 @@
                                 </div>
                                 <div id="station" class="col-3" style="display:none;">
                                     <label class="mt-5 form-label">Station</label>
-                                    <select id="stationn" class="form-control form-select select2" required="required">
-                                        <option value="-0">.: Select Station :.</option>
+                                    <select id="stationn" class="form-control form-select select2">
+                                        <option value="">.: Select Station :.</option>
                                     </select>
                                 </div>
                                 <div id="point" class="col-3" style="display:none;">
@@ -232,12 +232,20 @@
                 $('#point').hide('fast');
             });
 
-            $("#datepicker").datepicker();
+            $("#datepicker").datepicker({
+                singleDatePicker: true,
+                showDropdowns: true,
+                minYear: 2021,
+                locale: {
+                    format: 'DD/MM/YYYY'
+                }
+            });
 
             //button submit form
             $('#submitNew').click(function () {
-                submitForm();
-
+                if (validateForm()) {
+                    submitForm();
+                }
             });
 
             //disabled selection
@@ -322,7 +330,7 @@
         function validateKM() {
             var startKM = parseFloat($('#startKM').val());
             var endKM = parseFloat($('#endKM').val());
-            var totalKM = (endKM - startKM)*1000;
+            var totalKM = (endKM - startKM) * 1000;
 
             if (endKM < startKM) {
                 alert('End KM must be greater than Start KM');
@@ -335,24 +343,138 @@
             const startTime = $('#startTime').val();
             const endTime = $('#endTime').val();
 
-            if (startTime && endTime) {
-                const start = new Date(`1970-01-01T${startTime}:00`);
-                const end = new Date(`1970-01-01T${endTime}:00`);
+            const start = new Date(`1970-01-01T${startTime}:00`);
+            const end = new Date(`1970-01-01T${endTime}:00`);
 
-                let diff = (end - start) / 1000 / 60; // difference in minutes
+            let diff = (end - start) / 1000 / 60; // difference in minutes
 
-                if (diff < 0) {
-                    diff += 24 * 60; // handle cases where endTime is past midnight
-                }
-
-                const hours = Math.floor(diff / 60);
-                const minutes = diff % 60;
-
-                const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
-                $('#totalTime').val(formattedTime); // Corrected line
-            } else {
-                alert('Please enter both start and end times.');
+            if (diff < 0) {
+                diff += 24 * 60; // handle cases where endTime is past midnight
             }
+
+            const hours = Math.floor(diff / 60);
+            const minutes = diff % 60;
+
+            const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+            $('#totalTime').val(formattedTime); // Corrected line
+
+        }
+
+        function validateForm() {
+            let isValid = true;
+            let requiredFields = [
+                '#region', '#kmuj', '#section', '#gang', '#datepicker',
+                '#linecond', '#category', '#worktype', '#total',
+                '#startKM', '#endKM', '#startTime', '#endTime'
+            ];
+
+            requiredFields.forEach(function (field) {
+                if ($(field).val() === '' || $(field).val() === '-0') {
+                    isValid = false;
+                    $(field).addClass('is-invalid');
+                } else {
+                    $(field).removeClass('is-invalid');
+                }
+            });
+
+            if (!isValid) {
+                alert('Please fill all required fields.');
+            }
+
+            return isValid;
+        }
+
+
+        function submitForm() {
+            var UpdBy = localStorage.getItem('usrI');
+            var Region = localStorage.getItem('regID');
+            var Kmuj = localStorage.getItem('kmujVal');
+            var Section = localStorage.getItem('scnVal');
+            var formattedDate = moment($('#datepicker').val(), 'MM/DD/YYYY').format('DD/MM/YYYY');
+
+            var data = {
+                UpdBy: UpdBy,
+                Region: Region,
+                Kmuj: Kmuj,
+                Section: Section,
+                Gang: $('#gang').val(),
+                Date: formattedDate,
+                WorkType: $('#worktype').val(),
+                Total: $('#total').val(),
+                TotalUnit: $('#unit').val(),
+                TimeStart: $('#startTime').val(),
+                TimeLast: $('#endTime').val(),
+                Category: $('#category').val(),
+                Condition: $('#linecond').val(),
+                Adds: $('#addnotes').val(),
+                TimeTaken: $('#totalTime').val(),
+                KMFrom: $('#startKM').val(),
+                KMTo: $('#endKM').val(),
+                KMTotal: $('#totalKM').val(),
+                Station: $('#stationn').val(),
+                SPoint: $('#stPoint').val(),
+                CatDetails: $('#catdet').val(),
+                Temp: $('#temp').val(),
+                Workers: $('#gangno').val(),
+            };
+
+            console.log("UpdBy:", UpdBy);
+            console.log("Region:", Region);
+            console.log("Kmuj:", Kmuj);
+            console.log("Section:", Section);
+            console.log("Gang:", $("#gang option:selected").val());
+            console.log("Date:", formattedDate);
+            console.log("WorkType:", $("#worktype option:selected").val());
+            console.log("Total:", $("#total").val());
+            console.log("TotalUnit:", $("#unit").val());
+            console.log("TimeStart:", $("#startTime").val());
+            console.log("TimeLast:", $("#endTime").val());
+            console.log("Category:", $("#category option:selected").val());
+            console.log("Condition:", $("#linecond option:selected").val());
+            console.log("Adds:", $("#addnotes").val());
+            console.log("TimeTaken:", $("#totalTime").text());
+            console.log("KMFrom:", $("#startKM").text());
+            console.log("KMTo:", $("#endKM").text());
+            console.log("KMTotal:", $("#totalKM").text());
+            console.log("Station:", $("#stationn option:selected").val());
+            console.log("SPoint:", $("#stPoint").val());
+            console.log("CatDetails:", $("#catdet option:selected").val());
+            console.log("Temp:", $("#region option:selected").val());
+            console.log("Workers:", $("#gangno").val());
+
+            $.ajax({
+                url: linkDepan + "NewForm",
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (response) {
+                    var data;
+                    try {
+                        data = JSON.parse(response);
+                    } catch (error) {
+                        console.error("Error parsing JSON:", error);
+                        swarning();
+                        return;
+                    }
+                    if (data && data.status === "00") {
+                        swal.fire('Success!', 'User details have been updated.', 'success');
+
+                    } else {
+                        swarning();
+                    }
+                    if (localStorage.getItem("lvlI") === "2" || localStorage.getItem("lvlI") === "3" || localStorage.getItem("lvlI") === "6") {
+                        $("#content").hide();
+                        $("#contentOthers").show();
+                    }
+                    else {
+                        $("#content").show();
+                        $("#contentOthers").hide();
+                    }
+                },
+            });
         }
 
         function listReports(kmuj, section, gang) {
@@ -439,7 +561,7 @@
                                     return counter++;
                                 },
                             }],
-                            createdRow: function (row, data, dataIndex) {
+                        createdRow: function (row, data, dataIndex) {
                             $('td', row).addClass('text-nowrap align-middle');
                         }
                     });

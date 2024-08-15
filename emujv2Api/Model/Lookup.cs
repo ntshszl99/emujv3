@@ -10,6 +10,7 @@ using emujv2Api.Constructor;
 using static System.Collections.Specialized.BitVector32;
 using System.Drawing;
 using Oracle.ManagedDataAccess.Client;
+using Microsoft.Extensions.Primitives;
 
 namespace emujv2Api.Model
 {
@@ -164,6 +165,8 @@ namespace emujv2Api.Model
 
                     User.SectionVal = row["kmuj"].ToString();
                     User.KMUJVal = row["muj"].ToString();
+
+                    User.RegionID = row["region_id"].ToString();
                 }
             }
             else
@@ -1100,7 +1103,7 @@ namespace emujv2Api.Model
             SqlStr.Append(" a.daily_additional, a.rpt_code ");
             SqlStr.Append(" from daily as a, region as b, kmuj as c, section as d, category as e, work_type as f ");
             SqlStr.Append(" where convert(datetime, daily_date, 103) >= @MulaTarikh ");
-            SqlStr.Append(" and convert(datetime, daily_date, 103) <= @AkhirTarikh "); 
+            SqlStr.Append(" and convert(datetime, daily_date, 103) <= @AkhirTarikh ");
             SqlStr.Append(" and a.daily_section = b.region_id ");
             SqlStr.Append(" and a.daily_kmuj = c.kmuj_value ");
             SqlStr.Append(" and a.daily_sec = d.section_val ");
@@ -1110,6 +1113,38 @@ namespace emujv2Api.Model
 
             ParamTmp.Add("@MulaTarikh", MulaTarikh);
             ParamTmp.Add("@AkhirTarikh", AkhirTarikh);
+
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+            return JsonConvert.SerializeObject(Recc, Formatting.Indented);
+        }
+
+        public string GetAllFormDetails(string RptCode)
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+
+            SqlStr.Append(" select b.region_name, c.kmuj_name, d.section_name, (select concat('Gang ', a.daily_gang)) as Gang, ");
+            SqlStr.Append(" a.daily_date, f.work_name, a.upd_user, ");
+            SqlStr.Append(" a.daily_total, a.daily_unit, ");
+            SqlStr.Append(" a.effect_kmfrom, a.effect_kmto, a.effect_kmtotal, g.cond_name, a.daily_workers, ");
+            SqlStr.Append(" e.category_name, a.category_details, ");
+            SqlStr.Append(" a.daily_timestart, a.daily_timelast, a.daily_timetaken, a.station, a.station_point, ");
+            SqlStr.Append(" a.daily_additional, a.rpt_code ");
+            SqlStr.Append(" from daily as a, region as b, kmuj as c, section as d, category as e, work_type as f, condition as g ");
+            SqlStr.Append(" where a.daily_section = b.region_id ");
+            SqlStr.Append(" and a.daily_kmuj = c.kmuj_value ");
+            SqlStr.Append(" and a.daily_sec = d.section_val ");
+            SqlStr.Append(" and a.daily_category = e.category_id ");
+            SqlStr.Append(" and a.daily_worktype = f.id ");
+            SqlStr.Append(" and a.daily_condition = g.cond_id ");
+            SqlStr.Append(" and a.rpt_code = @RptCode ");
+            SqlStr.Append(" order by convert(datetime, daily_date, 103) desc ");
+
+            ParamTmp.Add("@RptCode", RptCode);
 
             Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
             return JsonConvert.SerializeObject(Recc, Formatting.Indented);

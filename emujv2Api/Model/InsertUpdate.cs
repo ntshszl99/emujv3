@@ -287,11 +287,6 @@ namespace emujv2Api.Model
         }
 
 
-
-
-
-
-
         //generate rptcode
         public string GenerateFormattedRptCode()
         {
@@ -337,7 +332,7 @@ namespace emujv2Api.Model
             string formattedRptCode = GenerateFormattedRptCode();
 
             SqlStr.Append(" INSERT INTO [dbo].[daily] ");
-            SqlStr.Append(" ([daily_section] ");
+            SqlStr.Append(" ( [daily_section] ");
             SqlStr.Append(" , [daily_kmuj] ");
             SqlStr.Append(" , [daily_sec] ");
 
@@ -369,12 +364,12 @@ namespace emujv2Api.Model
             SqlStr.Append(" , [upd_user] ");
             SqlStr.Append(" , [upd_date]) ");
             SqlStr.Append(" VALUES ");
-            SqlStr.Append(" (' @Region ");
+            SqlStr.Append(" ( @Region ");
             SqlStr.Append(" , @Kmuj ");
             SqlStr.Append(" , @Section ");
 
             SqlStr.Append(" , @Gang ");
-            SqlStr.Append(" , @Date ");
+            SqlStr.Append(" , CONVERT(VARCHAR(10), @Date, 103) ");
             SqlStr.Append(" , @WorkType ");
             SqlStr.Append(" , @Total ");
             SqlStr.Append(" , @TotalUnit ");
@@ -399,7 +394,8 @@ namespace emujv2Api.Model
             SqlStr.Append(" , @RptCode ");
             SqlStr.Append(" , @Workers ");
             SqlStr.Append(" , @UpdBy ");
-            SqlStr.Append(" , CONVERT(VARCHAR(10), GETDATE(), 103) + ' ' + CONVERT(VARCHAR(8), GETDATE(), 108) + ' ' + RIGHT(CONVERT(VARCHAR(20), GETDATE(), 22), 2) ");
+            SqlStr.Append(" , CONVERT(VARCHAR(10), GETDATE(), 103) + ' ' + CONVERT(VARCHAR(8), GETDATE(), 108)) ");
+            SqlStr.Append(" , CONVERT(VARCHAR(10), GETDATE(), 103) + ' ' + CONVERT(VARCHAR(8), GETDATE(), 108)) ");
 
             ParamTmp.Add("@Region", formCons.Region ?? (object)DBNull.Value);
             ParamTmp.Add("@Kmuj", formCons.Kmuj ?? (object)DBNull.Value);

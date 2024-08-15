@@ -22,7 +22,7 @@ namespace emujv2Api.Constructor
 
     public class R1FormCons
     {
-
+        public string User { get; set; }
         public string Region { get; set; }
         public string Kmuj { get; set; }
         public string Section { get; set; }

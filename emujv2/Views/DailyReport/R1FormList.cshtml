@@ -67,6 +67,113 @@
                 </div>
             </div>
 
+            <!--Modal Form Details-->
+            <div class="modal fade" id="modalDetails" tabindex="-1" aria-labelledby="modalUpdateLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content ">
+                        <div class="modal-body text-center p-4">
+                            <h4 class=" mt-5">Report ID: </h4>
+                            <input readonly id="rptcode" type="text" class="text-success form-control text-center bg-transparent border-0">
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label"><strong>Region</strong></label>
+                                        <input readonly id="region" type="text" class="form-control text-center bg-transparent border-0">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label"><strong>KMUJ</strong></label>
+                                        <input readonly id="kmuj" type="text" class="form-control text-center bg-transparent border-0">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label"><strong>Section</strong></label>
+                                        <input readonly id="section" type="text" class="form-control text-center bg-transparent border-0">
+                                    </div>
+                                    <div></div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label"><strong>Gang</strong></label>
+                                        <input readonly id="gang" type="text" class="form-control text-center bg-transparent border-0">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label"><strong>No. of Staff (Valid)</strong></label>
+                                        <input readonly id="pax" type="text" class="form-control text-center bg-transparent border-0">
+                                    </div>
+                                    <div></div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label"><strong>Work Date</strong></label>
+                                        <input type="text" id="datepicker" class="form-control text-center bg-transparent border-0">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label"><strong>Line</strong></label>
+                                        <input type="text" id="linecond" class="form-control text-center bg-transparent border-0">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label"><strong>Category</strong></label>
+                                        <input type="text" id="category" class="form-control text-center bg-transparent border-0">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label"><strong>Category Details</strong></label>
+                                        <input type="text" id="categorydets" class="form-control text-center bg-transparent border-0">
+                                    </div>
+                                    <div></div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label"><strong>Work Type</strong></label>
+                                        <input type="text" id="worktype" class="form-control text-center bg-transparent border-0">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label"><strong>Total</strong></label>
+                                        <input type="text" id="totalWork" class="form-control text-center bg-transparent border-0">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label"><strong>Unit</strong></label>
+                                        <input type="text" id="unit" class="form-control text-center bg-transparent border-0">
+                                    </div>
+                                    <div></div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label"><strong>Effected KM (From)</strong></label>
+                                        <input type="text" id="KMto" class="form-control text-center bg-transparent border-0">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label"><strong>Effected KM (To)</strong></label>
+                                        <input type="text" id="KMfrom" class="form-control text-center bg-transparent border-0">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label"><strong>Total KM (meter)</strong></label>
+                                        <input type="text" id="totalKM" class="form-control text-center bg-transparent border-0">
+                                    </div>
+                                    <div></div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label"><strong>Time Start</strong></label>
+                                        <input type="text" id="timeStart" class="form-control text-center bg-transparent border-0">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label"><strong>Time End</strong></label>
+                                        <input type="text" id="timeEnd" class="form-control text-center bg-transparent border-0">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label"><strong>Total Time</strong></label>
+                                        <input type="text" id="totalTime" class="form-control text-center bg-transparent border-0">
+                                    </div>
+                                    <div></div>
+                                    <div class="col-12">
+                                        <label class="mt-5 form-label"><strong>Additional Note</strong></label>
+                                        <input type="text" id="notes" class="form-control text-center bg-transparent border-0">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label"><strong>Work at Station</strong></label>
+                                        <input type="text" id="workStation" class="form-control text-center bg-transparent border-0">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label"><strong>Station Point</strong></label>
+                                        <input type="text" id="stPoint" class="form-control text-center bg-transparent border-0">
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-light mb-5" data-bs-dismiss="modal" aria-label="Close" type="button">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
             <!--Modal Delete Data-->
             <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
@@ -75,7 +182,7 @@
                         <div class="modal-body text-center p-4">
                             <i class="fa fa-exclamation-circle fa-10x text-danger lh-1 mg-t-20 d-inline-block"></i>
                             <h4 class="text-danger">Report Number: </h4>
-                            <h3 id="reportno" type="text" class="form-control text-center bg-transparent border-0"></h3>
+                            <input type="text" id="reportno" class="form-control text-center bg-transparent border-0">
                             <h3 class="text-danger">Warning! Are you sure? </h3>
                             <p class="mg-b-20 mg-x-20">You may not be able to recover this data.</p>
 
@@ -85,33 +192,6 @@
                     </div>
                 </div>
             </div>
-
-            @*<div class="modal" id="modalDelete">
-            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Delete Report</h5><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="card-body">
-                            <div class="mb-0 m-0">
-                                <div class="row">
-                                    <div class="col-12 bg-light-transparent-2">
-                                        <h5 class="m-5 text-center">REPORT NUMBER: <input readonly id="reportno" type="text" class="form-control text-center bg-transparent border-0"></h5>
-                                    </div>
-                                    <div class="col-12 bg-danger-transparent-2">
-                                        <h5 class="m-5 text-danger text-center">Are you sure want to delete?</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer pd-20">
-                                <button class="btn btn-danger" type="button">Delete</button> <button class="btn btn-light" data-bs-dismiss="modal" ria-label="Close" type="button">Cancel</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>*@
         </div>
     </div>
 </div>
@@ -174,7 +254,72 @@
                 $("#contentAdmin").hide();
                 $("#contentOthers").show();
             }
+
         });
+
+
+        $('#modalDetails, #modalUpdate, #modalDelete').on('show.bs.modal', function (e) {
+            var ids = $(e.relatedTarget).data('id');
+            $(this).data('id', ids);
+            console.log('read ' + ids);
+            rptDetails(ids);
+        });
+
+        //button submit update report
+        $("#submitUpdate").click(function () {
+            var ids = $('#modalUpdate').data('id');
+            console.log('read ' + ids);
+            rptUpdate(ids);
+        });
+
+        //modal delete report
+        $('#submitDelete').click(function () {
+            var ids = $('#modalDelete').data('id');
+            console.log('read ' + ids);
+            rptDelete(ids);
+        });
+
+        function rptDetails(ids) {
+            var reportno = $(".reportno" + ids).html();
+            $.ajax({
+                url: linkDepan + "GetAllFormDetails?RptCode=" + ids,
+                type: 'GET',
+                dataType: 'json',
+                data: {},
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    $('#rptcode').val(data[0].rpt_code);
+                    $('#region').val(data[0].region_name);
+                    $('#kmuj').val(data[0].kmuj_name);
+                    $('#section').val(data[0].section_name);
+                    $('#gang').val(data[0].Gang);
+                    $('#pax').val(data[0].daily_workers);
+                    $('#datepicker').val(data[0].daily_date);
+                    $('#linecond').val(data[0].cond_name);
+                    $('#category').val(data[0].category_name);
+                    $('#categorydets').val(data[0].category_details);
+                    $('#worktype').val(data[0].work_name);
+                    $('#totalWork').val(data[0].daily_total);
+                    $('#unit').val(data[0].daily_unit);
+                    $('#KMfrom').val(data[0].effect_kmfrom);
+                    $('#KMto').val(data[0].effect_kmto);
+                    $('#totalKM').val(data[0].effect_kmtotal);
+                    $('#timeStart').val(data[0].daily_timestart);
+                    $('#timeEnd').val(data[0].daily_timelast);
+                    $('#totalTime').val(data[0].daily_timetaken);
+                    $('#notes').val(data[0].daily_additional);
+                    $('#workStation').val(data[0].station);
+                    $('#stPoint').val(data[0].station_point);
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
 
         function listReports(mdate, edate) {
             if (mdate === undefined) {
@@ -214,19 +359,21 @@
                         responsive: true,
                         data: data,
                         columns: [
-                            { data: "rpt_code" },
+                            { data: "no" },
                             { data: "rpt_code" },
                             { data: "daily_date" },
                             { data: "upd_user" },
                             { data: "section_name" },
-                            { data: "no" },
+                            { data: "rpt_code" },
                         ],
                         columnDefs: [
                             {
                                 targets: -1,
                                 title: "Action",
                                 render: function (data, type, full, meta) {
-                                    return '<a class="modal-effect btn btn-primary" data-id="' + data + '" data-bs-target="#modalDelete" data-bs-effect="effect-scale" data-bs-toggle="modal"><i class="fe fe-edit font-10"></i></a>';
+                                    return '<a class="modal-effect btn btn-success" data-id="' + data + '" data-bs-target="#modalDetails" data-bs-effect="effect-sign" data-bs-toggle="modal"><i class="fe fe-eye font-10"></i></a>' +
+                                        ' <a class="modal-effect btn btn-primary" data-id="' + data + '" data-bs-target="#modalDetails" data-bs-effect="effect-sign" data-bs-toggle="modal"><i class="fe fe-edit font-10"></i></a>' +
+                                        ' <a class="btn btn-danger" data-id="' + data + '" data-bs-target="#modalDelete" data-bs-effect="effect-sign" data-bs-toggle="modal"><i class="fe fe-trash font-10"></i></a>';
                                 },
                             },
                             {

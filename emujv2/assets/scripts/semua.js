@@ -56,6 +56,9 @@ $(document).ready(function () {
     var M = localStorage.getItem("kmuj");
     $("#tempekKMUJ").html(M);
 
+    var RID = localStorage.getItem("regID");
+    $("tempekRegID").html(RID);
+
     var SCNVal = localStorage.getItem("scnVal");
     $("#tempekScnVal").html(SCNVal);
 

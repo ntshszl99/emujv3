@@ -27,6 +27,7 @@ namespace emujv2Api.Constructor
         public string kmujEng { get; set; }
         public string KMUJ { get; set; }
         public string Section { get; set; }
+        public string RegionID { get; set; }
         public string KMUJVal { get; set; }
         public string SectionVal { get; set; }
         public string StatusCuti { get; set; }
@@ -35,8 +36,14 @@ namespace emujv2Api.Constructor
         public string TokenAdmin { get; set; }
         public string ErrCode { get; set; }
         public string ErrDtl { get; set; }
-   
 
+        
+    }
+    public class GangPaxRequest
+    {
+        public string Kmuj { get; set; }
+        public string Section { get; set; }
+        public List<string> Gang { get; set; }
     }
 
 }
