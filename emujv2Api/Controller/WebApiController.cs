@@ -31,6 +31,90 @@ namespace emujv2Api.Controller
         }
 
 
+        [HttpDelete]
+        public string DeleteGangDetails(string StaffId)
+        {
+            TokenFunc Token = new TokenFunc();
+            PublicCons RetDat = new PublicCons();
+            string conn = _config.GetValue<string>("KTMBParam:DbConnection");
+            string Salah = "";
+            String Data = Token.ValidateToken(httpContextAccessor.HttpContext.Request.Headers["Token"], ref Salah);
+            InsertUpdate ret = new InsertUpdate();
+            if (string.IsNullOrEmpty(Data))
+            {
+                HttpContext.Response.StatusCode = 401;
+                return null;
+            }
+            UserCons User = JsonConvert.DeserializeObject<UserCons>(Data);
+
+            if (!string.IsNullOrEmpty(User.Userid))
+            {
+                Salah = ret.DeleteGangDetails(StaffId);
+                if (Salah == "0")
+                {
+                    RetDat.status = "00";
+                    RetDat.StatusDetail = "Data delete successfully.";
+                    return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+                }
+                else
+                {
+                    RetDat.status = "99";
+                    RetDat.StatusDetail = Salah;
+                    return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+                }
+            }
+            else
+            {
+                RetDat.status = "99";
+                RetDat.StatusDetail = "Error : Not Authorize User.";
+                return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+            }
+        }
+
+        [HttpDelete]
+        public string DeleteReport(string RptCode)
+        {
+            TokenFunc Token = new TokenFunc();
+            PublicCons RetDat = new PublicCons();
+            string conn = _config.GetValue<string>("KTMBParam:DbConnection");
+            string Salah = "";
+            String Data = Token.ValidateToken(httpContextAccessor.HttpContext.Request.Headers["Token"], ref Salah);
+            InsertUpdate ret = new InsertUpdate();
+            if (string.IsNullOrEmpty(Data))
+            {
+                HttpContext.Response.StatusCode = 401;
+                return null;
+            }
+            UserCons User = JsonConvert.DeserializeObject<UserCons>(Data);
+
+            if (!string.IsNullOrEmpty(User.Userid))
+            {
+                Salah = ret.DeleteReport(RptCode);
+                if (Salah == "0")
+                {
+                    RetDat.status = "00";
+                    RetDat.StatusDetail = "Data delete successfully.";
+                    return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+                }
+                else
+                {
+                    RetDat.status = "99";
+                    RetDat.StatusDetail = Salah;
+                    return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+                }
+            }
+            else
+            {
+                RetDat.status = "99";
+                RetDat.StatusDetail = "Error : Not Authorize User.";
+                return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+            }
+        }
+
+
+
+
+
         [HttpPost]
         public string UpdateUser(UserCons data)
         {
@@ -240,10 +324,8 @@ namespace emujv2Api.Controller
             }
         }
 
-
-
-        [HttpDelete]
-        public string DeleteGangDetails(string StaffId)
+        [HttpPost]
+        public string DailyAttendList(MasukCons formCons, string Gang)
         {
             TokenFunc Token = new TokenFunc();
             PublicCons RetDat = new PublicCons();
@@ -260,11 +342,11 @@ namespace emujv2Api.Controller
 
             if (!string.IsNullOrEmpty(User.Userid))
             {
-                Salah = ret.DeleteGangDetails(StaffId);
+                Salah = ret.DailyAttendList(formCons, Gang);
                 if (Salah == "0")
                 {
                     RetDat.status = "00";
-                    RetDat.StatusDetail = "Data delete successfully.";
+                    RetDat.StatusDetail = "Update Save.";
                     return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
                 }
                 else
@@ -281,6 +363,10 @@ namespace emujv2Api.Controller
                 return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
             }
         }
+
+
+
+
 
 
 
@@ -598,6 +684,7 @@ namespace emujv2Api.Controller
                 return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
             }
         }
+
 
 
         [HttpGet]
@@ -1137,7 +1224,7 @@ namespace emujv2Api.Controller
         }
 
         [HttpGet]
-        public string GetDailyReportEngineer(string Category, string Kmuj, string SDate, string EDate)
+        public string GetDailyReportEngineer(string Region, string Category, string Kmuj, string SDate, string EDate)
         {
             TokenFunc Token = new TokenFunc();
             PublicCons RetDat = new PublicCons();
@@ -1154,7 +1241,7 @@ namespace emujv2Api.Controller
 
             if (!string.IsNullOrEmpty(User.Userid))
             {
-                return ret.GetDailyReportEngineer(Category, Kmuj, SDate, EDate);
+                return ret.GetDailyReportEngineer(Region, Category, Kmuj, SDate, EDate);
             }
             else
             {
@@ -1183,6 +1270,34 @@ namespace emujv2Api.Controller
             if (!string.IsNullOrEmpty(User.Userid))
             {
                 return ret.GetDailyReportCI(Gang, Category, Section, SDate, EDate);
+            }
+            else
+            {
+                RetDat.status = "99";
+                RetDat.StatusDetail = "Error : Not Authorize User.";
+                return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+            }
+        }
+
+        [HttpGet]
+        public string GetDailyReportNormal(string Section, string SDate, string EDate)
+        {
+            TokenFunc Token = new TokenFunc();
+            PublicCons RetDat = new PublicCons();
+            string conn = _config.GetValue<string>("KTMBParam:DbConnection");
+            string Salah = "";
+            String Data = Token.ValidateToken(httpContextAccessor.HttpContext.Request.Headers["Token"], ref Salah);
+            Lookup ret = new Lookup();
+            if (string.IsNullOrEmpty(Data))
+            {
+                HttpContext.Response.StatusCode = 401;
+                return null;
+            }
+            UserCons User = JsonConvert.DeserializeObject<UserCons>(Data);
+
+            if (!string.IsNullOrEmpty(User.Userid))
+            {
+                return ret.GetDailyReportNormal(Section, SDate, EDate);
             }
             else
             {

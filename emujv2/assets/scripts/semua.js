@@ -43,6 +43,7 @@ $(document).ready(function () {
 
     var UR = localStorage.getItem("usrR");
     $("#tempekUsrRegion").html(UR);
+    $("#tempekUsrRegion2").html(UR);
 
     var URE = localStorage.getItem("usrRE");
     $("#tempekUsrRegionE").html(URE);

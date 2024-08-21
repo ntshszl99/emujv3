@@ -82,7 +82,7 @@
                                     </div>
                                     <div class="col-4">
                                         <label class="mt-5 form-label">KMUJ</label>
-                                        <select id="regEng" class="form-control form-select select2">
+                                        <select id="kmujEng" class="form-control form-select select2">
                                             <option value="-0">Select KMUJ</option>
                                         </select>
                                     </div>
@@ -216,11 +216,10 @@
                             <h3 class="text-danger">Warning! Are you sure? </h3>
                             <p class="mg-b-20 mg-x-20">You may not be able to recover this data.</p>
                             <h4 class="mt-5 text-danger">Report Number: </h4>
-                            <h3 id="reportno" type="text" class="form-control text-center bg-transparent border-0"></h3>
+                            <input readonly id="reportno" type="text" class="mb-3 form-control text-center bg-transparent border-0">
 
-
-                            <button aria-label="Close" class="btn btn-danger mb-5" type="button">Delete</button>
-                            <button class="btn btn-light mb-5" data-bs-dismiss="modal" ria-label="Close" type="button">Cancel</button>
+                            <button id="submitDelete" class="btn btn-danger mb-5" type="button">Delete</button>
+                            <button class="btn btn-light mb-5" data-bs-dismiss="modal" aria-label="Close" type="button">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -251,6 +250,7 @@
             listGang();
             cariReg();
             cariSec();
+            dapatRptCode();
 
             //CHECK USER LEVEL
 
@@ -273,16 +273,15 @@
                     localStorage.setItem("selHarE", edate);
 
                     rgn = $("#region option:selected").text();
-                    localStorage.setItem("selRgn", rgn, this.value);
+                    localStorage.setItem("selRgn", rgn);
 
                     kmj = $("#kmuj option:selected").text();
-                    localStorage.setItem("selKmj", kmj, this.value);
+                    localStorage.setItem("selKmj", kmj);
 
                     scn = $("#section option:selected").text();
-                    localStorage.setItem("selScn", scn, this.value);
+                    localStorage.setItem("selScn", scn);
 
-                    listReports(localStorage.getItem("selRgn", this.value), localStorage.getItem("selKmj", this.value), localStorage.getItem("selScn", this.value), sdate, edate);
-                    //listReports(localStorage.getItem("selRgn", this.value), sdate, edate);
+                    listReports(localStorage.getItem("selRgn"), localStorage.getItem("selKmj"), localStorage.getItem("selScn"), sdate, edate);
                     salertSave('Update Date : ' + start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
                 });
 
@@ -294,17 +293,15 @@
                     var edate = localStorage.setItem("selHarE", edate);
 
                     rgn = $("#region option:selected").text();
-                    localStorage.setItem("selRgn", rgn, this.value);
+                    localStorage.setItem("selRgn", rgn);
 
                     kmj = $("#kmuj option:selected").text();
-                    localStorage.setItem("selKmj", kmj, this.value);
+                    localStorage.setItem("selKmj", kmj);
 
                     scn = $("#section option:selected").text();
-                    localStorage.setItem("selScn", scn, this.value);
+                    localStorage.setItem("selScn", scn);
 
-                    listReports(localStorage.getItem("selRgn", this.value), localStorage.getItem("selKmj", this.value), localStorage.getItem("selScn", this.value), sdate, edate);
-                    //listReports(localStorage.getItem("selRgn", this.value), localStorage.getItem("selKmj", this.value), localStorage.getItem("selScn", this.value));
-
+                    listReports(localStorage.getItem("selRgn"), localStorage.getItem("selKmj"), localStorage.getItem("selScn"), sdate, edate);
                 });
             }
 
@@ -379,19 +376,15 @@
 
                     sdate = start.format('YYYY/MM/DD');
                     edate = end.format('YYYY/MM/DD');
+
                     localStorage.setItem("selHar", sdate);
                     localStorage.setItem("selHarE", edate);
-
-                    rgn = localStorage.getItem("usrR");
-                    localStorage.setItem("selRgn", rgn, this.value);
-
-                    kmj = localStorage.getItem("kmuj");
-                    localStorage.setItem("selKmj", kmj, this.value);
 
                     scn = localStorage.getItem("scn");
                     localStorage.setItem("selScn", scn, this.value);
 
-                    listReports(localStorage.getItem("selRgn", this.value), localStorage.getItem("selKmj", this.value), localStorage.getItem("selScn", this.value), sdate, edate);
+
+                    listReportsNormal(localStorage.getItem("selScn", this.value), sdate, edate);
                     salertSave('Update Date : ' + start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
                 });
 
@@ -402,17 +395,10 @@
                     var sdate = localStorage.setItem("selHar", sdate);
                     var edate = localStorage.setItem("selHarE", edate);
 
-                    rgn = localStorage.getItem("usrR");
-                    localStorage.setItem("selRgn", rgn, this.value);
-
-                    kmj = localStorage.getItem("kmuj");
-                    localStorage.setItem("selKmj", kmj, this.value);
-
                     scn = localStorage.getItem("scn");
                     localStorage.setItem("selScn", scn, this.value);
 
-                    listReports(localStorage.getItem("selRgn", this.value), localStorage.getItem("selKmj", this.value), localStorage.getItem("selScn", this.value), sdate, edate);
-                    //listReports(localStorage.getItem("selRgn", this.value), localStorage.getItem("selKmj", this.value), localStorage.getItem("selScn", this.value));
+                    listReportsNormal(localStorage.getItem("selScn", this.value), sdate, edate);
 
                 });
             }
@@ -425,8 +411,16 @@
                 $("#contentEngineer").show();
 
                 rgn = localStorage.getItem("usrRE");
+                //usrRE = east, central, south, north
                 localStorage.setItem("selRgn", rgn);
-                cariReg(localStorage.getItem("selRgn", this.value));
+                console.log('region: ' + rgn);
+
+                rgn2 = localStorage.getItem("usrR");
+                //usrRE = east, central, south, north
+                localStorage.setItem("selRgn2", rgn2);
+                console.log('region2: ' + rgn2);
+
+                cariReg(localStorage.getItem("selRgn"));
 
                 $('#txtDate4').daterangepicker({
                     minYear: 2021,
@@ -436,48 +430,44 @@
 
                     sdate = start.format('YYYY/MM/DD');
                     edate = end.format('YYYY/MM/DD');
-
                     localStorage.setItem("selHar", sdate);
                     localStorage.setItem("selHarE", edate);
 
-                    //gng = $("#gangEng option:selected").text();
-                    //localStorage.setItem("selGng", gng);
+                    rgn = localStorage.getItem("usrR");
+                    localStorage.setItem("selRgn", rgn);
+                    console.log('region: ' + rgn);
+
+                    kmj = $("#kmujEng option:selected").text();
+                    localStorage.setItem("selKmj", kmj);
 
                     ctg = $("#categoryEng option:selected").text();
                     localStorage.setItem("selCtg", ctg);
 
-                    rgn = $("#regEng option:selected").text();
-                    localStorage.setItem("selRgn", rgn);
-
+                    listReportsEngineer(localStorage.getItem("selRgn"), localStorage.getItem("selCtg"), localStorage.getItem("selKmj"), sdate, edate);
                     salertSave('Update Date : ' + start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
-                    //listReportsEngineer(localStorage.getItem("selGng", this.value), localStorage.getItem("selCtg", this.value), localStorage.getItem("selRgn", this.value), sdate, edate);
-                    listReportsEngineer(localStorage.getItem("selCtg", this.value), localStorage.getItem("selRgn", this.value), sdate, edate);
-
                 });
 
-                $("sdate, edate").on('change', function () {
+                $("#categoryEng, #kmujEng, sdate, edate").on('change', function () {
 
                     checkStore();
 
                     var sdate = localStorage.setItem("selHar", sdate);
                     var edate = localStorage.setItem("selHarE", edate);
 
-                    //gng = $("#gangEng option:selected").text();
-                    //localStorage.setItem("selGng", gng);
+                    rgn = localStorage.getItem("usrR");
+                    localStorage.setItem("selRgn", rgn);
+                    console.log('region: ' + rgn);
+
+                    kmj = $("#kmujEng option:selected").text();
+                    localStorage.setItem("selKmj", kmj);
 
                     ctg = $("#categoryEng option:selected").text();
                     localStorage.setItem("selCtg", ctg);
 
-                    rgn = $("#reg option:selected").text();
-                    localStorage.setItem("selRgn", rgn);
-
-                    salertSave('Update Date : ' + start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
-                    //listReportsEngineer(localStorage.getItem("selGng", this.value), localStorage.getItem("selCtg", this.value), localStorage.getItem("selRgn", this.value), sdate, edate);
-                    listReportsEngineer(localStorage.getItem("selCtg", this.value), localStorage.getItem("selRgn", this.value), sdate, edate);
-
+                    listReportsEngineer(localStorage.getItem("selRgn"), localStorage.getItem("selCtg"), localStorage.getItem("selKmj"), sdate, edate);
                 });
-
             }
+
 
             //not authorized user
             else {
@@ -488,11 +478,14 @@
             }
         });
 
-        //delete modal
-        //delete modal
+        //modal delete
         $('#modalDelete').on('show.bs.modal', function (e) {
             var ids = $(e.relatedTarget).data('id');
-            var code = $(".code" + ids).html();
+            $(this).data('id', ids);
+            dapatRptCode(ids);
+        });
+
+        function dapatRptCode(ids) {
             $.ajax({
                 url: linkDepan + "GetReportDetails?RptCode=" + ids,
                 type: 'GET',
@@ -502,7 +495,11 @@
                     request.setRequestHeader("Token", localStorage.getItem('main'));
                 },
                 success: function (data) {
-                    $('#reportno').text(data[0].rpt_code);
+                    if (data && data.length > 0) {
+                        $('#reportno').val(data[0].rpt_code);
+                    } else {
+                        console.error('No data received');
+                    }
                 },
                 error: function (xhr) {
                     swarning();
@@ -510,11 +507,68 @@
                 complete: function () {
                 }
             });
+        }
+
+        //modal delete user
+        $('#submitDelete').click(function () {
+            var ids = $('#modalDelete').data('id');
+            console.log('read ' + ids);
+            rptDelete(ids);
         });
 
-
-        function stfDelete(ids) {
-
+        function rptDelete(ids) {
+            console.log("Deleting report with ID:", ids);
+            var data = {
+                RptCode: ids,
+            };
+            $.ajax({
+                url: linkDepan + "DeleteReport?RptCode=" + ids,
+                type: 'DELETE',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (response) {
+                    var data;
+                    try {
+                        data = JSON.parse(response);
+                    } catch (error) {
+                        console.error("Error parsing JSON:", error);
+                        swarning();
+                        return;
+                    }
+                    if (data && data.status === "00") {
+                        $('#modalDelete').modal('hide');
+                        swal.fire('Success!', 'Report has been deleted.', 'success');
+                    } else {
+                        $('#modalDelete').modal('hide');
+                        swarning();
+                    }
+                    if (localStorage.getItem("lvlI") === "1" || localStorage.getItem("lvlI") === "5") {
+                        listReports(
+                            localStorage.getItem("selRgn"),
+                            localStorage.getItem("selKmj"),
+                            localStorage.getItem("selScn"),
+                            localStorage.getItem("selHar"),
+                            localStorage.getItem("selHarE")
+                        );
+                    } else if (["2", "3", "4", "6"].includes(localStorage.getItem("lvlI"))) {
+                        $("#contentAdmin").show();
+                        $("#contentEngineer").hide();
+                        $("#contentNormal").hide();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error Status:", status);
+                    console.error("Error Thrown:", error);
+                    console.error("Response Text:", xhr.responseText);
+                    swarning();
+                },
+                complete: function () {
+                    console.log("Request completed");
+                }
+            });
         }
 
         function listGang() {
@@ -665,9 +719,9 @@
                         $.each(data, function (index, value) {
                             auxArr[index] = "<option value='" + value.region_id + "'>" + value.kmuj_name + "</option>";
                         });
-                        $('#regEng').append(auxArr.join(''));
+                        $('#kmujEng').append(auxArr.join(''));
                     } else {
-                        $("#regEng").addClass(" is-invalid");
+                        $("#kmujEng").addClass(" is-invalid");
 
                     }
                 },
@@ -706,31 +760,41 @@
             });
         }
 
+
+
+
         //report admin and normal
         function listReports(region, kmuj, section, mdate, edate) {
+            var arrBuln = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+            var d = new Date();
+
             if (mdate === undefined) {
-                var arrBuln = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', '06', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-                var d = new Date();
                 var month = d.getMonth() - 1;
+                if (month < 0) month = 11; // Handle January case
                 mdate = d.getDate() + '/' + arrBuln[month] + '/' + d.getFullYear();
                 localStorage.setItem("selHar", mdate);
-                localStorage.setItem("selRgn", rgn, this.value);
-                localStorage.setItem("selKmj", kmj, this.value);
-                localStorage.setItem("selScn", scn, this.value);
+                localStorage.setItem("selRgn", region);
+                localStorage.setItem("selKmj", kmuj);
+                localStorage.setItem("selScn", section);
             }
+
             if (edate === undefined) {
-                var arrBuln = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', '06', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-                var d = new Date();
                 var month = d.getMonth();
-                edate = d.getDate() + '/' + arrBuln[month] + '/' + d.getFullYear(); console.log(edate);
+                edate = d.getDate() + '/' + arrBuln[month] + '/' + d.getFullYear();
+                console.log('edate ialah: ' + edate);
                 localStorage.setItem("selHarE", edate);
-                localStorage.setItem("selRgn", rgn, this.value);
-                localStorage.setItem("selKmj", kmj, this.value);
-                localStorage.setItem("selScn", scn, this.value);
+                localStorage.setItem("selRgn", region);
+                localStorage.setItem("selKmj", kmuj);
+                localStorage.setItem("selScn", section);
             }
+
+            var url = linkDepan + "GetDailyReport?SDate=" + mdate + "&EDate=" + edate;
+            if (region) url += "&Region=" + region;
+            if (kmuj) url += "&Kmuj=" + kmuj;
+            if (section) url += "&Section=" + section;
+
             $.ajax({
-                url: linkDepan + "GetDailyReport?Region=" + region + "&Kmuj=" + kmuj + "&Section=" + section + "&SDate=" + mdate + "&Edate=" + edate,
-                /*url: linkDepan + "GetDailyReport?Region=" + region + "&Kmuj=" + kmuj + "&Section=" + section,*/
+                url: url,
                 type: 'GET',
                 dataType: 'json',
                 data: {},
@@ -741,10 +805,10 @@
                     console.log('mana : ' + data);
                     var counter = 1;
                     $.fn.dataTable.ext.errMode = 'throw';
-                    if ($.fn.dataTable.isDataTable("#tableAdmin, #tableNormal")) {
-                        $("#tableAdmin, #tableNormal, #tableEngineer").DataTable().destroy();
+                    if ($.fn.dataTable.isDataTable("#tableAdmin")) {
+                        $("#tableAdmin").DataTable().destroy();
                     }
-                    $("#tableAdmin, #tableNormal").DataTable({
+                    $("#tableAdmin").DataTable({
                         dom: 'Bfrtip',
                         buttons: [
                             'copy', 'csv', 'excel', 'pdf', 'print'
@@ -776,8 +840,6 @@
                                 title: "Action",
                                 render: function (data, type, full, meta) {
                                     return '<a class="modal-effect btn btn-danger" data-id="' + data + '" data-bs-target="#modalDelete" data-bs-effect="effect-scale" data-bs-toggle="modal"><i class="fe fe-trash font-10"></i></a>';
-                                    //return '<a class="text-danger" >' + data + ' <i class="ion-close-circled"></i></a></p >';
-
                                 },
                             },
                             {
@@ -906,27 +968,36 @@
         }
 
         //report engineer
-        function listReportsEngineer(category, kmuj, mdate, edate) {
+        function listReportsEngineer(region, category, kmuj, mdate, edate) {
+            var arrBuln = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+            var d = new Date();
+
             if (mdate === undefined) {
-                var arrBuln = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', '06', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-                var d = new Date();
                 var month = d.getMonth() - 1;
+                if (month < 0) month = 11; // Handle January case
                 mdate = d.getDate() + '/' + arrBuln[month] + '/' + d.getFullYear();
                 localStorage.setItem("selHar", mdate);
-                localStorage.setItem("selCtg", ctg, this.value);
-                localStorage.setItem("selRgn", rgn, this.value);
+                localStorage.setItem("selRgn", region);
+                localStorage.setItem("selKmj", kmuj);
+                localStorage.setItem("selCtg", category);
             }
+
             if (edate === undefined) {
-                var arrBuln = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', '06', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-                var d = new Date();
                 var month = d.getMonth();
-                edate = d.getDate() + '/' + arrBuln[month] + '/' + d.getFullYear(); console.log(edate);
+                edate = d.getDate() + '/' + arrBuln[month] + '/' + d.getFullYear();
+                console.log('edate ialah' + edate);
                 localStorage.setItem("selHarE", edate);
-                localStorage.setItem("selCtg", ctg, this.value);
-                localStorage.setItem("selRgn", rgn, this.value);
+                localStorage.setItem("selKmj", kmuj);
+                localStorage.setItem("selCtg", category);
             }
-            $.ajax({
-                url: linkDepan + "GetDailyReportEngineer?Category=" + category + "&Kmuj=" + kmuj + "&SDate=" + mdate + "&Edate=" + edate,
+
+
+            var url = linkDepan + "GetDailyReportEngineer?Region=" + region + "&SDate=" + mdate + "&EDate=" + edate;
+            if (category) url += "&category=" + category;
+            if (kmuj) url += "&Kmuj=" + kmuj;
+
+            $.ajax({   
+                url: url,
                 type: 'GET',
                 dataType: 'json',
                 data: {},
@@ -971,10 +1042,7 @@
                                 targets: -1,
                                 title: "Action",
                                 render: function (data, type, full, meta) {
-                                    //return '<a class="btn btn-danger" data-id="' + data + '" data-bs-target="#modalDelete" data-bs-toggle="modal" ><i class="fe fe-trash font-16"></i></a>'
                                     return '<a class="modal-effect btn btn-danger" data-id="' + data + '" data-bs-target="#modalDelete" data-bs-effect="effect-scale" data-bs-toggle="modal"><i class="fe fe-trash font-10"></i></a>';
-
-
                                 },
                             },
                             {
@@ -1139,6 +1207,201 @@
                         $("#tableCI").DataTable().destroy();
                     }
                     $("#tableCI").DataTable({
+                        dom: 'Bfrtip',
+                        buttons: [
+                            'copy', 'csv', 'excel', 'pdf', 'print'
+                        ],
+                        responsive: true,
+                        data: data,
+                        columns: [
+                            { data: "no" },
+                            { data: "region_name" },
+                            { data: "kmuj_name" },
+                            { data: "section_name" },
+                            { data: "Gang" },
+                            { data: "daily_date" },
+                            { data: "work_name" },
+                            { data: "output" },
+                            { data: "effect_kmfrom" },
+                            { data: "effect_kmto" },
+                            { data: "daily_condition" },
+                            { data: "daily_workers" },
+                            { data: "daily_category" },
+                            { data: "Time" },
+                            { data: "daily_additional" },
+                            { data: "rpt_code" },
+                            { data: "rpt_code" },
+                        ],
+                        columnDefs: [
+                            {
+                                targets: -1,
+                                title: "Action",
+                                render: function (data, type, full, meta) {
+                                    return '<a class="modal-effect btn btn-danger" data-id="' + data + '" data-bs-target="#modalDelete" data-bs-effect="effect-scale" data-bs-toggle="modal"><i class="fe fe-trash font-10"></i></a>';
+                                    //return '<a class="text-danger" >' + data + ' <i class="ion-close-circled"></i></a></p >';
+
+                                },
+                            },
+                            {
+                                targets: -2,
+                                title: "Code",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                            {
+                                targets: -3,
+                                title: "Additional Note",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                            {
+                                targets: -4,
+                                title: "Time (Start-End)",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                            {
+                                targets: -5,
+                                title: "Category",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                            {
+                                targets: -6,
+                                title: "Workers",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                            {
+                                targets: -7,
+                                title: "Up/Dn",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                            {
+                                targets: -8,
+                                title: "To (KM)",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                            {
+                                targets: -9,
+                                title: "From (KM)",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                            {
+                                targets: -10,
+                                title: "Output/Unit",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                            {
+                                targets: -11,
+                                title: "Work Type",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                            {
+                                targets: -12,
+                                title: "Date",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                            {
+                                targets: -13,
+                                title: "Gang",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                            {
+                                targets: -14,
+                                title: "MUJ",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                            {
+                                targets: -15,
+                                title: "KMUJ",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                            {
+                                targets: -16,
+                                title: "Region",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                            {
+                                targets: -17,
+                                title: "No",
+                                render: function (data, type, full, meta) {
+                                    return counter++;
+                                },
+                            }],
+                        createdRow: function (row, data, dataIndex) {
+                            $('td', row).addClass('text-nowrap align-middle');
+                        }
+
+                    });
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+        //report normal
+        function listReportsNormal(section, mdate, edate) {
+            if (mdate === undefined) {
+                var arrBuln = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', '06', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+                var d = new Date();
+                var month = d.getMonth() - 1;
+                mdate = d.getDate() + '/' + arrBuln[month] + '/' + d.getFullYear();
+                localStorage.setItem("selHar", mdate);
+                localStorage.setItem("selScn", scn, this.value);
+            }
+            if (edate === undefined) {
+                var arrBuln = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', '06', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+                var d = new Date();
+                var month = d.getMonth();
+                edate = d.getDate() + '/' + arrBuln[month] + '/' + d.getFullYear(); console.log(edate);
+                localStorage.setItem("selHarE", edate);
+                localStorage.setItem("selScn", scn, this.value);
+            }
+            $.ajax({
+                url: linkDepan + "GetDailyReportNormal?Section=" + section + "&SDate=" + mdate + "&Edate=" + edate,
+                type: 'GET',
+                dataType: 'json',
+                data: {},
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    console.log('mana : ' + data);
+                    var counter = 1;
+                    $.fn.dataTable.ext.errMode = 'throw';
+                    if ($.fn.dataTable.isDataTable("#tableNormal")) {
+                        $("#tableNormal").DataTable().destroy();
+                    }
+                    $("#tableNormal").DataTable({
                         dom: 'Bfrtip',
                         buttons: [
                             'copy', 'csv', 'excel', 'pdf', 'print'

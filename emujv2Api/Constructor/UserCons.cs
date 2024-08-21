@@ -37,7 +37,6 @@ namespace emujv2Api.Constructor
         public string ErrCode { get; set; }
         public string ErrDtl { get; set; }
 
-        
     }
     public class GangPaxRequest
     {

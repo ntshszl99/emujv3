@@ -1,5 +1,6 @@
 ﻿using ConnectionModule;
 using emujv2Api.Constructor;
+using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,6 +11,51 @@ namespace emujv2Api.Model
 {
     public class InsertUpdate
     {
+
+        //DELETE
+
+        public string DeleteGangDetails(string StaffId)
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+            Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
+
+            SqlStr.Append(" DELETE FROM gang_details WHERE staff_no = @StaffId ");
+
+            ParamTmp.Add("@StaffId", StaffId);
+
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+            if (Salah != "") { return Salah; }
+            else { return "0"; }
+        }
+
+        public string DeleteReport(string RptCode)
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+            Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
+
+            SqlStr.Append(" DELETE FROM daily WHERE rpt_code = @RptCode ");
+
+            ParamTmp.Add("@RptCode", RptCode);
+
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+            if (Salah != "") { return Salah; }
+            else { return "0"; }
+        }
+
+
+
+
+
+
+        //UPDATE
 
         public string UpdateUser(string Status, string UserLevel, string Userid)
         {
@@ -107,23 +153,7 @@ namespace emujv2Api.Model
             else { return "0"; }
         }
 
-        public string DeleteGangDetails(string StaffId)
-        {
-            StringBuilder SqlStr = new StringBuilder();
-            DataTable Recc = new DataTable();
-            MsSql DbCon = new MsSql();
-            string Salah = "";
-            CommonFunc Conn = new CommonFunc();
-            Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
 
-            SqlStr.Append(" DELETE FROM gang_details WHERE staff_no = @StaffId ");
-
-            ParamTmp.Add("@StaffId", StaffId);
-
-            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
-            if (Salah != "") { return Salah; }
-            else { return "0"; }
-        }
 
 
         private (int staffSecCount, int staffCount) CheckCounts(string staffId)
@@ -330,6 +360,7 @@ namespace emujv2Api.Model
 
             // Generate the formatted report code
             string formattedRptCode = GenerateFormattedRptCode();
+            string gangString = formCons.Gang != null ? string.Join(",", formCons.Gang) : string.Empty;
 
             SqlStr.Append(" INSERT INTO [dbo].[daily] ");
             SqlStr.Append(" ( [daily_section] ");
@@ -395,13 +426,14 @@ namespace emujv2Api.Model
             SqlStr.Append(" , @Workers ");
             SqlStr.Append(" , @UpdBy ");
             SqlStr.Append(" , CONVERT(VARCHAR(10), GETDATE(), 103) + ' ' + CONVERT(VARCHAR(8), GETDATE(), 108)) ");
-            SqlStr.Append(" , CONVERT(VARCHAR(10), GETDATE(), 103) + ' ' + CONVERT(VARCHAR(8), GETDATE(), 108)) ");
 
             ParamTmp.Add("@Region", formCons.Region ?? (object)DBNull.Value);
             ParamTmp.Add("@Kmuj", formCons.Kmuj ?? (object)DBNull.Value);
             ParamTmp.Add("@Section", formCons.Section ?? (object)DBNull.Value);
 
-            ParamTmp.Add("@Gang", formCons.Gang ?? (object)DBNull.Value);
+            // Convert the Gang list to a comma-separated string
+            ParamTmp.Add("@Gang", string.IsNullOrEmpty(gangString) ? (object)DBNull.Value : gangString);
+
             ParamTmp.Add("@Date", formCons.Date ?? (object)DBNull.Value);
             ParamTmp.Add("@WorkType", formCons.WorkType ?? (object)DBNull.Value);
             ParamTmp.Add("@Total", formCons.Total ?? (object)DBNull.Value);
@@ -432,14 +464,212 @@ namespace emujv2Api.Model
             Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
             if (Salah != "") { return Salah; }
             else { return "0"; }
-
         }
 
+
+
+        //public string DailyAttendList(MasukCons formCons, string Gang)
+        //{
+        //    StringBuilder SqlStr = new StringBuilder(); DataTable Recc = new DataTable(); MsSql DbCon = new MsSql(); string Salah = ""; CommonFunc Conn = new CommonFunc(); Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
+        //    // Step 1: Execute the SELECT statement to get the daily_id
+        //    SqlStr.Append(" SELECT TOP 1 daily_id FROM [dbo].[daily] ORDER BY daily_id DESC ");
+        //    Recc = DbCon.ExecuteReader(SqlStr.ToString(), null, Conn.emujConn, ref Salah);
+        //    if (Salah != "") { return Salah; }
+
+        //    if (Recc.Rows.Count > 0)
+        //    {
+        //        int DailyId = Convert.ToInt32(Recc.Rows[0]["daily_id"]);
+
+        //        // Step 2: Construct the SQL query to count valid gang members
+        //        SqlStr.Clear();
+        //        SqlStr.Append(" SELECT count(*) as CountGang ");
+        //        SqlStr.Append(" FROM [muj].[dbo].[gang_details] WHERE staff_status = 'VALID' AND gang_id IN (");
+
+        //        // Check if formCons.Gang is not null or empty
+        //        if (formCons.Gang != null && formCons.Gang.Any())
+        //        {
+        //            for (int i = 0; i < formCons.Gang.Count(); i++)
+        //            {
+        //                string paramName = "@Gang" + i;
+        //                SqlStr.Append(paramName);
+        //                if (i < formCons.Gang.Count() - 1)
+        //                {
+        //                    SqlStr.Append(", ");
+        //                }
+        //                ParamTmp.Add(paramName, formCons.Gang[i]);
+        //            }
+        //            SqlStr.Append(")");
+        //        }
+        //        else
+        //        {
+        //            return "Gang array is null or empty.";
+        //        }
+
+        //        Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+        //        if (Salah != "") { return Salah; }
+
+        //        int CountGang = Convert.ToInt32(Recc.Rows[0]["CountGang"]);
+
+        //        // Step 3: Insert into daily_attendencelist
+        //        SqlStr.Clear();
+        //        SqlStr.Append(" INSERT INTO [dbo].[daily_attendencelist] ");
+        //        SqlStr.Append(" ( [staff_attd_rpt_id] ");
+        //        SqlStr.Append(" , [staff_attd_no] ");
+        //        SqlStr.Append(" , [staff_attd_updatedate] ");
+        //        SqlStr.Append(" , [staff_attd_updby] ");
+        //        SqlStr.Append(" , [staff_attd_total]) ");
+        //        SqlStr.Append(" VALUES ");
+        //        SqlStr.Append(" ( @DailyId ");
+        //        SqlStr.Append(" , @AttId ");
+        //        SqlStr.Append(" , CONVERT(VARCHAR(10), GETDATE(), 103) + ' ' + REPLACE(CONVERT(VARCHAR(5), GETDATE(), 108), ':', '') ");
+        //        SqlStr.Append(" , @Gang ");
+        //        SqlStr.Append(" , @Workers ) ");
+
+        //        string idString = formCons.AttId != null ? string.Join(",", formCons.AttId) : string.Empty;
+        //        string gangString = formCons.Gang != null ? string.Join(",", formCons.Gang) : string.Empty;
+
+        //        ParamTmp.Add("@DailyId", DailyId);
+        //        ParamTmp.Add("@AttId", string.IsNullOrEmpty(idString) ? (object)DBNull.Value : idString);
+        //        ParamTmp.Add("@Gang", string.IsNullOrEmpty(gangString) ? (object)DBNull.Value : gangString); // Update the existing parameter
+        //        ParamTmp.Add("@Workers", CountGang);
+
+        //        Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+        //        if (Salah != "") { return Salah; }
+        //        else { return "0"; }
+        //    }
+        //    else
+        //    {
+        //        return "No daily_id found.";
+        //    }
+        //}
+
+        public string DailyAttendList(MasukCons formCons, string Gang)
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+            Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
+
+            // Step 1: Execute the SELECT statement to get the daily_id
+            SqlStr.Append(" SELECT TOP 1 daily_id FROM [dbo].[daily] ORDER BY daily_id DESC ");
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), null, Conn.emujConn, ref Salah);
+            if (Salah != "") { return Salah; }
+
+            if (Recc.Rows.Count > 0)
+            {
+                int DailyId = Convert.ToInt32(Recc.Rows[0]["daily_id"]);
+
+                // Step 2: Construct the SQL query to count valid gang members
+                SqlStr.Clear();
+                SqlStr.Append(" SELECT staff_status, count(*) as CountGang ");
+                SqlStr.Append(" FROM [muj].[dbo].[gang_details] WHERE gang_id IN (");
+
+                // Check if formCons.Gang is not null or empty
+                if (formCons.Gang != null && formCons.Gang.Any())
+                {
+                    for (int i = 0; i < formCons.Gang.Count(); i++)
+                    {
+                        string paramName = "@Gang" + i;
+                        SqlStr.Append(paramName);
+                        if (i < formCons.Gang.Count() - 1)
+                        {
+                            SqlStr.Append(", ");
+                        }
+                        ParamTmp.Add(paramName, formCons.Gang[i]);
+                    }
+                    SqlStr.Append(") GROUP BY staff_status");
+                }
+                else
+                {
+                    return "Gang array is null or empty.";
+                }
+
+                Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+                if (Salah != "") { return Salah; }
+
+                int CountGangValid = 0;
+                int CountGangNotValid = 0;
+
+                foreach (DataRow row in Recc.Rows)
+                {
+                    if (row["staff_status"].ToString() == "VALID")
+                    {
+                        CountGangValid = Convert.ToInt32(row["CountGang"]);
+                    }
+                    else
+                    {
+                        CountGangNotValid = Convert.ToInt32(row["CountGang"]);
+                    }
+                }
+
+                // Step 3: Insert into daily_attendencelist for VALID staff_status
+                if (CountGangValid > 0)
+                {
+                    SqlStr.Clear();
+                    SqlStr.Append(" INSERT INTO [dbo].[daily_attendencelist] ");
+                    SqlStr.Append(" ( [staff_attd_rpt_id] ");
+                    SqlStr.Append(" , [staff_attd_no] ");
+                    SqlStr.Append(" , [staff_attd_updatedate] ");
+                    SqlStr.Append(" , [staff_attd_updby] ");
+                    SqlStr.Append(" , [staff_attd_total]) ");
+                    SqlStr.Append(" VALUES ");
+                    SqlStr.Append(" ( @DailyId ");
+                    SqlStr.Append(" , @AttId ");
+                    SqlStr.Append(" , CONVERT(VARCHAR(10), GETDATE(), 103) + ' ' + REPLACE(CONVERT(VARCHAR(5), GETDATE(), 108), ':', '') ");
+                    SqlStr.Append(" , @Gang ");
+                    SqlStr.Append(" , @Workers ) ");
+
+                    string idString = formCons.AttId != null ? string.Join(",", formCons.AttId) : string.Empty;
+                    string gangString = formCons.Gang != null ? string.Join(",", formCons.Gang) : string.Empty;
+
+                    ParamTmp.Add("@DailyId", DailyId);
+                    ParamTmp.Add("@AttId", string.IsNullOrEmpty(idString) ? (object)DBNull.Value : idString);
+                    ParamTmp.Add("@Gang", string.IsNullOrEmpty(gangString) ? (object)DBNull.Value : gangString);
+                    ParamTmp.Add("@Workers", CountGangValid);
+
+                    Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+                    if (Salah != "") { return Salah; }
+                }
+
+                // Step 4: Insert into daily_attendencelistno for non-VALID staff_status
+                if (CountGangNotValid > 0)
+                {
+                    SqlStr.Clear();
+                    SqlStr.Append(" INSERT INTO [dbo].[[daily_attendencelistno] ");
+                    SqlStr.Append(" ( [staff_attdno_rpt_id] ");
+                    SqlStr.Append(" , [staff_attdno_no] ");
+                    SqlStr.Append(" , [staff_attdno_updatedate] ");
+                    SqlStr.Append(" , [staff_attdno_updby] ");
+                    SqlStr.Append(" , [staff_attdno_total]) ");
+                    SqlStr.Append(" VALUES ");
+                    SqlStr.Append(" ( @DailyId ");
+                    SqlStr.Append(" , @AttId ");
+                    SqlStr.Append(" , CONVERT(VARCHAR(10), GETDATE(), 103) + ' ' + REPLACE(CONVERT(VARCHAR(5), GETDATE(), 108), ':', '') ");
+                    SqlStr.Append(" , @Gang ");
+                    SqlStr.Append(" , @Workers ) ");
+
+                    string idString = formCons.AttId != null ? string.Join(",", formCons.AttId) : string.Empty;
+                    string gangString = formCons.Gang != null ? string.Join(",", formCons.Gang) : string.Empty;
+
+                    ParamTmp["@Workers"] = CountGangNotValid;
+
+                    Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+                    if (Salah != "") { return Salah; }
+                }
+
+                return "0";
+            }
+            else
+            {
+                return "No daily_id found.";
+            }
+        }
+
+
+
+
     }
-
-
-
-
-
 }
 
