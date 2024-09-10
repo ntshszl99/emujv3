@@ -58,7 +58,7 @@
                     </button>
                     <div class="navbar navbar-expand-lg navbar-nav-right responsive-navbar navbar-dark p-0">
                         <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
-                            <div class="dropdown header-theme">
+                            @*<div class="dropdown header-theme">
                                 <a class="nav-link icon layout-setting">
                                     <span class="dark-layout">
                                         <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><rect fill="none" height="24" width="24" /><circle cx="12" cy="12" opacity=".3" r="3" /><path d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z" /></svg>
@@ -67,7 +67,7 @@
                                         <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><rect fill="none" height="24" width="24" /><path d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27 C17.45,17.19,14.93,19,12,19c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z" opacity=".3" /><path d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z" /></svg>
                                     </span>
                                 </a>
-                            </div>
+                            </div>*@
                             <div class="dropdown header-fullscreen">
                                 <a class="nav-link icon full-screen-link" id="fullscreen-button">
                                     <svg class="header-icon" x="1008" y="1248" viewBox="0 0 24 24" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M7,14 L5,14 L5,19 L10,19 L10,17 L7,17 L7,14 Z M5,10 L7,10 L7,7 L10,7 L10,5 L5,5 L5,10 Z M17,17 L14,17 L14,19 L19,19 L19,14 L17,14 L17,17 Z M14,5 L14,7 L17,7 L17,10 L19,10 L19,5 L14,5 Z"></path></svg>
@@ -132,42 +132,51 @@
                 <div class="slide-left disabled" id="slide-left"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24"><path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z" /></svg></div>
                 <ul class="side-menu">
                     <li class="slide">
-                        <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="side-menu__icon"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                            <span class="side-menu__label">Daily Report</span><i class="angle fe fe-chevron-right"></i>
+                        <a class="side-menu__item" href="javascript:void(0)">
+                            <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                            <span class="side-menu__label">Daily Task</span>
                         </a>
-                        <ul class="slide-menu">
+                        <ul class="slide-menu" style="display: block;">
                             <li class="sub-slide">
-                                <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="/DailyReport/R1Form"><span class="sub-side-menu__label">Form</span></a>
+                                <a class="sub-side-menu__item" href="/DailyReport/R1Form"><span class="sub-side-menu__label">Form</span></a>
                             </li>
                             <li class="sub-slide">
-                                <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="/DailyReport/R1FormList"><span class="sub-side-menu__label">Form List</span></a>
+                                <a class="sub-side-menu__item" href="/DailyReport/R1FormList"><span class="sub-side-menu__label">Form List</span></a>
                             </li>
                             <li class="sub-slide">
-                                <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="/DailyReport/R1WeeklyProgramme"><span class="sub-side-menu__label">R1 Weekly Programme</span></a>
-                            </li>
-                            <li class="sub-slide">
-                                <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="/DailyReport/R2WeeklyProgramme"><span class="sub-side-menu__label">R2 Weekly Programme</span></a>
-                            </li>
-                            @*<li class="sub-slide">
-            <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="/DailyReport/Form"><span class="sub-side-menu__label">Form</span></a>
-        </li>*@
-                            <li class="sub-slide">
-                                <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="/DailyReport/DailyReport"><span class="sub-side-menu__label">Daily Report</span></a>
-                            </li>
-                            <li class="sub-slide">
-                                <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="/DailyReport/Checklist"><span class="sub-side-menu__label">Checklist</span></a>
+                                <a class="sub-side-menu__item" href="/DailyReport/DailyReport"><span class="sub-side-menu__label">Daily Report</span></a>
                             </li>
                         </ul>
                     </li>
                     <li class="slide">
-                        <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
+                        <a class="side-menu__item" href="javascript:void(0)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="side-menu__icon">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                            </svg>
+                            <span class="side-menu__label">Weekly Task</span>
+                        </a>
+                        <ul class="slide-menu" style="display: block;">
+                            <li class="sub-slide">
+                                <a class="sub-side-menu__item" href="/DailyReport/R1WeeklyProgramme"><span class="sub-side-menu__label">R1 Weekly Programme</span></a>
+                            </li>
+                            <li class="sub-slide">
+                                <a class="sub-side-menu__item" href="/DailyReport/R2WeeklyProgramme"><span class="sub-side-menu__label">R2 Weekly Programme</span></a>
+                            </li>
+                            <li class="sub-slide">
+                                <a class="sub-side-menu__item" href="/DailyReport/Checklist"><span class="sub-side-menu__label">Checklist</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item" href="javascript:void(0)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="side-menu__icon">
                                 <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
                             </svg>
-                            <span class="side-menu__label">Gang</span><i class="angle fe fe-chevron-right"></i>
+                            <span class="side-menu__label">Gang</span>
                         </a>
-                        <ul class="slide-menu">
+                        <ul class="slide-menu" style="display: block;">
                             <li class="side-menu-label1">
                                 <a href="javascript:void(0)">Apps</a>
                             </li>
@@ -180,13 +189,13 @@
                         </ul>
                     </li>
                     <li class="slide">
-                        <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
+                        <a class="side-menu__item" href="javascript:void(0)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="side-menu__icon">
                                 <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z" />
                             </svg>
-                            <span class="side-menu__label">User</span><i class="angle fe fe-chevron-right"></i>
+                            <span class="side-menu__label">User</span>
                         </a>
-                        <ul class="slide-menu">
+                        <ul class="slide-menu" style="display: block;">
                             <li class="side-menu-label1">
                                 <a href="javascript:void(0)">Apps</a>
                             </li>
@@ -223,15 +232,15 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow p-4">
                                 <div class="sidebar-dropdown-divider pb-3">
-                                    <h4 class="font-weight-bold">Help</h4>
-                                    <a class="d-block" href="javascript:void(0)">Knowledge base</a>
-                                    <a class="d-block" href="javascript:void(0)">Contact@info.com</a>
-                                    <a class="d-block" href="javascript:void(0)">88 8888 8888</a>
+                                    <h4 class="font-weight-bold">Any inquiries</h4>
+                                    <a class="d-block" href="javascript:void(0)">Siti Adibah Samsuddin</a>
+                                    <a class="d-block" href="javascript:void(0)">sitiadibah@ktmb.com.my</a>
+                                    <a class="d-block" href="javascript:void(0)">PABX 1505</a>
                                 </div>
-                                <div class="sidebar-dropdown-divider pb-3 pt-3 mb-3">
+                                @*<div class="sidebar-dropdown-divider pb-3 pt-3 mb-3">
                                     <p class="mb-1">Your Fax Number</p>
                                     <a class="font-weight-bold" href="javascript:void(0)">88 8888 8888</a>
-                                </div>
+                                </div>*@
                             </div>
                         </div>
                     </div>

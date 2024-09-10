@@ -1239,7 +1239,7 @@ namespace emujv2Api.Model
 
             ParamTmp.Add("@RptCode", RptCode);
 
-            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);          
             return JsonConvert.SerializeObject(Recc, Formatting.Indented);
         }
     }
