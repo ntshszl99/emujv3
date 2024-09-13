@@ -1176,7 +1176,7 @@ namespace emujv2Api.Model
             return JsonConvert.SerializeObject(Recc, Formatting.Indented);
         }
 
-        public string GetAllForm(string SDate, string EDate)
+        public string GetFormListNormal(string Section, string SDate, string EDate)
         {
             StringBuilder SqlStr = new StringBuilder();
             Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
@@ -1188,7 +1188,7 @@ namespace emujv2Api.Model
             string AkhirTarikh = EDate;
 
             SqlStr.Append(" select b.region_name, c.kmuj_name, d.section_name, (select concat('Gang ', a.daily_gang)) as Gang, ");
-            SqlStr.Append(" a.daily_date, f.work_name, a.upd_user, ");
+            SqlStr.Append(" a.daily_date,  f.work_name, a.upd_user, a.upd_date, ");
             SqlStr.Append(" (select concat(a.daily_total, ' ', a.daily_unit)) as output,  ");
             SqlStr.Append(" a.effect_kmfrom, a.effect_kmto, a.daily_condition, a.daily_workers,  ");
             SqlStr.Append(" (select concat(e.category_name, ' ( ', a.category_details, ' )')) as daily_category, ");
@@ -1202,8 +1202,10 @@ namespace emujv2Api.Model
             SqlStr.Append(" and a.daily_sec = d.section_val ");
             SqlStr.Append(" and a.daily_category = e.category_id ");
             SqlStr.Append(" and a.daily_worktype = f.id ");
+            SqlStr.Append(" and d.section_name = @Section ");
             SqlStr.Append(" order by convert(datetime, daily_date, 103) desc ");
 
+            ParamTmp.Add("@Section", Section);
             ParamTmp.Add("@MulaTarikh", MulaTarikh);
             ParamTmp.Add("@AkhirTarikh", AkhirTarikh);
 

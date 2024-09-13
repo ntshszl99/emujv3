@@ -15,8 +15,160 @@
             </div>
 
             <!--End Page header-->
-            <!--1-Admin && 4-MUJ && 5-HQ-->
+            <!--1-Admin && 5-HQ-->
             <div class="" id=contentAdmin>
+                <div class="col-lg-12 col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="mb-3 m-0">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label">Region</label>
+                                        <select id="region" class="form-control form-select select2">
+                                            <option value="-0">Select Region</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label">KMUJ</label>
+                                        <select id="kmuj" class="form-control form-select select2">
+                                            <option value="-0">Select KMUJ</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label">Section</label>
+                                        <select id="section" class="form-control form-select select2">
+                                            <option value="-0">Select Section</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label">Date (From - To)</label>
+                                        <div class="input-group">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class=" mt-1 mb-1 fa fa-solid fa fa-calendar font-20"></i></span>
+                                            </div>
+                                            <input type="text" class="form-control" id="txtDate" name="txtDate" required="required" autocomplete="off" />
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="col-lg-12">
+                                            <div class="table-responsive table-lg">
+                                                <table id="tableAdmin" class="table table-striped table-bordered text-nowrap">
+                                                    <thead>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--2-Engineer && 6-Pemb.Teknik-->
+            <div class="" id=contentEngineer>
+                <div class="col-lg-12 col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="mb-3 m-0">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label class="mt-5 form-label">Category</label>
+                                        <select id="categoryEng" class="form-control form-select select2">
+                                            <option value="-0">Select Category</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="mt-5 form-label">KMUJ</label>
+                                        <select id="kmujEng" class="form-control form-select select2">
+                                            <option value="-0">Select KMUJ</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="mt-5 form-label">Date (From - To)</label>
+                                        <div class="input-group">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class=" mt-1 mb-1 fa fa-solid fa fa-calendar font-20"></i></span>
+                                            </div>
+                                            <input type="text" class="form-control" id="txtDate4" name="txtDate4" required="required" autocomplete="off" />
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="col-lg-12">
+                                            <div class="table-responsive table-lg">
+                                                <table id="tableEngineer" class="table card-table table-vcenter text-nowrap border">
+                                                    <thead>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--3-CI-->
+            <div class="" id=contentCI>
+                <div class="col-lg-12 col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="mb-3 m-0">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label">Gang</label>
+                                        <select id="gangCI" class="form-control form-select select2">
+                                            <option value="-0">Select Gang</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label">Category</label>
+                                        <select id="categoryCI" class="form-control form-select select2">
+                                            <option value="-0">Select Category</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label">Section</label>
+                                        <select id="regCI" class="form-control form-select select2" required>
+                                            <option value="-0">Select Section</option>
+                                            <option id="tempekScn" value="1"></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label">Date (From - To)</label>
+                                        <div class="input-group">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class=" mt-1 mb-1 fa fa-solid fa fa-calendar font-20"></i></span>
+                                            </div>
+                                            <input type="text" class="form-control" id="txtDate2" name="txtDate2" required="required" autocomplete="off" />
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="col-lg-12">
+                                            <div class="table-responsive table-lg">
+                                                <table id="tableCI" class="table card-table table-vcenter text-nowrap border">
+                                                    <thead>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4-MUJ-->
+            <div class="" id=contentNormal>
                 <div class="col-lg-12 col-md-12">
                     <div class="card">
                         <div class="card-body">
@@ -29,14 +181,14 @@
                                                 <div class="input-group-append">
                                                     <span class="input-group-text"><i class=" mt-1 mb-1 fa fa-solid fa fa-calendar font-20"></i></span>
                                                 </div>
-                                                <input type="text" class="form-control" id="txtDate" name="txtDate" required="required" autocomplete="off" />
+                                                <input type="text" class="form-control" id="txtDate3" name="txtDate" required="required" autocomplete="off" />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card-body">
                                         <div class="col-lg-12">
                                             <div class="table-responsive table-lg">
-                                                <table id="tableAdmin" class="table table-striped table-bordered text-nowrap">
+                                                <table id="tableNormal" class="table table-striped table-bordered text-nowrap">
                                                     <thead>
                                                     </thead>
                                                     <tbody>
@@ -227,7 +379,7 @@
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="table-responsive table-lg">
-                                                <table id="tableRep" class="table table-striped table-bordered text-nowrap">
+                                                <table id="tableRep2" class="table table-striped table-bordered text-nowrap">
                                                     <thead>
                                                     </thead>
                                                     <tbody></tbody>
@@ -356,6 +508,7 @@
         $(document).ready(function () {
             checkSess();
             listReports();
+            listReports2();
             listLnCondition();
             listCategory();
             listCatDetails();
@@ -364,46 +517,228 @@
             listGang();
 
             //CHECK USER LEVEL
-
-            //user level == 1 & 4 & 5
-            if (localStorage.getItem("lvlI") === "1" || localStorage.getItem("lvlI") === "4" || localStorage.getItem("lvlI") === "5") {
+            //user level == 1 & 5
+            if (localStorage.getItem("lvlI") === "1" || localStorage.getItem("lvlI") === "5") {
                 $("#contentAdmin").show();
-                $("#contentOthers").hide();
+                $("#contentNormal").hide();
+                $("#contentEngineer").hide();
+                $("#contentCI").hide();
 
                 $('#txtDate').daterangepicker({
                     minYear: 2021,
-                    opens: 'right'
                 }, function (start, end, label) {
-                    console.log("A new date selection was made: " + start.format('DD/MM/YYYY') + ' to ' + end.format('DD/MM/YYYY'));
-                    console.log(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM/YYYY'));
+                    console.log("A new date selection was made: " + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD'));
+                    console.log(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
 
                     sdate = start.format('YYYY/MM/DD');
                     edate = end.format('YYYY/MM/DD');
                     localStorage.setItem("selHar", sdate);
                     localStorage.setItem("selHarE", edate);
 
-                    listReports(sdate, edate);
+                    rgn = $("#region option:selected").text();
+                    localStorage.setItem("selRgn", rgn);
+
+                    kmj = $("#kmuj option:selected").text();
+                    localStorage.setItem("selKmj", kmj);
+
+                    scn = $("#section option:selected").text();
+                    localStorage.setItem("selScn", scn);
+
+                    listReports(localStorage.getItem("selRgn"), localStorage.getItem("selKmj"), localStorage.getItem("selScn"), sdate, edate);
                     salertSave('Update Date : ' + start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
                 });
 
-                ("sdate, edate").on('change', function () {
+                $("#region, #kmuj, #section, sdate, edate").on('change', function () {
+
+                    checkStore();
+
                     var sdate = localStorage.setItem("selHar", sdate);
                     var edate = localStorage.setItem("selHarE", edate);
 
-                    listReports(sdate, edate);
+                    rgn = $("#region option:selected").text();
+                    localStorage.setItem("selRgn", rgn);
+
+                    kmj = $("#kmuj option:selected").text();
+                    localStorage.setItem("selKmj", kmj);
+
+                    scn = $("#section option:selected").text();
+                    localStorage.setItem("selScn", scn);
+
+                    listReports(localStorage.getItem("selRgn"), localStorage.getItem("selKmj"), localStorage.getItem("selScn"), sdate, edate);
+                });
+            }
+
+            //userlevel == 3
+            else if (localStorage.getItem("lvlI") === "3") {
+                $("#contentAdmin").hide();
+                $("#contentNormal").hide();
+                $("#contentEngineer").hide();
+                $("#contentCI").show();
+
+                kmj = localStorage.getItem("kmuj");
+                localStorage.setItem("selKmj", kmj);
+                cariSec(localStorage.getItem("selKmj", this.value));
+
+                $('#txtDate2').daterangepicker({
+                    minYear: 2021,
+                }, function (start, end, label) {
+                    console.log("A new date selection was made: " + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD'));
+                    console.log(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
+
+                    sdate = start.format('YYYY/MM/DD');
+                    edate = end.format('YYYY/MM/DD');
+                    localStorage.setItem("selHar", sdate);
+                    localStorage.setItem("selHarE", edate);
+
+                    ctg = $("#categoryCI option:selected").text();
+                    localStorage.setItem("selCtg", ctg);
+
+                    sec = $("#sec option:selected").text();
+                    localStorage.setItem("selScn", sec);
+
                     salertSave('Update Date : ' + start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
+                    listReportsCI(localStorage.getItem("selCtg", this.value), localStorage.getItem("selScn", this.value), sdate, edate);
+
+                });
+
+                $("sdate, edate").on('change', function () {
+
+                    checkStore();
+
+                    var sdate = localStorage.setItem("selHar", sdate);
+                    var edate = localStorage.setItem("selHarE", edate);
+
+                    ctg = $("#categoryCI option:selected").text();
+                    localStorage.setItem("selCtg", ctg);
+
+                    sec = $("#sec option:selected").text();
+                    localStorage.setItem("selScn", sec);
+
+                    salertSave('Update Date : ' + start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
+                    listReportsCI(localStorage.getItem("selCtg", this.value), localStorage.getItem("selScn", this.value), sdate, edate);
 
                 });
 
             }
-            //userlevel == 2 & 3 & 6
-            else if (localStorage.getItem("lvlI") === "2" || localStorage.getItem("lvlI") === "3" || localStorage.getItem("lvlI") === "6") {
+
+            //userlevel == 4
+            else if (localStorage.getItem("lvlI") === "4") {
+                $("#contentNormal").show();
                 $("#contentAdmin").hide();
-                $("#contentOthers").show();
+                $("#contentEngineer").hide();
+                $("#contentCI").hide();
+
+                $('#txtDate3').daterangepicker({
+
+                    minYear: 2021,
+                    opens: 'right'
+
+                }, function (start, end, label) {
+                    console.log("A new date selection was made: " + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD'));
+                    console.log(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
+
+                    sdate = start.format('YYYY/MM/DD');
+                    edate = end.format('YYYY/MM/DD');
+
+                    localStorage.setItem("selHar", sdate);
+                    localStorage.setItem("selHarE", edate);
+
+                    scn = localStorage.getItem("scn");
+                    localStorage.setItem("selScn", scn, this.value);
+
+
+                    listReportsNormal(localStorage.getItem("selScn", this.value), sdate, edate);
+                    salertSave('Update Date : ' + start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
+                });
+
+                $("sdate, edate").on('change', function () {
+
+                    checkStore();
+
+                    var sdate = localStorage.setItem("selHar", sdate);
+                    var edate = localStorage.setItem("selHarE", edate);
+
+                    scn = localStorage.getItem("scn");
+                    localStorage.setItem("selScn", scn, this.value);
+
+                    listReportsNormal(localStorage.getItem("selScn", this.value), sdate, edate);
+
+                });
+            }
+
+            //userlevel == 2 & 6
+            else if (localStorage.getItem("lvlI") === "2" || localStorage.getItem("lvlI") === "6") {
+                $("#contentAdmin").hide();
+                $("#contentNormal").hide();
+                $("#contentCI").hide();
+                $("#contentEngineer").show();
+
+                rgn = localStorage.getItem("usrRE");
+                //usrRE = east, central, south, north
+                localStorage.setItem("selRgn", rgn);
+                console.log('region: ' + rgn);
+
+                rgn2 = localStorage.getItem("usrR");
+                //usrRE = east, central, south, north
+                localStorage.setItem("selRgn2", rgn2);
+                console.log('region2: ' + rgn2);
+
+                cariReg(localStorage.getItem("selRgn"));
+
+                $('#txtDate4').daterangepicker({
+                    minYear: 2021,
+                }, function (start, end, label) {
+                    console.log("A new date selection was made: " + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD'));
+                    console.log(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
+
+                    sdate = start.format('YYYY/MM/DD');
+                    edate = end.format('YYYY/MM/DD');
+                    localStorage.setItem("selHar", sdate);
+                    localStorage.setItem("selHarE", edate);
+
+                    rgn = localStorage.getItem("usrR");
+                    localStorage.setItem("selRgn", rgn);
+                    console.log('region: ' + rgn);
+
+                    kmj = $("#kmujEng option:selected").text();
+                    localStorage.setItem("selKmj", kmj);
+
+                    ctg = $("#categoryEng option:selected").text();
+                    localStorage.setItem("selCtg", ctg);
+
+                    listReportsEngineer(localStorage.getItem("selRgn"), localStorage.getItem("selCtg"), localStorage.getItem("selKmj"), sdate, edate);
+                    salertSave('Update Date : ' + start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
+                });
+
+                $("#categoryEng, #kmujEng, sdate, edate").on('change', function () {
+
+                    checkStore();
+
+                    var sdate = localStorage.setItem("selHar", sdate);
+                    var edate = localStorage.setItem("selHarE", edate);
+
+                    rgn = localStorage.getItem("usrR");
+                    localStorage.setItem("selRgn", rgn);
+                    console.log('region: ' + rgn);
+
+                    kmj = $("#kmujEng option:selected").text();
+                    localStorage.setItem("selKmj", kmj);
+
+                    ctg = $("#categoryEng option:selected").text();
+                    localStorage.setItem("selCtg", ctg);
+
+                    listReportsEngineer(localStorage.getItem("selRgn"), localStorage.getItem("selCtg"), localStorage.getItem("selKmj"), sdate, edate);
+                });
             }
 
 
-
+            //not authorized user
+            else {
+                $("#contentAdmin").hide();
+                $("#contentNormal").hide();
+                $("#contentEngineer").hide();
+                $("#contentCI").hide();
+            }
         });
 
 
@@ -412,8 +747,19 @@
             var ids = $(e.relatedTarget).data('id');
             $(this).data('id', ids);
             console.log('read ' + ids);
-            rptDetails(ids);
+           
 
+            kmj = $("#kmuj option:selected").text();
+            localStorage.setItem("selKmj", kmj, this.value);
+
+            scn = $("#section option:selected").text();
+            localStorage.setItem("selScn", scn, this.value);
+
+            gng = $("#gang option:selected").text();
+            localStorage.setItem("selGng", gng, this.value);
+
+            listReports2(localStorage.getItem("selKmj", this.value), localStorage.getItem("selScn", this.value), localStorage.getItem("selGng", this.value));
+            rptDetails(ids);
         });
 
         //button submit update report
@@ -429,156 +775,6 @@
             console.log('read ' + ids);
             rptDelete(ids);
         });
-
-
-        function rptDetails(ids) {
-            var reportno = $(".reportno" + ids).html();
-            $.ajax({
-                url: linkDepan + "GetAllFormDetails?RptCode=" + ids,
-                type: 'GET',
-                dataType: 'json',
-                data: {},
-                beforeSend: function (request) {
-                    request.setRequestHeader("Token", localStorage.getItem('main'));
-                },
-                success: function (data) {
-                    $('#rptcode, #rptcode2').val(data[0].rpt_code);
-                    $('#region, #region2').val(data[0].region_name);
-                    $('#kmuj, #kmuj2').val(data[0].kmuj_name);
-                    $('#section, #section2').val(data[0].section_name);
-                    $('#gang, #gang2').val(data[0].Gang);
-                    $('#pax, #pax2').val(data[0].daily_workers);
-                    $('#workdate').val(data[0].daily_date);
-                    $('#linecond, #linecond2').val(data[0].cond_name);
-                    $('#category, #category2').val(data[0].category_name);
-                    $('#categorydets, #categorydets2').val(data[0].category_details);
-                    $('#worktype, #worktype2').val(data[0].work_name);
-                    $('#totalWork, #totalWork2').val(data[0].daily_total);
-                    $('#unit, #unit2').val(data[0].daily_unit);
-                    $('#KMfrom, #KMfrom2').val(data[0].effect_kmfrom);
-                    $('#KMto, #KMto2').val(data[0].effect_kmto);
-                    $('#totalKM, #totalKM2').val(data[0].effect_kmtotal);
-                    $('#timeStart, #timeStart2').val(data[0].daily_timestart);
-                    $('#timeEnd, #timeEnd2').val(data[0].daily_timelast);
-                    $('#totalTime, #totalTime2').val(data[0].daily_timetaken);
-                    $('#notes, #notes2').val(data[0].daily_additional);
-                    $('#workStation, #workStation2').val(data[0].station);
-                    $('#stPoint, #stPoint2').val(data[0].station_point);
-                },
-                error: function (xhr) {
-                    swarning();
-                },
-                complete: function () {
-                }
-            });
-        }
-
-        function listReports(mdate, edate) {
-            if (mdate === undefined) {
-                var arrBuln = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', '06', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-                var d = new Date();
-                var month = d.getMonth() - 1;
-                mdate = d.getDate() + '/' + arrBuln[month] + '/' + d.getFullYear();
-                localStorage.setItem("selHar", mdate);
-            }
-            if (edate === undefined) {
-                var arrBuln = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', '06', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-                var d = new Date();
-                var month = d.getMonth();
-                edate = d.getDate() + '/' + arrBuln[month] + '/' + d.getFullYear(); console.log(edate);
-                localStorage.setItem("selHarE", edate);
-            }
-            $.ajax({
-                url: linkDepan + "GetAllForm?SDate=" + mdate + "&Edate=" + edate,
-                type: 'GET',
-                dataType: 'json',
-                data: {},
-                beforeSend: function (request) {
-                    request.setRequestHeader("Token", localStorage.getItem('main'));
-                },
-                success: function (data) {
-                    console.log('mana : ' + data);
-                    var counter = 1;
-                    $.fn.dataTable.ext.errMode = 'throw';
-                    if ($.fn.dataTable.isDataTable("#tableAdmin")) {
-                        $("#tableAdmin").DataTable().destroy();
-                    }
-                    $("#tableAdmin").DataTable({
-                        dom: 'Bfrtip',
-                        buttons: [
-                            'copy', 'csv', 'excel', 'pdf', 'print'
-                        ],
-                        responsive: true,
-                        data: data,
-                        columns: [
-                            { data: "no" },
-                            { data: "rpt_code" },
-                            { data: "daily_date" },
-                            { data: "upd_user" },
-                            { data: "section_name" },
-                            { data: "rpt_code" },
-                        ],
-                        columnDefs: [
-                            {
-                                targets: -1,
-                                title: "Action",
-                                render: function (data, type, full, meta) {
-                                    return '<a class="modal-effect btn btn-success" data-id="' + data + '" data-bs-target="#modalDetails" data-bs-effect="effect-sign" data-bs-toggle="modal"><i class="fe fe-eye font-10"></i></a>' +
-                                        ' <a class="modal-effect btn btn-primary" data-id="' + data + '" data-bs-target="#modalUpdate" data-bs-effect="effect-sign" data-bs-toggle="modal"><i class="fe fe-edit font-10"></i></a>' +
-                                        ' <a class="btn btn-danger" data-id="' + data + '" data-bs-target="#modalDelete" data-bs-effect="effect-sign" data-bs-toggle="modal"><i class="fe fe-trash font-10"></i></a>';
-                                },
-                            },
-                            {
-                                targets: -2,
-                                title: "Section",
-                                render: function (data, type, full, meta) {
-                                    return data;
-                                },
-                            },
-                            {
-                                targets: -3,
-                                title: "Submitted By",
-                                render: function (data, type, full, meta) {
-                                    return data;
-                                },
-                            },
-                            {
-                                targets: -4,
-                                title: "Date",
-                                render: function (data, type, full, meta) {
-                                    return data;
-                                },
-                            },
-                            {
-                                targets: -5,
-                                title: "Report ID",
-                                render: function (data, type, full, meta) {
-                                    return data;
-                                },
-                            },
-                            {
-                                targets: -6,
-                                title: "No",
-                                render: function (data, type, full, meta) {
-                                    return counter++;
-                                },
-                            }
-                        ],
-                        createdRow: function (row, data, dataIndex) {
-                            $('td', row).addClass('text-nowrap align-middle');
-                        }
-                    });
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error: ' + error);
-                    console.error('Status: ' + status);
-                    console.dir(xhr);
-                    swarning();
-                },
-                complete: function () {
-                }
-            });
-        }
 
         //delete modal
         $('#modalDelete').on('show.bs.modal', function (e) {
@@ -764,6 +960,419 @@
                 }
             });
         }
+
+        function rptDetails(ids) {
+            var reportno = $(".reportno" + ids).html();
+            $.ajax({
+                url: linkDepan + "GetAllFormDetails?RptCode=" + ids,
+                type: 'GET',
+                dataType: 'json',
+                data: {},
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    $('#rptcode, #rptcode2').val(data[0].rpt_code);
+                    $('#region, #region2').val(data[0].region_name);
+                    $('#kmuj, #kmuj2').val(data[0].kmuj_name);
+                    $('#section, #section2').val(data[0].section_name);
+                    $('#gang, #gang2').val(data[0].Gang);
+                    $('#pax, #pax2').val(data[0].daily_workers);
+                    $('#workdate').val(data[0].daily_date);
+                    $('#linecond, #linecond2').val(data[0].cond_name);
+                    $('#category, #category2').val(data[0].category_name);
+                    $('#categorydets, #categorydets2').val(data[0].category_details);
+                    $('#worktype, #worktype2').val(data[0].work_name);
+                    $('#totalWork, #totalWork2').val(data[0].daily_total);
+                    $('#unit, #unit2').val(data[0].daily_unit);
+                    $('#KMfrom, #KMfrom2').val(data[0].effect_kmfrom);
+                    $('#KMto, #KMto2').val(data[0].effect_kmto);
+                    $('#totalKM, #totalKM2').val(data[0].effect_kmtotal);
+                    $('#timeStart, #timeStart2').val(data[0].daily_timestart);
+                    $('#timeEnd, #timeEnd2').val(data[0].daily_timelast);
+                    $('#totalTime, #totalTime2').val(data[0].daily_timetaken);
+                    $('#notes, #notes2').val(data[0].daily_additional);
+                    $('#workStation, #workStation2').val(data[0].station);
+                    $('#stPoint, #stPoint2').val(data[0].station_point);
+
+                    var kmuj2 = $('#kmuj').val();
+                    var section2 = $('#section').val();
+                    var gang2 = $('#gang2').val();
+
+                    console.log('gang2:', gang2);
+                    console.log('kmuj2:', kmuj2);
+                    console.log('section2:', section2);
+
+                    // Call listReports2 with the fetched values
+                    listReports2(kmuj2, section2, gang2);
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+        function listReports2(kmuj, section, gang) {
+            if (typeof gang === "string") {
+                gang = gang.split(/(?<=\d)(?=Gang)/);
+            }
+            if (Array.isArray(gang) && gang.length > 0) {
+                var gangString = gang.join(",");
+                $.ajax({
+                    url: linkDepan + "GetGListNormal?Kmuj=" + kmuj + "&Section=" + section + "&Gang=" + encodeURIComponent(gangString),
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {},
+                    beforeSend: function (request) {
+                        request.setRequestHeader("Token", localStorage.getItem('main'));
+                    },
+                    success: function (response) {
+                        try {
+                            // Log the response to inspect it
+                            console.log("Server Response:", response);
+                            console.log("Gang String: " + gangString); // Corrected the variable name
+
+                            // Initialize DataTable with the correct column definitions
+                            var counter = 1;
+                            $.fn.dataTable.ext.errMode = 'throw';
+                            if ($.fn.dataTable.isDataTable('#tableRep2')) {
+                                $('#tableRep2').DataTable().destroy();
+                                $('#tableRep2').empty(); // Clear the table contents
+                            }
+                            $('#tableRep2').DataTable({
+                                responsive: true,
+                                data: response,
+                                columns: [
+                                    { data: "Emplid" },
+                                    { data: "Emplid" },
+                                    { data: "Nama" },
+                                    { data: "JobGrade" },
+                                    { data: "JobDesc" },
+                                    { data: "Gang" },
+                                    { data: "cuti_name" },
+                                ],
+                                columnDefs: [
+                                    {
+                                        targets: -1,
+                                        title: "Status",
+                                        render: function (data, type, full, meta) {
+                                            var status = '';
+                                            if (data == 'VALID') {
+                                                status = '<a class="text-success">' + data + ' <i class="ion-checkmark-circled"></i></a></p>';
+                                            } else {
+                                                status = '<a class="text-danger">' + data + ' <i class="ion-close-circled"></i></a></p>';
+                                            }
+                                            return status;
+                                        },
+                                    },
+                                    {
+                                        targets: -2,
+                                        title: "Gang",
+                                        render: function (data, type, full, meta) {
+                                            return data;
+                                        },
+                                    },
+                                    {
+                                        targets: -3,
+                                        title: "Position",
+                                        render: function (data, type, full, meta) {
+                                            return data;
+                                        },
+                                    },
+                                    {
+                                        targets: -4,
+                                        title: "Grade",
+                                        render: function (data, type, full, meta) {
+                                            return data;
+                                        },
+                                    },
+                                    {
+                                        targets: -5,
+                                        title: "Name",
+                                        render: function (data, type, full, meta) {
+                                            return data;
+                                        },
+                                    },
+                                    {
+                                        targets: -6,
+                                        title: "Staff ID",
+                                        render: function (data, type, full, meta) {
+                                            return data;
+                                        },
+                                    },
+                                    {
+                                        targets: -7,
+                                        title: "No",
+                                        render: function (data, type, full, meta) {
+                                            return counter++;
+                                        }
+                                    }
+                                ],
+                                createdRow: function (row, data, dataIndex) {
+                                    $('td', row).addClass('text-nowrap align-middle');
+                                }
+                            });
+                        } catch (error) {
+                            console.error("Error parsing JSON:", error);
+                            if ($.fn.dataTable.isDataTable('#tableRep2')) {
+                                $('#tableRep2').DataTable().destroy();
+                                $('#tableRep2').empty(); // Clear the table contents
+                            }
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error("AJAX request failed:", textStatus, errorThrown);
+                        if ($.fn.dataTable.isDataTable('#tableRep2')) {
+                            $('#tableRep2').DataTable().destroy();
+                            $('#tableRep2').empty(); // Clear the table contents
+                        }
+                    }
+                });
+
+            }
+        }
+
+        //report ci
+        function listReportsNormal(category, section, mdate, edate) {
+            if (mdate === undefined) {
+                var arrBuln = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', '06', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+                var d = new Date();
+                var month = d.getMonth() - 1;
+                mdate = d.getDate() + '/' + arrBuln[month] + '/' + d.getFullYear();
+                localStorage.setItem("selHar", mdate);
+                localStorage.setItem("selScn", scn, this.value);
+            }
+            if (edate === undefined) {
+                var arrBuln = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', '06', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+                var d = new Date();
+                var month = d.getMonth();
+                edate = d.getDate() + '/' + arrBuln[month] + '/' + d.getFullYear(); console.log(edate);
+                localStorage.setItem("selHarE", edate);
+                localStorage.setItem("selScn", scn, this.value);
+            }
+            $.ajax({
+                url: linkDepan + "GetFormListNormal?Section=" + section + "&SDate=" + mdate + "&Edate=" + edate,
+                type: 'GET',
+                dataType: 'json',
+                data: {},
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    console.log('mana : ' + data);
+                    var counter = 1;
+                    $.fn.dataTable.ext.errMode = 'throw';
+                    if ($.fn.dataTable.isDataTable("#tableNormal")) {
+                        $("#tableNormal").DataTable().destroy();
+                    }
+                    $("#tableNormal").DataTable({
+                        dom: 'Bfrtip',
+                        buttons: [
+                            'copy', 'csv', 'excel', 'pdf', 'print'
+                        ],
+                        responsive: true,
+                        data: data,
+                        columns: [
+                            { data: "no" },
+                            { data: "rpt_code" },
+                            { data: "daily_date" },
+                            { data: "upd_user" },
+                            { data: "upd_date" },
+                            { data: "section_name" },
+                            { data: "rpt_code" },
+                        ],
+                        columnDefs: [
+                            {
+                                targets: -1,
+                                title: "Action",
+                                render: function (data, type, full, meta) {
+                                    return '<a class="modal-effect btn btn-success" data-id="' + data + '" data-bs-target="#modalDetails" data-bs-effect="effect-sign" data-bs-toggle="modal"><i class="fe fe-eye font-10"></i></a>' +
+                                        ' <a class="modal-effect btn btn-primary" data-id="' + data + '" data-bs-target="#modalUpdate" data-bs-effect="effect-sign" data-bs-toggle="modal"><i class="fe fe-edit font-10"></i></a>' +
+                                        ' <a class="btn btn-danger" data-id="' + data + '" data-bs-target="#modalDelete" data-bs-effect="effect-sign" data-bs-toggle="modal"><i class="fe fe-trash font-10"></i></a>';
+                                },
+                            },
+                            {
+                                targets: -2,
+                                title: "Section",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                            {
+                                targets: -3,
+                                title: "Update Date",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                            {
+                                targets: -4,
+                                title: "Submitted By",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                            {
+                                targets: -5,
+                                title: "Work Date",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                            {
+                                targets: -6,
+                                title: "Report ID",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                            {
+                                targets: -7,
+                                title: "No",
+                                render: function (data, type, full, meta) {
+                                    return counter++;
+                                },
+                            }
+                        ],
+                        createdRow: function (row, data, dataIndex) {
+                            $('td', row).addClass('text-nowrap align-middle');
+                        }
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error: ' + error);
+                    console.error('Status: ' + status);
+                    console.dir(xhr);
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+        //report normal
+        function listReportsNormal(section, mdate, edate) {
+            if (mdate === undefined) {
+                var arrBuln = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', '06', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+                var d = new Date();
+                var month = d.getMonth() - 1;
+                mdate = d.getDate() + '/' + arrBuln[month] + '/' + d.getFullYear();
+                localStorage.setItem("selHar", mdate);
+                localStorage.setItem("selScn", scn, this.value);
+            }
+            if (edate === undefined) {
+                var arrBuln = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', '06', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+                var d = new Date();
+                var month = d.getMonth();
+                edate = d.getDate() + '/' + arrBuln[month] + '/' + d.getFullYear(); console.log(edate);
+                localStorage.setItem("selHarE", edate);
+                localStorage.setItem("selScn", scn, this.value);
+            }
+            $.ajax({
+                url: linkDepan + "GetFormListNormal?Section=" + section + "&SDate=" + mdate + "&Edate=" + edate,
+                type: 'GET',
+                dataType: 'json',
+                data: {},
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    console.log('mana : ' + data);
+                    var counter = 1;
+                    $.fn.dataTable.ext.errMode = 'throw';
+                    if ($.fn.dataTable.isDataTable("#tableNormal")) {
+                        $("#tableNormal").DataTable().destroy();
+                    }
+                    $("#tableNormal").DataTable({
+                        dom: 'Bfrtip',
+                        buttons: [
+                            'copy', 'csv', 'excel', 'pdf', 'print'
+                        ],
+                        responsive: true,
+                        data: data,
+                        columns: [
+                            { data: "no" },
+                            { data: "rpt_code" },
+                            { data: "daily_date" },
+                            { data: "upd_user" },
+                            { data: "upd_date" },
+                            { data: "section_name" },
+                            { data: "rpt_code" },
+                        ],
+                        columnDefs: [
+                            {
+                                targets: -1,
+                                title: "Action",
+                                render: function (data, type, full, meta) {
+                                    return '<a class="modal-effect btn btn-success" data-id="' + data + '" data-bs-target="#modalDetails" data-bs-effect="effect-sign" data-bs-toggle="modal"><i class="fe fe-eye font-10"></i></a>' +
+                                        ' <a class="modal-effect btn btn-primary" data-id="' + data + '" data-bs-target="#modalUpdate" data-bs-effect="effect-sign" data-bs-toggle="modal"><i class="fe fe-edit font-10"></i></a>' +
+                                        ' <a class="btn btn-danger" data-id="' + data + '" data-bs-target="#modalDelete" data-bs-effect="effect-sign" data-bs-toggle="modal"><i class="fe fe-trash font-10"></i></a>';
+                                },
+                            },
+                            {
+                                targets: -2,
+                                title: "Section",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                            {
+                                targets: -3,
+                                title: "Update Date",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                            {
+                                targets: -4,
+                                title: "Submitted By",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                            {
+                                targets: -5,
+                                title: "Work Date",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                            {
+                                targets: -6,
+                                title: "Report ID",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                            {
+                                targets: -7,
+                                title: "No",
+                                render: function (data, type, full, meta) {
+                                    return counter++;
+                                },
+                            }
+                        ],
+                        createdRow: function (row, data, dataIndex) {
+                            $('td', row).addClass('text-nowrap align-middle');
+                        }
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error: ' + error);
+                    console.error('Status: ' + status);
+                    console.dir(xhr);
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+      
+
+       
 
 
     </script>

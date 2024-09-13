@@ -50,10 +50,10 @@ namespace emujv2
             services.AddLogging(c => c.AddConsole().AddDebug().AddConfiguration(Configuration));
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo
+                c.SwaggerDoc("v3", new OpenApiInfo
                 {
                     Title = "e-MUJ @ KTMB",
-                    Version = "v2",
+                    Version = "v3",
                     Description = "Data Management System",
                     Contact = new OpenApiContact
                     {

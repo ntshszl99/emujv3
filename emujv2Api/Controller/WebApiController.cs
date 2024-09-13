@@ -365,7 +365,45 @@ namespace emujv2Api.Controller
         }
 
 
+        [HttpPost]
+        public string DailyAttendListNo(MasukCons formCons, string Gang)
+        {
+            TokenFunc Token = new TokenFunc();
+            PublicCons RetDat = new PublicCons();
+            string conn = _config.GetValue<string>("KTMBParam:DbConnection");
+            string Salah = "";
+            String Data = Token.ValidateToken(httpContextAccessor.HttpContext.Request.Headers["Token"], ref Salah);
+            InsertUpdate ret = new InsertUpdate();
+            if (string.IsNullOrEmpty(Data))
+            {
+                HttpContext.Response.StatusCode = 401;
+                return null;
+            }
+            UserCons User = JsonConvert.DeserializeObject<UserCons>(Data);
 
+            if (!string.IsNullOrEmpty(User.Userid))
+            {
+                Salah = ret.DailyAttendListNo(formCons, Gang);
+                if (Salah == "0")
+                {
+                    RetDat.status = "00";
+                    RetDat.StatusDetail = "Update Save.";
+                    return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+                }
+                else
+                {
+                    RetDat.status = "99";
+                    RetDat.StatusDetail = Salah;
+                    return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+                }
+            }
+            else
+            {
+                RetDat.status = "99";
+                RetDat.StatusDetail = "Error : Not Authorize User.";
+                return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+            }
+        }
 
 
 
@@ -1308,7 +1346,7 @@ namespace emujv2Api.Controller
         }
 
         [HttpGet]
-        public string GetAllForm(string SDate, string EDate)
+        public string GetAllForm(string Section, string SDate, string EDate)
         {
             TokenFunc Token = new TokenFunc();
             PublicCons RetDat = new PublicCons();
@@ -1325,7 +1363,7 @@ namespace emujv2Api.Controller
 
             if (!string.IsNullOrEmpty(User.Userid))
             {
-                return ret.GetAllForm(SDate, EDate);
+                return ret.GetAllForm(Section, SDate, EDate);
             }
             else
             {
