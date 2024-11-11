@@ -1045,6 +1045,10 @@
     <Content Include="assets\images\flags\za.svg" />
     <Content Include="assets\images\flags\zm.svg" />
     <Content Include="assets\images\flags\zw.svg" />
+    <Content Include="assets\images\users\emujlogo_long.png" />
+    <Content Include="assets\images\users\emujlogo_longwhite.png" />
+    <Content Include="assets\images\users\emujlogo_square.png" />
+    <Content Include="assets\images\users\emujlogo_webicon.png" />
     <Content Include="assets\images\users\ktmb_logo.png" />
     <Content Include="assets\images\users\logo2x.png" />
     <Content Include="assets\images\orders\1.jpg" />
@@ -1275,6 +1279,7 @@
     <Content Include="assets\images\users\7.jpg" />
     <Content Include="assets\images\users\8.jpg" />
     <Content Include="assets\images\users\9.jpg" />
+    <Content Include="assets\images\users\trackicon_logo.png" />
     <Content Include="assets\js\accordion.js" />
     <Content Include="assets\js\aes.js" />
     <Content Include="assets\js\app-calendar.js" />

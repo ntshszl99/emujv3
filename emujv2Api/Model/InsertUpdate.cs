@@ -42,6 +42,8 @@ namespace emujv2Api.Model
             Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
 
             SqlStr.Append(" DELETE FROM daily WHERE rpt_code = @RptCode ");
+            SqlStr.Append(" DELETE FROM daily_attendencelist WHERE rpt_code = @RptCode ");
+            SqlStr.Append(" DELETE FROM daily_attendencelistno WHERE rpt_code = @RptCode ");
 
             ParamTmp.Add("@RptCode", RptCode);
 
@@ -543,7 +545,7 @@ namespace emujv2Api.Model
             SqlStr.Append(" INSERT INTO [dbo].[daily_attendencelistno] ");
             SqlStr.Append(" ([staff_attdno_rpt_id], [staff_attdno_no], [staff_attdno_updatedate], [staff_attdno_updby], [staff_attdno_total], [rpt_code]) ");
             SqlStr.Append(" VALUES ");
-            SqlStr.Append(" (@DailyId, @AttId, CONVERT(VARCHAR(10), GETDATE(), 103) + ' ' + REPLACE(CONVERT(VARCHAR(5), GETDATE(), 108), ':', ''), @Gang, @Workers, @RptCode)");
+            SqlStr.Append(" (@DailyId, @AttId, CONVERT(VARCHAR(10), GETDATE(), 103) + ' ' + REPLACE(CONVERT(VARCHAR(5), GETDATE(), 108), ':', ''), @Gang, @Workers, @RptCode)" );
 
             string idString = validAttIds.Any() ? string.Join(",", validAttIds) : string.Empty;
             string gangString = formCons.Gang != null ? string.Join(",", formCons.Gang) : string.Empty;

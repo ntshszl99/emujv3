@@ -990,7 +990,7 @@ namespace emujv2Api.Model
             string AkhirTarikh = EDate;
 
             SqlStr.Append(" select b.region_name, c.kmuj_name, d.section_name, (select concat('Gang ', a.daily_gang)) as Gang, ");
-            SqlStr.Append(" a.daily_date, f.work_name, ");
+            SqlStr.Append(" a.daily_date, f.work_name, a.upd_user, a.upd_date, ");
             SqlStr.Append(" (select concat(a.daily_total, ' ', a.daily_unit)) as output, ");
             SqlStr.Append(" a.effect_kmfrom, a.effect_kmto, a.daily_condition, a.daily_workers, ");
             SqlStr.Append(" (select concat(e.category_name, ' ( ', a.category_details, ' )')) as daily_category, ");
@@ -1098,7 +1098,7 @@ namespace emujv2Api.Model
             string AkhirTarikh = EDate;
 
             SqlStr.Append(" select b.region_name, c.kmuj_name, d.section_name, (select concat('Gang ', a.daily_gang)) as Gang, ");
-            SqlStr.Append(" a.daily_date, f.work_name, ");
+            SqlStr.Append(" a.daily_date, f.work_name, a.upd_user, a.upd_date, ");
             SqlStr.Append(" (select concat(a.daily_total, ' ', a.daily_unit)) as output,  ");
             SqlStr.Append(" a.effect_kmfrom, a.effect_kmto, a.daily_condition, a.daily_workers,  ");
             SqlStr.Append(" (select concat(e.category_name, ' ( ', a.category_details, ' )')) as daily_category, ");
@@ -1137,6 +1137,8 @@ namespace emujv2Api.Model
             return JsonConvert.SerializeObject(Recc, Formatting.Indented);
         }
 
+
+     
         public string GetDailyReportNormal(string Section, string SDate, string EDate)
         {
             StringBuilder SqlStr = new StringBuilder();
@@ -1149,9 +1151,9 @@ namespace emujv2Api.Model
             string AkhirTarikh = EDate;
 
             SqlStr.Append(" select b.region_name, c.kmuj_name, d.section_name, (select concat('Gang ', a.daily_gang)) as Gang, ");
-            SqlStr.Append(" a.daily_date, f.work_name, ");
-            SqlStr.Append(" (select concat(a.daily_total, ' ', a.daily_unit)) as output,  ");
-            SqlStr.Append(" a.effect_kmfrom, a.effect_kmto, a.daily_condition, a.daily_workers,  ");
+            SqlStr.Append(" a.daily_date, f.work_name, a.upd_user, a.upd_date, ");
+            SqlStr.Append(" (select concat(a.daily_total, ' ', a.daily_unit)) as output, ");
+            SqlStr.Append(" a.effect_kmfrom, a.effect_kmto, a.daily_condition, a.daily_workers, ");
             SqlStr.Append(" (select concat(e.category_name, ' ( ', a.category_details, ' )')) as daily_category, ");
             SqlStr.Append(" (select concat(a.daily_timestart, ' - ', a.daily_timelast, ' ', '(', a.daily_timetaken, ')')) as Time, ");
             SqlStr.Append(" a.daily_additional, a.rpt_code ");
@@ -1171,6 +1173,62 @@ namespace emujv2Api.Model
             ParamTmp.Add("@MulaTarikh", MulaTarikh);
             ParamTmp.Add("@AkhirTarikh", AkhirTarikh);
 
+
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+            return JsonConvert.SerializeObject(Recc, Formatting.Indented);
+        }
+
+
+        //FormList -------------------------------------------
+        public string GetFormListAdmin(string Region, string Kmuj, string Section, string SDate, string EDate)
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+            string MulaTarikh = SDate;
+            string AkhirTarikh = EDate;
+
+            SqlStr.Append(" select b.region_name, c.kmuj_name, d.section_name, (select concat('Gang ', a.daily_gang)) as Gang, ");
+            SqlStr.Append(" a.daily_date,  f.work_name, a.upd_user, a.upd_date, ");
+            SqlStr.Append(" (select concat(a.daily_total, ' ', a.daily_unit)) as output,  ");
+            SqlStr.Append(" a.effect_kmfrom, a.effect_kmto, a.daily_condition, a.daily_workers,  ");
+            SqlStr.Append(" (select concat(e.category_name, ' ( ', a.category_details, ' )')) as daily_category, ");
+            SqlStr.Append(" (select concat(a.daily_timestart, ' - ', a.daily_timelast, ' ', '(', a.daily_timetaken, ')')) as Time, ");
+            SqlStr.Append(" a.daily_additional, a.rpt_code ");
+            SqlStr.Append(" from daily as a, region as b, kmuj as c, section as d, category as e, work_type as f ");
+            SqlStr.Append(" where convert(datetime, daily_date, 103) >= @MulaTarikh ");
+            SqlStr.Append(" and convert(datetime, daily_date, 103) <= @AkhirTarikh ");
+            SqlStr.Append(" and a.daily_section = b.region_id ");
+            SqlStr.Append(" and a.daily_kmuj = c.kmuj_value ");
+            SqlStr.Append(" and a.daily_sec = d.section_val ");
+            SqlStr.Append(" and a.daily_category = e.category_id ");
+            SqlStr.Append(" and a.daily_worktype = f.id ");
+
+            ParamTmp.Add("@MulaTarikh", MulaTarikh);
+            ParamTmp.Add("@AkhirTarikh", AkhirTarikh);
+
+            if (!string.IsNullOrEmpty(Region) && Region != "Select Region")
+            {
+                SqlStr.Append(" and b.region_name = @Region ");
+                ParamTmp.Add("@Region", Region);
+            }
+
+            if (!string.IsNullOrEmpty(Kmuj) && Kmuj != "Select KMUJ")
+            {
+                SqlStr.Append(" and c.kmuj_name = @Kmuj ");
+                ParamTmp.Add("@Kmuj", Kmuj);
+            }
+
+            if (!string.IsNullOrEmpty(Section) && Section != "Select Section")
+            {
+                SqlStr.Append(" and d.section_name = @Section ");
+                ParamTmp.Add("@Section", Section);
+            }
+
+            SqlStr.Append(" order by convert(datetime, a.daily_date, 103) asc ");
 
             Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
             return JsonConvert.SerializeObject(Recc, Formatting.Indented);
@@ -1212,6 +1270,7 @@ namespace emujv2Api.Model
             Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
             return JsonConvert.SerializeObject(Recc, Formatting.Indented);
         }
+
 
         public string GetAllFormDetails(string RptCode)
         {

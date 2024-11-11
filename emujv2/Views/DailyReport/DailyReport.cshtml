@@ -41,7 +41,7 @@
                                     </div>
 
                                     <div class="col-3">
-                                        <label class="mt-5 form-label">Date (From - To)</label>
+                                        <label class="mt-5 form-label">Work Date (From - To)</label>
                                         <div class="input-group">
                                             <div class="input-group-append">
                                                 <span class="input-group-text"><i class=" mt-1 mb-1 fa fa-solid fa fa-calendar font-20"></i></span>
@@ -87,7 +87,7 @@
                                         </select>
                                     </div>
                                     <div class="col-4">
-                                        <label class="mt-5 form-label">Date (From - To)</label>
+                                        <label class="mt-5 form-label">Work Date (From - To)</label>
                                         <div class="input-group">
                                             <div class="input-group-append">
                                                 <span class="input-group-text"><i class=" mt-1 mb-1 fa fa-solid fa fa-calendar font-20"></i></span>
@@ -140,7 +140,7 @@
                                         </select>
                                     </div>
                                     <div class="col-3">
-                                        <label class="mt-5 form-label">Date (From - To)</label>
+                                        <label class="mt-5 form-label">Work Date (From - To)</label>
                                         <div class="input-group">
                                             <div class="input-group-append">
                                                 <span class="input-group-text"><i class=" mt-1 mb-1 fa fa-solid fa fa-calendar font-20"></i></span>
@@ -177,7 +177,7 @@
                                         <div class="mt-2 form-label"></div>
                                     </div>
                                     <div class="d-flex justify-content-end">
-                                        <div class="m-3  form-label">Date</div>
+                                        <div class="m-3  form-label">Work Date</div>
                                         <div class="col-3">
                                             <div class="input-group">
                                                 <div class="input-group-append">
@@ -553,10 +553,33 @@
                             localStorage.getItem("selHar"),
                             localStorage.getItem("selHarE")
                         );
-                    } else if (["2", "3", "4", "6"].includes(localStorage.getItem("lvlI"))) {
-                        $("#contentAdmin").show();
+                    } else if (localStorage.getItem("lvlI") === "2" || localStorage.getItem("lvlI") === "6") {
+                        listReportsEngineer(
+                            localStorage.getItem("selRgn"),
+                            localStorage.getItem("selCtg"),
+                            localStorage.getItem("selKmj"),
+                            localStorage.getItem("selHar"),
+                            localStorage.getItem("selHarE")
+                        );
+                    } else if (localStorage.getItem("lvlI") === "3") {
+                        listReportsCI(
+                            localStorage.getItem("selCtg"),
+                            localStorage.getItem("selScn"),
+                            localStorage.getItem("selHar"),
+                            localStorage.getItem("selHarE")
+                        );
+                    } else if (localStorage.getItem("lvlI") === "4") {
+                        listReportsNormal(
+                            localStorage.getItem("selScn"),
+                            localStorage.getItem("selHar"),
+                            localStorage.getItem("selHarE")
+                        );
+                    } else {
+                        $("#contentAdmin").hide();
                         $("#contentEngineer").hide();
                         $("#contentNormal").hide();
+                        $("#contentCI").hide();
+                        $("#contentOthers").show();
                     }
                 },
                 error: function (xhr, status, error) {

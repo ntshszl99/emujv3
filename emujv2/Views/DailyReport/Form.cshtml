@@ -2,7 +2,6 @@
     ViewBag.Title = "Daily Form";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <div class="app-content main-content">
     <div class="side-app">
         <div class="container-fluid main-container">
@@ -10,152 +9,171 @@
             <!--Page header-->
             <div class="page-header">
                 <div class="page-leftheader">
-                    <h4 class="page-title">Update Form</h4>
+                    <h4 class="page-title">Update R1 Form</h4>
+                    <div class="row align-items-center">
+                        <div class="col-4 text-left">
+                            <h5 class="mb-0">Report ID:</h5>
+                        </div>
+                        <div class="col-6">
+                            <input readonly id="rptcode" type="text" class="text-success form-control text-left bg-transparent border-0">
+                        </div>
+                    </div>
                 </div>
             </div>
+
+
             <!--End Page header-->
 
-            <div class="" id="tempekList">
+            <div class="" id="content">
                 <div class="card">
                     <div class="card-body">
                         <div class="mb-3 m-0">
                             <div class="row">
+                                <div class="col-3">
+                                    <label class="mt-5 form-label"><strong>Region</strong></label>
+                                    <input readonly id="region" type="text" class="form-control text-left bg-transparent border-0">
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label"><strong>KMUJ</strong></label>
+                                    <input readonly id="kmuj" type="text" class="form-control text-left bg-transparent border-0">
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label"><strong>Section</strong></label>
+                                    <input readonly id="section" type="text" class="form-control text-left bg-transparent border-0">
+                                </div>
+                                <div></div>
                                 <div class="col-6">
-                                    <label class="mt-3 form-label">Region</label>
-                                    <select id="region" class="form-control form-select select2">
-                                        <option value="-0">Select Region</option>
+                                    <label class="mt-5 form-label">Gang</label>
+                                    <select id="gang" type="text" class="form-control form-select select2" required="required" multiple>
+                                        <option value="-0">Select Gang</option>
                                     </select>
                                 </div>
-                                <div class="col-6">
-                                    <label class="mt-3 form-label">KMUJ</label>
-                                    <select id="kmuj" class="form-control form-select select2">
-                                        <option value="-0">Select KMUJ</option>
-                                    </select>
+                                <div class="mb-5 col-3">
+                                    <label class="mt-5 form-label">No. of Staff (Valid)</label>
+                                    <input readonly id="gangno" type="text" class="form-control">
                                 </div>
-                                <div class="col-6">
-                                    <label class="mt-3 form-label">Section</label>
-                                    <select id="section" class="form-control form-select select2">
-                                        <option value="-0">Select Section</option>
-                                    </select>
-                                </div>
-                             
-                                <div class="col-6">
-                                    <label class="mt-3 form-label">Date (From - To)</label>
-                                    <div class="input-group">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text"><i class=" mt-1 mb-1 fa fa-solid fa fa-calendar font-20"></i></span>
-                                        </div>
-                                        <input type="text" class="form-control" id="txtDate" name="txtDate" required="required" autocomplete="off" />
+                                <div class="col-lg-12">
+                                    <div class="table-responsive table-lg">
+                                        <table id="tableRep" class="table table-striped table-bordered text-nowrap">
+                                            <thead>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
                                     </div>
                                 </div>
-                                <div class="col-2">
-                                    <label class="mt-3 form-label">.</label>
-                                    <button type="button" name="Cari" id="Cari" class="btn btn-purple waves-effect waves-light"><i class="fa fa-search"></i></button>
+                                <div></div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Work Date</label>
+                                    <input type="text" id="datepicker" class="form-control" required="required">
                                 </div>
-                                <div class="card-body">
-                                    <div class="col-lg-12">
-                                        <div class="table-responsive table-lg">
-                                            <table id="tableRep" class="table table-striped table-bordered text-nowrap">
-                                                <thead>
-                                                </thead>
-                                                <tbody></tbody>
-                                            </table>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Line</label>
+                                    <select id="linecond" class="form-control form-select select2" required="required">
+                                        <option value="-0">.: Select Condition :.</option>
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Category</label>
+                                    <select id="category" class="form-control form-select select2" required="required">
+                                        <option value="-0">.: Select Category :.</option>
+                                    </select>
+                                </div>
+                                <div id="catEmer" class="col-3" style='display:none;'>
+                                    <label class="mt-5 form-label">Category</label>
+                                    <select id="catdet" class="form-control form-select select2">
+                                        <option value="-">.: Select Emergency :.</option>
+                                    </select>
+                                </div>
+                                <div></div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Work Type</label>
+                                    <select id="worktype" class="form-control form-select select2" required="required">
+                                        <option value="-0">.: Select Work Type :.</option>
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Total</label>
+                                    <input id="total" type="text" class="form-control" placeholder="Total" required="required">
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Unit</label>
+                                    <input id="unit" class="form-control" placeholder="Unit" readonly>
+                                </div>
+                                <div></div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Effected KM (Start)</label>
+                                    <input type="number" id="startKM" class="form-control" placeholder="Start KM" required="required">
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Effected KM (End)</label>
+                                    <input type="number" id="endKM" class="form-control" placeholder="End KM" required="required">
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Effected KM (meter)</label>
+                                    <input type="text" id="totalKM" class="form-control" placeholder="Total KM" readonly>
+                                </div>
+                                <div></div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Time Start </label>
+                                    <input type="time" id="startTime" class="form-control" placeholder="Start Time" required="required">
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Time End</label>
+                                    <input type="time" id="endTime" class="form-control" placeholder="End Time" required="required">
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Time Taken KM</label>
+                                    <input type="text" id="totalTime" class="form-control" readonly>
+                                </div>
+                                <div></div>
+                                <div class="col-3">
+                                    <div class="mb-3 mt-5">
+                                        <div class="form-label">Work at Station?</div>
+                                        <div class="custom-controls-stacked">
+                                            <label class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" name="station_option" id="id_radio1" value="Yes">
+                                                <span class="custom-control-label">Yes</span>
+                                            </label>
+                                            <label class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" name="station_option" id="id_radio2" value="No">
+                                                <span class="custom-control-label">No</span>
+                                            </label>
                                         </div>
                                     </div>
+                                </div>
+                                <div id="station" class="col-3" style="display:none;">
+                                    <label class="mt-5 form-label">Station</label>
+                                    <select id="stationn" class="form-control form-select select2">
+                                        <option value="">.: Select Station :.</option>
+                                    </select>
+                                </div>
+                                <div id="point" class="col-3" style="display:none;">
+                                    <label class="mt-5 form-label">Point No.</label>
+                                    <input type="text" id="stPoint" class="form-control" placeholder="Station's Point">
+                                </div>
+                                <div class="col-xl-12">
+                                    <label class="mt-5 form-label">Additional Information</label>
+                                    <textarea class="mb-5 form-control" id="addnotes" placeholder="Textarea" rows="3"></textarea>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <button type="button" id="submitNew" class='btn btn-success center m-1'>Update Form</button>
+                                    <button type="button" class='btn btn-light center m-1' onclick="window.location.href='R1FormList'">Back</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!--Modal User Details-->
-            <div class="modal" id="modalDetails">
-                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Staff Details</h5><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
-                        </div>
-                        <div class="modal-body">
+        <div class="" id="contentOthers">
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-3 m-0">
+                        <div class="row">
                             <div class="card-body">
-                                <div class="mb-0 m-0">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="form-label">Staff ID</div>
-                                            <input readonly id="staffID" type="text" class="form-control">
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="mt-5 form-label">Staff Name</div>
-                                            <input readonly id="staffname" type="text" class="form-control">
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="mt-5 form-label">Department</div>
-                                            <input readonly id="dept" type="text" class="form-control">
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="mt-5 form-label">Designation</div>
-                                            <input readonly id="position" type="text" class="form-control">
-                                        </div>
-                                        <div class="mb-5"></div>
-                                        <div class="card-body bg-success-transparent-2">
-                                            <div class="mb-0 m-0">
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        <div class="mt-2 form-label">Update Status</div>
-                                                        <select id="cuti" class="form-control form-select select2" required="required">
-                                                            <option value="-0">.: Select Reason :.</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer pd-20">
-                                    <button class="btn btn-success" type="button">Update</button> <button class="btn btn-light" data-bs-dismiss="modal" ria-label="Close" type="button">Cancel</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!--Modal Delete User-->
-            <div class="modal" id="modalDelete">
-                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Delete Staff</h5><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="card-body">
-                                <div class="mb-0 m-0">
-                                    <div class="row">
-                                        <div class="col-12 bg-danger-transparent-2">
-                                            <h5 class="mt-5 mb-5 text-danger text-center">Are you sure want to delete?</h5>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="mt-5 form-label">Staff ID</div>
-                                            <input readonly id="staffID2" type="text" class="form-control">
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="mt-5 form-label">Staff Name</div>
-                                            <input readonly id="staffname2" type="text" class="form-control">
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="mt-5 form-label">Department</div>
-                                            <input readonly id="dept2" type="text" class="form-control">
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="mt-5 form-label">Designation</div>
-                                            <input readonly id="position2" type="text" class="form-control">
-                                        </div>
-                                        <div class="mb-5"></div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer pd-20">
-                                    <button class="btn btn-danger" type="button">Delete</button> <button class="btn btn-light" data-bs-dismiss="modal" ria-label="Close" type="button">Cancel</button>
-                                </div>
+                                <h4 class="text-muted">Alert</h4>
+                                <p class="text-muted">Sorry, no data found.</p>
                             </div>
                         </div>
                     </div>
@@ -167,70 +185,278 @@
 
 
 @section scripts{
-
+    <script src="~/assets/scripts/semua.js"></script>
     <script src="~/assets/scripts/dashboard.js"></script>
     <script src="~/assets/plugins/daterangepicker/daterangepicker.js"></script>
     <script src="~/assets/plugins/select2/select2.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             checkSess();
-            listRegion();
-            listKMUJ();
-            listSection();
             listGang();
+            listGangPax();
+            listLnCondition();
+            listCategory();
+            listWorkType();
+            listCatDetails();
+            listWorkUnit();
+            listLocation();
 
-            $('#txtDate').daterangepicker({
+            //CHECK USER LEVEL
+            //user level == 1 & 5
+            if (localStorage.getItem("lvlI") === "1" || localStorage.getItem("lvlI") === "5") {
+                $("#contentAdmin").show();
+                $("#contentNormal").hide();
+                $("#contentOthers").hide();
+            }
 
-                opens: 'center',
+            //userlevel == 4
+            else if ((localStorage.getItem("lvlI") === "4") || (localStorage.getItem("lvlI") === "3")) {
+                $("#contentNormal").show();
+                $("#contentAdmin").hide();
+                $("#contentOthers").hide();
+            }
+
+            //not authorized user
+            else {
+                $("#contentAdmin").hide();
+                $("#contentNormal").hide();
+            }
+
+
+            //automatic show gang pax when select gang
+            $("#gang").on('change', function () {
+      
+                var kmj = $("#kmuj").val();
+                localStorage.setItem("selKmj", kmj); 
+
+                var scn = $("#section").val(); 
+                localStorage.setItem("selScn", scn); 
+           
+                var gng = $("#gang option:selected").text();
+                localStorage.setItem("selGng", gng); 
+
+                listGangPax(kmj, scn, gng);
+            });
+
+            //automatic show workunit when select worktype
+            $("#worktype").on('change', function () {
+                wrk = $("#worktype option:selected").text();
+                localStorage.setItem("selWrk", wrk, this.value);
+                listWorkUnit(localStorage.getItem("selWrk", this.value));
+            });
+
+            //show/hide work catergory - emegergency
+            $("#category").on('change', function () {
+                if ($("#category option:selected").val() == '1') {
+                    $("#catEmer").show();
+                }
+                else {
+                    $("#catEmer").hide();
+                }
+            });
+
+            //auto calculate totalkm
+            $('#startKM, #endKM').on('change', function () {
+                validateKM();
+            });
+
+            //auto calculate totaltime
+            $('#startTime, #endTime').on('change', function () {
+                validateTime();
+            });
+
+            // Handle click events on radio buttons
+            $('#id_radio1').click(function () {
+                $('#station').show('fast');
+                $('#point').show('fast');
+            });
+
+            $('#id_radio2').click(function () {
+                $('#station').hide('fast');
+                $('#point').hide('fast');
+            });
+
+            $("#datepicker").datepicker({
+                singleDatePicker: true,
+                showDropdowns: true,
                 minYear: 2021,
-                maxSpan: {
-                    days: 30
-                },
-            }, function (start, end, label) {
-                console.log("A new date selection was made: " + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD'));
-                console.log(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
-
-                sdate = start.format('YYYY/MM/DD');
-                edate = end.format('YYYY/MM/DD');
-                localStorage.setItem("selHar", sdate);
-                localStorage.setItem("selHarE", edate);
-
-                rgn = $("#region option:selected").text();
-                localStorage.setItem("selRgn", rgn, this.value);
-
-                kmj = $("#kmuj option:selected").text();
-                localStorage.setItem("selKmj", kmj, this.value);
-
-                scn = $("#section option:selected").text();
-                localStorage.setItem("selScn", scn, this.value);
-
-                listReports(localStorage.getItem("selRgn", this.value), localStorage.getItem("selKmj", this.value), localStorage.getItem("selScn", this.value), sdate, edate);
-                //listReports(localStorage.getItem("selRgn", this.value), sdate, edate);
-                salertSave('Update Date : ' + start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
+                locale: {
+                    format: 'DD/MM/YYYY'
+                }
             });
 
-            $("#gang, #kmuj, #section, sdate, edate").on('change', function () {
-
-                checkStore();
-
-                var sdate = localStorage.setItem("selHar", sdate);
-                var edate = localStorage.setItem("selHarE", edate);
-
-                rgn = $("#region option:selected").text();
-                localStorage.setItem("selRgn", rgn, this.value);
-
-                kmj = $("#kmuj option:selected").text();
-                localStorage.setItem("selKmj", kmj, this.value);
-
-                scn = $("#section option:selected").text();
-                localStorage.setItem("selScn", scn, this.value);
-
-                listReports(localStorage.getItem("selRgn", this.value), localStorage.getItem("selKmj", this.value), localStorage.getItem("selScn", this.value), sdate, edate);
-                //listReports(localStorage.getItem("selRgn", this.value), localStorage.getItem("selKmj", this.value), localStorage.getItem("selScn", this.value));
-
+            //button submit form
+            $('#submitNew').click(function () {
+                if (validateForm()) {
+                    submitForm();
+                    submitAttendance();
+                    submitAttendanceNo();
+                }
             });
+
+            function getQueryParameter(name) {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(name);
+            }
+
+            // Get the 'id' parameter
+            const id = getQueryParameter('id');
+            const gang = getQueryParameter('gang');
+            const gangno = getQueryParameter('gangno');
+            console.log('ID from URL:', id);
+
+            // If an ID is found, call the function to fetch details
+            if (id) {
+                rptDetails(id); // Call the rptDetails function to fetch data
+            }
+
 
         });
+
+        function validateKM() {
+            var startKM = parseFloat($('#startKM').val());
+            var endKM = parseFloat($('#endKM').val());
+            var totalKM = (endKM - startKM) * 1000;
+
+            if (endKM < startKM) {
+                alert('End KM must be greater than Start KM');
+            } else {
+                $('#totalKM').val(totalKM);
+            }
+        }
+
+        function validateTime() {
+            const startTime = $('#startTime').val();
+            const endTime = $('#endTime').val();
+
+            const start = new Date(`1970-01-01T${startTime}:00`);
+            const end = new Date(`1970-01-01T${endTime}:00`);
+
+            let diff = (end - start) / 1000 / 60;
+
+            if (diff < 0) {
+                diff += 24 * 60;
+            }
+
+            const hours = Math.floor(diff / 60);
+            const minutes = diff % 60;
+
+            const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+            $('#totalTime').val(formattedTime);
+
+        }
+
+        function validateForm() {
+            let isValid = true;
+            let requiredFields = [
+                '#region', '#kmuj', '#section', '#gang', '#datepicker',
+                '#linecond', '#category', '#worktype', '#total',
+                '#startKM', '#endKM', '#startTime', '#endTime'
+            ];
+
+            requiredFields.forEach(function (field) {
+                if ($(field).val() === '' || $(field).val() === '-0') {
+                    isValid = false;
+                    $(field).addClass('is-invalid');
+                } else {
+                    $(field).removeClass('is-invalid');
+                }
+            });
+
+            if (!isValid) {
+                alert('Please fill all required fields.');
+            }
+
+            return isValid;
+        }
+
+
+
+        //show gang pax based on gang type -- tak keluar lagi
+        function listGangPax(kmuj, section, gang) {
+            if (typeof gang === "string") {
+                gang = gang.split(/(?<=\d)(?=Gang)/);
+            }
+
+            if (Array.isArray(gang)) {
+                var gangString = gang.join(",");
+
+                $.ajax({
+                    url: linkDepan + "GetGangPax",
+                    data: {
+                        Kmuj: kmuj,
+                        Section: section,
+                        Gang: gangString
+                    },
+                    dataType: "json",
+                    beforeSend: function (request) {
+                        request.setRequestHeader("Token", localStorage.getItem('main'));
+                    },
+                    success: function (data) {
+                        if (data && data.length > 0) {
+                            $('#gangno').val(data[0].count);
+                        } else {
+                            $('#gangno').val('0 pax');
+                        }
+                    },
+                    error: function (error) {
+                        $('#gangno').val("");
+                    }
+                });
+            } else {
+                return;
+            }
+        }
+
+        function rptDetails(ids) {
+            var reportno = $(".reportno" + ids).html();
+            $.ajax({
+                url: linkDepan + "GetAllFormDetails?RptCode=" + ids,
+                type: 'GET',
+                dataType: 'json',
+                data: {},
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    $('#rptcode').val(data[0].rpt_code);
+                    $('#region').val(data[0].region_name);
+                    $('#kmuj').val(data[0].kmuj_name);
+                    $('#section').val(data[0].section_name);
+                    $('#gang').val(data[0].Gang);
+                    $('#pax').val(data[0].daily_workers);
+                    $('#datepicker').val(data[0].daily_date);
+                    $('#linecond').val(data[0].cond_name);
+                    $('#category').val(data[0].category_name);
+                    $('#catdet').val(data[0].category_details);
+                    $('#worktype').val(data[0].work_name);
+                    $('#total').val(data[0].daily_total);
+                    $('#unit').val(data[0].daily_unit);
+                    $('#startKM').val(data[0].effect_kmfrom);
+                    $('#endKM').val(data[0].effect_kmto);
+                    $('#totalKM').val(data[0].effect_kmtotal);
+                    $('#startTime').val(data[0].daily_timestart);
+                    $('#endTime').val(data[0].daily_timelast);
+                    $('#totalTime').val(data[0].daily_timetaken);
+                    $('#notes').val(data[0].daily_additional);
+                    $('#workStation').val(data[0].station);
+                    $('#stPoint').val(data[0].station_point);
+
+                    var kmuj2 = $('#kmuj').val();
+                    var section2 = $('#section').val();
+                    var gang2 = $('#gang2').val();
+
+                    console.log('gang2:', gang2);
+                    console.log('kmuj2:', kmuj2);
+                    console.log('section2:', section2);
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
 
         function listGang() {
             $.ajax({
@@ -259,9 +485,25 @@
             });
         }
 
-        function listRegion() {
+        //show workunit after select worktype
+        function listWorkUnit(workunit) {
             $.ajax({
-                url: linkDepan + "GetRegionList",
+                url: linkDepan + "GetWorkUnit?WorkUnit=" + workunit,
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data && Array.isArray(data) && data.length > 0) {
+                        $('#unit').val(data[0].unit);
+                    }
+                },
+            });
+        }
+
+        function listLnCondition() {
+            $.ajax({
+                url: linkDepan + "GetLineConditionList",
                 dataType: "json",
                 beforeSend: function (request) {
                     request.setRequestHeader("Token", localStorage.getItem('main'));
@@ -270,11 +512,11 @@
                     if (data.length >= 1) {
                         auxArr = [];
                         $.each(data, function (index, value) {
-                            auxArr[index] = "<option value='" + value.region_id + "'>" + value.region_name + "</option>";
+                            auxArr[index] = "<option value='" + value.cond_id + "'>" + value.cond_name + "</option>";
                         });
-                        $('#region').append(auxArr.join(''));
+                        $('#linecond').append(auxArr.join(''));
                     } else {
-                        $("#region").addClass(" is-invalid");
+                        $("#linecond").addClass(" is-invalid");
 
                     }
                 },
@@ -286,9 +528,9 @@
             });
         }
 
-        function listSection() {
+        function listCategory() {
             $.ajax({
-                url: linkDepan + "GetSectionList",
+                url: linkDepan + "GetCategory",
                 dataType: "json",
                 beforeSend: function (request) {
                     request.setRequestHeader("Token", localStorage.getItem('main'));
@@ -297,11 +539,11 @@
                     if (data.length >= 1) {
                         auxArr = [];
                         $.each(data, function (index, value) {
-                            auxArr[index] = "<option value='" + value.section_id + "'>" + value.section_name + "</option>";
+                            auxArr[index] = "<option value='" + value.category_id + "'>" + value.category_name + "</option>";
                         });
-                        $('#section').append(auxArr.join(''));
+                        $('#category').append(auxArr.join(''));
                     } else {
-                        $("#section").addClass(" is-invalid");
+                        $("#category").addClass(" is-invalid");
 
                     }
                 },
@@ -313,9 +555,9 @@
             });
         }
 
-        function listKMUJ() {
+        function listCatDetails() {
             $.ajax({
-                url: linkDepan + "KMUJList",
+                url: linkDepan + "GetCategoryDetails",
                 dataType: "json",
                 beforeSend: function (request) {
                     request.setRequestHeader("Token", localStorage.getItem('main'));
@@ -324,11 +566,11 @@
                     if (data.length >= 1) {
                         auxArr = [];
                         $.each(data, function (index, value) {
-                            auxArr[index] = "<option value='" + value.muj + "'>" + value.kmuj_name + "</option>";
+                            auxArr[index] = "<option value='" + value.id + "'>" + value.details + "</option>";
                         });
-                        $('#kmuj').append(auxArr.join(''));
+                        $('#catdet').append(auxArr.join(''));
                     } else {
-                        $("#kmuj").addClass(" is-invalid");
+                        $("#catdet").addClass(" is-invalid");
 
                     }
                 },
@@ -340,183 +582,24 @@
             });
         }
 
-        function listReports(region, kmuj, section, mdate, edate) {
-            if (mdate === undefined) {
-                var arrBuln = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', '06', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-                var d = new Date();
-                var month = d.getMonth() - 1;
-                mdate = d.getDate() + '/' + arrBuln[month] + '/' + d.getFullYear();
-                localStorage.setItem("selHar", mdate);
-                localStorage.setItem("selRgn", rgn, this.value);
-                localStorage.setItem("selKmj", kmj, this.value);
-                localStorage.setItem("selScn", scn, this.value);
-            }
-            if (edate === undefined) {
-                var arrBuln = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', '06', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-                var d = new Date();
-                var month = d.getMonth();
-                edate = d.getDate() + '/' + arrBuln[month] + '/' + d.getFullYear(); console.log(edate);
-                localStorage.setItem("selHarE", edate);
-                localStorage.setItem("selRgn", rgn, this.value);
-                localStorage.setItem("selKmj", kmj, this.value);
-                localStorage.setItem("selScn", scn, this.value);
-            }
+        function listWorkType() {
             $.ajax({
-                url: linkDepan + "GetDailyReport?Region=" + region + "&Kmuj=" + kmuj + "&Section=" + section + "&SDate=" + mdate + "&Edate=" + edate,
-                /*url: linkDepan + "GetDailyReport?Region=" + region + "&Kmuj=" + kmuj + "&Section=" + section,*/
-                type: 'GET',
-                dataType: 'json',
-                data: {},
+                url: linkDepan + "GetWorkType",
+                dataType: "json",
                 beforeSend: function (request) {
                     request.setRequestHeader("Token", localStorage.getItem('main'));
                 },
                 success: function (data) {
-                    console.log('mana : ' + data);
-                    var counter = 1;
-                    $.fn.dataTable.ext.errMode = 'throw';
-                    if ($.fn.dataTable.isDataTable('#tableRep')) {
-                        $('#tableRep').DataTable().destroy();
-                    }
-                    $('#tableRep').DataTable({
-                        dom: 'Bfrtip',
-                        buttons: [
-                            'copy', 'csv', 'excel', 'pdf', 'print'
-                        ],
-                        responsive: true,
-                        data: data,
-                        columns: [
-                            { data: "no" },
-                            { data: "region_name" },
-                            { data: "kmuj_name" },
-                            { data: "section_name" },
-                            { data: "Gang" },
-                            { data: "daily_date" },
-                            { data: "daily_worktype" },
-                            { data: "output" },
-                            { data: "effect_kmfrom" },
-                            { data: "effect_kmto" },
-                            { data: "daily_condition" },
-                            { data: "daily_workers" },
-                            { data: "daily_category" },
-                            { data: "Time" },
-                            { data: "daily_additional" },
-                            { data: "rpt_code" },
-                        ],
-                        columnDefs: [
-                            {
-                                targets: 1,
-                                title: "Code",
-                                render: function (data, type, full, meta) {
-                                    return data;
-                                },
-                            },
-                            {
-                                targets: -2,
-                                title: "Additional Note",
-                                render: function (data, type, full, meta) {
-                                    return data;
-                                },
-                            },
-                            {
-                                targets: -3,
-                                title: "Time (Start-End)",
-                                render: function (data, type, full, meta) {
-                                    return data;
-                                },
-                            },
-                            {
-                                targets: -4,
-                                title: "Category",
-                                render: function (data, type, full, meta) {
-                                    return data;
-                                },
-                            },
-                            {
-                                targets: -5,
-                                title: "Workers",
-                                render: function (data, type, full, meta) {
-                                    return data;
-                                },
-                            },
-                            {
-                                targets: -6,
-                                title: "Up/Dn",
-                                render: function (data, type, full, meta) {
-                                    return data;
-                                },
-                            },
-                            {
-                                targets: -7,
-                                title: "To (KM)",
-                                render: function (data, type, full, meta) {
-                                    return data;
-                                },
-                            },
-                            {
-                                targets: -8,
-                                title: "From (KM)",
-                                render: function (data, type, full, meta) {
-                                    return data;
-                                },
-                            },
-                            {
-                                targets: -9,
-                                title: "Output/Unit",
-                                render: function (data, type, full, meta) {
-                                    return data;
-                                },
-                            },
-                            {
-                                targets: -10,
-                                title: "Work Type",
-                                render: function (data, type, full, meta) {
-                                    return data;
-                                },
-                            },
-                            {
-                                targets: -11,
-                                title: "Date",
-                                render: function (data, type, full, meta) {
-                                    return data;
-                                },
-                            },
-                            {
-                                targets: -12,
-                                title: "Gang",
-                                render: function (data, type, full, meta) {
-                                    return data;
-                                },
-                            },
-                            {
-                                targets: -13,
-                                title: "MUJ",
-                                render: function (data, type, full, meta) {
-                                    return data;
-                                },
-                            },
-                            {
-                                targets: -14,
-                                title: "KMUJ",
-                                render: function (data, type, full, meta) {
-                                    return data;
-                                },
-                            },
-                            {
-                                targets: -15,
-                                title: "Region",
-                                render: function (data, type, full, meta) {
-                                    return data;
-                                },
-                            },
-                            {
-                                targets: -16,
-                                title: "No",
-                                render: function (data, type, full, meta) {
-                                    return counter++;
-                                },
-                            }]
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.id + "'>" + value.work_name + "</option>";
+                        });
+                        $('#worktype').append(auxArr.join(''));
+                    } else {
+                        $("#worktype").addClass(" is-invalid");
 
-                    });
+                    }
                 },
                 error: function (xhr) {
                     swarning();
@@ -525,6 +608,82 @@
                 }
             });
         }
+
+        function listLocation() {
+            $.ajax({
+                url: linkDepan + "GetLocation",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.LCN_CODE + "'>" + value.LCN_NAME + "</option>";
+                        });
+                        $('#stationn').append(auxArr.join(''));
+                    } else {
+                        $("#stationn").addClass(" is-invalid");
+
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+        function gatherFormData() {
+            var UpdBy = localStorage.getItem('usrI');
+            var Region = localStorage.getItem('regID');
+            var Kmuj = localStorage.getItem('kmujVal');
+            var Section = localStorage.getItem('scnVal');
+            var formattedDate = moment($('#datepicker').val(), 'MM/DD/YYYY').format('DD/MM/YYYY');
+
+            var gangValues = $("#gang").val();
+            var gangArray = gangValues;
+
+            var attValues = $("#tableRep").DataTable().rows().data().toArray();
+            var AttId = attValues.map(function (item) {
+                return item.Emplid;
+            });
+            var workers = $('#gangno').val().replace(/\D/g, '');
+
+            var formData = {
+                UpdBy: UpdBy,
+                Region: Region,
+                Kmuj: Kmuj,
+                Section: Section,
+                Gang: gangArray,
+                Date: formattedDate,
+                AttId: AttId, // Ensure this is an array
+                WorkType: $('#worktype').val(),
+                Total: $('#total').val(),
+                TotalUnit: $('#unit').val(),
+                TimeStart: $('#startTime').val(),
+                TimeLast: $('#endTime').val(),
+                Category: $('#category').val(),
+                Condition: $('#linecond').val(),
+                Adds: $('#addnotes').val(),
+                TimeTaken: $('#totalTime').val(),
+                KMFrom: $('#startKM').val(),
+                KMTo: $('#endKM').val(),
+                KMTotal: $('#totalKM').val(),
+                Station: $('#stationn').val(),
+                SPoint: $('#stPoint').val(),
+                CatDetails: $('#catdet').val(),
+                Temp: $('#temp').val(),
+                Workers: workers,
+            };
+
+            console.log("FormData:", formData);
+
+            return formData;
+        }
+
 
     </script>
 }

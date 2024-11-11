@@ -159,7 +159,7 @@
                                     <textarea class="mb-5 form-control" id="addnotes" placeholder="Textarea" rows="3"></textarea>
                                 </div>
                                 <div class="text-center">
-                                    <button type="button" id="submitNew" class='btn btn-success center'>Submit Daily Form</button>
+                                    <button type="button" id="submitNew" class='btn btn-success center'>Submit Form</button>
                                 </div>
                             </div>
                         </div>
@@ -246,6 +246,7 @@
                 if (validateForm()) {
                     submitForm();
                     submitAttendance();
+                    submitAttendanceNo();
                 }
             });
 
@@ -469,7 +470,7 @@
             var gang = formData.gang; // Extract gang data from formData
 
             $.ajax({
-                url: linkDepan + "DailyAttendList?Gang=" + gang,
+                url: linkDepan + "DailyAttendList?Gang=" + gang + "&DailyAttendListNo=" + gang,
 
                 type: 'POST',
                 contentType: 'application/json',
@@ -505,6 +506,49 @@
                 }
             });
         }
+
+        function submitAttendanceNo(gang) {
+            var formData = gatherFormData();
+            var gang = formData.gang; // Extract gang data from formData
+
+            $.ajax({
+                url: linkDepan + "DailyAttendListNo?Gang=" + gang,
+
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(formData), // Serialize the form data to JSON
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (response) {
+                    var data;
+                    try {
+                        data = JSON.parse(response);
+                    } catch (error) {
+                        console.error("Error parsing JSON:", error);
+                        swarning();
+                        return;
+                    }
+                    if (data && data.status === "00") {
+                        swal.fire('Success!', 'User details have been updated.', 'success');
+                    } else {
+                        swarning();
+                    }
+                    if (localStorage.getItem("lvlI") === "2" || localStorage.getItem("lvlI") === "3" || localStorage.getItem("lvlI") === "6") {
+                        $("#content").hide();
+                        $("#contentOthers").show();
+                    } else {
+                        $("#content").show();
+                        $("#contentOthers").hide();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("AJAX request failed:", textStatus, errorThrown);
+                    swarning();
+                }
+            });
+        }
+
 
         function listReports(kmuj, section, gang) {
             if (typeof gang === "string") {
