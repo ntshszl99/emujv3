@@ -300,26 +300,24 @@
             $('#startTime, #endTime').on('change', function () {
                 validateTime();
             });
+
+            $("#kmuj, #section, #gang").on('change', function () {
+                kmj = $("#kmuj option:selected").text();
+                localStorage.setItem("selKmj", kmj);
+
+                scn = $("#section option:selected").text();
+                localStorage.setItem("selScn", scn);
+
+                var gng = $("#gang option:selected").text();
+                localStorage.setItem("selGng", gng);
+
+                listGangPax(kmj, scn, gng);
+                listReports(kmj, scn, gng);
+
+            });
          
         });
-
-        //show table and gang pax value according to gang kmuj and section
-        checkStore();
-        $("#gang, #kmuj, #section").on('change', function () {
-            kmj = $("#kmuj option:selected").text();
-            localStorage.setItem("selKmj", kmj, this.value);
-
-            scn = $("#section option:selected").text();
-            localStorage.setItem("selScn", scn, this.value);
-
-            gng = $("#gang option:selected").text();
-            localStorage.setItem("selGng", gng, this.value);
-
-            listReports(localStorage.getItem("selKmj", this.value), localStorage.getItem("selScn", this.value), localStorage.getItem("selGng", this.value));
-            listGangPax(localStorage.getItem("selKmj", this.value), localStorage.getItem("selScn", this.value), localStorage.getItem("selGng", this.value));
-        });
-
-
+ 
         function validateKM() {
             var startKM = parseFloat($('#startKM').val());
             var endKM = parseFloat($('#endKM').val());
@@ -424,7 +422,6 @@
 
             return formData;
         }
-
 
         function submitForm() {
             var formData = gatherFormData();

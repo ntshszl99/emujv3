@@ -125,7 +125,7 @@
                             <h4 class=" mt-5">Report ID: </h4>
                             <input readonly id="rptcode" type="text" class="text-success form-control text-center bg-transparent border-0">
                             <div class="modal-body">
-                                <div class="row">
+                                <div class="row col-12">
                                     <div class="col-3">
                                         <label class="mt-5 form-label"><strong>Region</strong></label>
                                         <input readonly id="region" type="text" class="form-control text-center bg-transparent border-0">
@@ -146,6 +146,16 @@
                                     <div class="col-3">
                                         <label class="mt-5 form-label"><strong>No. of Staff (Valid)</strong></label>
                                         <input readonly id="pax" type="text" class="form-control text-center bg-transparent border-0">
+                                    </div>
+                                    <div></div>
+                                    <div class="col-lg-12">
+                                        <div class="table-responsive table-lg">
+                                            <table id="tableRep2" class="table table-striped table-bordered text-nowrap">
+                                                <thead>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                     <div></div>
                                     <div class="col-3">
@@ -242,148 +252,6 @@
                     </div>
                 </div>
             </div>
-
-            <!--Modal Update Data-->
-            <div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-                <div class="modal-dialog modal-xl">
-                    <div class="modal-content">                       
-                        <div class="modal-body text-center p-4">
-                            <h4 class="mt-5 text-danger">Report Number: </h4>
-                            <input type="text" id="rptcode2" class="form-control text-center bg-transparent border-0">
-                            <div class="row">
-                                <div class="col-3">
-                                    <label class="mt-5 form-label"><strong>Region</strong></label>
-                                    <input readonly id="region" type="text" class="form-control text-center bg-transparent border-0">
-                                </div>
-                                <div class="col-3">
-                                    <label class="mt-5 form-label"><strong>KMUJ</strong></label>
-                                    <input readonly id="kmuj" type="text" class="form-control text-center bg-transparent border-0">
-                                </div>
-                                <div class="col-3">
-                                    <label class="mt-5 form-label"><strong>Section</strong></label>
-                                    <input readonly id="section" type="text" class="form-control text-center bg-transparent border-0">
-                                </div>
-                                <div></div>
-                                <div class="col-3">
-                                    <label class="mt-5 form-label"><strong>Gang</strong></label>
-                                    <select id="gangEdit" type="text" class="form-control form-select select2" required="required" multiple>
-                                        <option value="-0">Select Gang</option>
-                                    </select>
-                                </div>
-                                <div class="mb-5 col-3">
-                                    <label class="mt-5 form-label"><strong>No. of Staff (Valid)</strong></label>
-                                    <input readonly id="gangno" type="text" class="form-control">
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="table-responsive table-lg">
-                                        <table id="tableRep2" class="table table-striped table-bordered text-nowrap">
-                                            <thead>
-                                            </thead>
-                                            <tbody></tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div></div>
-                                <div class="col-3">
-                                    <label class="mt-5 form-label"><strong>Work Date</strong></label>
-                                    <input type="text" id="dateEdit" class="form-control" required="required">
-                                </div>
-                                <div class="col-3">
-                                    <label class="mt-5 form-label"><strong>Line</strong></label>
-                                    <select id="linecondEdit" class="form-control form-select select2" required="required">
-                                        <option value="-0">.: Select Condition :.</option>
-                                    </select>
-                                </div>
-                                <div class="col-3">
-                                    <label class="mt-5 form-label"><strong>Category</strong></label>
-                                    <select id="catEdit" class="form-control form-select select2" required="required">
-                                        <option value="-0">.: Select Category :.</option>
-                                    </select>
-                                </div>
-                                <div id="catEmer" class="col-3" style='display:none;'>
-                                    <label class="mt-5 form-label">Category</label>
-                                    <select id="catDetEdit" class="form-control form-select select2">
-                                        <option value="-">.: Select Emergency :.</option>
-                                    </select>
-                                </div>
-                                <div></div>
-                                <div class="col-3">
-                                    <label class="mt-5 form-label"><strong>Work Type</strong></label>
-                                    <select id="workEdit" class="form-control form-select select2" required="required">
-                                        <option value="-0">.: Select Work Type :.</option>
-                                    </select>
-                                </div>
-                                <div class="col-3">
-                                    <label class="mt-5 form-label"><strong>Total</strong></label>
-                                    <input id="totalWork2" type="text" class="form-control" required="required">
-                                </div>
-                                <div class="col-3">
-                                    <label class="mt-5 form-label"><strong>Unit</strong></label>
-                                    <input id="unit2" class="form-control" placeholder="Unit" readonly>
-                                </div>
-                                <div></div>
-                                <div class="col-3">
-                                    <label class="mt-5 form-label"><strong>Effected KM (Start)</strong></label>
-                                    <input type="number" id="KMfrom2" class="form-control" required="required">
-                                </div>
-                                <div class="col-3">
-                                    <label class="mt-5 form-label"><strong>Effected KM (End)</strong></label>
-                                    <input type="number" id="KMto2" class="form-control" required="required">
-                                </div>
-                                <div class="col-3">
-                                    <label class="mt-5 form-label"><strong>Effected KM (meter)</strong></label>
-                                    <input type="text" id="totalKM2" class="form-control" readonly>
-                                </div>
-                                <div></div>
-                                <div class="col-3">
-                                    <label class="mt-5 form-label"><strong>Time Start</strong></label>
-                                    <input type="time" id="timeStart2" class="form-control" required="required">
-                                </div>
-                                <div class="col-3">
-                                    <label class="mt-5 form-label"><strong>Time End</strong></label>
-                                    <input type="time" id="timeEnd2" class="form-control" required="required">
-                                </div>
-                                <div class="col-3">
-                                    <label class="mt-5 form-label"><strong>Time Taken KM</strong></label>
-                                    <input type="text" id="totalTime2" class="form-control" readonly>
-                                </div>
-                                <div></div>
-                                <div class="col-3">
-                                    <div class="mb-3 mt-5">
-                                        <div class="form-label"><strong>Work at Station?</strong></div>
-                                        <div class="custom-controls-stacked">
-                                            <label class="custom-control custom-radio">
-                                                <input type="radio" class="custom-control-input" name="station_option" id="id_radio1" value="Yes">
-                                                <span class="custom-control-label">Yes</span>
-                                            </label>
-                                            <label class="custom-control custom-radio">
-                                                <input type="radio" class="custom-control-input" name="station_option" id="id_radio2" value="No">
-                                                <span class="custom-control-label">No</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="station" class="col-3" style="display:none;">
-                                    <label class="mt-5 form-label">Station</label>
-                                    <select id="stationn2" class="form-control form-select select2">
-                                        <option value="">.: Select Station :.</option>
-                                    </select>
-                                </div>
-                                <div id="point" class="col-3" style="display:none;">
-                                    <label class="mt-5 form-label">Point No.</label>
-                                    <input type="text" id="stPoint2" class="form-control" placeholder="Station's Point">
-                                </div>
-                                <div class="col-xl-12">
-                                    <label class="mt-5 form-label"><strong>Additional Information</strong></label>
-                                    <textarea class="mb-5 form-control" id="notes2" placeholder="Textarea" rows="3"></textarea>
-                                </div>
-                            </div>
-                            <button aria-label="Update" class="btn btn-success mb-5" type="button">Update</button>
-                            <button class="btn btn-light mb-5" data-bs-dismiss="modal" ria-label="Close" type="button">Cancel</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -411,8 +279,6 @@
             listRegion();
             listKMUJ();
             listSection();
-
-
 
             //CHECK USER LEVEL
             //user level == 1 & 5
@@ -507,6 +373,7 @@
                     listReportsNormal(localStorage.getItem("selScn", this.value), sdate, edate);
 
                 });
+
             }
 
             //not authorized user
@@ -515,7 +382,6 @@
                 $("#contentNormal").hide();
             }
 
-
             $("#datepicker, #dateEdit").datepicker({
                 singleDatePicker: true,
                 showDropdowns: true,
@@ -523,7 +389,7 @@
                 locale: {
                     format: 'DD/MM/YYYY'
                 }
-            });
+            });        
 
             $("#workEdit").on('change', function () {
                 wrk = $("#workEdit option:selected").text();
@@ -541,115 +407,94 @@
                 }
             });
 
-            //show gang pax based on gang type
-            function listGangPax(kmuj, section, gang) {
-                if (typeof gang === "string") {
-                    gang = gang.split(/(?<=\d)(?=Gang)/);
-                }
-
-                if (Array.isArray(gang)) {
-                    var gangString = gang.join(",");
-
-                    $.ajax({
-                        url: linkDepan + "GetGangPax",
-                        data: {
-                            Kmuj: kmuj,
-                            Section: section,
-                            Gang: gangString
-                        },
-                        dataType: "json",
-                        beforeSend: function (request) {
-                            request.setRequestHeader("Token", localStorage.getItem('main'));
-                        },
-                        success: function (data) {
-                            if (data && data.length > 0) {
-                                $('#gangno').val(data[0].count);
-                            } else {
-                                $('#gangno').val('0 pax');
-                            }
-                        },
-                        error: function (error) {
-                            $('#gangno').val("");
-                        }
-                    });
-                } else {
-                    return;
-                }
-            }
-
-
+            //auto calc total KM
             $('#startKM, #endKM').on('change', function () {
                 validateKM();
             });
 
+            //auto calc total time
             $('#startTime, #endTime').on('change', function () {
                 validateTime();
             });
 
-        });
+            $('#modalDetails, #modalDelete').on('show.bs.modal', function (e) {
+                console.log(e.relatedTarget); // Log the element that triggered the modal
 
-       
+                var ids = $(e.relatedTarget).data('id');
+                console.log('read ' + ids);
+                rptDetails(ids);
+            });
 
+            //modal delete report
+            $('#submitDelete').click(function () {
+                var ids = $('#modalDelete').data('id');
+                console.log('read ' + ids);
+                rptDelete(ids);
+            });
 
-        $('#modalDetails, #modalUpdate, #modalDelete').on('show.bs.modal', function (e) {
-            var ids = $(e.relatedTarget).data('id');
-            $(this).data('id', ids);
-            console.log('read ' + ids);
-
-
-            kmj = $("#kmuj option:selected").text();
-            localStorage.setItem("selKmj", kmj, this.value);
-
-            scn = $("#section option:selected").text();
-            localStorage.setItem("selScn", scn, this.value);
-
-            gng = $("#gang option:selected").text();
-            localStorage.setItem("selGng", gng, this.value);
-
-            listReports2(localStorage.getItem("selKmj", this.value), localStorage.getItem("selScn", this.value), localStorage.getItem("selGng", this.value));
-            rptDetails(ids);
-            listGangPax(localStorage.getItem("selKmj", this.value), localStorage.getItem("selScn", this.value), localStorage.getItem("selGng", this.value));
-        });
-
-        //button submit update report
-        $("#submitUpdate").click(function () {
-            var ids = $('#modalUpdate').data('id');
-            console.log('read ' + ids);
-            rptUpdate(ids);
-        });
-
-        //modal delete report
-        $('#submitDelete').click(function () {
-            var ids = $('#modalDelete').data('id');
-            console.log('read ' + ids);
-            rptDelete(ids);
-        });
-
-        //delete modal
-        $('#modalDelete').on('show.bs.modal', function (e) {
-            var ids = $(e.relatedTarget).data('id');
-            var code = $(".code" + ids).html();
-            $.ajax({
-                url: linkDepan + "GetReportDetails?RptCode=" + ids,
-                type: 'GET',
-                dataType: 'json',
-                data: {},
-                beforeSend: function (request) {
-                    request.setRequestHeader("Token", localStorage.getItem('main'));
-                },
-                success: function (data) {
-                    $('#reportno').val(data[0].rpt_code);
-                },
-                error: function (xhr) {
-                    swarning();
-                },
-                complete: function () {
-                }
+            //delete modal
+            $('#modalDelete').on('show.bs.modal', function (e) {
+                var ids = $(e.relatedTarget).data('id');
+                var code = $(".code" + ids).html();
+                $.ajax({
+                    url: linkDepan + "GetReportDetails?RptCode=" + ids,
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {},
+                    beforeSend: function (request) {
+                        request.setRequestHeader("Token", localStorage.getItem('main'));
+                    },
+                    success: function (data) {
+                        $('#reportno').val(data[0].rpt_code);
+                    },
+                    error: function (xhr) {
+                        swarning();
+                    },
+                    complete: function () {
+                    }
+                });
             });
         });
 
-       
 
+        //show gang pax based on gang type
+        function listGangPax(kmuj, section, gang) {
+            if (typeof gang === "string") {
+                gang = gang.split(/(?<=\d)(?=Gang)/);
+            }
+
+            if (Array.isArray(gang)) {
+                var gangString = gang.join(",");
+
+                $.ajax({
+                    url: linkDepan + "GetGangPax",
+                    data: {
+                        Kmuj: kmuj,
+                        Section: section,
+                        Gang: gangString
+                    },
+                    dataType: "json",
+                    beforeSend: function (request) {
+                        request.setRequestHeader("Token", localStorage.getItem('main'));
+                    },
+                    success: function (data) {
+                        if (data && data.length > 0) {
+                            $('#gangno').val(data[0].count);
+                        } else {
+                            $('#gangno').val('0 pax');
+                        }
+                    },
+                    error: function (error) {
+                        $('#gangno').val("");
+                    }
+                });
+            } else {
+                return;
+            }
+        }
+
+
+        //show report details bila dah tekan modalDetails
         function rptDetails(ids) {
             var reportno = $(".reportno" + ids).html();
             $.ajax({
@@ -665,35 +510,36 @@
                     $('#region, #region2').val(data[0].region_name);
                     $('#kmuj, #kmuj2').val(data[0].kmuj_name);
                     $('#section, #section2').val(data[0].section_name);
-                    $('#gang, #gang2').val(data[0].Gang);
-                    $('#pax, #pax2').val(data[0].daily_workers);
+                    $('#gang').val(data[0].Gang);
+                    $('#pax').val(data[0].daily_workers);
                     $('#workdate, #datepicker').val(data[0].daily_date);
-                    $('#linecond, #linecond2').val(data[0].cond_name);
-                    $('#category, #category2').val(data[0].category_name);
-                    $('#categorydets, #categorydets2').val(data[0].category_details);
-                    $('#worktype, #worktype2').val(data[0].work_name);
-                    $('#totalWork, #totalWork2').val(data[0].daily_total);
-                    $('#unit, #unit2').val(data[0].daily_unit);
-                    $('#KMfrom, #KMfrom2').val(data[0].effect_kmfrom);
-                    $('#KMto, #KMto2').val(data[0].effect_kmto);
-                    $('#totalKM, #totalKM2').val(data[0].effect_kmtotal);
-                    $('#timeStart, #timeStart2').val(data[0].daily_timestart);
-                    $('#timeEnd, #timeEnd2').val(data[0].daily_timelast);
-                    $('#totalTime, #totalTime2').val(data[0].daily_timetaken);
-                    $('#notes, #notes2').val(data[0].daily_additional);
-                    $('#workStation, #workStation2').val(data[0].station);
-                    $('#stPoint, #stPoint2').val(data[0].station_point);
+                    $('#linecond').val(data[0].cond_name);
+                    $('#category').val(data[0].category_name);
+                    $('#categorydets').val(data[0].category_details);
+                    $('#worktype').val(data[0].work_name);
+                    $('#totalWork').val(data[0].daily_total);
+                    $('#unit').val(data[0].daily_unit);
+                    $('#KMfrom').val(data[0].effect_kmfrom);
+                    $('#KMto').val(data[0].effect_kmto);
+                    $('#totalKM').val(data[0].effect_kmtotal);
+                    $('#timeStart').val(data[0].daily_timestart);
+                    $('#timeEnd').val(data[0].daily_timelast);
+                    $('#totalTime').val(data[0].daily_timetaken);
+                    $('#notes').val(data[0].daily_additional);
+                    $('#workStation').val(data[0].station);
+                    $('#stPoint').val(data[0].station_point);
 
-                    var kmuj2 = $('#kmuj').val();
-                    var section2 = $('#section').val();
-                    var gang2 = $('#gang2').val();
+                    console.log('gang:', gang);
+                    console.log('kmuj:', kmuj);  // Should now have correct value
+                    console.log('section:', section);  // Should now have correct value
 
-                    console.log('gang2:', gang2);
-                    console.log('kmuj2:', kmuj2);
-                    console.log('section2:', section2);
+                    var kmuj = data[0].kmuj_name;
+                    var section = data[0].section_name;
+                    var gang = data[0].Gang;
+
 
                     // Call listReports2 with the fetched values
-                    listReports2(kmuj2, section2, gang2);
+                    listReports2(kmuj, section, gang);
                 },
                 error: function (xhr) {
                     swarning();
@@ -739,6 +585,7 @@
             }
         }
 
+        //delete function
         function rptDelete(ids) {
             console.log("Deleting report with ID:", ids);
             var data = {
@@ -816,7 +663,6 @@
                 }
             });
         }
-
 
         function listSection() {
             $.ajax({
@@ -1078,7 +924,7 @@
 
 
 
-
+        //view modal --  show list staff yang kerja
         function listReports2(kmuj, section, gang) {
             if (typeof gang === "string") {
                 gang = gang.split(/(?<=\d)(?=Gang)/);

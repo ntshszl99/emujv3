@@ -236,6 +236,8 @@
                 localStorage.setItem("selGng", gng); 
 
                 listGangPax(kmj, scn, gng);
+                listReports(kmj, scn, gng);
+
             });
 
             //automatic show workunit when select worktype
@@ -346,6 +348,7 @@
 
         }
 
+        //make sure semua field not null
         function validateForm() {
             let isValid = true;
             let requiredFields = [
@@ -370,9 +373,7 @@
             return isValid;
         }
 
-
-
-        //show gang pax based on gang type -- tak keluar lagi
+        //show gang pax based on gang type 
         function listGangPax(kmuj, section, gang) {
             if (typeof gang === "string") {
                 gang = gang.split(/(?<=\d)(?=Gang)/);
@@ -684,7 +685,248 @@
             return formData;
         }
 
+        function listReports(kmuj, section, gang) {
+            if (typeof gang === "string") {
+                gang = gang.split(/(?<=\d)(?=Gang)/);
+            }
+            if (Array.isArray(gang) && gang.length > 0) {
+                var gangString = gang.join(",");
+                $.ajax({
+                    url: linkDepan + "GetGListNormal?Kmuj=" + kmuj + "&Section=" + section + "&Gang=" + gangString,
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {},
+                    beforeSend: function (request) {
+                        request.setRequestHeader("Token", localStorage.getItem('main'));
+                    },
+                    success: function (response) {
+                        try {
+                            // Log the response to inspect it
+                            console.log("Server Response:", response);
 
+                            // Initialize DataTable with the correct column definitions
+                            var counter = 1;
+                            $.fn.dataTable.ext.errMode = 'throw';
+                            if ($.fn.dataTable.isDataTable('#tableRep')) {
+                                $('#tableRep').DataTable().destroy();
+                                $('#tableRep').empty(); // Clear the table contents
+                            }
+                            $('#tableRep').DataTable({
+                                responsive: true,
+                                data: response,
+                                columns: [
+                                    { data: "Emplid" },
+                                    { data: "Emplid" },
+                                    { data: "Nama" },
+                                    { data: "JobGrade" },
+                                    { data: "JobDesc" },
+                                    { data: "Gang" },
+                                    { data: "cuti_name" },
+                                ],
+                                columnDefs: [
+                                    {
+                                        targets: -1,
+                                        title: "Status",
+                                        render: function (data, type, full, meta) {
+                                            var status = '';
+                                            if (data == 'VALID') {
+                                                status = '<a class="text-success">' + data + ' <i class="ion-checkmark-circled"></i></a></p>';
+                                            } else {
+                                                status = '<a class="text-danger">' + data + ' <i class="ion-close-circled"></i></a></p>';
+                                            }
+                                            return status;
+                                        },
+                                    },
+                                    {
+                                        targets: -2,
+                                        title: "Gang",
+                                        render: function (data, type, full, meta) {
+                                            return data;
+                                        },
+                                    },
+                                    {
+                                        targets: -3,
+                                        title: "Position",
+                                        render: function (data, type, full, meta) {
+                                            return data;
+                                        },
+                                    },
+                                    {
+                                        targets: -4,
+                                        title: "Grade",
+                                        render: function (data, type, full, meta) {
+                                            return data;
+                                        },
+                                    },
+                                    {
+                                        targets: -5,
+                                        title: "Name",
+                                        render: function (data, type, full, meta) {
+                                            return data;
+                                        },
+                                    },
+                                    {
+                                        targets: -6,
+                                        title: "Staff ID",
+                                        render: function (data, type, full, meta) {
+                                            return data;
+                                        },
+                                    },
+                                    {
+                                        targets: -7,
+                                        title: "No",
+                                        render: function (data, type, full, meta) {
+                                            return counter++;
+                                        }
+                                    }
+                                ],
+                                createdRow: function (row, data, dataIndex) {
+                                    $('td', row).addClass('text-nowrap align-middle');
+                                }
+                            });
+                        } catch (error) {
+                            console.error("Error parsing JSON:", error);
+                            if ($.fn.dataTable.isDataTable('#tableRep')) {
+                                $('#tableRep').DataTable().destroy();
+                                $('#tableRep').empty(); // Clear the table contents
+                            }
+
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error("AJAX request failed:", textStatus, errorThrown);
+                        if ($.fn.dataTable.isDataTable('#tableRep')) {
+                            $('#tableRep').DataTable().destroy();
+                            $('#tableRep').empty(); // Clear the table contents
+                        }
+
+                    }
+                });
+            }
+        }
+
+        function submitForm() {
+            var formData = gatherFormData();
+            $.ajax({
+                url: linkDepan + "NewForm",
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(formData), // Serialize the form data to JSON
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (response) {
+                    var data;
+                    try {
+                        data = JSON.parse(response);
+                    } catch (error) {
+                        console.error("Error parsing JSON:", error);
+                        swarning();
+                        return;
+                    }
+                    if (data && data.status === "00") {
+                        swal.fire('Success!', 'User details have been updated.', 'success');
+                    } else {
+                        swarning();
+                    }
+                    if (localStorage.getItem("lvlI") === "2" || localStorage.getItem("lvlI") === "3" || localStorage.getItem("lvlI") === "6") {
+                        $("#content").hide();
+                        $("#contentOthers").show();
+                    } else {
+                        $("#content").show();
+                        $("#contentOthers").hide();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("AJAX request failed:", textStatus, errorThrown);
+                    swarning();
+                }
+            });
+        }
+
+        function submitAttendance(gang) {
+            var formData = gatherFormData();
+            var gang = formData.gang; // Extract gang data from formData
+
+            $.ajax({
+                url: linkDepan + "DailyAttendList?Gang=" + gang + "&DailyAttendListNo=" + gang,
+
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(formData), // Serialize the form data to JSON
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (response) {
+                    var data;
+                    try {
+                        data = JSON.parse(response);
+                    } catch (error) {
+                        console.error("Error parsing JSON:", error);
+                        swarning();
+                        return;
+                    }
+                    if (data && data.status === "00") {
+                        swal.fire('Success!', 'User details have been updated.', 'success');
+                    } else {
+                        swarning();
+                    }
+                    if (localStorage.getItem("lvlI") === "2" || localStorage.getItem("lvlI") === "3" || localStorage.getItem("lvlI") === "6") {
+                        $("#content").hide();
+                        $("#contentOthers").show();
+                    } else {
+                        $("#content").show();
+                        $("#contentOthers").hide();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("AJAX request failed:", textStatus, errorThrown);
+                    swarning();
+                }
+            });
+        }
+
+        function submitAttendanceNo(gang) {
+            var formData = gatherFormData();
+            var gang = formData.gang; // Extract gang data from formData
+
+            $.ajax({
+                url: linkDepan + "DailyAttendListNo?Gang=" + gang,
+
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(formData), // Serialize the form data to JSON
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (response) {
+                    var data;
+                    try {
+                        data = JSON.parse(response);
+                    } catch (error) {
+                        console.error("Error parsing JSON:", error);
+                        swarning();
+                        return;
+                    }
+                    if (data && data.status === "00") {
+                        swal.fire('Success!', 'User details have been updated.', 'success');
+                    } else {
+                        swarning();
+                    }
+                    if (localStorage.getItem("lvlI") === "2" || localStorage.getItem("lvlI") === "3" || localStorage.getItem("lvlI") === "6") {
+                        $("#content").hide();
+                        $("#contentOthers").show();
+                    } else {
+                        $("#content").show();
+                        $("#contentOthers").hide();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("AJAX request failed:", textStatus, errorThrown);
+                    swarning();
+                }
+            });
+        }
     </script>
 }
 

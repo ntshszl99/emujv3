@@ -695,7 +695,7 @@ namespace emujv2Api.Controller
 
 
         [HttpGet]
-        public string GetGListNormal(string Section, string Gang)
+        public string GetGListNormal(string Kmuj, string Section, string Gang)
         {
             TokenFunc Token = new TokenFunc();
             PublicCons RetDat = new PublicCons();
@@ -713,7 +713,7 @@ namespace emujv2Api.Controller
 
             if (!string.IsNullOrEmpty(User.Userid))
             {
-                return ret.GetGListNormal(Section, Gang);
+                return ret.GetGListNormal(Kmuj, Section, Gang);
             }
             else
             {

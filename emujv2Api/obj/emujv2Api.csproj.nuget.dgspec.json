@@ -1,28 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\natashas\\Documents\\emuj\\emujv2Api\\emujv2Api.csproj": {}
+    "C:\\Users\\KTMB\\source\\repos\\e-muj\\emujv2Api\\emujv2Api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\natashas\\Documents\\emuj\\emujv2Api\\emujv2Api.csproj": {
+    "C:\\Users\\KTMB\\source\\repos\\e-muj\\emujv2Api\\emujv2Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\natashas\\Documents\\emuj\\emujv2Api\\emujv2Api.csproj",
+        "projectUniqueName": "C:\\Users\\KTMB\\source\\repos\\e-muj\\emujv2Api\\emujv2Api.csproj",
         "projectName": "emujv2Api",
-        "projectPath": "C:\\Users\\natashas\\Documents\\emuj\\emujv2Api\\emujv2Api.csproj",
-        "packagesPath": "C:\\Users\\natashas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\natashas\\Documents\\emuj\\emujv2Api\\obj\\",
+        "projectPath": "C:\\Users\\KTMB\\source\\repos\\e-muj\\emujv2Api\\emujv2Api.csproj",
+        "packagesPath": "C:\\Users\\KTMB\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\KTMB\\source\\repos\\e-muj\\emujv2Api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\natashas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\KTMB\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net7.0"
+          "net6.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
@@ -30,8 +30,8 @@
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net7.0": {
-            "targetAlias": "net7.0",
+          "net6.0": {
+            "targetAlias": "net6.0",
             "projectReferences": {}
           }
         },
@@ -47,8 +47,8 @@
         }
       },
       "frameworks": {
-        "net7.0": {
-          "targetAlias": "net7.0",
+        "net6.0": {
+          "targetAlias": "net6.0",
           "dependencies": {
             "JWT": {
               "target": "Package",
@@ -110,7 +110,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     }

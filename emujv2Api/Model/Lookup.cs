@@ -675,7 +675,7 @@ namespace emujv2Api.Model
         }
 
         //view ganglist normal
-        public string GetGListNormal(string Section, string Gang)
+        public string GetGListNormal(string Kmuj, string Section, string Gang)
         {
 
             StringBuilder SqlStr = new StringBuilder();
@@ -685,38 +685,43 @@ namespace emujv2Api.Model
             string Salah = "";
             CommonFunc Conn = new CommonFunc();
 
-            // Split the Gang parameter into an array
-            var gangArray = Gang.Split(',');
 
-            SqlStr.Append(" select b.Emplid, e.kmuj_name, d.section_name, b.Nama, b.JobGrade, UPPER(b.JobDesc) as JobDesc, (select concat('Gang ', a.gang_id)) as Gang, UPPER(f.cuti_name) as cuti_name ");
-            SqlStr.Append(" from gang_details as a, [HR_MAIN].[dbo].[HR_MAIN] as b, STAFFSECTION as c, section as d, kmuj as e, Ref_Cuti as f, Gang as g ");
-            SqlStr.Append(" where b.Emplid = ");
-            SqlStr.Append(" (select distinct(c.no_perkh) ");
-            SqlStr.Append(" where d.section_name = @Section ");
-            SqlStr.Append(" and c.no_muj = e.kmuj_value ");
-            SqlStr.Append(" and c.no_section = d.section_val ");
-            SqlStr.Append(" and d.section_kmuj = e.kmuj_value ) ");
-            SqlStr.Append(" and g.gang IN ("); // Use IN clause for multiple gangs
-            for (int i = 0; i < gangArray.Length; i++)
+            if(Gang != null)
             {
-                SqlStr.Append("@Gang" + i);
-                if (i < gangArray.Length - 1)
+                var gangArray = Gang.Split(',');
+
+                SqlStr.Append(" select b.Emplid, e.kmuj_name, d.section_name, b.Nama, b.JobGrade, UPPER(b.JobDesc) as JobDesc, (select concat('Gang ', a.gang_id)) as Gang, UPPER(f.cuti_name) as cuti_name ");
+                SqlStr.Append(" from gang_details as a, [HR_MAIN].[dbo].[HR_MAIN] as b, STAFFSECTION as c, section as d, kmuj as e, Ref_Cuti as f, Gang as g ");
+                SqlStr.Append(" where b.Emplid = ");
+                SqlStr.Append(" (select distinct(c.no_perkh) ");
+                SqlStr.Append(" where d.section_name = @Section ");
+                SqlStr.Append(" and c.no_muj = e.kmuj_value ");
+                SqlStr.Append(" and c.no_section = d.section_val ");
+                SqlStr.Append(" and d.section_kmuj = e.kmuj_value ) ");
+                SqlStr.Append(" and g.gang IN ("); // Use IN clause for multiple gangs
+                for (int i = 0; i < gangArray.Length; i++)
                 {
-                    SqlStr.Append(",");
+                    SqlStr.Append("@Gang" + i);
+                    if (i < gangArray.Length - 1)
+                    {
+                        SqlStr.Append(",");
+                    }
+                }
+                SqlStr.Append(") ");
+                SqlStr.Append(" and a.gang_id = g.id ");
+                SqlStr.Append(" and a.staff_no = b.Emplid ");
+                SqlStr.Append(" and b.Status = 'A' ");
+                SqlStr.Append(" and a.staff_status = f.cuti_code ");
+                SqlStr.Append(" order by b.Nama asc ");
+
+                ParamTmp.Add("@Section", Section);
+                for (int i = 0; i < gangArray.Length; i++)
+                {
+                    ParamTmp.Add("@Gang" + i, gangArray[i]);
                 }
             }
-            SqlStr.Append(") ");
-            SqlStr.Append(" and a.gang_id = g.id ");
-            SqlStr.Append(" and a.staff_no = b.Emplid ");
-            SqlStr.Append(" and b.Status = 'A' ");
-            SqlStr.Append(" and a.staff_status = f.cuti_code ");
-            SqlStr.Append(" order by b.Nama asc ");
-
-            ParamTmp.Add("@Section", Section);
-            for (int i = 0; i < gangArray.Length; i++)
-            {
-                ParamTmp.Add("@Gang" + i, gangArray[i]);
-            }
+            // Split the Gang parameter into an array
+            
 
             Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
             return JsonConvert.SerializeObject(Recc, Formatting.Indented);
@@ -726,12 +731,6 @@ namespace emujv2Api.Model
 
         public string GetGangPax(string Kmuj, string Section, string Gang)
         {
-            // Check if any of the parameters are null or empty
-            if (string.IsNullOrEmpty(Kmuj) || string.IsNullOrEmpty(Section) || string.IsNullOrEmpty(Gang))
-            {
-                Console.WriteLine("One or more parameters are null or empty.");
-            }
-
             StringBuilder SqlStr = new StringBuilder();
             Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
             DataTable Recc = new DataTable();
@@ -739,7 +738,9 @@ namespace emujv2Api.Model
             string Salah = "";
             CommonFunc Conn = new CommonFunc();
 
-            var gangArray = Gang.Split(',');
+            // Ensure Gang is not null or empty before proceeding
+            var gangArray = (string.IsNullOrEmpty(Gang)) ? new string[] { } : Gang.Split(',');
+
             SqlStr.Append(" select concat(count(*), ' pax') as count ");
             SqlStr.Append(" from (select b.Emplid, e.kmuj_name, d.section_name, b.Nama, b.JobGrade, UPPER(b.JobDesc) as JobDesc, UPPER(f.cuti_name) as cuti_name ");
             SqlStr.Append(" from gang_details as a, [HR_MAIN].[dbo].[HR_MAIN] as b, STAFFSECTION as c, section as d, kmuj as e, Ref_Cuti as f, Gang as g ");
@@ -769,16 +770,6 @@ namespace emujv2Api.Model
             for (int i = 0; i < gangArray.Length; i++)
             {
                 ParamTmp.Add("@Gang" + i, gangArray[i]);
-            }
-
-            // Check if DbCon and Conn are properly instantiated
-            if (DbCon == null)
-            {
-                throw new InvalidOperationException("DbCon is not instantiated.");
-            }
-            if (Conn == null)
-            {
-                throw new InvalidOperationException("Conn is not instantiated.");
             }
 
             Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
