@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
+using static System.Collections.Specialized.BitVector32;
 
 namespace emujv2Api.Model
 {
@@ -100,8 +102,143 @@ namespace emujv2Api.Model
             Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
             if (Salah != "") { return Salah; }
             else { return "0"; }
+        }
+
+        //public string UpdateForm(List<string> Gang, string Date, string WorkType, string Total, string TotalUnit,
+        //    string TimeStart, string TimeLast, string Condition, string Category, string Adds, string TimeTaken,
+        //    string KMFrom, string KMTo, string KMTotal, string Station, string SPoint, string CatDetails, string Temp,
+        //    string Workers, string UpdBy, string RptCode)
+        //{
+        //    StringBuilder SqlStr = new StringBuilder();
+        //    DataTable Recc = new DataTable();
+        //    MsSql DbCon = new MsSql();
+        //    string Salah = "";
+        //    CommonFunc Conn = new CommonFunc();
+        //    Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
+
+        //    string gangString = Gang != null ? string.Join(",", Gang) : string.Empty;
+
+        //    SqlStr.Append(" UPDATE daily ");
+        //    SqlStr.Append(" SET daily_gang = @Gang, ");
+        //    SqlStr.Append(" daily_date = @Date, ");
+        //    SqlStr.Append(" daily_worktype = @WorkType, ");
+        //    SqlStr.Append(" daily_total = @Total, ");
+        //    SqlStr.Append(" daily_unit = @TotalUnit, ");
+        //    SqlStr.Append(" daily_timestart = @TimeStart, ");
+        //    SqlStr.Append(" daily_timelast = @TimeLast, ");
+        //    SqlStr.Append(" daily_category = @Category, ");
+        //    SqlStr.Append(" daily_condition = @Condition, ");
+        //    SqlStr.Append(" daily_additional = @Adds, ");
+        //    SqlStr.Append(" daily_timetaken = @TimeTaken, ");
+        //    SqlStr.Append(" effect_kmfrom = @KMFrom, ");
+        //    SqlStr.Append(" effect_kmto = @KMTo, ");
+        //    SqlStr.Append(" effect_kmtotal = @KMTotal, ");
+        //    SqlStr.Append(" station = @Station, ");
+        //    SqlStr.Append(" station_point = @SPoint, ");
+        //    SqlStr.Append(" category_details = @CatDetails, ");
+        //    SqlStr.Append(" temperature = @Temp, ");
+        //    SqlStr.Append(" daily_workers = @Workers + ' pax', ");
+        //    SqlStr.Append(" upd_user = @UpdBy, ");
+        //    SqlStr.Append(" upd_date = CONVERT(VARCHAR(10), GETDATE(), 103) + ' ' + CONVERT(VARCHAR(8), GETDATE(), 108) ");
+        //    SqlStr.Append(" WHERE rpt_code = @RptCode ");
+
+        //    ParamTmp.Add("@Gang", string.IsNullOrEmpty(gangString) ? (object)DBNull.Value : gangString);
+        //    ParamTmp.Add("@Date", Date ?? (object)DBNull.Value);
+        //    ParamTmp.Add("@WorkType", WorkType ?? (object)DBNull.Value);
+        //    ParamTmp.Add("@Total", Total ?? (object)DBNull.Value);
+        //    ParamTmp.Add("@TotalUnit", TotalUnit ?? (object)DBNull.Value);
+        //    ParamTmp.Add("@TimeStart", TimeStart ?? (object)DBNull.Value);
+        //    ParamTmp.Add("@TimeLast", TimeLast ?? (object)DBNull.Value);
+        //    ParamTmp.Add("@Category", Category ?? (object)DBNull.Value);
+        //    ParamTmp.Add("@Condition", Condition ?? (object)DBNull.Value);
+        //    ParamTmp.Add("@Adds", Adds ?? (object)DBNull.Value);
+        //    ParamTmp.Add("@TimeTaken", TimeTaken ?? (object)DBNull.Value); 
+        //    ParamTmp.Add("@KMFrom", KMFrom ?? (object)DBNull.Value);
+        //    ParamTmp.Add("@KMTo", KMTo ?? (object)DBNull.Value);
+        //    ParamTmp.Add("@KMTotal", KMTotal ?? (object)DBNull.Value); 
+        //    ParamTmp.Add("@Station", Station ?? (object)DBNull.Value);
+        //    ParamTmp.Add("@SPoint", SPoint ?? (object)DBNull.Value);
+        //    ParamTmp.Add("@CatDetails", CatDetails ?? (object)DBNull.Value);
+        //    ParamTmp.Add("@Temp", Temp ?? (object)DBNull.Value);
+        //    ParamTmp.Add("@Workers", Workers ?? (object)DBNull.Value);
+        //    ParamTmp.Add("@UpdBy", UpdBy);
+        //    ParamTmp.Add("@RptCode", RptCode);
+
+        //    Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+        //    if (Salah != "") { return Salah; }
+        //    else { return "0"; }
+
+        //}
+
+
+
+        public string UpdateForm(R1FormCons formCons, string RptCode)
+        {
+            StringBuilder SqlStr = new StringBuilder();
+            DataTable Recc = new DataTable();
+            MsSql DbCon = new MsSql();
+            string Salah = "";
+            CommonFunc Conn = new CommonFunc();
+            Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
+
+            string gangString = formCons.Gang != null ? string.Join(",", formCons.Gang) : string.Empty;
+
+            SqlStr.Append(" UPDATE daily ");
+            SqlStr.Append(" SET daily_gang = @Gang, ");
+            SqlStr.Append(" daily_date = @Date, ");
+            SqlStr.Append(" daily_worktype = @WorkType, ");
+            SqlStr.Append(" daily_total = @Total, ");
+            SqlStr.Append(" daily_unit = @TotalUnit, ");
+            SqlStr.Append(" daily_timestart = @TimeStart, ");
+            SqlStr.Append(" daily_timelast = @TimeLast, ");
+            SqlStr.Append(" daily_category = @Category, ");
+            SqlStr.Append(" daily_condition = @Condition, ");
+            SqlStr.Append(" daily_additional = @Adds, ");
+            SqlStr.Append(" daily_timetaken = @TimeTaken, ");
+            SqlStr.Append(" effect_kmfrom = @KMFrom, ");
+            SqlStr.Append(" effect_kmto = @KMTo, ");
+            SqlStr.Append(" effect_kmtotal = @KMTotal, ");
+            SqlStr.Append(" station = @Station, ");
+            SqlStr.Append(" station_point = @SPoint, ");
+            SqlStr.Append(" category_details = @CatDetails, ");
+            SqlStr.Append(" temperature = @Temp, ");
+            SqlStr.Append(" daily_workers = @Workers + ' pax', ");
+            SqlStr.Append(" upd_user = @UpdBy, ");
+            SqlStr.Append(" upd_date = CONVERT(VARCHAR(10), GETDATE(), 103) + ' ' + CONVERT(VARCHAR(8), GETDATE(), 108) ");
+            SqlStr.Append(" WHERE rpt_code = @RptCode ");
+
+            ParamTmp.Add("@Gang", string.IsNullOrEmpty(gangString) ? (object)DBNull.Value : gangString);
+            ParamTmp.Add("@Date", formCons.Date ?? (object)DBNull.Value);
+            ParamTmp.Add("@WorkType", formCons.WorkType ?? (object)DBNull.Value);
+            ParamTmp.Add("@Total", formCons.Total ?? (object)DBNull.Value);
+            ParamTmp.Add("@TotalUnit", formCons.TotalUnit ?? (object)DBNull.Value);
+            ParamTmp.Add("@TimeStart", formCons.TimeStart ?? (object)DBNull.Value);
+            ParamTmp.Add("@TimeLast", formCons.TimeLast ?? (object)DBNull.Value);
+            ParamTmp.Add("@Category", formCons.Category ?? (object)DBNull.Value);
+            ParamTmp.Add("@Condition", formCons.Condition ?? (object)DBNull.Value);
+            ParamTmp.Add("@Adds", formCons.Adds ?? (object)DBNull.Value);
+            ParamTmp.Add("@TimeTaken", formCons.TimeTaken ?? (object)DBNull.Value);
+            ParamTmp.Add("@KMFrom", formCons.KMFrom ?? (object)DBNull.Value);
+            ParamTmp.Add("@KMTo", formCons.KMTo ?? (object)DBNull.Value);
+            ParamTmp.Add("@KMTotal", formCons.KMTotal ?? (object)DBNull.Value);
+            ParamTmp.Add("@Station", formCons.Station ?? (object)DBNull.Value);
+            ParamTmp.Add("@SPoint", formCons.SPoint ?? (object)DBNull.Value);
+            ParamTmp.Add("@CatDetails", formCons.CatDetails ?? (object)DBNull.Value);
+            ParamTmp.Add("@Temp", formCons.Temp ?? (object)DBNull.Value);
+            ParamTmp.Add("@RptCode", formCons.RptCode);
+            ParamTmp.Add("@Workers", formCons.Workers ?? (object)DBNull.Value);
+            ParamTmp.Add("@UpdBy", formCons.UpdBy);
+            ParamTmp.Add("@UpdDate", formCons.UpdDate ?? (object)DBNull.Value);
+
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+            if (Salah != "") { return Salah; }
+            else { return "0"; }
 
         }
+
+
+
+        //INSERT 
 
         public string NewUser(UserCons userCons)
         {

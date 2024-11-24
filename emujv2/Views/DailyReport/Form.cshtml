@@ -287,15 +287,7 @@
                 }
             });
 
-            //button submit form
-            $('#submitNew').click(function () {
-                if (validateForm()) {
-                    submitForm();
-                    submitAttendance();
-                    submitAttendanceNo();
-                }
-            });
-
+          
             function getQueryParameter(name) {
                 const urlParams = new URLSearchParams(window.location.search);
                 return urlParams.get(name);
@@ -307,6 +299,15 @@
             const gangno = getQueryParameter('gangno');
             console.log('ID from URL:', id);
 
+
+            //button submit form
+            $('#submitNew').click(function () {
+                if (validateForm()) {
+                    submitForm(id);
+                    //submitAttendance();
+                    //submitAttendanceNo();
+                }
+            });
             // If an ID is found, call the function to fetch details
             if (id) {
                 rptDetails(id); // Call the rptDetails function to fetch data
@@ -637,54 +638,6 @@
             });
         }
 
-        function gatherFormData() {
-            var UpdBy = localStorage.getItem('usrI');
-            var Region = localStorage.getItem('regID');
-            var Kmuj = localStorage.getItem('kmujVal');
-            var Section = localStorage.getItem('scnVal');
-            var formattedDate = moment($('#datepicker').val(), 'MM/DD/YYYY').format('DD/MM/YYYY');
-
-            var gangValues = $("#gang").val();
-            var gangArray = gangValues;
-
-            var attValues = $("#tableRep").DataTable().rows().data().toArray();
-            var AttId = attValues.map(function (item) {
-                return item.Emplid;
-            });
-            var workers = $('#gangno').val().replace(/\D/g, '');
-
-            var formData = {
-                UpdBy: UpdBy,
-                Region: Region,
-                Kmuj: Kmuj,
-                Section: Section,
-                Gang: gangArray,
-                Date: formattedDate,
-                AttId: AttId, // Ensure this is an array
-                WorkType: $('#worktype').val(),
-                Total: $('#total').val(),
-                TotalUnit: $('#unit').val(),
-                TimeStart: $('#startTime').val(),
-                TimeLast: $('#endTime').val(),
-                Category: $('#category').val(),
-                Condition: $('#linecond').val(),
-                Adds: $('#addnotes').val(),
-                TimeTaken: $('#totalTime').val(),
-                KMFrom: $('#startKM').val(),
-                KMTo: $('#endKM').val(),
-                KMTotal: $('#totalKM').val(),
-                Station: $('#stationn').val(),
-                SPoint: $('#stPoint').val(),
-                CatDetails: $('#catdet').val(),
-                Temp: $('#temp').val(),
-                Workers: workers,
-            };
-
-            console.log("FormData:", formData);
-
-            return formData;
-        }
-
         function listReports(kmuj, section, gang) {
             if (typeof gang === "string") {
                 gang = gang.split(/(?<=\d)(?=Gang)/);
@@ -805,10 +758,58 @@
             }
         }
 
-        function submitForm() {
+        function gatherFormData() {
+            var UpdBy = localStorage.getItem('usrI');
+            var Region = localStorage.getItem('regID');
+            var Kmuj = localStorage.getItem('kmujVal');
+            var Section = localStorage.getItem('scnVal');
+            var formattedDate = moment($('#datepicker').val(), 'MM/DD/YYYY').format('DD/MM/YYYY');
+
+            var gangValues = $("#gang").val();
+            var gangArray = gangValues;
+
+            var attValues = $("#tableRep").DataTable().rows().data().toArray();
+            var AttId = attValues.map(function (item) {
+                return item.Emplid;
+            });
+            var workers = $('#gangno').val().replace(/\D/g, '');
+
+            var formData = {
+                RptCode: $('#rptcode').val(),
+                UpdBy: UpdBy,
+                Region: Region,
+                Kmuj: Kmuj,
+                Section: Section,
+                Gang: gangArray,
+                Date: formattedDate,
+                AttId: AttId, // Ensure this is an array
+                WorkType: $('#worktype').val(),
+                Total: $('#total').val(),
+                TotalUnit: $('#unit').val(),
+                TimeStart: $('#startTime').val(),
+                TimeLast: $('#endTime').val(),
+                Category: $('#category').val(),
+                Condition: $('#linecond').val(),
+                Adds: $('#addnotes').val(),
+                TimeTaken: $('#totalTime').val(),
+                KMFrom: $('#startKM').val(),
+                KMTo: $('#endKM').val(),
+                KMTotal: $('#totalKM').val(),
+                Station: $('#stationn').val(),
+                SPoint: $('#stPoint').val(),
+                CatDetails: $('#catdet').val(),
+                Temp: $('#temp').val(),
+                Workers: workers,
+            };
+
+            console.log("FormData:", formData);
+            return formData;
+        }
+
+        function submitForm(id) {
             var formData = gatherFormData();
             $.ajax({
-                url: linkDepan + "NewForm",
+                url: linkDepan + "UpdateForm",
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify(formData), // Serialize the form data to JSON
@@ -844,89 +845,89 @@
             });
         }
 
-        function submitAttendance(gang) {
-            var formData = gatherFormData();
-            var gang = formData.gang; // Extract gang data from formData
+        //function submitAttendance(gang) {
+        //    var formData = gatherFormData();
+        //    var gang = formData.gang; // Extract gang data from formData
 
-            $.ajax({
-                url: linkDepan + "DailyAttendList?Gang=" + gang + "&DailyAttendListNo=" + gang,
+        //    $.ajax({
+        //        url: linkDepan + "DailyAttendList?Gang=" + gang + "&DailyAttendListNo=" + gang,
 
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify(formData), // Serialize the form data to JSON
-                beforeSend: function (request) {
-                    request.setRequestHeader("Token", localStorage.getItem('main'));
-                },
-                success: function (response) {
-                    var data;
-                    try {
-                        data = JSON.parse(response);
-                    } catch (error) {
-                        console.error("Error parsing JSON:", error);
-                        swarning();
-                        return;
-                    }
-                    if (data && data.status === "00") {
-                        swal.fire('Success!', 'User details have been updated.', 'success');
-                    } else {
-                        swarning();
-                    }
-                    if (localStorage.getItem("lvlI") === "2" || localStorage.getItem("lvlI") === "3" || localStorage.getItem("lvlI") === "6") {
-                        $("#content").hide();
-                        $("#contentOthers").show();
-                    } else {
-                        $("#content").show();
-                        $("#contentOthers").hide();
-                    }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.error("AJAX request failed:", textStatus, errorThrown);
-                    swarning();
-                }
-            });
-        }
+        //        type: 'POST',
+        //        contentType: 'application/json',
+        //        data: JSON.stringify(formData), // Serialize the form data to JSON
+        //        beforeSend: function (request) {
+        //            request.setRequestHeader("Token", localStorage.getItem('main'));
+        //        },
+        //        success: function (response) {
+        //            var data;
+        //            try {
+        //                data = JSON.parse(response);
+        //            } catch (error) {
+        //                console.error("Error parsing JSON:", error);
+        //                swarning();
+        //                return;
+        //            }
+        //            if (data && data.status === "00") {
+        //                swal.fire('Success!', 'User details have been updated.', 'success');
+        //            } else {
+        //                swarning();
+        //            }
+        //            if (localStorage.getItem("lvlI") === "2" || localStorage.getItem("lvlI") === "3" || localStorage.getItem("lvlI") === "6") {
+        //                $("#content").hide();
+        //                $("#contentOthers").show();
+        //            } else {
+        //                $("#content").show();
+        //                $("#contentOthers").hide();
+        //            }
+        //        },
+        //        error: function (jqXHR, textStatus, errorThrown) {
+        //            console.error("AJAX request failed:", textStatus, errorThrown);
+        //            swarning();
+        //        }
+        //    });
+        //}
 
-        function submitAttendanceNo(gang) {
-            var formData = gatherFormData();
-            var gang = formData.gang; // Extract gang data from formData
+        //function submitAttendanceNo(gang) {
+        //    var formData = gatherFormData();
+        //    var gang = formData.gang; // Extract gang data from formData
 
-            $.ajax({
-                url: linkDepan + "DailyAttendListNo?Gang=" + gang,
+        //    $.ajax({
+        //        url: linkDepan + "DailyAttendListNo?Gang=" + gang,
 
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify(formData), // Serialize the form data to JSON
-                beforeSend: function (request) {
-                    request.setRequestHeader("Token", localStorage.getItem('main'));
-                },
-                success: function (response) {
-                    var data;
-                    try {
-                        data = JSON.parse(response);
-                    } catch (error) {
-                        console.error("Error parsing JSON:", error);
-                        swarning();
-                        return;
-                    }
-                    if (data && data.status === "00") {
-                        swal.fire('Success!', 'User details have been updated.', 'success');
-                    } else {
-                        swarning();
-                    }
-                    if (localStorage.getItem("lvlI") === "2" || localStorage.getItem("lvlI") === "3" || localStorage.getItem("lvlI") === "6") {
-                        $("#content").hide();
-                        $("#contentOthers").show();
-                    } else {
-                        $("#content").show();
-                        $("#contentOthers").hide();
-                    }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.error("AJAX request failed:", textStatus, errorThrown);
-                    swarning();
-                }
-            });
-        }
+        //        type: 'POST',
+        //        contentType: 'application/json',
+        //        data: JSON.stringify(formData), // Serialize the form data to JSON
+        //        beforeSend: function (request) {
+        //            request.setRequestHeader("Token", localStorage.getItem('main'));
+        //        },
+        //        success: function (response) {
+        //            var data;
+        //            try {
+        //                data = JSON.parse(response);
+        //            } catch (error) {
+        //                console.error("Error parsing JSON:", error);
+        //                swarning();
+        //                return;
+        //            }
+        //            if (data && data.status === "00") {
+        //                swal.fire('Success!', 'User details have been updated.', 'success');
+        //            } else {
+        //                swarning();
+        //            }
+        //            if (localStorage.getItem("lvlI") === "2" || localStorage.getItem("lvlI") === "3" || localStorage.getItem("lvlI") === "6") {
+        //                $("#content").hide();
+        //                $("#contentOthers").show();
+        //            } else {
+        //                $("#content").show();
+        //                $("#contentOthers").hide();
+        //            }
+        //        },
+        //        error: function (jqXHR, textStatus, errorThrown) {
+        //            console.error("AJAX request failed:", textStatus, errorThrown);
+        //            swarning();
+        //        }
+        //    });
+        //}
     </script>
 }
 

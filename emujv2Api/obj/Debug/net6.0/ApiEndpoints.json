@@ -1173,6 +1173,37 @@
   },
   {
     "ContainingType": "emujv2Api.Controller.WebApiController",
+    "Method": "UpdateForm",
+    "RelativePath": "api/WebApi/UpdateForm",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "formCons",
+        "Type": "emujv2Api.Constructor.R1FormCons",
+        "IsRequired": true
+      },
+      {
+        "Name": "RptCode",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "emujv2Api.Controller.WebApiController",
     "Method": "UpdateGangDetails",
     "RelativePath": "api/WebApi/UpdateGangDetails",
     "HttpMethod": "POST",

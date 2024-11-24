@@ -30,6 +30,7 @@ namespace emujv2Api.Controller
             httpContextAccessor = _httpContextAccessor;
         }
 
+        //----------------------------DELETE------------------------------------//
 
         [HttpDelete]
         public string DeleteGangDetails(string StaffId)
@@ -113,7 +114,7 @@ namespace emujv2Api.Controller
 
 
 
-
+        //------------------------------------------UPDATE---------------------------------------//
 
         [HttpPost]
         public string UpdateUser(UserCons data)
@@ -154,6 +155,88 @@ namespace emujv2Api.Controller
                 return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
             }
         }
+
+        [HttpPost]
+        public string UpdateForm(R1FormCons formCons, string RptCode)
+        {
+            TokenFunc Token = new TokenFunc();
+            PublicCons RetDat = new PublicCons();
+            string conn = _config.GetValue<string>("KTMBParam:DbConnection");
+            string Salah = "";
+            String Data = Token.ValidateToken(httpContextAccessor.HttpContext.Request.Headers["Token"], ref Salah);
+            InsertUpdate ret = new InsertUpdate();
+            if (string.IsNullOrEmpty(Data))
+            {
+                HttpContext.Response.StatusCode = 401;
+                return null;
+            }
+            UserCons User = JsonConvert.DeserializeObject<UserCons>(Data);
+
+            if (!string.IsNullOrEmpty(User.Userid))
+            {
+                Salah = ret.UpdateForm(formCons, RptCode);
+                if (Salah != "0")
+                {
+                    RetDat.status = "99";
+                    RetDat.StatusDetail = Salah;
+                    return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+                }
+
+                RetDat.status = "00";
+                RetDat.StatusDetail = "Update Save.";
+                return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+            }
+            else
+            {
+                RetDat.status = "99";
+                RetDat.StatusDetail = "Error : Not Authorize User.";
+                return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+            }
+        }
+
+        //[HttpPost]
+        //public string UpdateForm(List<string> Gang, string Date, string WorkType, string Total, string TotalUnit,
+        //    string TimeStart, string TimeLast, string Condition, string Category, string Adds, string TimeTaken,
+        //    string KMFrom, string KMTo, string KMTotal, string Station, string SPoint, string CatDetails, string Temp,
+        //    string Workers, string UpdBy, string RptCode)
+        //{
+        //    TokenFunc Token = new TokenFunc();
+        //    PublicCons RetDat = new PublicCons();
+        //    string conn = _config.GetValue<string>("KTMBParam:DbConnection");
+        //    string Salah = "";
+        //    String Data = Token.ValidateToken(httpContextAccessor.HttpContext.Request.Headers["Token"], ref Salah);
+        //    InsertUpdate ret = new InsertUpdate();
+        //    if (string.IsNullOrEmpty(Data))
+        //    {
+        //        HttpContext.Response.StatusCode = 401;
+        //        return null;
+        //    }
+        //    UserCons User = JsonConvert.DeserializeObject<UserCons>(Data);
+
+        //    if (!string.IsNullOrEmpty(User.Userid))
+        //    {
+        //        Salah = ret.UpdateForm(Gang, Date, WorkType, Total, TotalUnit, TimeStart, TimeLast, Condition, Category,
+        //            Adds, TimeTaken, KMFrom, KMTo, KMTotal, Station, SPoint, CatDetails, Temp, Workers, UpdBy, RptCode);
+        //        if (Salah == "0")
+        //        {
+        //            RetDat.status = "00";
+        //            RetDat.StatusDetail = "Update Save.";
+        //            return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+        //        }
+        //        else
+        //        {
+        //            RetDat.status = "99";
+        //            RetDat.StatusDetail = Salah;
+        //            return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        RetDat.status = "99";
+        //        RetDat.StatusDetail = "Error : Not Authorize User.";
+        //        return JsonConvert.SerializeObject(RetDat, Formatting.Indented);
+        //    }
+        //}
 
         [HttpPost]
         public string NewUser(UserCons userCons)
@@ -412,7 +495,7 @@ namespace emujv2Api.Controller
 
 
 
-
+        //---------------------------------------------GET-------------------------------------------//
 
         [HttpGet]
         public string ValidateUser(string userid, string password)
