@@ -1173,6 +1173,68 @@
   },
   {
     "ContainingType": "emujv2Api.Controller.WebApiController",
+    "Method": "updateDailyAttendList",
+    "RelativePath": "api/WebApi/updateDailyAttendList",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "formCons",
+        "Type": "emujv2Api.Constructor.MasukCons",
+        "IsRequired": true
+      },
+      {
+        "Name": "Gang",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "emujv2Api.Controller.WebApiController",
+    "Method": "updateDailyAttendListNo",
+    "RelativePath": "api/WebApi/updateDailyAttendListNo",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "formCons",
+        "Type": "emujv2Api.Constructor.MasukCons",
+        "IsRequired": true
+      },
+      {
+        "Name": "Gang",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "emujv2Api.Controller.WebApiController",
     "Method": "UpdateForm",
     "RelativePath": "api/WebApi/UpdateForm",
     "HttpMethod": "POST",

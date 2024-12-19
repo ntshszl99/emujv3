@@ -44,7 +44,7 @@
                                 <div></div>
                                 <div class="col-6">
                                     <label class="mt-5 form-label">Gang</label>
-                                    <select id="gang" type="text" class="form-control form-select select2" required="required" multiple>
+                                    <select id="gang" type="text" class="form-control form-select select2" multiple required="required">
                                         <option value="-0">Select Gang</option>
                                     </select>
                                 </div>
@@ -303,11 +303,12 @@
             //button submit form
             $('#submitNew').click(function () {
                 if (validateForm()) {
-                    submitForm(id);
-                    //submitAttendance();
-                    //submitAttendanceNo();
+                    submitForm();
+                    submitAttendance();
+                    submitAttendanceNo();
                 }
             });
+
             // If an ID is found, call the function to fetch details
             if (id) {
                 rptDetails(id); // Call the rptDetails function to fetch data
@@ -349,15 +350,15 @@
 
         }
 
-        //make sure semua field not null
         function validateForm() {
             let isValid = true;
             let requiredFields = [
-                '#region', '#kmuj', '#section', '#gang', '#datepicker',
+                '#region', '#kmuj', '#section', '#datepicker',
                 '#linecond', '#category', '#worktype', '#total',
                 '#startKM', '#endKM', '#startTime', '#endTime'
             ];
 
+            // Validate common fields
             requiredFields.forEach(function (field) {
                 if ($(field).val() === '' || $(field).val() === '-0') {
                     isValid = false;
@@ -367,6 +368,16 @@
                 }
             });
 
+            // Special validation for #gang (multiple select field)
+            let gangValue = $('#gang').val(); // This will return an array
+            if (!gangValue || gangValue.length === 0 || gangValue.includes('-0')) {
+                isValid = false;
+                $('#gang').addClass('is-invalid');
+            } else {
+                $('#gang').removeClass('is-invalid');
+            }
+
+            // Alert if invalid fields exist
             if (!isValid) {
                 alert('Please fill all required fields.');
             }
@@ -764,7 +775,6 @@
             var Kmuj = localStorage.getItem('kmujVal');
             var Section = localStorage.getItem('scnVal');
             var formattedDate = moment($('#datepicker').val(), 'MM/DD/YYYY').format('DD/MM/YYYY');
-
             var gangValues = $("#gang").val();
             var gangArray = gangValues;
 
@@ -782,7 +792,7 @@
                 Section: Section,
                 Gang: gangArray,
                 Date: formattedDate,
-                AttId: AttId, // Ensure this is an array
+                AttId: AttId, 
                 WorkType: $('#worktype').val(),
                 Total: $('#total').val(),
                 TotalUnit: $('#unit').val(),
@@ -826,7 +836,16 @@
                         return;
                     }
                     if (data && data.status === "00") {
-                        swal.fire('Success!', 'User details have been updated.', 'success');
+                        swal.fire({
+                            title: 'Success!',
+                            text: 'User details have been updated.',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            // Redirect to the previous page
+                            window.history.back();
+                            window.location.reload();
+                        });
                     } else {
                         swarning();
                     }
@@ -845,89 +864,86 @@
             });
         }
 
-        //function submitAttendance(gang) {
-        //    var formData = gatherFormData();
-        //    var gang = formData.gang; // Extract gang data from formData
+        function submitAttendance(gang, id) {
+            var formData = gatherFormData();
+            var gang = formData.gang; // Extract gang data from formData
+            console.log("FormData untuk submitAttendance:", formData);
+            $.ajax({
+                url: linkDepan + "updateDailyAttendList?Gang=" + gang + "&RptCode?=" + id,
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(formData), // Serialize the form data to JSON
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (response) {
+                    var data;
+                    try {
+                        data = JSON.parse(response);
+                    } catch (error) {
+                        console.error("Error parsing JSON:", error);
+                        swarning();
+                        return;
+                    }
+                    if (data && data.status === "00") {
+                      
+                    } else {
+                        swarning();
+                    }
+                    if (localStorage.getItem("lvlI") === "2" || localStorage.getItem("lvlI") === "3" || localStorage.getItem("lvlI") === "6") {
+                        $("#content").hide();
+                        $("#contentOthers").show();
+                    } else {
+                        $("#content").show();
+                        $("#contentOthers").hide();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("AJAX request failed:", textStatus, errorThrown);
+                    swarning();
+                }
+            });
+        }
 
-        //    $.ajax({
-        //        url: linkDepan + "DailyAttendList?Gang=" + gang + "&DailyAttendListNo=" + gang,
-
-        //        type: 'POST',
-        //        contentType: 'application/json',
-        //        data: JSON.stringify(formData), // Serialize the form data to JSON
-        //        beforeSend: function (request) {
-        //            request.setRequestHeader("Token", localStorage.getItem('main'));
-        //        },
-        //        success: function (response) {
-        //            var data;
-        //            try {
-        //                data = JSON.parse(response);
-        //            } catch (error) {
-        //                console.error("Error parsing JSON:", error);
-        //                swarning();
-        //                return;
-        //            }
-        //            if (data && data.status === "00") {
-        //                swal.fire('Success!', 'User details have been updated.', 'success');
-        //            } else {
-        //                swarning();
-        //            }
-        //            if (localStorage.getItem("lvlI") === "2" || localStorage.getItem("lvlI") === "3" || localStorage.getItem("lvlI") === "6") {
-        //                $("#content").hide();
-        //                $("#contentOthers").show();
-        //            } else {
-        //                $("#content").show();
-        //                $("#contentOthers").hide();
-        //            }
-        //        },
-        //        error: function (jqXHR, textStatus, errorThrown) {
-        //            console.error("AJAX request failed:", textStatus, errorThrown);
-        //            swarning();
-        //        }
-        //    });
-        //}
-
-        //function submitAttendanceNo(gang) {
-        //    var formData = gatherFormData();
-        //    var gang = formData.gang; // Extract gang data from formData
-
-        //    $.ajax({
-        //        url: linkDepan + "DailyAttendListNo?Gang=" + gang,
-
-        //        type: 'POST',
-        //        contentType: 'application/json',
-        //        data: JSON.stringify(formData), // Serialize the form data to JSON
-        //        beforeSend: function (request) {
-        //            request.setRequestHeader("Token", localStorage.getItem('main'));
-        //        },
-        //        success: function (response) {
-        //            var data;
-        //            try {
-        //                data = JSON.parse(response);
-        //            } catch (error) {
-        //                console.error("Error parsing JSON:", error);
-        //                swarning();
-        //                return;
-        //            }
-        //            if (data && data.status === "00") {
-        //                swal.fire('Success!', 'User details have been updated.', 'success');
-        //            } else {
-        //                swarning();
-        //            }
-        //            if (localStorage.getItem("lvlI") === "2" || localStorage.getItem("lvlI") === "3" || localStorage.getItem("lvlI") === "6") {
-        //                $("#content").hide();
-        //                $("#contentOthers").show();
-        //            } else {
-        //                $("#content").show();
-        //                $("#contentOthers").hide();
-        //            }
-        //        },
-        //        error: function (jqXHR, textStatus, errorThrown) {
-        //            console.error("AJAX request failed:", textStatus, errorThrown);
-        //            swarning();
-        //        }
-        //    });
-        //}
+        function submitAttendanceNo(gang, id) {
+            var formData = gatherFormData();
+            var gang = formData.gang; // Extract gang data from formData
+            $.ajax({
+                url: linkDepan + "updateDailyAttendListNo?Gang=" + gang + "&RptCode?=" + id,
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(formData), // Serialize the form data to JSON
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (response) {
+                    var data;
+                    try {
+                        data = JSON.parse(response);
+                    } catch (error) {
+                        console.error("Error parsing JSON:", error);
+                        swarning();
+                        return;
+                    }
+                    if (data && data.status === "00") {
+                
+                    } else {
+                        swarning();
+                    }
+                    if (localStorage.getItem("lvlI") === "2" || localStorage.getItem("lvlI") === "3" || localStorage.getItem("lvlI") === "6") {
+                        $("#content").hide();
+                        $("#contentOthers").show();
+                    } else {
+                        $("#content").show();
+                        $("#contentOthers").hide();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("AJAX request failed:", textStatus, errorThrown);
+                    swarning();
+                }
+            });
+        }
     </script>
 }
 

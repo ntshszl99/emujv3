@@ -11,6 +11,7 @@ namespace emujv2Api.Constructor
         public string TotalPax { get; set; }
         public List<string> Gang { get; set; }
         public string Workers { get; set; }
+        public string RptCode { get; set; }
 
     }
 

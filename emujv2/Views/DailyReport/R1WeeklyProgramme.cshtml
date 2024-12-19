@@ -141,8 +141,6 @@
                 updateSelectedValues();
             });
 
-
-
             $('#tableRep').on('click', '.toggle-icon-work', function () {
                 var cell = $(this);
                 var currentText = cell.text().trim();
@@ -288,7 +286,7 @@
                     let startDate = moment(sdate, 'YYYY/MM/DD');
                     uniquework_name.forEach(() => {
                         for (let i = 0; i < 7; i++) {
-                            let headerDate = moment(startDate).add(i, 'days').format('D');
+                            let headerDate = moment(startDate).add(i, 'days').format('DD');
                             thead += `<th>${headerDate}</th>`;
                         }
                     });

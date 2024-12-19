@@ -354,11 +354,12 @@
         function validateForm() {
             let isValid = true;
             let requiredFields = [
-                '#region', '#kmuj', '#section', '#gang', '#datepicker',
+                '#region', '#kmuj', '#section', '#datepicker',
                 '#linecond', '#category', '#worktype', '#total',
                 '#startKM', '#endKM', '#startTime', '#endTime'
             ];
 
+            // Validate common fields
             requiredFields.forEach(function (field) {
                 if ($(field).val() === '' || $(field).val() === '-0') {
                     isValid = false;
@@ -368,13 +369,22 @@
                 }
             });
 
+            // Special validation for #gang (multiple select field)
+            let gangValue = $('#gang').val(); // This will return an array
+            if (!gangValue || gangValue.length === 0 || gangValue.includes('-0')) {
+                isValid = false;
+                $('#gang').addClass('is-invalid');
+            } else {
+                $('#gang').removeClass('is-invalid');
+            }
+
+            // Alert if invalid fields exist
             if (!isValid) {
                 alert('Please fill all required fields.');
             }
 
             return isValid;
         }
-
         function gatherFormData() {
             var UpdBy = localStorage.getItem('usrI');
             var Region = localStorage.getItem('regID');
@@ -443,7 +453,14 @@
                         return;
                     }
                     if (data && data.status === "00") {
-                        swal.fire('Success!', 'User details have been updated.', 'success');
+                        swal.fire({
+                            title: 'Success!',
+                            text: 'Form has been submitted.',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.reload();
+                        });
                     } else {
                         swarning();
                     }
@@ -462,12 +479,14 @@
             });
         }
 
+
+        //CHECK SMULA URL
         function submitAttendance(gang) {
             var formData = gatherFormData();
             var gang = formData.gang; // Extract gang data from formData
 
             $.ajax({
-                url: linkDepan + "DailyAttendList?Gang=" + gang + "&DailyAttendListNo=" + gang,
+                url: linkDepan + "DailyAttendList?Gang=" + gang,
 
                 type: 'POST',
                 contentType: 'application/json',
@@ -485,7 +504,7 @@
                         return;
                     }
                     if (data && data.status === "00") {
-                        swal.fire('Success!', 'User details have been updated.', 'success');
+                     
                     } else {
                         swarning();
                     }
@@ -527,7 +546,7 @@
                         return;
                     }
                     if (data && data.status === "00") {
-                        swal.fire('Success!', 'User details have been updated.', 'success');
+                        
                     } else {
                         swarning();
                     }
