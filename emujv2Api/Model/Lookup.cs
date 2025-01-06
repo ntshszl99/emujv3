@@ -244,7 +244,7 @@ namespace emujv2Api.Model
             string Salah = "";
             CommonFunc Conn = new CommonFunc();
 
-            SqlStr.Append(" select a.section_name, b.kmuj_name ");
+            SqlStr.Append(" select a.section_id, a.section_name, b.kmuj_name ");
             SqlStr.Append(" from section as a, kmuj as b ");
             SqlStr.Append(" where section_kmuj = b.kmuj_value ");
             SqlStr.Append(" and kmuj_name = @Kmuj ");
@@ -255,6 +255,66 @@ namespace emujv2Api.Model
             return JsonConvert.SerializeObject(Recc, Formatting.Indented);
 
         }
+
+        // R1 lama
+        //public string GetR1(string Kmuj, string Section, string SDate, string EDate)
+        //{
+        //    StringBuilder SqlStr = new StringBuilder();
+        //    DataTable Recc = new DataTable();
+        //    MsSql DbCon = new MsSql();
+        //    string Salah = "";
+        //    CommonFunc Conn = new CommonFunc();
+        //    string MulaTarikh = SDate;
+        //    string AkhirTarikh = EDate;
+        //    Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
+
+        //    SqlStr.Append(" WITH DailyAttendances AS ( ");
+        //    SqlStr.Append(" SELECT ");
+        //    SqlStr.Append("    LTRIM(RTRIM(m.n.value('.[1]', 'varchar(8000)'))) AS staff_attd_no, ");
+        //    SqlStr.Append("    s.staff_attd_updatedate, ");
+        //    SqlStr.Append("    s.staff_attd_rpt_id ");
+        //    SqlStr.Append(" FROM( ");
+        //    SqlStr.Append("     SELECT ");
+        //    SqlStr.Append("        staff_attd_no, ");
+        //    SqlStr.Append("        staff_attd_updatedate, ");
+        //    SqlStr.Append("        staff_attd_rpt_id, ");
+        //    SqlStr.Append("        CAST('<XMLRoot><RowData>' + REPLACE(staff_attd_no, ',', '</RowData><RowData>') + '</RowData></XMLRoot>' AS XML) AS x ");
+
+        //    SqlStr.Append("    FROM daily_attendencelist ");
+        //    SqlStr.Append(" ) AS s ");
+        //    SqlStr.Append(" CROSS APPLY s.x.nodes('/XMLRoot/RowData') AS m(n) ");
+        //    SqlStr.Append(" ) ");
+        //    SqlStr.Append(" SELECT ");
+        //    SqlStr.Append("    e.staff_attd_no,  ");
+        //    SqlStr.Append("    a.daily_date,  ");
+        //    SqlStr.Append("    ls.Nama,  ");
+        //    SqlStr.Append("    ls.JobDesc,  ");
+        //    SqlStr.Append("    b.work_name ");
+        //    SqlStr.Append(" FROM ");
+        //    SqlStr.Append("     daily a ");
+        //    SqlStr.Append(" JOIN work_type b ON a.daily_worktype = b.id ");
+        //    SqlStr.Append(" JOIN kmuj c ON a.daily_kmuj = c.kmuj_value ");
+        //    SqlStr.Append(" JOIN section d ON a.daily_sec = d.section_val ");
+        //    SqlStr.Append(" JOIN DailyAttendances e ON a.daily_id = e.staff_attd_rpt_id ");
+        //    SqlStr.Append(" LEFT JOIN [HR_MAIN].[dbo].[HR_MAIN] ls ON LTRIM(RTRIM(e.staff_attd_no)) = LTRIM(RTRIM(ls.Emplid)) ");
+        //    SqlStr.Append(" WHERE ");
+        //    SqlStr.Append("     CONVERT(datetime, a.daily_date, 103) >= @MulaTarikh ");
+        //    SqlStr.Append("     AND CONVERT(datetime, a.daily_date, 103) <= @AkhirTarikh ");
+        //    SqlStr.Append("     AND c.kmuj_name = @Kmuj ");
+        //    SqlStr.Append("     AND d.section_name = @Section ");
+        //    SqlStr.Append(" ORDER BY ");
+        //    SqlStr.Append("     e.staff_attd_no, a.daily_date, b.work_name; ");
+
+        //    ParamTmp.Add("@Kmuj", Kmuj);
+        //    ParamTmp.Add("@Section", Section);
+        //    ParamTmp.Add("@MulaTarikh", MulaTarikh);
+        //    ParamTmp.Add("@AkhirTarikh", AkhirTarikh);
+
+
+        //    Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
+        //    return JsonConvert.SerializeObject(Recc, Formatting.Indented);
+        //}
+
 
         public string GetR1(string Kmuj, string Section, string SDate, string EDate)
         {
@@ -267,53 +327,55 @@ namespace emujv2Api.Model
             string AkhirTarikh = EDate;
             Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
 
-            SqlStr.Append(" WITH DailyAttendances AS ( ");
-            SqlStr.Append(" SELECT ");
-            SqlStr.Append("    LTRIM(RTRIM(m.n.value('.[1]', 'varchar(8000)'))) AS staff_attd_no, ");
-            SqlStr.Append("    s.staff_attd_updatedate, ");
-            SqlStr.Append("    s.staff_attd_rpt_id ");
-            SqlStr.Append(" FROM( ");
-            SqlStr.Append("     SELECT ");
-            SqlStr.Append("        staff_attd_no, ");
-            SqlStr.Append("        staff_attd_updatedate, ");
-            SqlStr.Append("        staff_attd_rpt_id, ");
-            SqlStr.Append("        CAST('<XMLRoot><RowData>' + REPLACE(staff_attd_no, ',', '</RowData><RowData>') + '</RowData></XMLRoot>' AS XML) AS x ");
-
-            SqlStr.Append("    FROM daily_attendencelist ");
-            SqlStr.Append(" ) AS s ");
-            SqlStr.Append(" CROSS APPLY s.x.nodes('/XMLRoot/RowData') AS m(n) ");
-            SqlStr.Append(" ) ");
-            SqlStr.Append(" SELECT ");
-            SqlStr.Append("    e.staff_attd_no,  ");
-            SqlStr.Append("    a.daily_date,  ");
-            SqlStr.Append("    ls.Nama,  ");
-            SqlStr.Append("    ls.JobDesc,  ");
-            SqlStr.Append("    b.work_name ");
-            SqlStr.Append(" FROM ");
-            SqlStr.Append("     daily a ");
-            SqlStr.Append(" JOIN work_type b ON a.daily_worktype = b.id ");
-            SqlStr.Append(" JOIN kmuj c ON a.daily_kmuj = c.kmuj_value ");
-            SqlStr.Append(" JOIN section d ON a.daily_sec = d.section_val ");
-            SqlStr.Append(" JOIN DailyAttendances e ON a.daily_id = e.staff_attd_rpt_id ");
-            SqlStr.Append(" LEFT JOIN [HR_MAIN].[dbo].[HR_MAIN] ls ON LTRIM(RTRIM(e.staff_attd_no)) = LTRIM(RTRIM(ls.Emplid)) ");
-            SqlStr.Append(" WHERE ");
-            SqlStr.Append("     CONVERT(datetime, a.daily_date, 103) >= @MulaTarikh ");
-            SqlStr.Append("     AND CONVERT(datetime, a.daily_date, 103) <= @AkhirTarikh ");
-            SqlStr.Append("     AND c.kmuj_name = @Kmuj ");
-            SqlStr.Append("     AND d.section_name = @Section ");
-            SqlStr.Append(" ORDER BY ");
-            SqlStr.Append("     e.staff_attd_no, a.daily_date, b.work_name; ");
+            SqlStr.Append("WITH DailyAttendances AS ( ");
+            SqlStr.Append("    SELECT ");
+            SqlStr.Append("        LTRIM(RTRIM(m.n.value('.[1]', 'varchar(8000)'))) AS staff_attd_no, ");
+            SqlStr.Append("        s.staff_attd_updatedate, ");
+            SqlStr.Append("        s.rpt_code ");
+            SqlStr.Append("    FROM ( ");
+            SqlStr.Append("        SELECT ");
+            SqlStr.Append("            staff_attd_no, ");
+            SqlStr.Append("            staff_attd_updatedate, ");
+            SqlStr.Append("            rpt_code, ");
+            SqlStr.Append("            CAST('<XMLRoot><RowData>' + REPLACE(staff_attd_no, ',', '</RowData><RowData>') + '</RowData></XMLRoot>' AS XML) AS x ");
+            SqlStr.Append("        FROM daily_form_attendancelist ");
+            SqlStr.Append("    ) AS s ");
+            SqlStr.Append("    CROSS APPLY s.x.nodes('/XMLRoot/RowData') AS m(n) ");
+            SqlStr.Append(") ");
+            SqlStr.Append("SELECT ");
+            SqlStr.Append("    e.rpt_code, ");
+            SqlStr.Append("    a.daily_date, ");
+            SqlStr.Append("    ls.Nama, ");
+            SqlStr.Append("    ls.Emplid, ");
+            SqlStr.Append("    ls.JobDesc, ");
+            SqlStr.Append("    b.work_name, ");
+            SqlStr.Append("    gd.staff_status ");
+            SqlStr.Append("FROM ");
+            SqlStr.Append("    daily_form a ");
+            SqlStr.Append("JOIN kerja b ON a.daily_worktype = b.id ");
+            SqlStr.Append("JOIN kmuj c ON a.daily_kmuj = c.kmuj_value ");
+            SqlStr.Append("JOIN section d ON a.daily_sec = d.section_val ");
+            SqlStr.Append("JOIN DailyAttendances e ON a.rpt_code = e.rpt_code ");
+            SqlStr.Append("LEFT JOIN [HR_MAIN].[dbo].[HR_MAIN] ls ON LTRIM(RTRIM(e.staff_attd_no)) = LTRIM(RTRIM(ls.Emplid)) ");
+            SqlStr.Append("LEFT JOIN daily_form_attendancelistno f ON LTRIM(RTRIM(f.staff_attdno_no)) = LTRIM(RTRIM(ls.Emplid)) ");
+            SqlStr.Append("LEFT JOIN gang_details gd ON LTRIM(RTRIM(f.staff_attdno_no)) = LTRIM(RTRIM(gd.staff_no)) ");
+            SqlStr.Append("WHERE ");
+            SqlStr.Append("    CONVERT(datetime, a.daily_date, 103) >= @MulaTarikh ");
+            SqlStr.Append("    AND CONVERT(datetime, a.daily_date, 103) <= @AkhirTarikh ");
+            SqlStr.Append("    AND c.kmuj_name = @Kmuj ");
+            SqlStr.Append("    AND d.section_name = @Section ");
+            SqlStr.Append("    AND (gd.staff_status IS NULL OR gd.staff_status != 'valid') ");
+            SqlStr.Append("ORDER BY ");
+            SqlStr.Append("    e.staff_attd_no, a.daily_date, b.work_name; ");
 
             ParamTmp.Add("@Kmuj", Kmuj);
             ParamTmp.Add("@Section", Section);
             ParamTmp.Add("@MulaTarikh", MulaTarikh);
             ParamTmp.Add("@AkhirTarikh", AkhirTarikh);
 
-
             Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
             return JsonConvert.SerializeObject(Recc, Formatting.Indented);
         }
-
 
         public string GetTotalKM(string Kmuj, string Section, string SDate, string EDate)
         {
@@ -328,7 +390,7 @@ namespace emujv2Api.Model
 
             SqlStr.Append(" SELECT * , ");
             SqlStr.Append(" (SELECT distinct(concat('KM ', effect_kmfrom, ' - ', effect_kmto))) as TotalKM ");
-            SqlStr.Append(" FROM daily a ");
+            SqlStr.Append(" FROM daily_form a ");
             SqlStr.Append(" JOIN ");
             SqlStr.Append(" kmuj c ON a.daily_kmuj = c.kmuj_value ");
             SqlStr.Append(" JOIN ");
@@ -359,7 +421,7 @@ namespace emujv2Api.Model
 
             SqlStr.Append(" SELECT * , ");
             SqlStr.Append(" (SELECT distinct(concat('KM ', effect_kmfrom, ' - ', effect_kmto))) as TotalKM ");
-            SqlStr.Append(" FROM daily a ");
+            SqlStr.Append(" FROM daily_form a ");
             SqlStr.Append(" JOIN ");
             SqlStr.Append(" kmuj c ON a.daily_kmuj = c.kmuj_value ");
             SqlStr.Append(" JOIN ");
@@ -398,14 +460,14 @@ namespace emujv2Api.Model
             SqlStr.Append(" staff_attdno_rpt_id, ");
             SqlStr.Append(" CAST('<XMLRoot><RowData>' + REPLACE(staff_attdno_no, ',', '</RowData><RowData>') + '</RowData></XMLRoot>' AS XML) AS x ");
             SqlStr.Append(" FROM   ");
-            SqlStr.Append(" daily_attendencelistno ");
+            SqlStr.Append(" daily_form_attendancelistno ");
             SqlStr.Append(" ) AS s ");
             SqlStr.Append(" CROSS APPLY  ");
             SqlStr.Append(" s.x.nodes('/XMLRoot/RowData') AS m(n) ");
             SqlStr.Append(" ) ");
             SqlStr.Append(" SELECT * ");
             SqlStr.Append(" FROM  ");
-            SqlStr.Append(" daily a ");
+            SqlStr.Append(" daily_form a ");
             SqlStr.Append(" JOIN  ");
             SqlStr.Append(" work_type b ON a.daily_worktype = b.id ");
             SqlStr.Append(" JOIN  ");
@@ -871,11 +933,96 @@ namespace emujv2Api.Model
             string Salah = "";
             CommonFunc Conn = new CommonFunc();
 
-            SqlStr.Append("select * from kerja order by work_id asc");
+            // Declare date range variables (can be adjusted dynamically)
+            DateTime startDate = DateTime.Parse("2024-12-17");  // Example start date
+            DateTime endDate = DateTime.Parse("2024-12-20");    // Example end date
 
+            // Generate the dynamic date range part for the SQL query
+            List<string> dateColumns = new List<string>();
+            List<string> caseStatements = new List<string>();
+            List<DateTime> dateList = new List<DateTime>();
+
+            // Create dynamic SQL for each date
+            for (DateTime date = startDate; date <= endDate; date = date.AddDays(1))
+            {
+                dateList.Add(date);
+                string formattedDate = date.ToString("yyyy-MM-dd");
+                dateColumns.Add($"[{date.ToString("dd/MM/yyyy")}]");  // Add the formatted date as column name
+                caseStatements.Add($@"
+            MAX(CASE WHEN CONVERT(DATE, c.daily_date, 103) = '{formattedDate}' THEN 
+                CAST(DATEPART(HOUR, CAST(c.daily_timetaken AS DATETIME)) + 
+                DATEPART(MINUTE, CAST(c.daily_timetaken AS DATETIME)) / 60.0 AS DECIMAL(10,2)) 
+            ELSE 0 END) AS [{date.ToString("dd/MM/yyyy")}]
+        ");
+            }
+
+            // Add the additional sum column
+            string sumColumn = @"
+        SUM(CASE 
+            WHEN CONVERT(DATE, c.daily_date, 103) BETWEEN @StartDate AND @EndDate THEN 
+                CAST(DATEPART(HOUR, CAST(c.daily_timetaken AS DATETIME)) + 
+                     DATEPART(MINUTE, CAST(c.daily_timetaken AS DATETIME)) / 60.0 AS DECIMAL(10,2)) 
+            ELSE 0 
+        END) AS TotalTime
+    ";
+
+            // Construct SQL query
+            SqlStr.Append("DECLARE @StartDate DATE = '" + startDate.ToString("yyyy-MM-dd") + "';");
+            SqlStr.Append("DECLARE @EndDate DATE = '" + endDate.ToString("yyyy-MM-dd") + "';");
+
+            SqlStr.Append("WITH DateRange AS (");
+            SqlStr.Append("    SELECT @StartDate AS WorkDate");
+            SqlStr.Append("    UNION ALL");
+            SqlStr.Append("    SELECT DATEADD(DAY, 1, WorkDate)");
+            SqlStr.Append("    FROM DateRange");
+            SqlStr.Append("    WHERE WorkDate < @EndDate");
+            SqlStr.Append(") ");
+
+            SqlStr.Append("SELECT ");
+            SqlStr.Append("    a.work_cat_id, ");
+            SqlStr.Append("    a.work_cat_name, ");
+            SqlStr.Append("    b.work_name, ");
+
+            // Dynamically add case statements for each date
+            SqlStr.Append(string.Join(", ", caseStatements));
+
+            // Add the sum column
+            SqlStr.Append(", ");
+            SqlStr.Append(sumColumn);
+
+            SqlStr.Append("FROM ");
+            SqlStr.Append("    Ref_kerja AS a ");
+            SqlStr.Append("LEFT JOIN ");
+            SqlStr.Append("    kerja AS b ON a.work_cat_id = b.work_cat_id ");
+            SqlStr.Append("LEFT JOIN ");
+            SqlStr.Append("    daily_form AS c ON b.id = c.daily_worktype ");
+            SqlStr.Append("    AND CONVERT(DATE, c.daily_date, 103) BETWEEN @StartDate AND @EndDate ");
+
+            SqlStr.Append("GROUP BY ");
+            SqlStr.Append("    a.work_cat_id, ");
+            SqlStr.Append("    a.work_cat_name, ");
+            SqlStr.Append("    b.work_name ");
+
+            SqlStr.Append("ORDER BY ");
+            SqlStr.Append("    CAST(a.work_cat_id AS INT) ASC;");
+
+            // Log the full SQL query before execution
+            Console.WriteLine("Executing SQL Query: " + SqlStr.ToString());
+
+            // Execute the dynamic SQL query
             Recc = DbCon.ExecuteReader(SqlStr.ToString(), Conn.emujConn, ref Salah);
+
+            if (Recc.Rows.Count == 0)
+            {
+                Console.WriteLine("No data found.");
+                return JsonConvert.SerializeObject(new { message = "No data found" });
+            }
+
+            Console.WriteLine("Data received from server: " + JsonConvert.SerializeObject(Recc));
             return JsonConvert.SerializeObject(Recc, Formatting.Indented);
         }
+
+
 
         public string GetLineConditionList()
         {
@@ -927,7 +1074,7 @@ namespace emujv2Api.Model
             string Salah = "";
             CommonFunc Conn = new CommonFunc();
 
-            SqlStr.Append("select id, unit, work_name from work_type");
+            SqlStr.Append("select id, unit, work_cat_id, work_name from kerja");
 
             Recc = DbCon.ExecuteReader(SqlStr.ToString(), Conn.emujConn, ref Salah);
             return JsonConvert.SerializeObject(Recc, Formatting.Indented);
@@ -942,7 +1089,7 @@ namespace emujv2Api.Model
             string Salah = "";
             CommonFunc Conn = new CommonFunc();
 
-            SqlStr.Append(" select unit from work_type ");
+            SqlStr.Append(" select unit from kerja ");
             SqlStr.Append(" where work_name = @WorkUnit ");
 
             ParamTmp.Add("@WorkUnit", WorkUnit);
@@ -960,7 +1107,7 @@ namespace emujv2Api.Model
             string Salah = "";
             CommonFunc Conn = new CommonFunc();
 
-            SqlStr.Append(" select rpt_code from daily ");
+            SqlStr.Append(" select rpt_code from daily_form ");
             SqlStr.Append(" where rpt_code = @RptCode ");
 
             ParamTmp.Add("@RptCode", RptCode);
@@ -987,7 +1134,7 @@ namespace emujv2Api.Model
             SqlStr.Append(" (select concat(e.category_name, ' ( ', a.category_details, ' )')) as daily_category, ");
             SqlStr.Append(" (select concat(a.daily_timestart, ' - ', a.daily_timelast, ' ', '(', a.daily_timetaken, ')')) as Time, ");
             SqlStr.Append(" a.daily_additional, a.rpt_code, a.upd_user ");
-            SqlStr.Append(" from daily as a ");
+            SqlStr.Append(" from daily_form as a ");
             SqlStr.Append(" left join region as b on a.daily_section = b.region_id ");
             SqlStr.Append(" left join kmuj as c on a.daily_kmuj = c.kmuj_value ");
             SqlStr.Append(" left join section as d on a.daily_sec = d.section_val ");
@@ -1044,7 +1191,7 @@ namespace emujv2Api.Model
             SqlStr.Append(" (select concat(e.category_name, ' ( ', a.category_details, ' )')) as daily_category, ");
             SqlStr.Append(" (select concat(a.daily_timestart, ' - ', a.daily_timelast, ' ', '(', a.daily_timetaken, ')')) as Time, ");
             SqlStr.Append(" a.daily_additional, a.rpt_code ");
-            SqlStr.Append(" from daily as a, region as b, kmuj as c, section as d, category as e, work_type as f ");
+            SqlStr.Append(" from daily_form as a, region as b, kmuj as c, section as d, category as e, work_type as f ");
             SqlStr.Append(" where convert(datetime, daily_date, 103) >= @MulaTarikh ");
             SqlStr.Append(" and convert(datetime, daily_date, 103) <= @AkhirTarikh ");
             SqlStr.Append(" and a.daily_section = b.region_id ");
@@ -1095,7 +1242,7 @@ namespace emujv2Api.Model
             SqlStr.Append(" (select concat(e.category_name, ' ( ', a.category_details, ' )')) as daily_category, ");
             SqlStr.Append(" (select concat(a.daily_timestart, ' - ', a.daily_timelast, ' ', '(', a.daily_timetaken, ')')) as Time, ");
             SqlStr.Append(" a.daily_additional, a.rpt_code ");
-            SqlStr.Append(" from daily as a, region as b, kmuj as c, section as d, category as e, work_type as f ");
+            SqlStr.Append(" from daily_form as a, region as b, kmuj as c, section as d, category as e, work_type as f ");
             SqlStr.Append(" where convert(datetime, daily_date, 103) >= @MulaTarikh ");
             SqlStr.Append(" and convert(datetime, daily_date, 103) <= @AkhirTarikh ");
             SqlStr.Append(" and a.daily_section = b.region_id ");
@@ -1148,7 +1295,7 @@ namespace emujv2Api.Model
             SqlStr.Append(" (select concat(e.category_name, ' ( ', a.category_details, ' )')) as daily_category, ");
             SqlStr.Append(" (select concat(a.daily_timestart, ' - ', a.daily_timelast, ' ', '(', a.daily_timetaken, ')')) as Time, ");
             SqlStr.Append(" a.daily_additional, a.rpt_code ");
-            SqlStr.Append(" from daily as a, region as b, kmuj as c, section as d, category as e, work_type as f ");
+            SqlStr.Append(" from daily_form as a, region as b, kmuj as c, section as d, category as e, work_type as f ");
             SqlStr.Append(" where convert(datetime, daily_date, 103) >= @MulaTarikh ");
             SqlStr.Append(" and convert(datetime, daily_date, 103) <= @AkhirTarikh ");
             SqlStr.Append(" and a.daily_section = b.region_id ");
@@ -1189,7 +1336,7 @@ namespace emujv2Api.Model
             SqlStr.Append(" (select concat(e.category_name, ' ( ', a.category_details, ' )')) as daily_category, ");
             SqlStr.Append(" (select concat(a.daily_timestart, ' - ', a.daily_timelast, ' ', '(', a.daily_timetaken, ')')) as Time, ");
             SqlStr.Append(" a.daily_additional, a.rpt_code ");
-            SqlStr.Append(" from daily as a, region as b, kmuj as c, section as d, category as e, work_type as f ");
+            SqlStr.Append(" from daily_form as a, region as b, kmuj as c, section as d, category as e, work_type as f ");
             SqlStr.Append(" where convert(datetime, daily_date, 103) >= @MulaTarikh ");
             SqlStr.Append(" and convert(datetime, daily_date, 103) <= @AkhirTarikh ");
             SqlStr.Append(" and a.daily_section = b.region_id ");
@@ -1243,7 +1390,7 @@ namespace emujv2Api.Model
             SqlStr.Append(" (select concat(e.category_name, ' ( ', a.category_details, ' )')) as daily_category, ");
             SqlStr.Append(" (select concat(a.daily_timestart, ' - ', a.daily_timelast, ' ', '(', a.daily_timetaken, ')')) as Time, ");
             SqlStr.Append(" a.daily_additional, a.rpt_code ");
-            SqlStr.Append(" from daily as a, region as b, kmuj as c, section as d, category as e, work_type as f ");
+            SqlStr.Append(" from daily_form as a, region as b, kmuj as c, section as d, category as e, work_type as f ");
             SqlStr.Append(" where convert(datetime, daily_date, 103) >= @MulaTarikh ");
             SqlStr.Append(" and convert(datetime, daily_date, 103) <= @AkhirTarikh ");
             SqlStr.Append(" and a.daily_section = b.region_id ");
@@ -1279,7 +1426,7 @@ namespace emujv2Api.Model
             SqlStr.Append(" e.category_name, a.category_details, ");
             SqlStr.Append(" a.daily_timestart, a.daily_timelast, a.daily_timetaken, a.station, a.station_point, ");
             SqlStr.Append(" a.daily_additional, a.rpt_code ");
-            SqlStr.Append(" from daily as a, region as b, kmuj as c, section as d, category as e, work_type as f, condition as g ");
+            SqlStr.Append(" from daily_form as a, region as b, kmuj as c, section as d, category as e, work_type as f, condition as g ");
             SqlStr.Append(" where a.daily_section = b.region_id ");
             SqlStr.Append(" and a.daily_kmuj = c.kmuj_value ");
             SqlStr.Append(" and a.daily_sec = d.section_val ");

@@ -102,7 +102,7 @@ namespace emujv2
             });
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "e-MUJ");
+                c.SwaggerEndpoint("/swagger/v3/swagger.json", "e-MUJ");
                 c.RoutePrefix = string.Empty;
             });
 

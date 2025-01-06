@@ -43,9 +43,9 @@ namespace emujv2Api.Model
             CommonFunc Conn = new CommonFunc();
             Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
 
-            SqlStr.Append(" DELETE FROM daily WHERE rpt_code = @RptCode ");
-            SqlStr.Append(" DELETE FROM daily_attendencelist WHERE rpt_code = @RptCode ");
-            SqlStr.Append(" DELETE FROM daily_attendencelistno WHERE rpt_code = @RptCode ");
+            SqlStr.Append(" DELETE FROM daily_form WHERE rpt_code = @RptCode ");
+            SqlStr.Append(" DELETE FROM daily_form_attendancelist WHERE rpt_code = @RptCode ");
+            SqlStr.Append(" DELETE FROM daily_form_attendancelistno WHERE rpt_code = @RptCode ");
 
             ParamTmp.Add("@RptCode", RptCode);
 
@@ -64,7 +64,7 @@ namespace emujv2Api.Model
             CommonFunc Conn = new CommonFunc();
             Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
 
-            SqlStr.Append(" DELETE FROM daily WHERE rpt_code = @RptCode ");
+            SqlStr.Append(" DELETE FROM daily_form WHERE rpt_code = @RptCode ");
 
             ParamTmp.Add("@RptCode", RptCode);
 
@@ -115,7 +115,7 @@ namespace emujv2Api.Model
 
             string gangString = formCons.Gang != null ? string.Join(",", formCons.Gang) : string.Empty;
 
-            SqlStr.Append(" UPDATE daily ");
+            SqlStr.Append(" UPDATE daily_form ");
             SqlStr.Append(" SET daily_gang = @Gang, ");
             SqlStr.Append(" daily_date = @Date, ");
             SqlStr.Append(" daily_worktype = @WorkType, ");
@@ -206,7 +206,7 @@ namespace emujv2Api.Model
             var validAttIds = formCons.AttId?.Where(id => validStaffIds.Contains(id)).ToList() ?? new List<string>();
 
             SqlStr.Clear();
-            SqlStr.Append(" UPDATE daily_attendencelist ");
+            SqlStr.Append(" UPDATE daily_form_attendancelist ");
             SqlStr.Append(" SET staff_attd_no = @AttId, ");
             SqlStr.Append(" staff_attd_updatedate = CONVERT(VARCHAR(10), GETDATE(), 103) + ' ' + REPLACE(CONVERT(VARCHAR(5), GETDATE(), 108), ':', ''), ");
             SqlStr.Append(" staff_attd_updby = @Gang, ");
@@ -266,7 +266,7 @@ namespace emujv2Api.Model
             var validAttIds = formCons.AttId?.Where(id => validStaffIds.Contains(id)).ToList() ?? new List<string>();
 
             SqlStr.Clear();
-            SqlStr.Append(" UPDATE daily_attendencelistno ");
+            SqlStr.Append(" UPDATE daily_form_attendancelistno ");
             SqlStr.Append(" SET staff_attdno_no = @AttId, ");
             SqlStr.Append(" staff_attdno_updatedate = CONVERT(VARCHAR(10), GETDATE(), 103) + ' ' + REPLACE(CONVERT(VARCHAR(5), GETDATE(), 108), ':', ''), ");
             SqlStr.Append(" staff_attdno_updby = @Gang, ");
@@ -534,7 +534,7 @@ namespace emujv2Api.Model
 
             // Query to get the latest daily_id
             StringBuilder SqlStr = new StringBuilder();
-            SqlStr.Append("SELECT TOP 1 daily_id FROM [dbo].[daily] ORDER BY daily_id DESC");
+            SqlStr.Append("SELECT TOP 1 daily_id FROM [dbo].[daily_form] ORDER BY daily_id DESC");
 
             DataTable Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
             if (Salah != "")
@@ -544,14 +544,23 @@ namespace emujv2Api.Model
 
             // Fetch the latest daily_id
             int latestDailyId = 0;
-            if (Recc.Rows.Count > 0)
+            if (Recc.Rows.Count > 0 && Recc.Rows[0]["daily_id"] != DBNull.Value)
             {
-                latestDailyId = Convert.ToInt32(Recc.Rows[0]["daily_id"]);
+                // Get the last daily_id and increment by 1
+                latestDailyId = Convert.ToInt32(Recc.Rows[0]["daily_id"]) + 1;
+            }
+            else
+            {
+                // If no rows are returned, set the default starting value
+                latestDailyId = 1;
             }
 
             // Increment by 8 and format the report code
             string formattedRptCode = $"RPTD{latestDailyId + 8:D5}";
-            latestDailyId = latestDailyId + 1;
+
+            // Print or use the values
+            Console.WriteLine($"Latest Daily ID: {latestDailyId}");
+            Console.WriteLine($"Formatted Report Code: {formattedRptCode}");
 
             return (latestDailyId, formattedRptCode);
         }
@@ -571,17 +580,19 @@ namespace emujv2Api.Model
             var (latestDailyId, formattedRptCode) = GenerateFormattedRptCode();
             string gangString = formCons.Gang != null ? string.Join(",", formCons.Gang) : string.Empty;
 
-            SqlStr.Append("INSERT INTO [dbo].[daily] ");
-            SqlStr.Append("([daily_section], [daily_kmuj], [daily_sec], [daily_gang], [daily_date], [daily_worktype], [daily_total], [daily_unit], ");
+            SqlStr.Append("INSERT INTO [dbo].[daily_form] ");
+            SqlStr.Append("([daily_id], [daily_section], [daily_kmuj], [daily_sec], [daily_gang], [daily_date], [daily_worktype], [daily_total], [daily_unit], ");
             SqlStr.Append("[daily_timestart], [daily_timelast], [daily_category], [daily_condition], [daily_additional], [daily_timetaken], ");
             SqlStr.Append("[effect_kmfrom], [effect_kmto], [effect_kmtotal], [station], [station_point], [category_details], [temperature], ");
             SqlStr.Append("[rpt_code], [daily_workers], [upd_user], [upd_date]) ");
             SqlStr.Append("VALUES ");
-            SqlStr.Append("(@Region, @Kmuj, @Section, @Gang, CONVERT(VARCHAR(10), @Date, 103), @WorkType, @Total, @TotalUnit, ");
+            SqlStr.Append("(@DailyId, @Region, @Kmuj, @Section, @Gang, CONVERT(VARCHAR(10), @Date, 103), @WorkType, @Total, @TotalUnit, ");
             SqlStr.Append("@TimeStart, @TimeLast, @Category, @Condition, @Adds, @TimeTaken, @KMFrom, @KMTo, @KMTotal, @Station, @SPoint, ");
             SqlStr.Append("@CatDetails, @Temp, @RptCode, @Workers + ' pax', @UpdBy, CONVERT(VARCHAR(10), GETDATE(), 103) + ' ' + CONVERT(VARCHAR(8), GETDATE(), 108)); ");
             SqlStr.Append("SELECT SCOPE_IDENTITY();");
 
+            // Add the latestDailyId and formattedRptCode to the parameters
+            ParamTmp.Add("@DailyId", latestDailyId);
             ParamTmp.Add("@Region", formCons.Region ?? (object)DBNull.Value);
             ParamTmp.Add("@Kmuj", formCons.Kmuj ?? (object)DBNull.Value);
             ParamTmp.Add("@Section", formCons.Section ?? (object)DBNull.Value);
@@ -608,20 +619,28 @@ namespace emujv2Api.Model
             ParamTmp.Add("@UpdBy", formCons.UpdBy);
             ParamTmp.Add("@UpdDate", formCons.UpdDate ?? (object)DBNull.Value);
 
+            Console.WriteLine($"Latest Daily ID: {latestDailyId}"); // Check if it's correct
+            Console.WriteLine($"Formatted Report Code: {formattedRptCode}");
+
+            // Execute the query
             Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
             if (Salah != "") { return Salah; }
 
-            if (Recc.Rows.Count > 0)
+            if (Recc.Rows.Count > 0 && Recc.Rows[0][0] != DBNull.Value)
             {
-                latestDailyId = Convert.ToInt32(Recc.Rows[0][0]);
+                latestDailyId = Convert.ToInt32(Recc.Rows[0][0]); 
+                return latestDailyId.ToString(); 
             }
-            else
+            else if (Recc.Rows.Count < 0 && Recc.Rows[0][0] == DBNull.Value)
             {
-                return "Failed to retrieve the latest daily_id.";
+                return "Failed to retrieve the latest daily_id."; // Error message if no valid result
             }
 
             return "0";
+
         }
+
+
 
 
 
@@ -667,16 +686,16 @@ namespace emujv2Api.Model
             var validAttIds = formCons.AttId?.Where(id => validStaffIds.Contains(id)).ToList() ?? new List<string>();
 
             SqlStr.Clear();
-            SqlStr.Append(" INSERT INTO [dbo].[daily_attendencelist] ");
-            SqlStr.Append(" ([staff_attd_rpt_id], [staff_attd_no], [staff_attd_updatedate], [staff_attd_updby], [staff_attd_total], [rpt_code]) ");
+            SqlStr.Append(" INSERT INTO [dbo].[daily_form_attendancelist] ");
+            SqlStr.Append(" ([staff_attd_no], [staff_attd_updatedate], [staff_attd_updby], [staff_attd_total], [staff_attd_gang], [rpt_code]) ");
             SqlStr.Append(" VALUES ");
-            SqlStr.Append(" (@DailyId, @AttId, CONVERT(VARCHAR(10), GETDATE(), 103) + ' ' + REPLACE(CONVERT(VARCHAR(5), GETDATE(), 108), ':', ''), @Gang, @Workers, @RptCode)");
+            SqlStr.Append(" (@AttId, CONVERT(VARCHAR(10), GETDATE(), 103) + ' ' + CONVERT(VARCHAR(8), GETDATE(), 108), @UpdBy, @Workers, @Gang, @RptCode)");
 
             string idString = validAttIds.Any() ? string.Join(",", validAttIds) : string.Empty;
             string gangString = formCons.Gang != null ? string.Join(",", formCons.Gang) : string.Empty;
 
-            ParamTmp.Add("@DailyId", latestDailyId);
             ParamTmp.Add("@AttId", string.IsNullOrEmpty(idString) ? (object)DBNull.Value : idString);
+            ParamTmp.Add("@UpdBy", formCons.UpdBy);
             ParamTmp.Add("@Gang", string.IsNullOrEmpty(gangString) ? (object)DBNull.Value : gangString);
             ParamTmp.Add("@Workers", validStaffIds.Count);
             ParamTmp.Add("@RptCode", formattedRptCode ?? (object)DBNull.Value);
@@ -730,16 +749,16 @@ namespace emujv2Api.Model
             var validAttIds = formCons.AttId?.Where(id => validStaffIds.Contains(id)).ToList() ?? new List<string>();
 
             SqlStr.Clear();
-            SqlStr.Append(" INSERT INTO [dbo].[daily_attendencelistno] ");
-            SqlStr.Append(" ([staff_attdno_rpt_id], [staff_attdno_no], [staff_attdno_updatedate], [staff_attdno_updby], [staff_attdno_total], [rpt_code]) ");
+            SqlStr.Append(" INSERT INTO [dbo].[daily_form_attendancelistno] ");
+            SqlStr.Append(" ([staff_attdno_no], [staff_attdno_updatedate], [staff_attdno_updby], [staff_attdno_total], [staff_attdno_gang], [rpt_code]) ");
             SqlStr.Append(" VALUES ");
-            SqlStr.Append(" (@DailyId, @AttId, CONVERT(VARCHAR(10), GETDATE(), 103) + ' ' + REPLACE(CONVERT(VARCHAR(5), GETDATE(), 108), ':', ''), @Gang, @Workers, @RptCode)" );
+            SqlStr.Append(" (@AttId, CONVERT(VARCHAR(10), GETDATE(), 103) + ' ' + CONVERT(VARCHAR(8), GETDATE(), 108), @UpdBy, @Workers, @Gang, @RptCode)");
 
             string idString = validAttIds.Any() ? string.Join(",", validAttIds) : string.Empty;
             string gangString = formCons.Gang != null ? string.Join(",", formCons.Gang) : string.Empty;
 
-            ParamTmp.Add("@DailyId", latestDailyId);
             ParamTmp.Add("@AttId", string.IsNullOrEmpty(idString) ? (object)DBNull.Value : idString);
+            ParamTmp.Add("@UpdBy", formCons.UpdBy);
             ParamTmp.Add("@Gang", string.IsNullOrEmpty(gangString) ? (object)DBNull.Value : gangString);
             ParamTmp.Add("@Workers", validStaffIds.Count);
             ParamTmp.Add("@RptCode", formattedRptCode ?? (object)DBNull.Value);

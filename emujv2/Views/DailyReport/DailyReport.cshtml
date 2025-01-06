@@ -134,9 +134,8 @@
                                     </div>
                                     <div class="col-3">
                                         <label class="mt-5 form-label">Section</label>
-                                        <select id="regCI" class="form-control form-select select2" required>
+                                        <select id="secCI" class="form-control form-select select2" required>
                                             <option value="-0">Select Section</option>
-                                            <option id="tempekScn" value="1"></option>
                                         </select>
                                     </div>
                                     <div class="col-3">
@@ -767,11 +766,11 @@
                     if (data.length >= 1) {
                         auxArr = [];
                         $.each(data, function (index, value) {
-                            auxArr[index] = "<option value='" + value.kmuj_name + "'>" + value.section_name + "</option>";
+                            auxArr[index] = "<option value='" + value.section_id + "'>" + value.section_name + "</option>";
                         });
-                        $('#sec').append(auxArr.join(''));
+                        $('#secCI').append(auxArr.join(''));
                     } else {
-                        $("#sec").addClass(" is-invalid");
+                        $("#secCI").addClass(" is-invalid");
 
                     }
                 },

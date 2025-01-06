@@ -5,7 +5,7 @@ namespace emujv2Api.Constructor
 {
     public class MasukCons
     {
-
+        public string UpdBy { get; set; }
         public string DailyId { get; set; }
         public List<string> AttId { get; set; }
         public string TotalPax { get; set; }

@@ -244,7 +244,7 @@
                             <h3 class="text-danger">Warning! Are you sure? </h3>
                             <p class="mg-b-20 mg-x-20">You may not be able to recover this data.</p>
                             <h4 class="mt-5 text-danger">Report Number: </h4>
-                            <input readonly id="reportno" type="text" class="mb-3 form-control text-center bg-transparent border-0">
+                            <input readonly id="reportno" data-id="" type="text" class="mb-3 form-control text-center bg-transparent border-0">
 
                             <button id="submitDelete" class="btn btn-danger mb-5" type="button">Delete</button>
                             <button class="btn btn-light mb-5" data-bs-dismiss="modal" aria-label="Close" type="button">Cancel</button>
@@ -332,7 +332,7 @@
             }
 
             //userlevel == 4
-            else if ((localStorage.getItem("lvlI") === "4") || (localStorage.getItem("lvlI") === "3")) {
+            else if ((localStorage.getItem("lvlI") === "4")) {
                 $("#contentNormal").show();
                 $("#contentAdmin").hide();
                 $("#contentOthers").hide();
@@ -427,33 +427,50 @@
 
             //modal delete report
             $('#submitDelete').click(function () {
-                var ids = $('#modalDelete').data('id');
-                console.log('read ' + ids);
-                rptDelete(ids);
+                var ids = $('#modalDelete').data('id'); // Retrieve the stored ID
+                console.log('Read ID:', ids);
+                if (ids) {
+                    rptDelete(ids);
+                } else {
+                    console.error('No ID found for deletion.');
+                }
             });
 
             //delete modal
             $('#modalDelete').on('show.bs.modal', function (e) {
-                var ids = $(e.relatedTarget).data('id');
-                var code = $(".code" + ids).html();
-                $.ajax({
-                    url: linkDepan + "GetReportDetails?RptCode=" + ids,
-                    type: 'GET',
-                    dataType: 'json',
-                    data: {},
-                    beforeSend: function (request) {
-                        request.setRequestHeader("Token", localStorage.getItem('main'));
-                    },
-                    success: function (data) {
-                        $('#reportno').val(data[0].rpt_code);
-                    },
-                    error: function (xhr) {
-                        swarning();
-                    },
-                    complete: function () {
-                    }
-                });
+                var ids = $(e.relatedTarget).data('id'); // Retrieve data-id from the triggering element
+                console.log('Data-ID Retrieved:', ids); // Log the ID for debugging
+
+                if (ids) {
+                    // Store ID in modal for later use
+                    $('#modalDelete').data('id', ids);
+
+                    // Fetch and display report details
+                    $.ajax({
+                        url: linkDepan + "GetReportDetails?RptCode=" + ids,
+                        type: 'GET',
+                        dataType: 'json',
+                        beforeSend: function (request) {
+                            request.setRequestHeader("Token", localStorage.getItem('main'));
+                        },
+                        success: function (data) {
+                            if (data && data[0] && data[0].rpt_code) {
+                                $('#reportno').val(data[0].rpt_code); // Populate the report number
+                            } else {
+                                $('#reportno').val(''); // Clear the field if no data
+                                console.error('Invalid data structure from API.');
+                            }
+                        },
+                        error: function (xhr) {
+                            console.error('Error fetching report details:', xhr.responseText);
+                            swarning();
+                        }
+                    });
+                } else {
+                    console.error('No data-id found for modal.');
+                }
             });
+
         });
 
 

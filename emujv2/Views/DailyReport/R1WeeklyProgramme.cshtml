@@ -187,8 +187,6 @@
                 }
             });
 
-
-
         });
 
         function updateSelectedValues() {
@@ -283,6 +281,7 @@
                         let kepalaDate = moment(mulaDate).add(i, 'days').format('DD/MM');
                         thead += `<th>${kepalaDate}</th>`;
                     }
+
                     let startDate = moment(sdate, 'YYYY/MM/DD');
                     uniquework_name.forEach(() => {
                         for (let i = 0; i < 7; i++) {
@@ -290,17 +289,26 @@
                             thead += `<th>${headerDate}</th>`;
                         }
                     });
+
                     thead += '</tr>';
                     $('#tableRep thead').html(thead);
 
                     var groupedData = data.reduce((acc, item) => {
-                        if (!acc[item.staff_attd_no]) {
-                            acc[item.staff_attd_no] = { Nama: item.Nama, JobDesc: item.JobDesc, work_data: {} };
+                        if (!acc[item.Emplid]) {
+                            acc[item.Emplid] = { Nama: item.Nama, JobDesc: item.JobDesc, work_data: {}, attendance_data: {} };
                         }
-                        if (!acc[item.staff_attd_no].work_data[item.work_name]) {
-                            acc[item.staff_attd_no].work_data[item.work_name] = {};
+
+                        if (!acc[item.Emplid].work_data[item.work_name]) {
+                            acc[item.Emplid].work_data[item.work_name] = {};
                         }
-                        acc[item.staff_attd_no].work_data[item.work_name][item.daily_date] = item;
+
+                        if (!acc[item.Emplid].attendance_data[item.daily_date]) {
+                            acc[item.Emplid].attendance_data[item.daily_date] = {};
+                        }
+
+                        acc[item.Emplid].work_data[item.work_name][item.daily_date] = item;
+                        acc[item.Emplid].attendance_data[item.daily_date] = item.staff_status; // Use staff_status instead of attendance_status
+
                         return acc;
                     }, {});
 
@@ -310,9 +318,19 @@
                         tbody += `<td>${staffNo}</td>`;
                         tbody += `<td>${groupedData[staffNo].Nama || ''}</td>`;
                         tbody += `<td>${groupedData[staffNo].JobDesc || ''}</td>`;
+
+                        // Render staff_status for each day (Mon-Sun)
                         for (let i = 0; i < 7; i++) {
-                            tbody += '<td class="toggle-icon-work"></td>';
+                            let dayDate = moment(startDate).add(i, 'days').format('DD/MM/YYYY');
+                            let staffStatus = groupedData[staffNo].attendance_data[dayDate];
+                            if (staffStatus === null) {
+                                tbody += `<td><i class="fa fa-check"></i></td>`;
+                            } else {
+                                tbody += `<td></td>`;
+                            }
                         }
+
+                        // Render work names with attendance for each day
                         uniquework_name.forEach(work_name => {
                             for (let i = 0; i < 7; i++) {
                                 let dayDate = moment(startDate).add(i, 'days').format('DD/MM/YYYY');
@@ -345,6 +363,7 @@
                 complete: function () { }
             });
         }
+
 
     </script>
 }
