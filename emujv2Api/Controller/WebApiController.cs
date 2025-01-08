@@ -14,6 +14,7 @@ using System.Net.Http.Headers;
 using System.IO;
 using System.Data;
 using System.Text;
+using System.Security.Policy;
 
 namespace emujv2Api.Controller
 {
@@ -682,7 +683,7 @@ namespace emujv2Api.Controller
         }
 
         [HttpGet]
-        public string GetKerja()
+        public string GetKerja(string Kmuj, string Section, string SDate, string EDate)
         {
             TokenFunc Token = new TokenFunc();
             PublicCons RetDat = new PublicCons();
@@ -700,7 +701,7 @@ namespace emujv2Api.Controller
 
             if (!string.IsNullOrEmpty(User.Userid))
             {
-                return ret.GetKerja();
+                return ret.GetKerja(Kmuj, Section, SDate, EDate);
             }
             else
             {

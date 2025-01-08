@@ -18,7 +18,7 @@
                     <div class="card-body">
                         <div class="mb-3 m-0">
                             <div class="row">
-                                @*<div class="col-4">
+                                <div class="col-4">
                                     <label class="mt-3 form-label">KMUJ</label>
                                     <select id="kmuj" class="form-control form-select select2">
                                         <option value="-0">Select KMUJ</option>
@@ -43,24 +43,40 @@
                                     <div class="col-lg-12">
                                         <div class="col 4">
                                             <div id="selectedValues" class="mb-3"></div>
-                                        </div>*@
+                                        </div>
                                         <div class="table-responsive table-lg">
                                             <table id="tableRep" class="table table-bordered text-nowrap hover">
                                                 <thead></thead>
                                                 <tbody></tbody>
                                             </table>
                                         </div>
-
-                                        <div class="row mt-5">
-                                            <h5>Total Man - Hours for the Gangs = <span id="totalHours"></span></h5>
-                                            <h5>On Track Works = </h5>
-                                            <h5>Off Track Works = <span id="totalOffTrackWorks"></span></h5>
-                                            <h5>Others = <span id="totalTimeForSpecificCategories"></span></h5>
-                                            <h5>Total = </h5>
-                                            <h5>Inspected by RE / CPWI on  </h5>
+                                        <div class="row mt-5 justify-content-center align-items-center">
+                                            <div class="col-3">
+                                                <h5>Total Man - Hours for the Gangs = </h5>
+                                                <h5>On Track Works = </h5>
+                                                <h5>Off Track Works = </h5>
+                                                <h5>Others = </h5>
+                                                <h5>Total = </h5>
+                                                <h5>Inspected by RE / CPWI on  </h5>
+                                            </div>
+                                            <div class="col-2 align-center">
+                                                <h5><span id="totalHours"></span>  Mhrs</h5>
+                                                <h5><span id="totalOnTrackWorks"></span>  Mhrs</h5>
+                                                <h5><span id="totalOffTrackWorks"></span>  Mhrs</h5>
+                                                <h5><span id="totalSpecificCategories"></span>  Mhrs</h5>
+                                                <h5><span id="veryLastTotal"></span>  %</h5>
+                                                <h5>  </h5>
+                                            </div>
+                                            <div class="col-2 align-center">
+                                                <h5>-</h5>
+                                                <h5><span id="perOnTrack"></span>  Mhrs</h5>
+                                                <h5><span id="perOffTrack"></span>  Mhrs</h5>
+                                                <h5><span id="perOthers"></span>  Mhrs</h5>
+                                            </div>
                                         </div>
-                                    @*</div>*@
-                                @*</div>*@
+
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -80,10 +96,114 @@
             checkSess();
             listSection();
             listKMUJ();
-            listReports();
+            $('#txtDate').daterangepicker({
+                singleDatePicker: true,
+                autoUpdateInput: false,
+                minYear: 2021,
+            }, function (start) {
+                // Automatically set end date to 7 days after start date
+                var end = start.clone().add(6, 'days');
 
+                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+                console.log(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+
+                var sdate = start.format('YYYY-MM-DD'); // Change format to YYYY-MM-DD
+                var edate = end.format('YYYY-MM-DD'); // Change format to YYYY-MM-DD
+                localStorage.setItem("selHar", sdate);
+                localStorage.setItem("selHarE", edate);
+
+                var kmj = $("#kmuj option:selected").text();
+                localStorage.setItem("selKmj", kmj);
+
+                var scn = $("#section option:selected").text();
+                localStorage.setItem("selScn", scn);
+
+                salertSave('Loading...');
+                listReports(localStorage.getItem("selKmj"), localStorage.getItem("selScn"), sdate, edate);
+                updateSelectedValues();
+
+                // Update the input field with the selected date range
+                $('#txtDate').val(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM/YYYY'));
+            });
+
+
+            $("#kmuj, #section").on('change', function () {
+                checkStore();
+
+                var sdate = localStorage.getItem("selHar");
+                var edate = localStorage.getItem("selHarE");
+
+                var kmj = $("#kmuj option:selected").text();
+                localStorage.setItem("selKmj", kmj);
+
+                var scn = $("#section option:selected").text();
+                localStorage.setItem("selScn", scn);
+
+                listReports(localStorage.getItem("selKmj"), localStorage.getItem("selScn"), sdate, edate);
+                updateSelectedValues();
+            });
+
+
+            $('#tableRep').on('click', '.toggle-icon-work', function () {
+                var cell = $(this);
+                var currentText = cell.text().trim();
+                if (currentText === '') {
+                    cell.text('CA');
+                } else if (currentText === 'CA') {
+                    cell.text('CT');
+                } else if (currentText === 'CT') {
+                    cell.text('TH');
+                } else if (currentText === 'TH') {
+                    cell.text('S');
+                } else if (currentText === 'S') {
+                    cell.text('BK');
+                } else if (currentText === 'BK') {
+                    cell.text('CTR');
+                } else if (currentText === 'CTR') {
+                    cell.text('');
+                }
+            });
+
+            $('#tableRep').on('click', '.toggle-icon', function () {
+                var icon = $(this).find('i'); // Define the icon variable
+                if (icon.hasClass('fa-minus fa-rotate-90')) {
+                    icon.removeClass('fa-minus fa-rotate-90').addClass('fa-plus');
+                } else if (icon.hasClass('fa-plus')) {
+                    icon.removeClass('fa-plus').addClass('fa-minus');
+                } else if (icon.hasClass('fa-minus')) {
+                    icon.removeClass('fa-minus').addClass('fa-blank');
+                } else if (icon.hasClass('fa-blank')) {
+                    icon.removeClass('mdi-blank').addClass('fa-minus fa-rotate-90');
+                }
+            });
+
+            $('#tableRep').on('click', '.toggle-icon-blank', function () {
+                var icon = $(this).find('i'); // Define the icon variable
+                if (icon.hasClass('fa-blank')) {
+                    icon.removeClass('fa-blank').addClass('fa-minus fa-rotate-90');
+                } else if (icon.hasClass('fa-minus fa-rotate-90')) {
+                    icon.removeClass('fa-minus fa-rotate-90').addClass('fa-plus');
+                } else if (icon.hasClass('fa-plus')) {
+                    icon.removeClass('fa-plus').addClass('fa-minus');
+                } else if (icon.hasClass('fa-minus')) {
+                    icon.removeClass('fa-minus').addClass('fa-blank');
+                }
+            });
 
         });
+
+        function updateSelectedValues() {
+            var kmuj = localStorage.getItem("selKmj");
+            var section = localStorage.getItem("selScn");
+            var sdate = localStorage.getItem("selHar");
+            var edate = localStorage.getItem("selHarE");
+
+            var selectedValuesHtml = `
+                                 <p><strong>KMUJ:</strong> ${kmuj}</p>
+                                 <p><strong>Section:</strong> ${section}</p>
+                                 <p><strong>Date (From - To):</strong> ${sdate} - ${edate}</p>`;
+            $('#selectedValues').html(selectedValuesHtml);
+        }
 
         function listSection() {
             $.ajax({
@@ -135,16 +255,16 @@
             });
         }
 
-        function listReports() {
+        function listReports(kmuj, section, sdate, edate) {
             $.ajax({
-                url: linkDepan + "GetKerja",
+                url: linkDepan + "GetKerja?&Kmuj=" + kmuj + "&Section=" + section + "&SDate=" + sdate + "&Edate=" + edate,
                 type: 'GET',
                 dataType: 'json',
-                data: {},
                 beforeSend: function (request) {
                     request.setRequestHeader("Token", localStorage.getItem('main'));
                 },
                 success: function (data) {
+
                     console.log("Raw Data Received from Server:", data);
 
                     if (!data || !Array.isArray(data) || !data.length) {
@@ -152,191 +272,173 @@
                         return;
                     }
 
-                    let finalData = [];  // Initialize finalData as an empty array
-                    let uniqueDates = new Set();  // Set to hold unique dates
+                    let finalData = [];
+                    let uniqueDates = new Set();
 
-                    let prevWorkCatId = null;  // To store the previous work_cat_id
-                    let prevWorkCatName = null;  // To store the previous work_cat_name
-
-                    // Process data and keep all rows as they are, with merging for same work_cat_id and work_cat_name
                     data.forEach(item => {
                         let row = {
                             work_cat_id: item.work_cat_id,
                             work_cat_name: item.work_cat_name,
                             work_name: item.work_name,
-                            TotalTime: item.TotalTime || 0
+                            TotalTime: (isNaN(parseFloat(item.TotalTime)) ? 0 : parseFloat(item.TotalTime)).toFixed(2) // Ensure TotalTime is a valid number
                         };
 
-                        // Add all the date-based fields into the row
                         Object.keys(item).forEach(dateKey => {
-                            if (dateKey !== "work_cat_id" && dateKey !== "work_cat_name" && dateKey !== "work_name" && dateKey !== "TotalTime") {
-                                row[dateKey] = item[dateKey] || 0;  // Default to 0 if no value exists for the date
-                                uniqueDates.add(dateKey);  // Add date to uniqueDates set
+                            if (!["work_cat_id", "work_cat_name", "work_name", "TotalTime"].includes(dateKey)) {
+                                // Ensure the value is a valid number before applying .toFixed(2)
+                                const value = isNaN(parseFloat(item[dateKey])) ? 0 : parseFloat(item[dateKey]);
+                                row[dateKey] = value.toFixed(2); // Apply toFixed(2) only to valid numbers
+                                uniqueDates.add(dateKey);
                             }
                         });
 
-                        // If the current work_cat_id and work_cat_name are the same as the previous row, merge them
-                        if (prevWorkCatId === item.work_cat_id && prevWorkCatName === item.work_cat_name) {
-                            // Merge the current row with the previous one by removing the work_cat_id and work_cat_name
-                            row.work_cat_id = null;  // Set it to null so it can be merged (i.e., it won't be displayed)
-                            row.work_cat_name = null;  // Similarly, set work_cat_name to null
-                        } else {
-                            prevWorkCatId = item.work_cat_id;  // Update the previous work_cat_id
-                            prevWorkCatName = item.work_cat_name;  // Update the previous work_cat_name
-                        }
-
-                        finalData.push(row);  // Add the row to the finalData array
+                        finalData.push(row);
                     });
 
-                    let sortedDates = Array.from(uniqueDates).sort(); // Sort the dates
-
-                    // Calculate the totals for each date
-                    let totalRow = {
-                        work_cat_id: 'Total',
-                        work_cat_name: 'Total',
-                        work_name: '',
-                        TotalTime: 0
-                    };
+                    let sortedDates = Array.from(uniqueDates).sort();
+                    let totalRow = { work_cat_id: 'Total', work_cat_name: 'Total', work_name: '', TotalTime: 0 };
 
                     sortedDates.forEach(date => {
                         let dateSum = finalData.reduce((sum, row) => sum + (parseFloat(row[date]) || 0), 0);
-                        totalRow[date] = dateSum.toFixed(2);  // Store the total sum for the date
-                        totalRow.TotalTime += dateSum;  // Add to the total time sum
+                        totalRow[date] = dateSum.toFixed(2);
+                        totalRow.TotalTime += parseFloat(dateSum.toFixed(2));
                     });
 
-                    finalData.push(totalRow);  // Add the total row at the end
+                    finalData.push(totalRow);
 
-                    // Now calculate "Total Man-Hours for the Gangs"
-                    let totalManHoursForGangs = 0;
-                    finalData.forEach(row => {
-                        // We sum the TotalTime values for work categories that have a value
-                        if (row.work_cat_name !== 'Total') { // Exclude the "Total" row itself
-                            totalManHoursForGangs += row.TotalTime || 0;
-                        }
-                    });
+                    console.log("Processed Final Data:", finalData);
 
-                    // Display the total time for "Total Man-Hours for the Gangs"
-                    document.getElementById("totalHours").innerText = totalManHoursForGangs.toFixed(2);
+                    let specificCategories = [14, 15, 16, 17];
 
-                    // Calculate the total for "Off Track Works" (you may use work_cat_name or work_cat_id to filter)
-                    let offTrackWorksTotal = 0;
-                    finalData.forEach(row => {
-                        if (row.work_cat_name === 'Off Track Works') {
-                            offTrackWorksTotal += row.TotalTime || 0;
-                        }
-                    });
+                    // Calculations for summary
 
-                    // Display the total "Off Track Works"
-                    document.getElementById("totalOffTrackWorks").innerText = offTrackWorksTotal.toFixed(2);
+                    //total man-hours
+                    let totalManHoursForGangs = finalData.reduce((sum, row) => {
+                        return row.work_cat_name !== 'Total' ? sum + (parseFloat(row.TotalTime) || 0) : sum;
+                    }, 0).toFixed(2);
 
-                    // Now calculate "Total Time for Categories 1, 14, 15, 16, 17"
-                    let specificCategories = [1, 14, 15, 16, 17];
-                    let totalTimeForSpecificCategories = 0;
+                    //onTrack
+                    let totalOnTrackWorks = finalData.reduce((sum, row) => {
+                        return (!specificCategories.includes(row.work_cat_id) &&
+                            row.work_cat_id !== 5 &&
+                            row.work_cat_id !== 'Total') ? sum + (parseFloat(row.TotalTime) || 0) : sum;
+                    }, 0).toFixed(2);
 
-                    finalData.forEach(row => {
-                        if (specificCategories.includes(row.work_cat_id)) {
-                            totalTimeForSpecificCategories += row.TotalTime;
-                        }
-                    });
+                    //offTrack
+                    let offTrackWorksTotal = finalData.reduce((sum, row) => {
+                        return (row.work_cat_id === 5) ? sum + (parseFloat(row.TotalTime) || 0) : sum;
+                    }, 0).toFixed(2);
 
-                    // Display the total time for these specific categories
-                    document.getElementById("totalTimeForSpecificCategories").innerText = totalTimeForSpecificCategories.toFixed(2);
+                    //Others
+                    let totalTimeForSpecificCategories = finalData.reduce((sum, row) => {
+                        return (specificCategories.includes(row.work_cat_id)) ? sum + (parseFloat(row.TotalTime) || 0) : sum;
+                    }, 0).toFixed(2);
 
-                    // Define base columns for DataTable
+                    //total
+                    let veryLastTotal = totalManHoursForGangs;
+
+                    let perOnTrack = (parseFloat(totalOnTrackWorks) / parseFloat(totalManHoursForGangs) * 100).toFixed(2);
+                    let perOffTrack = (parseFloat(offTrackWorksTotal) / parseFloat(totalManHoursForGangs) * 100).toFixed(2);
+                    let perOthers = (parseFloat(totalTimeForSpecificCategories) / parseFloat(totalManHoursForGangs) * 100).toFixed(2);
+
+                    // Display the calculated totals
+                    document.getElementById("totalSpecificCategories").innerText = totalTimeForSpecificCategories;
+                    document.getElementById("totalOffTrackWorks").innerText = offTrackWorksTotal;
+                    document.getElementById("totalOnTrackWorks").innerText = totalOnTrackWorks;
+                    document.getElementById("totalHours").innerText = totalManHoursForGangs;
+                    document.getElementById("veryLastTotal").innerText = veryLastTotal;
+                    document.getElementById("perOnTrack").innerText = perOnTrack;
+                    document.getElementById("perOffTrack").innerText = perOffTrack;
+                    document.getElementById("perOthers").innerText = perOthers;
+
+                    // DataTable setup
                     let columns = [
-                        { data: "work_cat_id", title: "No" },  // Add the "No" column here
+                        { data: "work_cat_id", title: "No" },
                         { data: "work_cat_name", title: "Category" },
                         { data: "work_name", title: "Work Description" }
                     ];
 
-                    // Add dynamic columns for dates
                     sortedDates.forEach(date => {
                         columns.push({
-                            data: date,  // Use the date as the column data
-                            defaultContent: "0",  // Default value for missing dates
-                            title: date  // Set column header to the date
+                            data: date,
+                            defaultContent: "0",
+                            title: date
                         });
                     });
 
-                    // Add the "TotalTime" column at the end
                     columns.push({ data: "TotalTime", title: "Total Time" });
 
-                    // Initialize the DataTable
-                    let table = $('#tableRep').DataTable({
+                    // DataTable setup with the rowspan for Category and "No" (work_cat_id) column
+                    if ($.fn.DataTable.isDataTable('#tableRep')) {
+                        $('#tableRep').DataTable().clear().destroy(); // Clear and destroy the existing DataTable
+                    }
+                    $('#tableRep').DataTable({
                         ordering: false,
                         paging: false,
                         dom: 'Bfrtip',
                         buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
                         responsive: true,
-                        data: finalData,  // Pass the raw data (without merging rows)
-                        columns: columns,  // Use the dynamically defined columns
-                        createdRow: function (row, data, dataIndex) {
-                            // Ensure the "No" column reflects the sequential "work_cat_id"
-                            const rowNumber = data.work_cat_id;  // Use work_cat_id as the sequential number
-                            $('td', row).eq(0).html(rowNumber);  // Use the rowNumber for the "No" column
-                            $('td', row).addClass('text-nowrap align-middle');
+                        data: finalData,
+                        columns: columns,
+                        rowCallback: function (row, data, index) {
+                            // Get the current category value and previous category value
+                            const categoryCell = $('td', row).eq(1); // 1 is the index of the "Category" column
+                            const workDescCell = $('td', row).eq(2); // 2 is the index of the "Work Description" column
+                            const noCell = $('td', row).eq(0); // 0 is the index of the "No" column
+                            const categoryName = categoryCell.text();
 
-                            // Merge the cells for work_cat_name and work_cat_id if they are null
-                            if (data.work_cat_id === null) {
-                                $('td', row).eq(1).html('');  // Clear the "Category" column cell
-                            }
-                        },
-                        drawCallback: function (settings) {
-                            console.log("drawCallback triggered");
-
-                            // Helper function to merge cells using rowspan
-                            function mergeCells(startRow, endRow, colIndex, mergedContent = null) {
-                                console.log(`Merging cells from ${startRow} to ${endRow} in column ${colIndex}`);
-                                let firstCell = $(table.cell(startRow, colIndex).node());
-                                let content = mergedContent !== null ? mergedContent : firstCell.text();
-                                firstCell.attr('rowspan', endRow - startRow + 1).html(content);
-
-                                // Remove content from the other cells in the merged range
-                                for (let i = startRow + 1; i <= endRow; i++) {
-                                    $(table.row(i).node()).find('td:eq(' + colIndex + ')').empty();
+                            // Rowspan for Category column
+                            if (index === 0 || finalData[index].work_cat_name !== finalData[index - 1].work_cat_name) {
+                                let rowspan = 1;
+                                // Count how many times the same category appears consecutively
+                                for (let i = index + 1; i < finalData.length && finalData[i].work_cat_name === categoryName; i++) {
+                                    rowspan++;
                                 }
+                                // Set the rowspan for the current row
+                                categoryCell.attr('rowspan', rowspan);
+                                categoryCell.css('text-align', 'left'); // Center the text in the category cell
+                                categoryCell.css('vertical-align', 'middle'); // Center vertically in the cell
+                            } else {
+                                // Hide the category cell for rows with the same category
+                                categoryCell.hide();
                             }
 
-                            // Merge the rows based on work_cat_name
-                            let currentRow = 0;
-                            let startRow = -1;
-                            let lastWorkCatId = null;
-                            let lastWorkCatName = null;
-
-                            finalData.forEach((row, index) => {
-                                if (row.work_cat_id !== lastWorkCatId || row.work_cat_name !== lastWorkCatName) {
-                                    // If there's a change in work_cat_id or work_cat_name, merge previous rows
-                                    if (startRow !== -1 && index - startRow > 1) {
-                                        mergeCells(startRow, index - 1, 1); // Merge the category column (index 1)
-                                        mergeCells(startRow, index - 1, 0, row.work_cat_id); // Merge the id column (index 0)
-                                    }
-                                    startRow = index; // Set new starting row
+                            // Rowspan for "No" column (work_cat_id)
+                            if (index === 0 || finalData[index].work_cat_id !== finalData[index - 1].work_cat_id) {
+                                let rowspan = 1;
+                                // Count how many times the same work_cat_id appears consecutively
+                                for (let i = index + 1; i < finalData.length && finalData[i].work_cat_id === data.work_cat_id; i++) {
+                                    rowspan++;
                                 }
-                                lastWorkCatId = row.work_cat_id;
-                                lastWorkCatName = row.work_cat_name;
-                            });
-
-                            // Handle the last merge for remaining rows
-                            if (startRow !== -1 && finalData.length - startRow > 1) {
-                                mergeCells(startRow, finalData.length - 1, 1);
-                                mergeCells(startRow, finalData.length - 1, 0, finalData[startRow].work_cat_id);
+                                // Set the rowspan for the current row
+                                noCell.attr('rowspan', rowspan);
+                                noCell.css('text-align', 'center'); // Center the "No" text
+                                noCell.css('vertical-align', 'middle'); // Center vertically in the cell
+                            } else {
+                                // Hide the "No" cell for rows with the same work_cat_id
+                                noCell.hide();
                             }
+
+                            // Ensure that work descriptions are kept separate and aligned normally
+                            workDescCell.css('text-align', 'left'); // Align the "Work Description" to the left by default
+                            workDescCell.css('vertical-align', 'top'); // Ensure work descriptions align to the top
                         }
                     });
                 },
                 error: function (xhr) {
-                    swarning();
-                },
-                complete: function () { }
+                    console.error("Error fetching data:", xhr);
+                }
             });
         }
 
-
-
-
+        
 
     </script>
-}
+    }
+
+
+
+
 
 
 

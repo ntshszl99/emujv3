@@ -11,6 +11,10 @@ using static System.Collections.Specialized.BitVector32;
 using System.Drawing;
 using Oracle.ManagedDataAccess.Client;
 using Microsoft.Extensions.Primitives;
+using Microsoft.VisualBasic;
+using System.Security.Policy;
+using System.Reflection.Emit;
+using System.Globalization;
 
 namespace emujv2Api.Model
 {
@@ -748,7 +752,7 @@ namespace emujv2Api.Model
             CommonFunc Conn = new CommonFunc();
 
 
-            if(Gang != null)
+            if (Gang != null)
             {
                 var gangArray = Gang.Split(',');
 
@@ -783,7 +787,7 @@ namespace emujv2Api.Model
                 }
             }
             // Split the Gang parameter into an array
-            
+
 
             Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
             return JsonConvert.SerializeObject(Recc, Formatting.Indented);
@@ -925,92 +929,82 @@ namespace emujv2Api.Model
             return JsonConvert.SerializeObject(Recc, Formatting.Indented);
         }
 
-        public string GetKerja()
+        public string GetKerja(string Kmuj, string Section, string SDate, string EDate)
         {
             StringBuilder SqlStr = new StringBuilder();
             DataTable Recc = new DataTable();
+            Dictionary<string, object> ParamTmp = new Dictionary<string, object>();
             MsSql DbCon = new MsSql();
             string Salah = "";
             CommonFunc Conn = new CommonFunc();
 
-            // Declare date range variables (can be adjusted dynamically)
-            DateTime startDate = DateTime.Parse("2024-12-17");  // Example start date
-            DateTime endDate = DateTime.Parse("2024-12-20");    // Example end date
-
-            // Generate the dynamic date range part for the SQL query
-            List<string> dateColumns = new List<string>();
-            List<string> caseStatements = new List<string>();
-            List<DateTime> dateList = new List<DateTime>();
-
-            // Create dynamic SQL for each date
-            for (DateTime date = startDate; date <= endDate; date = date.AddDays(1))
+            // Parse the dates in "yyyy-MM-dd" format
+            if (!DateTime.TryParseExact(SDate, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime MulaTarikh) ||
+                !DateTime.TryParseExact(EDate, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime AKhirTarikh))
             {
-                dateList.Add(date);
-                string formattedDate = date.ToString("yyyy-MM-dd");
-                dateColumns.Add($"[{date.ToString("dd/MM/yyyy")}]");  // Add the formatted date as column name
-                caseStatements.Add($@"
-            MAX(CASE WHEN CONVERT(DATE, c.daily_date, 103) = '{formattedDate}' THEN 
-                CAST(DATEPART(HOUR, CAST(c.daily_timetaken AS DATETIME)) + 
-                DATEPART(MINUTE, CAST(c.daily_timetaken AS DATETIME)) / 60.0 AS DECIMAL(10,2)) 
-            ELSE 0 END) AS [{date.ToString("dd/MM/yyyy")}]
-        ");
+                return JsonConvert.SerializeObject(new { message = "Invalid date format" });
             }
 
-            // Add the additional sum column
+            List<string> caseStatements = new List<string>();
+            for (DateTime date = MulaTarikh; date <= AKhirTarikh; date = date.AddDays(1))
+            {
+                string formattedDate = date.ToString("yyyy-MM-dd");
+                caseStatements.Add($@"
+MAX(CASE 
+    WHEN (e.kmuj_name = @Kmuj AND d.section_name = @Section) AND 
+         CONVERT(DATE, c.daily_date, 103) = '{formattedDate}' THEN 
+         CAST(DATEPART(HOUR, CAST(c.daily_timetaken AS DATETIME)) + 
+         DATEPART(MINUTE, CAST(c.daily_timetaken AS DATETIME)) / 60.0 AS DECIMAL(10,2)) 
+    ELSE 0 
+END) AS [{date.ToString("dd/MM/yyyy")}]"
+                );
+            }
+
             string sumColumn = @"
-        SUM(CASE 
-            WHEN CONVERT(DATE, c.daily_date, 103) BETWEEN @StartDate AND @EndDate THEN 
-                CAST(DATEPART(HOUR, CAST(c.daily_timetaken AS DATETIME)) + 
-                     DATEPART(MINUTE, CAST(c.daily_timetaken AS DATETIME)) / 60.0 AS DECIMAL(10,2)) 
-            ELSE 0 
-        END) AS TotalTime
-    ";
-
-            // Construct SQL query
-            SqlStr.Append("DECLARE @StartDate DATE = '" + startDate.ToString("yyyy-MM-dd") + "';");
-            SqlStr.Append("DECLARE @EndDate DATE = '" + endDate.ToString("yyyy-MM-dd") + "';");
-
-            SqlStr.Append("WITH DateRange AS (");
-            SqlStr.Append("    SELECT @StartDate AS WorkDate");
-            SqlStr.Append("    UNION ALL");
-            SqlStr.Append("    SELECT DATEADD(DAY, 1, WorkDate)");
-            SqlStr.Append("    FROM DateRange");
-            SqlStr.Append("    WHERE WorkDate < @EndDate");
-            SqlStr.Append(") ");
+SUM(CASE 
+    WHEN (e.kmuj_name = @Kmuj AND d.section_name = @Section) AND 
+         CONVERT(DATE, c.daily_date, 103) BETWEEN @MulaTarikh AND @AkhirTarikh THEN 
+        CAST(DATEPART(HOUR, CAST(c.daily_timetaken AS DATETIME)) + 
+             DATEPART(MINUTE, CAST(c.daily_timetaken AS DATETIME)) / 60.0 AS DECIMAL(10,2)) 
+    ELSE 0 
+END) AS TotalTime";
 
             SqlStr.Append("SELECT ");
             SqlStr.Append("    a.work_cat_id, ");
             SqlStr.Append("    a.work_cat_name, ");
             SqlStr.Append("    b.work_name, ");
-
-            // Dynamically add case statements for each date
             SqlStr.Append(string.Join(", ", caseStatements));
-
-            // Add the sum column
             SqlStr.Append(", ");
             SqlStr.Append(sumColumn);
-
-            SqlStr.Append("FROM ");
+            SqlStr.Append(" FROM ");
             SqlStr.Append("    Ref_kerja AS a ");
             SqlStr.Append("LEFT JOIN ");
             SqlStr.Append("    kerja AS b ON a.work_cat_id = b.work_cat_id ");
             SqlStr.Append("LEFT JOIN ");
             SqlStr.Append("    daily_form AS c ON b.id = c.daily_worktype ");
-            SqlStr.Append("    AND CONVERT(DATE, c.daily_date, 103) BETWEEN @StartDate AND @EndDate ");
-
+            SqlStr.Append("    AND CONVERT(DATE, c.daily_date, 103) BETWEEN @MulaTarikh AND @AkhirTarikh ");
+            SqlStr.Append("LEFT JOIN ");
+            SqlStr.Append("    section AS d ON d.section_val = c.daily_sec ");
+            SqlStr.Append("LEFT JOIN ");
+            SqlStr.Append("    kmuj AS e ON e.kmuj_value = c.daily_kmuj ");
             SqlStr.Append("GROUP BY ");
             SqlStr.Append("    a.work_cat_id, ");
             SqlStr.Append("    a.work_cat_name, ");
             SqlStr.Append("    b.work_name ");
-
             SqlStr.Append("ORDER BY ");
             SqlStr.Append("    CAST(a.work_cat_id AS INT) ASC;");
 
-            // Log the full SQL query before execution
             Console.WriteLine("Executing SQL Query: " + SqlStr.ToString());
 
-            // Execute the dynamic SQL query
-            Recc = DbCon.ExecuteReader(SqlStr.ToString(), Conn.emujConn, ref Salah);
+            ParamTmp.Add("@Kmuj", Kmuj);
+            ParamTmp.Add("@Section", Section);
+            ParamTmp.Add("@MulaTarikh", MulaTarikh.ToString("yyyy-MM-dd"));
+            ParamTmp.Add("@AkhirTarikh", AKhirTarikh.ToString("yyyy-MM-dd"));
+
+            Console.WriteLine("Generated SQL Query: " + SqlStr.ToString());
+            Console.WriteLine("Parameters: " + JsonConvert.SerializeObject(ParamTmp));
+
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
 
             if (Recc.Rows.Count == 0)
             {
@@ -1021,8 +1015,6 @@ namespace emujv2Api.Model
             Console.WriteLine("Data received from server: " + JsonConvert.SerializeObject(Recc));
             return JsonConvert.SerializeObject(Recc, Formatting.Indented);
         }
-
-
 
         public string GetLineConditionList()
         {
@@ -1276,7 +1268,7 @@ namespace emujv2Api.Model
         }
 
 
-     
+
         public string GetDailyReportNormal(string Section, string SDate, string EDate)
         {
             StringBuilder SqlStr = new StringBuilder();
@@ -1303,7 +1295,7 @@ namespace emujv2Api.Model
             SqlStr.Append(" and a.daily_sec = d.section_val ");
             SqlStr.Append(" and a.daily_category = e.category_id ");
             SqlStr.Append(" and a.daily_worktype = f.id ");
-            SqlStr.Append(" and d.section_name = @Section ");           
+            SqlStr.Append(" and d.section_name = @Section ");
             SqlStr.Append(" order by convert(datetime, daily_date, 103) asc ");
 
 
@@ -1438,7 +1430,7 @@ namespace emujv2Api.Model
 
             ParamTmp.Add("@RptCode", RptCode);
 
-            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);          
+            Recc = DbCon.ExecuteReader(SqlStr.ToString(), ParamTmp, Conn.emujConn, ref Salah);
             return JsonConvert.SerializeObject(Recc, Formatting.Indented);
         }
     }

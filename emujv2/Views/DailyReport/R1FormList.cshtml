@@ -449,6 +449,7 @@
                     $.ajax({
                         url: linkDepan + "GetReportDetails?RptCode=" + ids,
                         type: 'GET',
+                        type: 'GET',
                         dataType: 'json',
                         beforeSend: function (request) {
                             request.setRequestHeader("Token", localStorage.getItem('main'));
