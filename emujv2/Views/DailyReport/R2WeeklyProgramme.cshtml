@@ -50,31 +50,47 @@
                                                 <tbody></tbody>
                                             </table>
                                         </div>
-                                        <div class="row mt-5 justify-content-center align-items-center">
-                                            <div class="col-3">
-                                                <h5>Total Man - Hours for the Gangs = </h5>
-                                                <h5>On Track Works = </h5>
-                                                <h5>Off Track Works = </h5>
-                                                <h5>Others = </h5>
-                                                <h5>Total = </h5>
-                                                <h5>Inspected by RE / CPWI on  </h5>
-                                            </div>
-                                            <div class="col-2 align-center">
-                                                <h5><span id="totalHours"></span>  Mhrs</h5>
-                                                <h5><span id="totalOnTrackWorks"></span>  Mhrs</h5>
-                                                <h5><span id="totalOffTrackWorks"></span>  Mhrs</h5>
-                                                <h5><span id="totalSpecificCategories"></span>  Mhrs</h5>
-                                                <h5><span id="veryLastTotal"></span>  %</h5>
-                                                <h5>  </h5>
-                                            </div>
-                                            <div class="col-2 align-center">
-                                                <h5>-</h5>
-                                                <h5><span id="perOnTrack"></span>  Mhrs</h5>
-                                                <h5><span id="perOffTrack"></span>  Mhrs</h5>
-                                                <h5><span id="perOthers"></span>  Mhrs</h5>
-                                            </div>
-                                        </div>
-
+                                        <table class="table table-bordered table-striped mt-5">
+                                            <thead>
+                                                <tr class="text-center">
+                                                    <th scope="col">Description</th>
+                                                    <th scope="col">Value</th>
+                                                    <th scope="col">Percentage</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Total Man-Hours for the Gangs</td>
+                                                    <td><span id="totalHours"></span> Mhrs</td>
+                                                    <td>-</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>On Track Works</td>
+                                                    <td><span id="totalOnTrackWorks"></span> Mhrs</td>
+                                                    <td><span id="perOnTrack"></span> Mhrs</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Off Track Works</td>
+                                                    <td><span id="totalOffTrackWorks"></span> Mhrs</td>
+                                                    <td><span id="perOffTrack"></span> Mhrs</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Others</td>
+                                                    <td><span id="totalSpecificCategories"></span> Mhrs</td>
+                                                    <td><span id="perOthers"></span> Mhrs</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Total</td>
+                                                    <td><span id="veryLastTotal"></span> %</td>
+                                                    <td>-</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Inspected by RE / CPWI on</td>
+                                                    <td>-</td>
+                                                    <td>-</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -101,14 +117,13 @@
                 autoUpdateInput: false,
                 minYear: 2021,
             }, function (start) {
-                // Automatically set end date to 7 days after start date
                 var end = start.clone().add(6, 'days');
 
                 console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
                 console.log(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
 
-                var sdate = start.format('YYYY-MM-DD'); // Change format to YYYY-MM-DD
-                var edate = end.format('YYYY-MM-DD'); // Change format to YYYY-MM-DD
+                var sdate = start.format('YYYY-MM-DD'); 
+                var edate = end.format('YYYY-MM-DD');
                 localStorage.setItem("selHar", sdate);
                 localStorage.setItem("selHarE", edate);
 
@@ -141,53 +156,6 @@
 
                 listReports(localStorage.getItem("selKmj"), localStorage.getItem("selScn"), sdate, edate);
                 updateSelectedValues();
-            });
-
-
-            $('#tableRep').on('click', '.toggle-icon-work', function () {
-                var cell = $(this);
-                var currentText = cell.text().trim();
-                if (currentText === '') {
-                    cell.text('CA');
-                } else if (currentText === 'CA') {
-                    cell.text('CT');
-                } else if (currentText === 'CT') {
-                    cell.text('TH');
-                } else if (currentText === 'TH') {
-                    cell.text('S');
-                } else if (currentText === 'S') {
-                    cell.text('BK');
-                } else if (currentText === 'BK') {
-                    cell.text('CTR');
-                } else if (currentText === 'CTR') {
-                    cell.text('');
-                }
-            });
-
-            $('#tableRep').on('click', '.toggle-icon', function () {
-                var icon = $(this).find('i'); // Define the icon variable
-                if (icon.hasClass('fa-minus fa-rotate-90')) {
-                    icon.removeClass('fa-minus fa-rotate-90').addClass('fa-plus');
-                } else if (icon.hasClass('fa-plus')) {
-                    icon.removeClass('fa-plus').addClass('fa-minus');
-                } else if (icon.hasClass('fa-minus')) {
-                    icon.removeClass('fa-minus').addClass('fa-blank');
-                } else if (icon.hasClass('fa-blank')) {
-                    icon.removeClass('mdi-blank').addClass('fa-minus fa-rotate-90');
-                }
-            });
-
-            $('#tableRep').on('click', '.toggle-icon-blank', function () {
-                var icon = $(this).find('i'); // Define the icon variable
-                if (icon.hasClass('fa-blank')) {
-                    icon.removeClass('fa-blank').addClass('fa-minus fa-rotate-90');
-                } else if (icon.hasClass('fa-minus fa-rotate-90')) {
-                    icon.removeClass('fa-minus fa-rotate-90').addClass('fa-plus');
-                } else if (icon.hasClass('fa-plus')) {
-                    icon.removeClass('fa-plus').addClass('fa-minus');
-                } else if (icon.hasClass('fa-minus')) {
-                    icon.removeClass('fa-minus').addClass('fa-blank');
-                }
             });
 
         });
@@ -280,14 +248,13 @@
                             work_cat_id: item.work_cat_id,
                             work_cat_name: item.work_cat_name,
                             work_name: item.work_name,
-                            TotalTime: (isNaN(parseFloat(item.TotalTime)) ? 0 : parseFloat(item.TotalTime)).toFixed(2) // Ensure TotalTime is a valid number
+                            TotalTime: (isNaN(parseFloat(item.TotalTime)) || parseFloat(item.TotalTime) === 0) ? '' : parseFloat(item.TotalTime).toFixed(2) // Return empty string if TotalTime is 0
                         };
 
                         Object.keys(item).forEach(dateKey => {
                             if (!["work_cat_id", "work_cat_name", "work_name", "TotalTime"].includes(dateKey)) {
-                                // Ensure the value is a valid number before applying .toFixed(2)
-                                const value = isNaN(parseFloat(item[dateKey])) ? 0 : parseFloat(item[dateKey]);
-                                row[dateKey] = value.toFixed(2); // Apply toFixed(2) only to valid numbers
+                                const value = isNaN(parseFloat(item[dateKey])) || parseFloat(item[dateKey]) === 0 ? '' : parseFloat(item[dateKey]).toFixed(2); // Return empty string if the value is 0
+                                row[dateKey] = value;
                                 uniqueDates.add(dateKey);
                             }
                         });
@@ -296,7 +263,7 @@
                     });
 
                     let sortedDates = Array.from(uniqueDates).sort();
-                    let totalRow = { work_cat_id: 'Total', work_cat_name: 'Total', work_name: '', TotalTime: 0 };
+                    let totalRow = { work_cat_id: '', work_cat_name: 'TOTAL', work_name: '', TotalTime: 0 };
 
                     sortedDates.forEach(date => {
                         let dateSum = finalData.reduce((sum, row) => sum + (parseFloat(row[date]) || 0), 0);
@@ -370,7 +337,7 @@
 
                     // DataTable setup with the rowspan for Category and "No" (work_cat_id) column
                     if ($.fn.DataTable.isDataTable('#tableRep')) {
-                        $('#tableRep').DataTable().clear().destroy(); // Clear and destroy the existing DataTable
+                        $('#tableRep').DataTable().clear().destroy(); 
                     }
                     $('#tableRep').DataTable({
                         ordering: false,
@@ -381,47 +348,40 @@
                         data: finalData,
                         columns: columns,
                         rowCallback: function (row, data, index) {
-                            // Get the current category value and previous category value
-                            const categoryCell = $('td', row).eq(1); // 1 is the index of the "Category" column
-                            const workDescCell = $('td', row).eq(2); // 2 is the index of the "Work Description" column
-                            const noCell = $('td', row).eq(0); // 0 is the index of the "No" column
+                            const categoryCell = $('td', row).eq(1); 
+                            const workDescCell = $('td', row).eq(2); 
+                            const noCell = $('td', row).eq(0);
                             const categoryName = categoryCell.text();
 
-                            // Rowspan for Category column
+                            // rowspan cat_work_name
                             if (index === 0 || finalData[index].work_cat_name !== finalData[index - 1].work_cat_name) {
                                 let rowspan = 1;
-                                // Count how many times the same category appears consecutively
                                 for (let i = index + 1; i < finalData.length && finalData[i].work_cat_name === categoryName; i++) {
                                     rowspan++;
                                 }
-                                // Set the rowspan for the current row
                                 categoryCell.attr('rowspan', rowspan);
-                                categoryCell.css('text-align', 'left'); // Center the text in the category cell
-                                categoryCell.css('vertical-align', 'middle'); // Center vertically in the cell
+                                categoryCell.css('text-align', 'left'); 
+                                categoryCell.css('vertical-align', 'middle'); 
                             } else {
-                                // Hide the category cell for rows with the same category
                                 categoryCell.hide();
                             }
 
-                            // Rowspan for "No" column (work_cat_id)
+                            // rowspan cat_work_id
                             if (index === 0 || finalData[index].work_cat_id !== finalData[index - 1].work_cat_id) {
                                 let rowspan = 1;
-                                // Count how many times the same work_cat_id appears consecutively
                                 for (let i = index + 1; i < finalData.length && finalData[i].work_cat_id === data.work_cat_id; i++) {
                                     rowspan++;
                                 }
-                                // Set the rowspan for the current row
                                 noCell.attr('rowspan', rowspan);
-                                noCell.css('text-align', 'center'); // Center the "No" text
-                                noCell.css('vertical-align', 'middle'); // Center vertically in the cell
+                                noCell.css('text-align', 'center'); 
+                                noCell.css('vertical-align', 'middle');
                             } else {
-                                // Hide the "No" cell for rows with the same work_cat_id
                                 noCell.hide();
                             }
 
-                            // Ensure that work descriptions are kept separate and aligned normally
-                            workDescCell.css('text-align', 'left'); // Align the "Work Description" to the left by default
-                            workDescCell.css('vertical-align', 'top'); // Ensure work descriptions align to the top
+                            // align
+                            workDescCell.css('text-align', 'left'); 
+                            workDescCell.css('vertical-align', 'top'); 
                         }
                     });
                 },
