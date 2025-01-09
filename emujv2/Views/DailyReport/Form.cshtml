@@ -75,7 +75,7 @@
                                 <div class="col-3">
                                     <label class="mt-5 form-label">Category</label>
                                     <select id="category" class="form-control form-select select2" required="required">
-                                        <option value="0">.: Select Category :.</option>
+                                        <option value="-0">.: Select Category :.</option>
                                     </select>
                                 </div>
                                 <div id="catEmer" class="col-3" style='display:none;'>
@@ -110,7 +110,7 @@
                                 </div>
                                 <div class="col-3">
                                     <label class="mt-5 form-label">Effected KM (meter)</label>
-                                    <input type="text" id="totalKM" class="form-control" placeholder="Total KM" readonly>
+                                    <input readonly type="text" id="totalKM" class="form-control" placeholder="Total KM" >
                                 </div>
                                 <div></div>
                                 <div class="col-3">
@@ -334,9 +334,6 @@
                 showDropdowns: true,
                 minYear: 2021,
                 maxDate: new Date(),
-                locale: {
-                    format: 'DD/MM/YYYY'
-                }
             });
 
             //modal user details & delete user
@@ -374,54 +371,15 @@
                     submitAttendance();
                     submitAttendanceNo();
                 }
-
-                //setTimeout(function () {
-                //    window.location.href = "R1FormList.cshtml";  
-                //}, 6000);
             });
 
+            // If an ID is found, call the function to fetch details
             if (id) {
-                rptDetails(id); 
+                rptDetails(id); // Call the rptDetails function to fetch data
             }
 
 
         });
-
-        function validateForm() {
-            let isValid = true;
-            let requiredFields = [
-                '#region', '#kmuj', '#section', '#datepicker',
-                '#linecond', '#category', '#worktype', '#total',
-                '#startKM', '#endKM', '#startTime', '#endTime'
-            ];
-
-            // Validate common fields
-            requiredFields.forEach(function (field) {
-                if ($(field).val() === '' || $(field).val() === '-0') {
-                    isValid = false;
-                    $(field).addClass('is-invalid');
-                } else {
-                    $(field).removeClass('is-invalid');
-                }
-            });
-
-            // Special validation for #gang (multiple select field)
-            let gangValue = $('#gang').val(); // This will return an array
-            if (!gangValue || gangValue.length === 0 || gangValue.includes('-0')) {
-                isValid = false;
-                $('#gang').addClass('is-invalid');
-            } else {
-                $('#gang').removeClass('is-invalid');
-            }
-
-            // Alert if invalid fields exist
-            if (!isValid) {
-                alert('Please fill all required fields.');
-            }
-
-            return isValid;
-        }
-
 
         function stfDetails(ids) {
             var staffID = $(".staffID" + ids).html();
@@ -564,26 +522,132 @@
 
         }
 
+        $('#submitNew').click(function () {
+            // Check if the form is valid
+            if (validateForm()) {
+                // Proceed with form submission
+                submitForm();
+                submitAttendance();
+                submitAttendanceNo();
+            } else {
+                // If the form is invalid, show an error message
+                alert("Please select all field before submitting.");
+            }
+        });
+
         function validateForm() {
             let isValid = true;
-            let requiredFields = [
-                '#region', '#kmuj', '#section', '#datepicker',
-                '#linecond', '#category', '#worktype', '#total',
-                '#startKM', '#endKM', '#startTime', '#endTime'
-            ];
 
-            // Validate common fields
-            requiredFields.forEach(function (field) {
-                if ($(field).val() === '' || $(field).val() === '-0') {
-                    isValid = false;
-                    $(field).addClass('is-invalid');
-                } else {
-                    $(field).removeClass('is-invalid');
-                }
-            });
+            // Validate Region
+            let regionValue = $('#region').val();
+            if (regionValue === '' || regionValue === '-0' || regionValue === '0') {
+                isValid = false;
+                $('#region').addClass('is-invalid');
+            } else {
+                $('#region').removeClass('is-invalid');
+            }
 
-            // Special validation for #gang (multiple select field)
-            let gangValue = $('#gang').val(); // This will return an array
+            // Validate KMUJ
+            let kmujValue = $('#kmuj').val();
+            if (kmujValue === '' || kmujValue === '-0' || kmujValue === '0') {
+                isValid = false;
+                $('#kmuj').addClass('is-invalid');
+            } else {
+                $('#kmuj').removeClass('is-invalid');
+            }
+
+            // Validate Section
+            let sectionValue = $('#section').val();
+            if (sectionValue === '' || sectionValue === '-0' || sectionValue === '0') {
+                isValid = false;
+                $('#section').addClass('is-invalid');
+            } else {
+                $('#section').removeClass('is-invalid');
+            }
+
+            // Validate Datepicker
+            let dateValue = $('#datepicker').val();
+            if (!dateValue || dateValue === '') {
+                isValid = false;
+                $('#datepicker').addClass('is-invalid');
+            } else {
+                $('#datepicker').removeClass('is-invalid');
+            }
+
+            // Validate Line Condition
+            let linecondValue = $('#linecond').val();
+            if (linecondValue === '0' || linecondValue === '-0' || linecondValue === '') {
+                isValid = false;
+                $('#linecond').addClass('is-invalid');
+            } else {
+                $('#linecond').removeClass('is-invalid');
+            }
+
+            // Validate Category
+            let categoryValue = $('#category').val();
+            if (categoryValue === '0' || categoryValue === '-0' || categoryValue === '') {
+                isValid = false;
+                $('#category').addClass('is-invalid');
+            } else {
+                $('#category').removeClass('is-invalid');
+            }
+
+            // Validate Work Type
+            let worktypeValue = $('#worktype').val();
+            if (worktypeValue === '0' || worktypeValue === '-0' || worktypeValue === '') {
+                isValid = false;
+                $('#worktype').addClass('is-invalid');
+            } else {
+                $('#worktype').removeClass('is-invalid');
+            }
+
+            // Validate Total
+            let totalValue = $('#total').val();
+            if (totalValue === '' || totalValue === '-0' || totalValue === '0') {
+                isValid = false;
+                $('#total').addClass('is-invalid');
+            } else {
+                $('#total').removeClass('is-invalid');
+            }
+
+            // Validate Start KM
+            let startKMValue = $('#startKM').val();
+            if (startKMValue === '' || startKMValue === '-0' || startKMValue === '0') {
+                isValid = false;
+                $('#startKM').addClass('is-invalid');
+            } else {
+                $('#startKM').removeClass('is-invalid');
+            }
+
+            // Validate End KM
+            let endKMValue = $('#endKM').val();
+            if (endKMValue === '' || endKMValue === '-0' || endKMValue === '0') {
+                isValid = false;
+                $('#endKM').addClass('is-invalid');
+            } else {
+                $('#endKM').removeClass('is-invalid');
+            }
+
+            // Validate Start Time
+            let startTimeValue = $('#startTime').val();
+            if (startTimeValue === '' || startTimeValue === '-0' || startTimeValue === '0') {
+                isValid = false;
+                $('#startTime').addClass('is-invalid');
+            } else {
+                $('#startTime').removeClass('is-invalid');
+            }
+
+            // Validate End Time
+            let endTimeValue = $('#endTime').val();
+            if (endTimeValue === '' || endTimeValue === '-0' || endTimeValue === '0') {
+                isValid = false;
+                $('#endTime').addClass('is-invalid');
+            } else {
+                $('#endTime').removeClass('is-invalid');
+            }
+
+            // Validate Gang
+            let gangValue = $('#gang').val();
             if (!gangValue || gangValue.length === 0 || gangValue.includes('-0')) {
                 isValid = false;
                 $('#gang').addClass('is-invalid');
@@ -591,12 +655,12 @@
                 $('#gang').removeClass('is-invalid');
             }
 
-            // Alert if invalid fields exist
+            return isValid;
             if (!isValid) {
-                alert('Please fill all required fields.');
+                $('html, body').animate({ scrollTop: $(firstInvalidField).offset().top }, 500);  // Scroll to first invalid field
+                firstInvalidField.focus();  // Focus on the first invalid field
             }
 
-            return isValid;
         }
 
         //show gang pax based on gang type 
@@ -676,7 +740,6 @@
                     console.log('gang2:', gang2);
                     console.log('kmuj2:', kmuj2);
                     console.log('section2:', section2);
-                    console.log('effect_kmtotal:', data[0].effect_kmtotal);
 
                 },
                 error: function (xhr) {
@@ -1002,9 +1065,10 @@
             var Region = localStorage.getItem('regID');
             var Kmuj = localStorage.getItem('kmujVal');
             var Section = localStorage.getItem('scnVal');
-            var formattedDate = moment($('#datepicker').val(), 'MM/DD/YYYY').format('DD/MM/YYYY');
             var gangValues = $("#gang").val();
             var gangArray = gangValues;
+
+            var formattedDate = moment($('#datepicker').val(), 'MM/DD/YYYY').format('DD/MM/YYYY');
 
             var attValues = $("#tableRep").DataTable().rows().data().toArray();
             var AttId = attValues.map(function (item) {
