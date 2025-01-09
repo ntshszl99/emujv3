@@ -180,6 +180,55 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="modalDetails" tabindex="-1" aria-labelledby="modalUpdateLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body text-center p-4">
+                        <i class="fe fe-check-circle text-success lh-1 mg-t-20 d-inline-block" style="font-size: 5em;"></i>
+                        <h3 class="text-success">Confirm Action</h3>
+                        <p class="mg-b-20 mg-x-20">Are you sure to update this data?</p>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-label">Staff ID</div>
+                                    <input readonly id="staffID" type="text" class="form-control text-center bg-transparent border-0">
+                                </div>
+                                <div class="col-12">
+                                    <div class="mt-5 form-label">Staff Name</div>
+                                    <input readonly id="staffname" type="text" class="form-control text-center bg-transparent border-0">
+                                </div>
+                                <div class="col-12">
+                                    <div class="mt-5 form-label">Department</div>
+                                    <input readonly id="dept" type="text" class="form-control text-center bg-transparent border-0">
+                                </div>
+                                <div class="col-12">
+                                    <div class="mt-5 form-label">Designation</div>
+                                    <input readonly id="position" type="text" class="form-control text-center bg-transparent border-0">
+                                </div>
+                                <div class="mb-5"></div>
+                                <div class="card-body bg-success-transparent-2">
+                                    <div class="mb-0 m-0">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-label">Update Status</div>
+                                                <select id="cuti" class="form-control form-select select2" required="required">
+                                                    <option value="-0">.: Select Reason :.</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button id="submitUpdate" class="btn btn-success mb-5" type="button">Update</button>
+                        <button class="btn btn-light mb-5" data-bs-dismiss="modal" aria-label="Close" type="button">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -196,10 +245,12 @@
             listGangPax();
             listLnCondition();
             listCategory();
+            listCuti();
             listWorkType();
             listCatDetails();
             listWorkUnit();
             listLocation();
+            listReports();
 
             //CHECK USER LEVEL
             //user level == 1 & 5
@@ -282,9 +333,25 @@
                 singleDatePicker: true,
                 showDropdowns: true,
                 minYear: 2021,
+                maxDate: new Date(),
                 locale: {
                     format: 'DD/MM/YYYY'
                 }
+            });
+
+            //modal user details & delete user
+            $('#modalDetails').on('show.bs.modal', function (e) {
+                var ids = $(e.relatedTarget).data('id');
+                $(this).data('id', ids);
+                console.log('read ' + ids);
+                stfDetails(ids);
+            });
+
+            //button submit update user
+            $("#submitUpdate").click(function () {
+                var ids = $('#modalDetails').data('id');
+                console.log('read ' + ids);
+                updateUser(ids);
             });
 
           
@@ -317,15 +384,117 @@
 
         });
 
-        function validateKM() {
-            var startKM = parseFloat($('#startKM').val());
-            var endKM = parseFloat($('#endKM').val());
-            var totalKM = (endKM - startKM) * 1000;
+        function stfDetails(ids) {
+            var staffID = $(".staffID" + ids).html();
+            $.ajax({
+                url: linkDepan + "GetGangDetails?StaffId=" + ids,
+                type: 'GET',
+                dataType: 'json',
+                data: {},
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    $('#staffID, #staffID2').val(data[0].staff_no);
+                    $('#staffname, #staffname2').val(data[0].staff_name);
+                    $('#dept, #dept2').val(data[0].section_id);
+                    $('#position, #position2').val(data[0].position);
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
 
-            if (endKM < startKM) {
+        //update hal user
+        function updateUser(ids) {
+            var data = {
+                Userid: ids,
+                StatusCuti: $('#cuti').val(),
+            };
+
+            console.log("Updating user:", ids);
+            console.log("Status Cuti:", $("#cuti option:selected").val());
+
+            $.ajax({
+                url: linkDepan + "UpdateGangDetails",
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (response) {
+                    var data;
+                    try {
+                        data = JSON.parse(response);
+                    } catch (error) {
+                        console.error("Error parsing JSON:", error);
+                        swarning();
+                        return;
+                    }
+                    if (data && data.status === "00") {
+                        $('#modalDetails').modal('hide');
+                        swal.fire('Success!', 'User details have been updated.', 'success');
+                        $('#modalDetails').modal('hide');
+
+                    } else {
+                        $('#modalDetails').modal('hide');
+                        swarning();
+                    }
+                    if (localStorage.getItem("lvlI") === "1") {
+                        listReports(localStorage.getItem("selKmj"),
+                            localStorage.getItem("selScn"),
+                            localStorage.getItem("selGng"));
+                    } else if (["2", "3", "4", "5", "6"].includes(localStorage.getItem("lvlI"))) {
+                        var formData = gatherFormData(); 
+
+                        var Kmuj = formData.Kmuj;  
+                        var Region = formData.Region;  
+                        var Workers = formData.Workers;  
+
+                        listGangPax(Kmuj, Region, Workers);  
+                        listReports(Kmuj, Region, Workers); e form
+                    }
+                }
+            },
+            );
+        }
+
+        function validateKM() {
+            const startKM = parseFloat($('#startKM').val());
+            const endKM = parseFloat($('#endKM').val());
+            var linecond = $("#linecond option:selected").text();
+            localStorage.setItem("selLine", linecond);
+
+            if (isNaN(startKM) || isNaN(endKM)) {
+                $('#totalKM').val('');
+                return;
+            }
+
+            const totalKM = (endKM - startKM).toFixed(3);
+
+            if (linecond === "UpLine") {
+                if (startKM > endKM) {
+                    $('#totalKM').val(totalKM.decimal(3));
+                }
+                else {
+                    alert('End KM must be smaller than Start KM');
+                    $('#totalKM').val('');
+                }
+            } else if (linecond === "DownLine") {
+                if (startKM < endKM) {
+                    $('#totalKM').val(totalKM);
+                }
+                else {
+                    alert('End KM must be greater than Start KM');
+                    $('#totalKM').val('');
+                }
+            } else if (endKM < startKM) {
                 alert('End KM must be greater than Start KM');
-            } else {
-                $('#totalKM').val(totalKM);
+                $('#totalKM').val('');
             }
         }
 
@@ -664,6 +833,7 @@
                         request.setRequestHeader("Token", localStorage.getItem('main'));
                     },
                     success: function (response) {
+                        var counter = 1, countStf = 0, countID = 0;
                         try {
                             // Log the response to inspect it
                             console.log("Server Response:", response);
@@ -686,10 +856,21 @@
                                     { data: "JobDesc" },
                                     { data: "Gang" },
                                     { data: "cuti_name" },
+                                    { data: "Emplid" },
                                 ],
                                 columnDefs: [
                                     {
                                         targets: -1,
+                                        title: "Actions",
+                                        render: function (data, type, full, meta) {
+                                            countStf++;
+                                            /*return '<a href="..' + data + '" id="BviewRes" class="btn btn-primary"><i class="fe fe-edit font-16"></i>';*/
+                                            return '<a class="modal-effect btn btn-primary" data-id="' + data + '" data-bs-target="#modalDetails" data-bs-effect="effect-sign" data-bs-toggle="modal" ><i class="fe fe-edit font-10"></i></a>'
+
+                                        },
+                                    },
+                                    {
+                                        targets: -2,
                                         title: "Status",
                                         render: function (data, type, full, meta) {
                                             var status = '';
@@ -702,42 +883,42 @@
                                         },
                                     },
                                     {
-                                        targets: -2,
+                                        targets: -3,
                                         title: "Gang",
                                         render: function (data, type, full, meta) {
                                             return data;
                                         },
                                     },
                                     {
-                                        targets: -3,
+                                        targets: -4,
                                         title: "Position",
                                         render: function (data, type, full, meta) {
                                             return data;
                                         },
                                     },
                                     {
-                                        targets: -4,
+                                        targets: -5,
                                         title: "Grade",
                                         render: function (data, type, full, meta) {
                                             return data;
                                         },
                                     },
                                     {
-                                        targets: -5,
+                                        targets: -6,
                                         title: "Name",
                                         render: function (data, type, full, meta) {
                                             return data;
                                         },
                                     },
                                     {
-                                        targets: -6,
+                                        targets: -7,
                                         title: "Staff ID",
                                         render: function (data, type, full, meta) {
                                             return data;
                                         },
                                     },
                                     {
-                                        targets: -7,
+                                        targets: -8,
                                         title: "No",
                                         render: function (data, type, full, meta) {
                                             return counter++;
@@ -941,6 +1122,34 @@
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.error("AJAX request failed:", textStatus, errorThrown);
                     swarning();
+                }
+            });
+        }
+
+
+        function listCuti() {
+            $.ajax({
+                url: linkDepan + "GetCutiList",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.cuti_code + "'>" + value.cuti_name + "</option>";
+                        });
+                        $('#cuti').append(auxArr.join(''));
+                    } else {
+                        $("#cuti").addClass(" is-invalid");
+
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
                 }
             });
         }
