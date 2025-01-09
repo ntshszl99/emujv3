@@ -2832,7 +2832,6 @@
     <Content Include="assets\scss\plugins\wysiwyag\_richtext.scss" />
     <Content Include="assets\scss\style.scss" />
     <Content Include="assets\scss\_variables.scss" />
-    <Content Include=".vs\ProjectSettings.json" />
     <Content Include=".vs\slnx.sqlite" />
     <Content Include=".vs\themeforest-0yBMtiGd-dashtic-html-admin-template\FileContentIndex\6a0e142a-4286-422c-b66b-64d43239ee83.vsidx" />
     <Content Include=".vs\themeforest-0yBMtiGd-dashtic-html-admin-template\FileContentIndex\87e4f6d2-1391-45eb-812a-7dfc1c1baf2b.vsidx" />
@@ -3095,6 +3094,7 @@
     <Content Include="assets\scss\_variables-dark-material.scss" />
     <Content Include="assets\scss\_variables-dark.scss" />
     <Content Include="assets\scss\_variables-material.scss" />
+    <Content Include=".vs\ProjectSettings.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
