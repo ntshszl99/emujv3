@@ -1419,7 +1419,7 @@ END) AS TotalTime";
             SqlStr.Append(" e.category_name, a.category_details, ");
             SqlStr.Append(" a.daily_timestart, a.daily_timelast, a.daily_timetaken, a.station, a.station_point, ");
             SqlStr.Append(" a.daily_additional, a.rpt_code ");
-            SqlStr.Append(" from daily_form as a, region as b, kmuj as c, section as d, category as e, work_type as f, condition as g ");
+            SqlStr.Append(" from daily_form as a, region as b, kmuj as c, section as d, category as e, kerja as f, condition as g ");
             SqlStr.Append(" where a.daily_section = b.region_id ");
             SqlStr.Append(" and a.daily_kmuj = c.kmuj_value ");
             SqlStr.Append(" and a.daily_sec = d.section_val ");

@@ -121,14 +121,16 @@
             <div class="modal fade" id="modalDetails" tabindex="-1" aria-labelledby="modalUpdateLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
-                        <div class="modal-body text-left p-4">
-                            <h4 class=" mt-5">Report ID: </h4>
-                            <input readonly id="rptcode" type="text" class="text-success form-control text-left bg-transparent border-0">
+                        <div class="modal-body p-4">
+                            <div class="d-flex flex-column align-items-center">
+                                <label class="mt-5 form-label"><strong>Report ID</strong></label>
+                                <input readonly id="rptcode" type="text" class="text-success form-control text-center bg-transparent border-0">
+                            </div>
                             <div class="modal-body">
                                 <div class="row col-12">
                                     <div class="col-3">
                                         <label class="mt-5 form-label"><strong>Region</strong></label>
-                                        <p readonly id="region" type="text" class="form-control text-left bg-transparent border-0">
+                                        <input readonly id="region" type="text" class="form-control text-left bg-transparent border-0">
                                     </div>
                                     <div class="col-3">
                                         <label class="mt-5 form-label"><strong>KMUJ</strong></label>
@@ -228,7 +230,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <button class="btn btn-light mb-5" data-bs-dismiss="modal" aria-label="Close" type="button">Close</button>
+                            <div class="d-flex justify-content-center">
+                                <button class="btn btn-light mb-5" data-bs-dismiss="modal" aria-label="Close" type="button">Close</button>
+                            </div>
                         </div>
                     </div>
                 </div>

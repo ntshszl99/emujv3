@@ -110,7 +110,7 @@
                                 </div>
                                 <div class="col-3">
                                     <label class="mt-5 form-label">Effected KM (meter)</label>
-                                    <input type="text" id="totalKM" class="form-control" placeholder="Total KM" readonly>
+                                    <input readonly type="text" id="totalKM" class="form-control" placeholder="Total KM" >
                                 </div>
                                 <div></div>
                                 <div class="col-3">
@@ -122,7 +122,7 @@
                                     <input type="time" id="endTime" class="form-control" placeholder="End Time" required="required">
                                 </div>
                                 <div class="col-3">
-                                    <label class="mt-5 form-label">Time Taken KM</label>
+                                    <label class="mt-5 form-label">Time Taken</label>
                                     <input type="text" id="totalTime" class="form-control" readonly>
                                 </div>
                                 <div></div>
@@ -449,14 +449,20 @@
                             localStorage.getItem("selScn"),
                             localStorage.getItem("selGng"));
                     } else if (["2", "3", "4", "5", "6"].includes(localStorage.getItem("lvlI"))) {
-                        var formData = gatherFormData(); 
+                        var formData = gatherFormData();
+                        var Workers = formData.Workers;
 
-                        var Kmuj = formData.Kmuj;  
-                        var Region = formData.Region;  
-                        var Workers = formData.Workers;  
+                        var kmj = $("#kmuj").val();  
+                        localStorage.setItem("selKmj", kmj);  
 
-                        listGangPax(Kmuj, Region, Workers);  
-                        listReports(Kmuj, Region, Workers); e form
+                        var scn = $("#section").val();  
+                        localStorage.setItem("selScn", scn); 
+
+                        var gng = $("#gang option:selected").text();
+                        localStorage.setItem("selGng", gng);
+
+                        listGangPax(kmj, scn, gng);  
+                        listReports(kmj, scn, gng); 
                     }
                 }
             },
@@ -631,6 +637,8 @@
                     console.log('gang2:', gang2);
                     console.log('kmuj2:', kmuj2);
                     console.log('section2:', section2);
+                    console.log('effect_kmtotal:', data[0].effect_kmtotal);
+
                 },
                 error: function (xhr) {
                     swarning();
