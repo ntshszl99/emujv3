@@ -132,7 +132,7 @@
                                 <div class="col-3">
                                     <div class="mb-3 mt-5">
                                         <div class="form-label">Work at Station?</div>
-                                        <div class="custom-controls-stacked">
+                                        <div class="custom-controls-stacked" required="required">
                                             <label class="custom-control custom-radio">
                                                 <input type="radio" class="custom-control-input" name="station_option" id="id_radio1" value="Yes">
                                                 <span class="custom-control-label">Yes</span>
@@ -365,6 +365,13 @@
 
             });
 
+            $('#addnotes').on('input', function () {
+                let value = this.value;
+                if (value.length > 0) {
+                    this.value = value.charAt(0).toUpperCase() + value.slice(1);
+                }
+            });
+
             //modal user details & delete user
             $('#modalDetails').on('show.bs.modal', function (e) {
                 var ids = $(e.relatedTarget).data('id');
@@ -377,7 +384,7 @@
             $("#submitUpdate").click(function () {
                 var ids = $('#modalDetails').data('id');
                 console.log('read ' + ids);
-                (ids);
+                updateUser(ids);
             });
 
         });
@@ -479,10 +486,10 @@
 
             if (linecond === "UpLine") {
                 if (startKM > endKM) {
-                    $('#totalKM').val(totalKM.decimal(3));
+                    $('#totalKM').val(totalKM);
                 }
                 else {
-                    alert('End KM must be smaller than Start KM');
+                    Swal.fire('Invalid KM Range', 'End KM must be smaller than Start KM.', 'warning');
                     $('#totalKM').val('');
                 }
             } else if (linecond === "DownLine") {
@@ -490,13 +497,16 @@
                     $('#totalKM').val(totalKM);
                 }
                 else {
-                    alert('End KM must be greater than Start KM');
+
+                    Swal.fire('Invalid KM Range', 'End KM must be greater than Start KM.', 'warning');
                     $('#totalKM').val('');
                 }
             } else if (endKM < startKM) {
-                alert('End KM must be greater than Start KM');
+                Swal.fire('Invalid KM Range', 'End KM must be greater than Start KM.', 'warning');
                 $('#totalKM').val('');
-            } 
+            }
+            else $('#totalKM').val(totalKM);
+
         }
 
         function validateTime() {
@@ -528,7 +538,6 @@
                 '#startKM', '#endKM', '#startTime', '#endTime'
             ];
 
-            // Validate common fields
             requiredFields.forEach(function (field) {
                 if ($(field).val() === '' || $(field).val() === '-0') {
                     isValid = false;
@@ -538,8 +547,7 @@
                 }
             });
 
-            // Special validation for #gang (multiple select field)
-            let gangValue = $('#gang').val(); // This will return an array
+            let gangValue = $('#gang').val();
             if (!gangValue || gangValue.length === 0 || gangValue.includes('-0')) {
                 isValid = false;
                 $('#gang').addClass('is-invalid');
@@ -547,13 +555,29 @@
                 $('#gang').removeClass('is-invalid');
             }
 
-            // Alert if invalid fields exist
+            const stationOption = $('input[name="station_option"]:checked').val();
+            if (!stationOption) {
+                isValid = false;
+                $('#id_radio1').addClass('is-invalid');  
+                $('#id_radio2').addClass('is-invalid');  
+            } else {
+                $('#id_radio1').removeClass('is-invalid');
+                $('#id_radio2').removeClass('is-invalid');
+            }
+
             if (!isValid) {
-                alert('Please fill all required fields.');
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Validation Error',
+                    text: 'Please fill all required fields.',
+                    confirmButtonText: 'OK'
+                });
             }
 
             return isValid;
         }
+
+
         function gatherFormData() {
             var UpdBy = localStorage.getItem('usrI');
             var Region = localStorage.getItem('regID');

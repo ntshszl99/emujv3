@@ -31,15 +31,15 @@
                             <div class="row">
                                 <div class="col-3">
                                     <label class="mt-5 form-label"><strong>Region</strong></label>
-                                    <input readonly id="region" type="text" class="form-control text-left bg-transparent border-0">
+                                    <input readonly id="region" type="text" class="form-control text-left bg-transparent border-0" required="required">
                                 </div>
                                 <div class="col-3">
                                     <label class="mt-5 form-label"><strong>KMUJ</strong></label>
-                                    <input readonly id="kmuj" type="text" class="form-control text-left bg-transparent border-0">
+                                    <input readonly id="kmuj" type="text" class="form-control text-left bg-transparent border-0" required="required">
                                 </div>
                                 <div class="col-3">
                                     <label class="mt-5 form-label"><strong>Section</strong></label>
-                                    <input readonly id="section" type="text" class="form-control text-left bg-transparent border-0">
+                                    <input readonly id="section" type="text" class="form-control text-left bg-transparent border-0" required="required">
                                 </div>
                                 <div></div>
                                 <div class="col-6">
@@ -69,26 +69,22 @@
                                 <div class="col-3">
                                     <label class="mt-5 form-label">Line</label>
                                     <select id="linecond" class="form-control form-select select2" required="required">
-                                        <option value="-0">.: Select Condition :.</option>
                                     </select>
                                 </div>
                                 <div class="col-3">
                                     <label class="mt-5 form-label">Category</label>
                                     <select id="category" class="form-control form-select select2" required="required">
-                                        <option value="-0">.: Select Category :.</option>
                                     </select>
                                 </div>
                                 <div id="catEmer" class="col-3" style='display:none;'>
                                     <label class="mt-5 form-label">Category</label>
                                     <select id="catdet" class="form-control form-select select2">
-                                        <option value="-">.: Select Emergency :.</option>
                                     </select>
                                 </div>
                                 <div></div>
                                 <div class="col-3">
                                     <label class="mt-5 form-label">Work Type</label>
                                     <select id="worktype" class="form-control form-select select2" required="required">
-                                        <option value="-0">.: Select Work Type :.</option>
                                     </select>
                                 </div>
                                 <div class="col-3">
@@ -110,7 +106,7 @@
                                 </div>
                                 <div class="col-3">
                                     <label class="mt-5 form-label">Effected KM (meter)</label>
-                                    <input readonly type="text" id="totalKM" class="form-control" placeholder="Total KM" >
+                                    <input readonly type="text" id="totalKM" class="form-control" placeholder="Total KM">
                                 </div>
                                 <div></div>
                                 <div class="col-3">
@@ -131,11 +127,11 @@
                                         <div class="form-label">Work at Station?</div>
                                         <div class="custom-controls-stacked">
                                             <label class="custom-control custom-radio">
-                                                <input type="radio" class="custom-control-input" name="station_option" id="id_radio1" value="Yes">
+                                                <input type="radio" class="custom-control-input" name="station_option" id="id_radio1" value="Yes" required="required">
                                                 <span class="custom-control-label">Yes</span>
                                             </label>
                                             <label class="custom-control custom-radio">
-                                                <input type="radio" class="custom-control-input" name="station_option" id="id_radio2" value="No">
+                                                <input type="radio" class="custom-control-input" name="station_option" id="id_radio2" value="No" required="required">
                                                 <span class="custom-control-label">No</span>
                                             </label>
                                         </div>
@@ -155,7 +151,7 @@
                                     <label class="mt-5 form-label">Additional Information</label>
                                     <textarea class="mb-5 form-control" id="addnotes" placeholder="Textarea" rows="3"></textarea>
                                 </div>
-                                <div class="d-flex justify-content-end">
+                                <div class="d-flex justify-content-center">
                                     <button type="button" id="submitNew" class='btn btn-success center m-1'>Update Form</button>
                                     <button type="button" class='btn btn-light center m-1' onclick="window.location.href='R1FormList'">Back</button>
                                 </div>
@@ -291,6 +287,15 @@
 
             });
 
+            //uppercase first letter
+            $('#addnotes').on('input', function () {
+                let value = this.value;
+                if (value.length > 0) {
+                    this.value = value.charAt(0).toUpperCase() + value.slice(1);
+                }
+            });
+
+
             //automatic show workunit when select worktype
             $("#worktype").on('change', function () {
                 wrk = $("#worktype option:selected").text();
@@ -364,18 +369,20 @@
             console.log('ID from URL:', id);
 
 
-            //button submit form
             $('#submitNew').click(function () {
+                console.log("Submit button clicked");
                 if (validateForm()) {
+                    console.log("Form is valid, proceeding with submission...");
                     submitForm();
                     submitAttendance();
                     submitAttendanceNo();
+                } else {
+                    console.log("Form is invalid, not submitting.");
                 }
             });
 
-            // If an ID is found, call the function to fetch details
             if (id) {
-                rptDetails(id); // Call the rptDetails function to fetch data
+                rptDetails(id);
             }
 
 
@@ -481,10 +488,10 @@
 
             if (linecond === "UpLine") {
                 if (startKM > endKM) {
-                    $('#totalKM').val(totalKM.decimal(3));
+                    $('#totalKM').val(totalKM);
                 }
                 else {
-                    alert('End KM must be smaller than Start KM');
+                    Swal.fire('Invalid KM Range', 'End KM must be smaller than Start KM.', 'warning');
                     $('#totalKM').val('');
                 }
             } else if (linecond === "DownLine") {
@@ -492,13 +499,15 @@
                     $('#totalKM').val(totalKM);
                 }
                 else {
-                    alert('End KM must be greater than Start KM');
+
+                    Swal.fire('Invalid KM Range', 'End KM must be greater than Start KM.', 'warning');
                     $('#totalKM').val('');
                 }
             } else if (endKM < startKM) {
-                alert('End KM must be greater than Start KM');
+                Swal.fire('Invalid KM Range', 'End KM must be greater than Start KM.', 'warning');
                 $('#totalKM').val('');
             }
+            else $('#totalKM').val(totalKM);
         }
 
         function validateTime() {
@@ -522,131 +531,23 @@
 
         }
 
-        $('#submitNew').click(function () {
-            // Check if the form is valid
-            if (validateForm()) {
-                // Proceed with form submission
-                submitForm();
-                submitAttendance();
-                submitAttendanceNo();
-            } else {
-                // If the form is invalid, show an error message
-                alert("Please select all field before submitting.");
-            }
-        });
-
         function validateForm() {
             let isValid = true;
+            let requiredFields = [
+                '#region', '#kmuj', '#section', '#datepicker',
+                '#linecond', '#category', '#worktype', '#total',
+                '#startKM', '#endKM', '#startTime', '#endTime'
+            ];
 
-            // Validate Region
-            let regionValue = $('#region').val();
-            if (regionValue === '' || regionValue === '-0' || regionValue === '0') {
-                isValid = false;
-                $('#region').addClass('is-invalid');
-            } else {
-                $('#region').removeClass('is-invalid');
-            }
+            requiredFields.forEach(function (field) {
+                if ($(field).val() === '' || $(field).val() === '-0') {
+                    isValid = false;
+                    $(field).addClass('is-invalid');
+                } else {
+                    $(field).removeClass('is-invalid');
+                }
+            });
 
-            // Validate KMUJ
-            let kmujValue = $('#kmuj').val();
-            if (kmujValue === '' || kmujValue === '-0' || kmujValue === '0') {
-                isValid = false;
-                $('#kmuj').addClass('is-invalid');
-            } else {
-                $('#kmuj').removeClass('is-invalid');
-            }
-
-            // Validate Section
-            let sectionValue = $('#section').val();
-            if (sectionValue === '' || sectionValue === '-0' || sectionValue === '0') {
-                isValid = false;
-                $('#section').addClass('is-invalid');
-            } else {
-                $('#section').removeClass('is-invalid');
-            }
-
-            // Validate Datepicker
-            let dateValue = $('#datepicker').val();
-            if (!dateValue || dateValue === '') {
-                isValid = false;
-                $('#datepicker').addClass('is-invalid');
-            } else {
-                $('#datepicker').removeClass('is-invalid');
-            }
-
-            // Validate Line Condition
-            let linecondValue = $('#linecond').val();
-            if (linecondValue === '0' || linecondValue === '-0' || linecondValue === '') {
-                isValid = false;
-                $('#linecond').addClass('is-invalid');
-            } else {
-                $('#linecond').removeClass('is-invalid');
-            }
-
-            // Validate Category
-            let categoryValue = $('#category').val();
-            if (categoryValue === '0' || categoryValue === '-0' || categoryValue === '') {
-                isValid = false;
-                $('#category').addClass('is-invalid');
-            } else {
-                $('#category').removeClass('is-invalid');
-            }
-
-            // Validate Work Type
-            let worktypeValue = $('#worktype').val();
-            if (worktypeValue === '0' || worktypeValue === '-0' || worktypeValue === '') {
-                isValid = false;
-                $('#worktype').addClass('is-invalid');
-            } else {
-                $('#worktype').removeClass('is-invalid');
-            }
-
-            // Validate Total
-            let totalValue = $('#total').val();
-            if (totalValue === '' || totalValue === '-0' || totalValue === '0') {
-                isValid = false;
-                $('#total').addClass('is-invalid');
-            } else {
-                $('#total').removeClass('is-invalid');
-            }
-
-            // Validate Start KM
-            let startKMValue = $('#startKM').val();
-            if (startKMValue === '' || startKMValue === '-0' || startKMValue === '0') {
-                isValid = false;
-                $('#startKM').addClass('is-invalid');
-            } else {
-                $('#startKM').removeClass('is-invalid');
-            }
-
-            // Validate End KM
-            let endKMValue = $('#endKM').val();
-            if (endKMValue === '' || endKMValue === '-0' || endKMValue === '0') {
-                isValid = false;
-                $('#endKM').addClass('is-invalid');
-            } else {
-                $('#endKM').removeClass('is-invalid');
-            }
-
-            // Validate Start Time
-            let startTimeValue = $('#startTime').val();
-            if (startTimeValue === '' || startTimeValue === '-0' || startTimeValue === '0') {
-                isValid = false;
-                $('#startTime').addClass('is-invalid');
-            } else {
-                $('#startTime').removeClass('is-invalid');
-            }
-
-            // Validate End Time
-            let endTimeValue = $('#endTime').val();
-            if (endTimeValue === '' || endTimeValue === '-0' || endTimeValue === '0') {
-                isValid = false;
-                $('#endTime').addClass('is-invalid');
-            } else {
-                $('#endTime').removeClass('is-invalid');
-            }
-
-            // Validate Gang
             let gangValue = $('#gang').val();
             if (!gangValue || gangValue.length === 0 || gangValue.includes('-0')) {
                 isValid = false;
@@ -655,12 +556,26 @@
                 $('#gang').removeClass('is-invalid');
             }
 
-            return isValid;
-            if (!isValid) {
-                $('html, body').animate({ scrollTop: $(firstInvalidField).offset().top }, 500);  // Scroll to first invalid field
-                firstInvalidField.focus();  // Focus on the first invalid field
+            const stationOption = $('input[name="station_option"]:checked').val();
+            if (!stationOption) {
+                isValid = false;
+                $('#id_radio1').addClass('is-invalid');
+                $('#id_radio2').addClass('is-invalid');
+            } else {
+                $('#id_radio1').removeClass('is-invalid');
+                $('#id_radio2').removeClass('is-invalid');
             }
 
+            if (!isValid) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Validation Error',
+                    text: 'Please fill all required fields.',
+                    confirmButtonText: 'OK'
+                });
+            }
+
+            return isValid;
         }
 
         //show gang pax based on gang type 
@@ -1130,7 +1045,7 @@
                     if (data && data.status === "00") {
                         swal.fire({
                             title: 'Success!',
-                            text: 'User details have been updated.',
+                            text: 'Form details have been updated.',
                             icon: 'success',
                             confirmButtonText: 'OK'
                         }).then(() => {
