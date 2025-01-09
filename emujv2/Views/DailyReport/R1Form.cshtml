@@ -478,11 +478,11 @@
                 return;
             }
 
-            const totalKM = endKM - startKM;
+            const totalKM = (endKM - startKM).toFixed(3);
 
             if (linecond === "UpLine") {
                 if (startKM > endKM) {
-                    $('#totalKM').val(totalKM);
+                    $('#totalKM').val(totalKM.decimal(3));
                 }
                 else {
                     alert('End KM must be smaller than Start KM');
