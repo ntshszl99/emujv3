@@ -75,7 +75,7 @@
                                 <div class="col-3">
                                     <label class="mt-5 form-label">Category</label>
                                     <select id="category" class="form-control form-select select2" required="required">
-                                        <option value="-0">.: Select Category :.</option>
+                                        <option value="0">.: Select Category :.</option>
                                     </select>
                                 </div>
                                 <div id="catEmer" class="col-3" style='display:none;'>
@@ -110,7 +110,7 @@
                                 </div>
                                 <div class="col-3">
                                     <label class="mt-5 form-label">Effected KM (meter)</label>
-                                    <input readonly type="text" id="totalKM" class="form-control" placeholder="Total KM" >
+                                    <input type="text" id="totalKM" class="form-control" placeholder="Total KM" readonly>
                                 </div>
                                 <div></div>
                                 <div class="col-3">
@@ -374,15 +374,54 @@
                     submitAttendance();
                     submitAttendanceNo();
                 }
+
+                //setTimeout(function () {
+                //    window.location.href = "R1FormList.cshtml";  
+                //}, 6000);
             });
 
-            // If an ID is found, call the function to fetch details
             if (id) {
-                rptDetails(id); // Call the rptDetails function to fetch data
+                rptDetails(id); 
             }
 
 
         });
+
+        function validateForm() {
+            let isValid = true;
+            let requiredFields = [
+                '#region', '#kmuj', '#section', '#datepicker',
+                '#linecond', '#category', '#worktype', '#total',
+                '#startKM', '#endKM', '#startTime', '#endTime'
+            ];
+
+            // Validate common fields
+            requiredFields.forEach(function (field) {
+                if ($(field).val() === '' || $(field).val() === '-0') {
+                    isValid = false;
+                    $(field).addClass('is-invalid');
+                } else {
+                    $(field).removeClass('is-invalid');
+                }
+            });
+
+            // Special validation for #gang (multiple select field)
+            let gangValue = $('#gang').val(); // This will return an array
+            if (!gangValue || gangValue.length === 0 || gangValue.includes('-0')) {
+                isValid = false;
+                $('#gang').addClass('is-invalid');
+            } else {
+                $('#gang').removeClass('is-invalid');
+            }
+
+            // Alert if invalid fields exist
+            if (!isValid) {
+                alert('Please fill all required fields.');
+            }
+
+            return isValid;
+        }
+
 
         function stfDetails(ids) {
             var staffID = $(".staffID" + ids).html();
