@@ -1,0 +1,707 @@
+﻿@{
+    ViewBag.Title = "RegisteredUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="app-content main-content">
+    <div class="side-app">
+        <div class="container-fluid main-container">
+
+            <!--Page header-->
+            <div class="page-header">
+                <div class="page-leftheader">
+                    <h4 class="page-title">Registered Users' List</h4>
+                </div>
+            </div>
+            <!--End Page header-->
+
+            <div class="" id="tempekList">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            <div class="table-responsive table-lg">
+                                <div class="card-body">
+                                    <div class="col-lg-12">
+                                        <div class="table-responsive table-lg">
+                                            <div class="mb-5 d-flex justify-content-start">
+                                                <a class="btn btn-success" data-bs-target="#modalTambah" data-bs-toggle="modal" href="javascript:void(0)">Add New User</a>
+                                            </div>
+                                            <table id="tableRep" class="table table-striped table-bordered text-nowrap">
+                                                <thead>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Modal Add User-->
+            <div class="modal" id="modalTambah">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h6 class="modal-title">Add New User</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body pd-0">
+                            <div class="card-body">
+                                <div class="mb-0 m-0">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <label class="form-label">Staff ID</label>
+                                            <select id="staffID" class="form-control form-select select2">
+                                            </select>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="mt-5 form-label">Staff Name</div>
+                                            <input readonly id="staffname" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="mt-5 form-label">Designation</div>
+                                            <input readonly id="position" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="mt-5 form-label">Region</div>
+                                            <input readonly id="region" type="text" class="form-control">
+                                        </div>
+                                        <div></div>
+                                        <div class="col-12">
+                                            <div id="kmujs" class="mt-5 form-label">KMUJ</div>
+                                            <div id="kmujss">
+                                                <select id="kmuj" class="form-control form-select select2" required="required">
+                                                    <option value="-0">.: Select KMUJ :.</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div id="sections" class="mt-5 form-label">Section</div>
+                                            <div id="sectionss">
+                                                <select id="section" class="form-control form-select select2" required="required">
+                                                    <option value="-0">.: Select Section :.</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="mt-5 form-label">Level Entitle</div>
+                                            <select id="userlevel" class="form-control form-select select2" required="required">
+                                                <option value="-0">.: Select Access Level :.</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer pd-20">
+                            <button class="btn btn-success" id="submitNew" type="button">Submit</button>
+                            <button class="btn btn-light" id="cancel" data-bs-dismiss="modal" ria-label="Close" type="button">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--Modal User Details-->
+            <div class="modal fade" id="modalDetails" tabindex="-1" aria-labelledby="modalUpdateLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body text-center p-4">
+                            <i class="fe fe-check-circle text-success lh-1 mg-t-20 d-inline-block" style="font-size: 5em;"></i>
+                            <h3 class="text-success">Confirm Action</h3>
+                            <p class="mg-b-20 mg-x-20">Are you sure to update this data?</p>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-label">Staff ID</div>
+                                        <input readonly id="staffID2" type="text" class="form-control text-center">
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mt-5 form-label">Staff Name</div>
+                                        <input readonly id="staffname2" type="text" class="form-control text-center">
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mt-5 form-label">Department</div>
+                                        <input readonly id="dept2" type="text" class="form-control text-center">
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mt-5 form-label">Designation</div>
+                                        <input readonly id="position2" type="text" class="form-control text-center">
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mt-5 form-label">Level Entitle</div>
+                                        <input readonly id="level2" type="text" class="form-control text-center">
+                                    </div>
+                                    <div class="mb-5"></div>
+                                    <div class="card-body bg-success-transparent-2">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-label">Level Entitle</div>
+                                                <select id="userlevel2" class="form-control form-select select2" required="required">
+                                                </select>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="mt-5 form-label">Staff Status</div>
+                                                <select id="status2" class="form-control form-select select2" required="required">
+                                                    <option value="active">Active</option>
+                                                    <option value="inactive">Inactive</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button id="submitUpdate" class="btn btn-success mb-5" type="button">Update</button>
+                            <button class="btn btn-light mb-5" data-bs-dismiss="modal" ria-label="Close" type="button">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Modal Update User Details-->
+            <div class="modal" id="modalDetails">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Staff Details</h5><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="card-body">
+                                <div class="mb-0 m-0">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-label">Staff ID</div>
+                                            <input readonly id="staffID2" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="mt-5 form-label">Staff Name</div>
+                                            <input readonly id="staffname2" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="mt-5 form-label">Department</div>
+                                            <input readonly id="dept2" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="mt-5 form-label">Designation</div>
+                                            <input readonly id="position2" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="mt-5 form-label">Level Entitle</div>
+                                            <input readonly id="level2" type="text" class="form-control">
+                                        </div>
+                                        <div class="mb-5"></div>
+                                        <div class="card-body bg-success-transparent-2">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-label">Level Entitle</div>
+                                                    <select id="userlevel2" class="form-control form-select select2" required="required">
+                                                    </select>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="mt-5 form-label">Staff Status</div>
+                                                    <select id="status2" class="form-control form-select select2" required="required">
+                                                        <option value="active">Active</option>
+                                                        <option value="inactive">Inactive</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer pd-20">
+                                    <button class="btn btn-success" id="submitUpdate" type="button">Submit</button> <button class="btn btn-light" data-bs-dismiss="modal" ria-label="Close" id="cancelUpdate" type="button">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <script src="~/assets/scripts/dashboard.js"></script>
+    <script src="~/assets/plugins/morris/morris.min.js"></script>
+    <script src="~/assets/plugins/raphael/raphael.min.js"></script>
+    <script src="~/assets/plugins/select2/select2.min.js"></script>
+
+    <script type="text/javascript">
+        checkSess();
+        $(document).ready(function () {
+
+            listKMUJ();
+            listSection();
+            maklumatStf();
+            listUsrLevel();
+            listReports();
+
+            //modal details user
+            $('#modalDetails').on('show.bs.modal', function (e) {
+                var ids = $(e.relatedTarget).data('id');
+                $(this).data('id', ids);
+                console.log('read ' + ids);
+                stfDet(ids);
+            });
+
+            //button submit update user
+            $("#submitUpdate").click(function () {
+                var ids = $('#modalDetails').data('id');
+                console.log('read ' + ids);
+                updateUser(ids);
+            });
+
+            //button submit add user
+            $('#submitNew').click(function () {
+                tambahUser();
+
+            });
+
+            //tambah user
+            $('#modalTambah').on('shown.bs.modal', function () {
+                $('#staffID').select2({
+                    dropdownParent: $('#modalTambah'),
+                    placeholder: "Type to search for Staff ID",
+                    minimumInputLength: 1,
+                    ajax: {
+                        url: function (params) {
+                            return linkDepan + "GetEngDetails?StaffId=" + params.term;
+                        },
+                        dataType: 'json',
+                        delay: 250,
+                        beforeSend: function (request) {
+                            request.setRequestHeader("Token", localStorage.getItem('main'));
+                        },
+                        data: function (params) {
+                            return {
+                                StaffId: params.term
+                            };
+                        },
+                        processResults: function (data) {
+                            return {
+                                results: $.map(data, function (item) {
+                                    return {
+                                        id: item.Emplid,
+                                        text: item.Emplid
+                                    };
+                                })
+                            };
+                        },
+                        cache: true
+                    }
+                }).on("select2:select", function (e) {
+                    var selectedStaffID = e.params.data.id;
+                    localStorage.setItem("selID", selectedStaffID);
+                    console.log(selectedStaffID);
+                    maklumatStf(selectedStaffID);
+                })
+                if ($('#modalTambah').on('hidden.bs.modal')) {
+                    $('#staffID').val(null).trigger('change');
+                    $('#staffname').val(null).trigger('change');
+                    $('#position').val(null).trigger('change');
+                    $('#region').val(null).trigger('change');
+                    $("#kmuj").val("-0").trigger("change.select2");
+                    $("#section").val("-0").trigger("change.select2");
+                    $("#userlevel").val("-0").trigger("change.select2");
+                }
+            });
+
+
+        });
+
+        function maklumatStf(staffID) {
+            console.log("maklumatStf called with staffID:", staffID);
+            $.ajax({
+                url: linkDepan + "GetUserDetails?StaffId=" + staffID,
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    console.log("maklumatStf success callback data:", data);
+                    if (data && Array.isArray(data) && data.length > 0) {
+                        for (let i = 0; i < 3 && i < data.length; i++) {
+                            console.log("Name:", data[i].Nama);
+                            console.log("Region:", data[i].RegDesc);
+                            console.log("Position:", data[i].JobDesc);
+
+                            $('#staffname').val(data[0].Nama);
+                            $('#region').val(data[0].RegDesc);
+                            $('#position').val(data[0].JobDesc);
+
+                            if (data[i].RegDesc === 'HQ') {
+                                console.log('Data region is HQ');
+                                $('#kmujs').hide('fast');
+                                $('#kmujss').hide('fast'); // Hide KMUJ dropdown
+                                $('#sections').hide('fast');
+                                $('#sectionss').hide('fast'); // Hide Section dropdown
+                            } else {
+                                console.log('Data region is not HQ');
+                                $('#kmujs').show('fast');
+                                $('#kmujss').show('fast'); // Show KMUJ dropdown
+                                $('#sections').show('fast');
+                                $('#sectionss').show('fast'); // Show Section dropdown
+                            }
+                        }
+                    }
+                },
+                error: function (xhr) {
+                    console.error("maklumatStf error callback:", xhr);
+                    swarning();
+                },
+                complete: function () {
+                    console.log("maklumatStf complete callback");
+                }
+            });
+        }
+
+        //update hal user
+        function updateUser(ids) {
+            var data = {
+                Userid: ids,
+                UserLevel: $('#userlevel2').val(),
+                Status: $('#status2').val(),
+            };
+
+            console.log("Updating user:", ids);
+            console.log("User Level:", $("#userlevel2 option:selected").text());
+            console.log("Status:", $("#status2 option:selected").text());
+
+            $.ajax({
+                url: linkDepan + "UpdateUser",
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (response) {
+                    var data;
+                    try {
+                        data = JSON.parse(response);
+                    } catch (error) {
+                        console.error("Error parsing JSON:", error);
+                        swarning();
+                        return;
+                    }
+                    if (data && data.status === "00") {
+                        $('#modalDetails').modal('hide');
+                        swal.fire('Success!', 'User details have been updated.', 'success');
+                        listReports();
+                    } else {
+                        $('#modalDetails').modal('hide');
+                        swarning();
+                    }
+                    console.log("Response data:", data);
+                },
+            });
+        }
+
+        //tamboh user dehh
+        function tambahUser() {
+            var data = {
+                Userid: $('#staffID').val(),
+                Nama: $('#staffname').val(),
+                Designation: $('#position').val(),
+                Region: $("#region").val(),
+                KMUJ: $("#kmuj option:selected").val(),
+                Section: $("#section option:selected").val(),
+                UserLevel: $("#userlevel option:selected").val(),
+            };
+
+            if (data.Region == 'HQ') {
+                if ($("#kmuj option:selected").val() == '-0' || $("#section option:selected").val() == '-0') {
+                    data.Kmuj = ' ';
+                    data.Section = ' ';
+                    if ($("#userlevel option:selected").val() == '-0') {
+                        alert('Please select User Level.');
+                    }
+                    else executeUser(data);
+                }
+
+            }
+            else if (data.Region != 'HQ') {
+                if ($("#kmuj option:selected").val() == '-0') {
+                    alert('Please select KMUJ.');
+                }
+                else if ($("#section option:selected").val() == '-0') {
+                    alert('Please select Section.');
+                }
+                else if ($("#userlevel option:selected").val() == '-0') {
+                    alert('Please select User Level.');
+                }
+                else executeUser(data);
+            }
+        }
+
+        function executeUser(data) {
+            console.log("UPDATING USER:", data.Userid);
+            console.log("Nama:", data.Nama);
+            console.log("Designation:", data.Designation);
+            console.log("Region:", data.Region);
+            console.log("KMUJ:", data.KMUJ);
+            console.log("SECTION:", data.Section);
+            console.log("USER LEVEL:", data.UserLevel);
+
+            $.ajax({
+                url: linkDepan + "NewUser",
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (response) {
+                    var data;
+                    try {
+                        data = JSON.parse(response);
+                    } catch (error) {
+                        console.error("Error parsing JSON:", error);
+                        swarning();
+                        return;
+                    }
+                    if (data && data.status === "00") {
+                        $('#modalTambah').modal('hide');
+                        swal.fire('Success!', 'New user successfully added.', 'success');
+                        listReports();
+                    } else {
+                        $('#modalTambah').modal('hide');
+                        swarning();
+                    }
+                    console.log("Response data:", data);
+                },
+            });
+        }
+
+        function stfDet(ids) {
+            var staffID = $("staffID" + ids).html();
+            console.log(staffID);
+            $.ajax({
+                url: linkDepan + "Get?StaffId=" + ids,
+                type: 'GET',
+                dataType: 'json',
+                data: {},
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data && Array.isArray(data) && data.length > 0) {
+                        $('#staffID2').val(data[0].staff_id);
+                        $('#staffname2').val(data[0].staff_name);
+                        $('#dept2').val(data[0].dept);
+                        $('#position2').val(data[0].position);
+                        $('#level2').val(data[0].ref_level_name);
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+        function listUsrLevel() {
+            $.ajax({
+                url: linkDepan + "GetUserLevelList",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.ref_level_no + "'>" + value.ref_level_name + "</option>";
+                        });
+                        $('#userlevel, #userlevel2').append(auxArr.join(''));
+                    } else {
+                        $("#userlevel, #userlevel2").addClass(" is-invalid");
+
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+        function listKMUJ() {
+            $.ajax({
+                url: linkDepan + "KMUJList",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.kmuj_value + "'>" + value.kmuj_name + "</option>";
+                        });
+                        $('#kmuj').append(auxArr.join(''));
+                    } else {
+                        $("#kmuj").addClass(" is-invalid");
+
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+        function listSection() {
+            $.ajax({
+                url: linkDepan + "GetSectionList",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.section_val + "'>" + value.section_name + "</option>";
+                        });
+                        $('#section').append(auxArr.join(''));
+                    } else {
+                        $("#section").addClass(" is-invalid");
+
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+        function listReports() {
+            $.ajax({
+                url: linkDepan + "GetUser?",
+                type: 'GET',
+                dataType: 'json',
+                data: {},
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    $.fn.dataTable.ext.errMode = 'throw';
+                    if ($.fn.dataTable.isDataTable('#tableRep')) {
+                        $('#tableRep').DataTable().destroy();
+                    }
+                    $.fn.dataTable.ext.errMode = 'throw';
+                    var counter = 1, countStf = 0, countID = 0;
+                    $('#tableRep').DataTable({
+                        dom: 'Bfrtip',
+                        buttons: [
+                            'copy', 'csv', 'excel', 'pdf', 'print'
+                        ],
+                        responsive: true,
+                        data: data,
+                        columns: [
+                            { data: "Emplid" },
+                            { data: "Nama" },
+                            { data: "JobDesc" },
+                            { data: "LocDesc" },
+                            { data: "RegDesc" },
+                            { data: "ref_level_name" },
+                            { data: "staff_status" },
+                            { data: "Emplid" },
+                        ],
+                        columnDefs: [
+                            {
+                                targets: -1,
+                                title: "Actions",
+                                render: function (data, type, full, meta) {
+                                    countStf++;
+
+                                    /*return '<a href="..' + data + '" id="BviewRes" class="btn btn-primary"><i class="fe fe-edit font-16"></i>';*/
+                                    return '<a class="btn btn-primary" data-id="' + data + '" data-bs-target="#modalDetails" data-bs-toggle="modal" class="btn btn-primary"><i class="fe fe-edit font-16"></i></a>'
+                                    //return '<button type="button" data-id="' + data + '" class="btn btn-gradient-secondary waves-effect" data-toggle="modal" data-animation="bounce" data-target="#modalDetails">Late Details</button>';
+
+                                },
+                            },
+                            {
+                                targets: -2,
+                                title: "Status",
+                                render: function (data, type, full, meta) {
+                                    var status = '';
+                                    if (data == 'active') { status = '<a class="text-success">' + 'Active' + ' <i class="ion-checkmark-circled"></i></a></p >'; }
+                                    else {
+                                        status = '<a class="text-danger">' + 'Inactive' + ' <i class="ion-close-circled"></i></a></p >';
+                                    }
+                                    return status;
+                                },
+                            },
+                            {
+                                targets: -3,
+                                title: "Level",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                            {
+                                targets: -4,
+                                title: "Region",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                            {
+                                targets: -5,
+                                title: "Location",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                            {
+                                targets: -6,
+                                title: "Designation",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                            {
+                                targets: -7,
+                                title: "Name",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                            {
+                                targets: -8,
+                                title: "Staff ID",
+                                render: function (data, type, full, meta) {
+                                    return data;
+                                },
+                            },
+                        ],
+                        rowId: function (a) {
+                            return countID++;
+                        },
+                        createdRow: function (row, data, dataIndex) {
+                            $('td', row).addClass('text-nowrap align-middle');
+                        }
+
+                    });
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+
+
+    </script>
+}

@@ -1,0 +1,911 @@
+﻿
+@{
+    ViewBag.Title = "R1Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="app-content main-content">
+    <div class="side-app">
+        <div class="container-fluid main-container">
+
+            <!--Page header-->
+            <div class="page-header">
+                <div class="page-leftheader">
+                    <h4 class="page-title">Weekly Work Planning</h4>
+                </div>
+            </div>
+        
+
+            <!--End Page header-->
+
+            <div class="" id="content">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3 m-0">
+                            <div class="row">
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Region</label>
+                                    <select id="region" class="form-control form-select select2" required="required">
+                                        <option value="-0">Select Region</option>
+                                        <option id="tempekUsrRegion"></option>
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">KMUJ</label>
+                                    <select disabled id="kmuj" class="form-control form-select select2" required="required">
+                                        <option value="-0">Select KMUJ</option>
+                                        <option id="tempekKMUJ" data="tempekKMUJVal"></option>
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Section</label>
+                                    <select disabled id="section" class="form-control form-select select2" required="required">
+                                        <option value="-0">Select Section</option>
+                                        <option id="tempekScn"></option>
+                                    </select>
+                                </div>
+                                <div></div>
+                                <div class="col-6">
+                                    <label class="mt-5 form-label">Gang</label>
+                                    <select disabled id="gang" type="text" class="form-control form-select select2" required="required" multiple>
+                                        <option value="-0">Select Gang</option>
+                                    </select>
+                                </div>
+                                <div class="mb-5 col-3">
+                                    <label class="mt-5 form-label">No. of Staff (Valid)</label>
+                                    <input readonly id="gangno" type="text" class="form-control">
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="table-responsive table-lg">
+                                        <table id="tableRep" class="table table-striped table-bordered text-nowrap">
+                                            <thead>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div></div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Work Date</label>
+                                    <input type="text" id="datepicker" class="form-control" required="required">
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Line</label>
+                                    <select id="linecond" class="form-control form-select select2" required="required">
+                                        <option value="-0">.: Select Condition :.</option>
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Category</label>
+                                    <select id="category" class="form-control form-select select2" required="required">
+                                        <option value="-0">.: Select Category :.</option>
+                                    </select>
+                                </div>
+                                <div id="catEmer" class="col-3" style='display:none;'>
+                                    <label class="mt-5 form-label">Category</label>
+                                    <select id="catdet" class="form-control form-select select2">
+                                        <option value="-">.: Select Emergency :.</option>
+                                    </select>
+                                </div>
+                                <div></div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Work Type</label>
+                                    <select id="worktype" class="form-control form-select select2" required="required">
+                                        <option value="-0">.: Select Work Type :.</option>
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Total</label>
+                                    <input id="total" type="text" class="form-control" placeholder="Total" required="required">
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Unit</label>
+                                    <input id="unit" class="form-control" placeholder="Unit" readonly>
+                                </div>
+                                <div></div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Effected KM (Start)</label>
+                                    <input type="number" id="startKM" class="form-control" placeholder="Start KM" required="required">
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Effected KM (End)</label>
+                                    <input type="number" id="endKM" class="form-control" placeholder="End KM" required="required">
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Effected KM (meter)</label>
+                                    <input type="text" id="totalKM" class="form-control" placeholder="Total KM" readonly>
+                                </div>
+                                <div></div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Time Start </label>
+                                    <input type="time" id="startTime" class="form-control" placeholder="Start Time" required="required">
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Time End</label>
+                                    <input type="time" id="endTime" class="form-control" placeholder="End Time" required="required">
+                                </div>
+                                <div class="col-3">
+                                    <label class="mt-5 form-label">Time Taken KM</label>
+                                    <input type="text" id="totalTime" class="form-control" readonly>
+                                </div>
+                                <div></div>
+                                <div class="col-3">
+                                    <div class="mb-3 mt-5">
+                                        <div class="form-label">Work at Station?</div>
+                                        <div class="custom-controls-stacked">
+                                            <label class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" name="station_option" id="id_radio1" value="Yes">
+                                                <span class="custom-control-label">Yes</span>
+                                            </label>
+                                            <label class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" name="station_option" id="id_radio2" value="No">
+                                                <span class="custom-control-label">No</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="station" class="col-3" style="display:none;">
+                                    <label class="mt-5 form-label">Station</label>
+                                    <select id="stationn" class="form-control form-select select2">
+                                        <option value="">.: Select Station :.</option>
+                                    </select>
+                                </div>
+                                <div id="point" class="col-3" style="display:none;">
+                                    <label class="mt-5 form-label">Point No.</label>
+                                    <input type="text" id="stPoint" class="form-control" placeholder="Station's Point">
+                                </div>
+                                <div class="col-xl-12">
+                                    <label class="mt-5 form-label">Additional Information</label>
+                                    <textarea class="mb-5 form-control" id="addnotes" placeholder="Textarea" rows="3"></textarea>
+                                </div>
+                                <div class="text-center">
+                                    <button type="button" id="submitNew" class='btn btn-success center'>Submit Form</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="" id="contentOthers">
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-3 m-0">
+                        <div class="row">
+                            <div class="card-body">
+                                <h4 class="text-muted">Alert</h4>
+                                <p class="text-muted">Sorry, no data found.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- end app-content-->
+
+
+
+@section scripts{
+    <script src="~/assets/scripts/dashboard.js"></script>
+    <script src="~/assets/scripts/semua.js"></script>
+    <script src="~/assets/scripts/dashboard.js"></script>
+    <script src="~/assets/plugins/morris/morris.min.js"></script>
+    <script src="~/assets/plugins/raphael/raphael.min.js"></script>
+    <script src="~/assets/plugins/select2/select2.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            listGang();
+            listLnCondition();
+            listCategory();
+            listWorkType();
+            listCatDetails();
+            listWorkUnit();
+            listReports();
+            listLocation();
+
+            console.log(localStorage.getItem("lvlI"));
+            if (localStorage.getItem("lvlI") === "2" || localStorage.getItem("lvlI") === "3" || localStorage.getItem("lvlI") === "6") {
+                $("#content").hide();
+                $("#contentOthers").show();
+            }
+            else {
+                $("#content").show();
+                $("#contentOthers").hide();
+            }
+
+            // Handle click events on radio buttons
+            $('#id_radio1').click(function () {
+                $('#station').show('fast');
+                $('#point').show('fast');
+            });
+
+            $('#id_radio2').click(function () {
+                $('#station').hide('fast');
+                $('#point').hide('fast');
+            });
+
+            $("#datepicker").datepicker({
+                singleDatePicker: true,
+                showDropdowns: true,
+                minYear: 2021,
+                locale: {
+                    format: 'DD/MM/YYYY'
+                }
+            });
+
+            //button submit form
+            $('#submitNew').click(function () {
+                if (validateForm()) {
+                    submitForm();
+                    submitAttendance();
+                    submitAttendanceNo();
+
+                }
+            });
+
+            //disabled selection
+            $("#region").on('change', function () {
+                if ($("#region").val() == '-0') {
+                    $('#kmuj').prop('disabled', true);
+                }
+                else {
+                    $('#kmuj').prop('disabled', false);
+                }
+            });
+            $("#kmuj").on('change', function () {
+                if ($("#kmuj").val() == '-0') {
+                    $('#section').prop('disabled', true);
+                }
+                else {
+                    $('#section').prop('disabled', false);
+                }
+            });
+            $("#section").on('change', function () {
+                if ($("#section").val() == '-0') {
+                    $('#gang').prop('disabled', true);
+                }
+                else {
+                    $('#gang').prop('disabled', false);
+                }
+            });
+
+            //automatic show workunit when select worktype
+            $("#worktype").on('change', function () {
+                wrk = $("#worktype option:selected").text();
+                localStorage.setItem("selWrk", wrk, this.value);
+                listWorkUnit(localStorage.getItem("selWrk", this.value));
+            });
+
+            //show/hide work catergory - emegergency
+            $("#category").on('change', function () {
+                if ($("#category option:selected").val() == '1') {
+                    $("#catEmer").show();
+                }
+                else {
+                    $("#catEmer").hide();
+                }
+            });
+
+            $('#startKM, #endKM').on('change', function () {
+                validateKM();
+            });
+
+            $('#startTime, #endTime').on('change', function () {
+                validateTime();
+            });
+
+            $("#kmuj, #section, #gang").on('change', function () {
+                kmj = $("#kmuj option:selected").text();
+                localStorage.setItem("selKmj", kmj);
+
+                scn = $("#section option:selected").text();
+                localStorage.setItem("selScn", scn);
+
+                var gng = $("#gang option:selected").text();
+                localStorage.setItem("selGng", gng);
+
+                listGangPax(kmj, scn, gng);
+                listReports(kmj, scn, gng);
+
+            });
+         
+        });
+ 
+        function validateKM() {
+            var startKM = parseFloat($('#startKM').val());
+            var endKM = parseFloat($('#endKM').val());
+            var totalKM = (endKM - startKM) * 1000;
+
+            if (endKM < startKM) {
+                alert('End KM must be greater than Start KM');
+            } else {
+                $('#totalKM').val(totalKM);
+            }
+        }
+
+        function validateTime() {
+            const startTime = $('#startTime').val();
+            const endTime = $('#endTime').val();
+
+            const start = new Date(`1970-01-01T${startTime}:00`);
+            const end = new Date(`1970-01-01T${endTime}:00`);
+
+            let diff = (end - start) / 1000 / 60;
+
+            if (diff < 0) {
+                diff += 24 * 60;
+            }
+
+            const hours = Math.floor(diff / 60);
+            const minutes = diff % 60;
+
+            const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+            $('#totalTime').val(formattedTime);
+
+        }
+
+        function validateForm() {
+            let isValid = true;
+            let requiredFields = [
+                '#region', '#kmuj', '#section', '#datepicker',
+                '#linecond', '#category', '#worktype', '#total',
+                '#startKM', '#endKM', '#startTime', '#endTime'
+            ];
+
+            // Validate common fields
+            requiredFields.forEach(function (field) {
+                if ($(field).val() === '' || $(field).val() === '-0') {
+                    isValid = false;
+                    $(field).addClass('is-invalid');
+                } else {
+                    $(field).removeClass('is-invalid');
+                }
+            });
+
+            // Special validation for #gang (multiple select field)
+            let gangValue = $('#gang').val(); // This will return an array
+            if (!gangValue || gangValue.length === 0 || gangValue.includes('-0')) {
+                isValid = false;
+                $('#gang').addClass('is-invalid');
+            } else {
+                $('#gang').removeClass('is-invalid');
+            }
+
+            // Alert if invalid fields exist
+            if (!isValid) {
+                alert('Please fill all required fields.');
+            }
+
+            return isValid;
+        }
+        function gatherFormData() {
+            var UpdBy = localStorage.getItem('usrI');
+            var Region = localStorage.getItem('regID');
+            var Kmuj = localStorage.getItem('kmujVal');
+            var Section = localStorage.getItem('scnVal');
+            var formattedDate = moment($('#datepicker').val(), 'MM/DD/YYYY').format('DD/MM/YYYY');
+
+            var gangValues = $("#gang").val();
+            var gangArray = gangValues;
+
+            var attValues = $("#tableRep").DataTable().rows().data().toArray();
+            var AttId = attValues.map(function (item) {
+                return item.Emplid;
+            });
+            var workers = $('#gangno').val().replace(/\D/g, '');
+
+            var formData = {
+                UpdBy: UpdBy,
+                Region: Region,
+                Kmuj: Kmuj,
+                Section: Section,
+                Gang: gangArray,
+                Date: formattedDate,
+                AttId: AttId, // Ensure this is an array
+                WorkType: $('#worktype').val(),
+                Total: $('#total').val(),
+                TotalUnit: $('#unit').val(),
+                TimeStart: $('#startTime').val(),
+                TimeLast: $('#endTime').val(),
+                Category: $('#category').val(),
+                Condition: $('#linecond').val(),
+                Adds: $('#addnotes').val(),
+                TimeTaken: $('#totalTime').val(),
+                KMFrom: $('#startKM').val(),
+                KMTo: $('#endKM').val(),
+                KMTotal: $('#totalKM').val(),
+                Station: $('#stationn').val(),
+                SPoint: $('#stPoint').val(),
+                CatDetails: $('#catdet').val(),
+                Temp: $('#temp').val(),
+                Workers: workers,
+            };
+
+            console.log("FormData:", formData);
+
+            return formData;
+        }
+
+        function submitForm() {
+            var formData = gatherFormData();
+            $.ajax({
+                url: linkDepan + "NewForm",
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(formData), // Serialize the form data to JSON
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (response) {
+                    var data;
+                    try {
+                        data = JSON.parse(response);
+                    } catch (error) {
+                        console.error("Error parsing JSON:", error);
+                        swarning();
+                        return;
+                    }
+                    if (data && data.status === "00") {
+                        swal.fire({
+                            title: 'Success!',
+                            text: 'Form has been submitted.',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    } else {
+                        swarning();
+                    }
+                    if (localStorage.getItem("lvlI") === "2" || localStorage.getItem("lvlI") === "3" || localStorage.getItem("lvlI") === "6") {
+                        $("#content").hide();
+                        $("#contentOthers").show();
+                    } else {
+                        $("#content").show();
+                        $("#contentOthers").hide();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("AJAX request failed:", textStatus, errorThrown);
+                    swarning();
+                }
+            });
+        }
+
+
+        //CHECK SMULA URL
+        function submitAttendance(gang) {
+            var formData = gatherFormData();
+            var gang = formData.gang; // Extract gang data from formData
+
+            $.ajax({
+                url: linkDepan + "DailyAttendList?Gang=" + gang,
+
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(formData), // Serialize the form data to JSON
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (response) {
+                    var data;
+                    try {
+                        data = JSON.parse(response);
+                    } catch (error) {
+                        console.error("Error parsing JSON:", error);
+                        swarning();
+                        return;
+                    }
+                    if (data && data.status === "00") {
+                     
+                    } else {
+                        swarning();
+                    }
+                    if (localStorage.getItem("lvlI") === "2" || localStorage.getItem("lvlI") === "3" || localStorage.getItem("lvlI") === "6") {
+                        $("#content").hide();
+                        $("#contentOthers").show();
+                    } else {
+                        $("#content").show();
+                        $("#contentOthers").hide();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("AJAX request failed:", textStatus, errorThrown);
+                    swarning();
+                }
+            });
+        }
+
+        function submitAttendanceNo(gang) {
+            var formData = gatherFormData();
+            var gang = formData.gang; // Extract gang data from formData
+
+            $.ajax({
+                url: linkDepan + "DailyAttendListNo?Gang=" + gang,
+
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(formData), // Serialize the form data to JSON
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (response) {
+                    var data;
+                    try {
+                        data = JSON.parse(response);
+                    } catch (error) {
+                        console.error("Error parsing JSON:", error);
+                        swarning();
+                        return;
+                    }
+                    if (data && data.status === "00") {
+                        
+                    } else {
+                        swarning();
+                    }
+                    if (localStorage.getItem("lvlI") === "2" || localStorage.getItem("lvlI") === "3" || localStorage.getItem("lvlI") === "6") {
+                        $("#content").hide();
+                        $("#contentOthers").show();
+                    } else {
+                        $("#content").show();
+                        $("#contentOthers").hide();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("AJAX request failed:", textStatus, errorThrown);
+                    swarning();
+                }
+            });
+        }
+
+
+        function listReports(kmuj, section, gang) {
+            if (typeof gang === "string") {
+                gang = gang.split(/(?<=\d)(?=Gang)/);
+            }
+            if (Array.isArray(gang) && gang.length > 0) {
+                var gangString = gang.join(",");
+                $.ajax({
+                    url: linkDepan + "GetGListNormal?Kmuj=" + kmuj + "&Section=" + section + "&Gang=" + gangString,
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {},
+                    beforeSend: function (request) {
+                        request.setRequestHeader("Token", localStorage.getItem('main'));
+                    },
+                    success: function (response) {
+                        try {
+                            // Log the response to inspect it
+                            console.log("Server Response:", response);
+
+                            // Initialize DataTable with the correct column definitions
+                            var counter = 1;
+                            $.fn.dataTable.ext.errMode = 'throw';
+                            if ($.fn.dataTable.isDataTable('#tableRep')) {
+                                $('#tableRep').DataTable().destroy();
+                                $('#tableRep').empty(); // Clear the table contents
+                            }
+                            $('#tableRep').DataTable({
+                                responsive: true,
+                                data: response,
+                                columns: [
+                                    { data: "Emplid" },
+                                    { data: "Emplid" },
+                                    { data: "Nama" },
+                                    { data: "JobGrade" },
+                                    { data: "JobDesc" },
+                                    { data: "Gang" },
+                                    { data: "cuti_name" },
+                                ],
+                                columnDefs: [
+                                    {
+                                        targets: -1,
+                                        title: "Status",
+                                        render: function (data, type, full, meta) {
+                                            var status = '';
+                                            if (data == 'VALID') {
+                                                status = '<a class="text-success">' + data + ' <i class="ion-checkmark-circled"></i></a></p>';
+                                            } else {
+                                                status = '<a class="text-danger">' + data + ' <i class="ion-close-circled"></i></a></p>';
+                                            }
+                                            return status;
+                                        },
+                                    },
+                                    {
+                                        targets: -2,
+                                        title: "Gang",
+                                        render: function (data, type, full, meta) {                                    
+                                            return data;
+                                        },
+                                    },
+                                    {
+                                        targets: -3,
+                                        title: "Position",
+                                        render: function (data, type, full, meta) {
+                                            return data;
+                                        },
+                                    },
+                                    {
+                                        targets: -4,
+                                        title: "Grade",
+                                        render: function (data, type, full, meta) {
+                                            return data;
+                                        },
+                                    },
+                                    {
+                                        targets: -5,
+                                        title: "Name",
+                                        render: function (data, type, full, meta) {
+                                            return data;
+                                        },
+                                    },
+                                    {
+                                        targets: -6,
+                                        title: "Staff ID",
+                                        render: function (data, type, full, meta) {
+                                            return data;
+                                        },
+                                    },
+                                    {
+                                        targets: -7,
+                                        title: "No",
+                                        render: function (data, type, full, meta) {
+                                            return counter++;
+                                        }
+                                    }
+                                ],
+                                createdRow: function (row, data, dataIndex) {
+                                    $('td', row).addClass('text-nowrap align-middle');
+                                }
+                            });
+                        } catch (error) {
+                            console.error("Error parsing JSON:", error);
+                            if ($.fn.dataTable.isDataTable('#tableRep')) {
+                                $('#tableRep').DataTable().destroy();
+                                $('#tableRep').empty(); // Clear the table contents
+                            }
+            
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error("AJAX request failed:", textStatus, errorThrown);
+                        if ($.fn.dataTable.isDataTable('#tableRep')) {
+                            $('#tableRep').DataTable().destroy();
+                            $('#tableRep').empty(); // Clear the table contents
+                        }
+      
+                    }
+                });
+            }
+        }
+
+
+        //show workunit after select worktype
+        function listWorkUnit(workunit) {
+            $.ajax({
+                url: linkDepan + "GetWorkUnit?WorkUnit=" + workunit,
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data && Array.isArray(data) && data.length > 0) {
+                        $('#unit').val(data[0].unit);
+                    }
+                },
+            });
+        }
+
+        //show gang pax based on gang type
+        function listGangPax(kmuj, section, gang) {
+            if (typeof gang === "string") {
+                gang = gang.split(/(?<=\d)(?=Gang)/);
+            }
+
+            if (Array.isArray(gang)) {
+                var gangString = gang.join(",");
+
+                $.ajax({
+                    url: linkDepan + "GetGangPax",
+                    data: {
+                        Kmuj: kmuj,
+                        Section: section,
+                        Gang: gangString
+                    },
+                    dataType: "json",
+                    beforeSend: function (request) {
+                        request.setRequestHeader("Token", localStorage.getItem('main'));
+                    },
+                    success: function (data) {
+                        if (data && data.length > 0) {
+                            $('#gangno').val(data[0].count);
+                        } else {
+                            $('#gangno').val('0 pax');
+                        }
+                    },
+                    error: function (error) {
+                        $('#gangno').val("");
+                    }
+                });
+            } else {
+                return;
+            }
+        }
+
+        function listGang() {
+            $.ajax({
+                url: linkDepan + "GangList",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.id + "'>" + value.gang + "</option>";
+                        });
+                        $('#gang').append(auxArr.join(''));
+                    } else {
+                        $("#gang").addClass(" is-invalid");
+
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+        function listLnCondition() {
+            $.ajax({
+                url: linkDepan + "GetLineConditionList",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.cond_id + "'>" + value.cond_name + "</option>";
+                        });
+                        $('#linecond').append(auxArr.join(''));
+                    } else {
+                        $("#linecond").addClass(" is-invalid");
+
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+        function listCategory() {
+            $.ajax({
+                url: linkDepan + "GetCategory",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.category_id + "'>" + value.category_name + "</option>";
+                        });
+                        $('#category').append(auxArr.join(''));
+                    } else {
+                        $("#category").addClass(" is-invalid");
+
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+        function listCatDetails() {
+            $.ajax({
+                url: linkDepan + "GetCategoryDetails",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.id + "'>" + value.details + "</option>";
+                        });
+                        $('#catdet').append(auxArr.join(''));
+                    } else {
+                        $("#catdet").addClass(" is-invalid");
+
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+        function listWorkType() {
+            $.ajax({
+                url: linkDepan + "GetWorkType",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.id + "'>" + value.work_name + "</option>";
+                        });
+                        $('#worktype').append(auxArr.join(''));
+                    } else {
+                        $("#worktype").addClass(" is-invalid");
+
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+        function listLocation() {
+            $.ajax({
+                url: linkDepan + "GetLocation",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.LCN_CODE + "'>" + value.LCN_NAME + "</option>";
+                        });
+                        $('#stationn').append(auxArr.join(''));
+                    } else {
+                        $("#stationn").addClass(" is-invalid");
+
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+
+    </script>
+}
+
+
+
+

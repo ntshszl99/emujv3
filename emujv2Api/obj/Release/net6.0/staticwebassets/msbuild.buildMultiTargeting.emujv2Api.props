@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\emujv2Api.props" />
+</Project>

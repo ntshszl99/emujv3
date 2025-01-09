@@ -1,0 +1,362 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="app-content main-content">
+    <div class="side-app">
+        <div class="container-fluid main-container">
+
+            <!--Page header-->
+            <div class="page-header">
+                <div class="page-leftheader">
+                    <h4 class="page-title">Gang Registration</h4>
+                </div>
+            </div>
+            <!--End Page header-->
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="mb-3 m-0">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <label class="mt-5 form-label">Gang</label>
+                                        <select id="gang" class="form-control form-select select2" required>
+                                            <option value="-0">.: Select Gang :.</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="col-lg-12">
+                                        <div class="table-responsive table-lg">
+                                            <table id="tableWork" class="table table-striped table-bordered text-nowrap" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Staff ID</th>
+                                                        <th>Staff Name</th>
+                                                        <th>Grade</th>
+                                                        <th>Position</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="col-3">
+                                                            <select id="staffID" class="form-control form-select select2">
+                                                            </select>
+                                                        </td>
+                                                        <td class="col-3">
+                                                            <input class="form-control" id="staffname" readonly />
+                                                        </td>
+                                                        <td class="col-3">
+                                                            <input class="form-control" id="grade" readonly />
+                                                        </td>
+                                                        <td class="col-3">
+                                                            <input class="form-control" id="position" readonly />
+                                                        </td>
+                                                        <td>
+                                                            <button class="delBtn btn btn-danger delete deleteBtn">Delete</button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <button id="submitGang" type="button" class='btn btn-success submit m-1'>Submit Gang</button>
+                                    <button id="addBtn" type="button" class='btn btn-primary addmore m-1'>Add More</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- end app-content-->
+
+
+
+@section scripts{
+    <script src="~/assets/scripts/dashboard.js"></script>
+    <script src="~/assets/scripts/semua.js"></script>
+    <script src="~/assets/scripts/dashboard.js"></script>
+    <script src="~/assets/plugins/morris/morris.min.js"></script>
+    <script src="~/assets/plugins/raphael/raphael.min.js"></script>
+    <script src="~/assets/plugins/select2/select2.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            checkStore();
+            listGang();
+            maklumatStf();
+
+            var updBy = localStorage.getItem('usrI');
+
+            initializeSelect2ForStaffID('#staffID');
+            $('#addBtn').click(function () {
+                var newRow = $('#tableWork tbody tr:first').clone();
+                newRow.find('input').val('');
+
+                var staffSelect = newRow.find('select[id^="staffID"]');
+                staffSelect.val('');
+                newRow.find('.select2-container').remove();
+
+                var newStaffID = 'staffID' + Date.now();
+                staffSelect.attr('id', newStaffID);
+
+                $('#tableWork tbody').append(newRow);
+                initializeSelect2ForStaffID('#' + newStaffID);
+
+            });
+
+            $('#tableWork').on('click', '.deleteBtn', function (event) {
+                event.preventDefault();
+                var $row = $(this).closest('tr');
+                var $tableBody = $('#tableWork tbody');
+
+                if ($tableBody.find('tr').length > 1) {
+                    $row.remove();
+                } else {
+                    $row.find('input').val('');
+                    $row.find('select').val('').trigger('change');
+                }
+            });
+
+            //button submit update user
+            $('#submitGang').click(function () {
+                $('#tableWork tbody tr').each(function () {
+                    var row = $(this);
+                    console.log("Row:", {
+                        staffId: row.find('select[id^="staffID"]').val(),
+                        nama: row.find('#staffname').val(),
+                        grade: row.find('#grade').val(),
+                        designation: row.find('#position').val(),
+                        UpdBy: updBy,
+                    });
+                });
+                if ($("#gang").val() === '-0') {
+                    swarning('Please select Gang', 'error');
+                }
+                else tambahGang();
+            });
+
+        });
+
+        function tambahGang() {
+            var data = [];
+            var uniqueStaffIds = new Set();
+            var updBy = localStorage.getItem('usrI');
+            var kmuj = localStorage.getItem('kmujVal');
+            var section = localStorage.getItem('scnVal');
+
+            $('#tableWork tbody tr').each(function () {
+                var row = $(this); // This is a jQuery object
+                var staffId = row.find('select[id^="staffID"]').val();
+                var nama = row.find('#staffname').val();
+                var grade = row.find('#grade').val();
+                var designation = row.find('#position').val();
+
+                // Log each value to ensure it is correctly retrieved
+                console.log("Processing row:");
+                console.log("staffId:", staffId);
+                console.log("nama:", nama);
+                console.log("grade:", grade);
+                console.log("designation:", designation);
+
+                // Check for duplicate StaffId
+                if (uniqueStaffIds.has(staffId)) {
+                    console.warn(`Duplicate StaffId found: ${staffId}`);
+                    return; // Skip this row
+                }
+
+                uniqueStaffIds.add(staffId);
+
+                var rowData = {
+                    GangId: $('#gang').val(),
+                    StaffId: staffId,
+                    Nama: nama,
+                    Grade: grade,
+                    Designation: designation,
+                    UpdBy: updBy,
+                    KMUJ: kmuj,
+                    Section: section,
+                };
+
+                console.log("Row data:", rowData); // Log each row data
+                data.push(rowData);
+            });
+
+            console.log("Collected data:", data); // Log the final collected data
+            executeUser(data);
+        }
+
+
+
+        function executeUser(data) {
+            console.log("UPDATING USERS:", data);
+
+            $.ajax({
+                url: linkDepan + "NewGang",
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (response) {
+                    var responseData;
+                    try {
+                        responseData = JSON.parse(response);
+                    } catch (error) {
+                        console.error("Error parsing JSON:", error);
+                        swarning();
+                        return;
+                    }
+                    if (responseData && responseData.status === "00") {
+                        $('#modalTambah').modal('hide');
+                        swal.fire('Success!', 'New users successfully added.', 'success');
+
+                        $('#gang').val('-0').trigger('change');
+                        var $tableBody = $('#tableWork tbody');
+                        $tableBody.find('tr:gt(0)').remove(); 
+                        var $firstRow = $tableBody.find('tr:first');
+                        $firstRow.find('input').val(''); 
+                        $firstRow.find('select').val('').trigger('change');
+                    } 
+                    else if (responseData && responseData.status === "99") {
+                        $('#modalTambah').modal('hide');
+                        swarning(); ('Error!', 'User already registered', 'error');
+
+                    } 
+                },
+                error: function (xhr) {
+                    console.error("AJAX error:", xhr);
+                    swarning();
+                }
+            });
+        }
+
+
+
+
+
+        function initializeSelect2ForStaffID(selector) {
+            $(selector).select2({
+                placeholder: "Type to search for Staff ID",
+                minimumInputLength: 1,
+                ajax: {
+                    url: function (params) {
+                        return linkDepan + "GetEngDetails?StaffId=" + params.term;
+                    },
+                    dataType: 'json',
+                    delay: 250,
+                    beforeSend: function (request) {
+                        request.setRequestHeader("Token", localStorage.getItem('main'));
+                    },
+                    data: function (params) {
+                        return {
+                            StaffId: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    id: item.Emplid,
+                                    text: item.Emplid
+                                };
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            }).on("select2:select", function (e) {
+                var selectedStaffID = e.params.data.id;
+                var row = $(this).closest('tr');
+
+                console.log('selected:' + selectedStaffID);
+                maklumatStf(selectedStaffID, row);
+            });
+        }
+
+
+        // change according staffid
+        $(document).on('change', 'select[id^="staffID"]', function () {
+            var staffID = $(this).val();
+            var row = $(this).closest('tr');
+            maklumatStf(staffID, row);
+        });
+
+        function maklumatStf(staffID, row) {
+            if (!row || !staffID) {
+                console.error("maklumatStf: row or staffID is undefined");
+                return;
+            }
+
+            $.ajax({
+                url: linkDepan + "GetUserDetails?StaffId=" + staffID,
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    console.log("maklumatStf success callback data:", data);
+                    if (data && Array.isArray(data) && data.length > 0) {
+                        row.find('#staffname').val(data[0].Nama);
+                        row.find('#grade').val(data[0].Grade);
+                        row.find('#position').val(data[0].JobDesc);
+                    } else {
+                        row.find('#staffname').val('');
+                        row.find('#grade').val('');
+                        row.find('#position').val('');
+                    }
+                },
+                error: function (xhr) {
+                    console.error("maklumatStf error callback:", xhr);
+                    swarning();
+                },
+                complete: function () {
+                    console.log("maklumatStf complete callback");
+                }
+            });
+        }
+
+
+        //list gang
+        function listGang() {
+            $.ajax({
+                url: linkDepan + "GangList",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.id + "'>" + value.gang + "</option>";
+                        });
+                        $('#gang').append(auxArr.join(''));
+                    } else {
+                        $("#gang").addClass(" is-invalid");
+
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+    </script>
+}
+

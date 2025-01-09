@@ -1,0 +1,366 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
+    <meta name="keywords" content="admin, admin template, dashboard, admin dashboard, bootstrap 5, responsive, clean, ui, admin panel, ui kit, responsive admin, application, bootstrap 4, flat, bootstrap5, admin dashboard template" />
+    <title>e-MUJ@KTMB - Data Management System</title>
+    <link rel="icon" href="~/assets/images/users/emujlogo_webicon.png" type="image/x-icon" />
+    <link id="style" href="~/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/assets/css/style.css" rel="stylesheet" />
+    <link href="~/assets/css/plugin.css" rel="stylesheet" />
+    <link href="~/assets/css/animated.css" rel="stylesheet" />
+    <link href="~/assets/plugins/web-fonts/icons.css" rel="stylesheet" />
+    <link href="~/assets/plugins/web-fonts/font-awesome/font-awesome.min.css" rel="stylesheet">
+    <link href="~/assets/plugins/web-fonts/plugin.css" rel="stylesheet" />
+    <link href="~/assets/plugins/timepicker/bootstrap-material-datetimepicker.css" rel="stylesheet">
+    <link href="~/assets/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+
+
+
+</html>
+
+
+
+@RenderSection("css", false)
+</head>
+
+<body class="main-body app sidebar-mini light-mode ltr">
+    <div id="global-loader">
+        <img src="~/assets/images/users/emujlogo_webicon.png" alt="loader">
+    </div>
+    <div class="app-header header top-header">
+        <div class="container-fluid main-container">
+            <div class="d-flex">
+                <div class="dropdown side-nav">
+                    <div class="app-sidebar__toggle" data-bs-toggle="sidebar">
+                        <a class="open-toggle" href="javascript:void(0)">
+                            <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                        </a>
+                        <a class="close-toggle" href="javascript:void(0)">
+                            <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" /></svg>
+                        </a>
+                    </div>
+                </div>
+                <a class="header-brand" href="~/Home/Index">
+                    <img src="~/assets/images/users/emujlogo_webicon.png" class="header-brand-img desktop-lgo" alt="Dashtic logo">
+                    <img src="~/assets/images/users/emujlogo_webicon.png" class="header-brand-img dark-logo" alt="Dashtic logo">
+                    <img src="~/assets/images/users/emujlogo_webicon.png" class="header-brand-img mobile-logo" alt="Dashtic logo">
+                    <img src="~/assets/images/users/emujlogo_webicon.png" class="header-brand-img darkmobile-logo" alt="Dashtic logo">
+                </a>
+                <div class="d-flex order-lg-2 ms-lg-auto">
+                    <button class="navbar-toggler navresponsive-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon fe fe-more-vertical "></span>
+                    </button>
+                    <div class="navbar navbar-expand-lg navbar-nav-right responsive-navbar navbar-dark p-0">
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+                            <div class="dropdown header-theme">
+                                <a class="nav-link icon layout-setting">
+                                    <span class="dark-layout">
+                                        <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><rect fill="none" height="24" width="24" /><circle cx="12" cy="12" opacity=".3" r="3" /><path d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z" /></svg>
+                                    </span>
+                                    <span class="light-layout">
+                                        <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><rect fill="none" height="24" width="24" /><path d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27 C17.45,17.19,14.93,19,12,19c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z" opacity=".3" /><path d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z" /></svg>
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="dropdown header-fullscreen">
+                                <a class="nav-link icon full-screen-link" id="fullscreen-button">
+                                    <svg class="header-icon" x="1008" y="1248" viewBox="0 0 24 24" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M7,14 L5,14 L5,19 L10,19 L10,17 L7,17 L7,14 Z M5,10 L7,10 L7,7 L10,7 L10,5 L5,5 L5,10 Z M17,17 L14,17 L14,19 L19,19 L19,14 L17,14 L17,17 Z M14,5 L14,7 L17,7 L17,10 L19,10 L19,5 L14,5 Z"></path></svg>
+                                </a>
+                            </div>
+                            <div class="dropdown profile-dropdown">
+                                <a href="javascript:void(0)" class="nav-link icon leading-none" data-bs-toggle="dropdown">
+                                    <svg class="header-icon me-3" x="1008" y="1248" viewBox="0 0 24 24" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false">
+                                        <path d="M0 0h24v24H0V0z" fill="none" />
+                                        <path d="M12 16c-2.69 0-5.77 1.28-6 2h12c-.2-.71-3.3-2-6-2z" opacity=".3" />
+                                        <circle cx="12" cy="8" opacity=".3" r="2" />
+                                        <path d="M12 14c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4zm-6 4c.22-.72 3.31-2 6-2 2.7 0 5.8 1.29 6 2H6zm6-6c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0-6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2z" />
+                                    </svg>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow animated">
+                                    <a class="dropdown-item d-flex" href="~/Home/Index">
+                                        <svg class="header-icon me-3" x="1008" y="1248" viewBox="0 0 24 24" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false">
+                                            <path d="M0 0h24v24H0V0z" fill="none" />
+                                            <path d="M12 16c-2.69 0-5.77 1.28-6 2h12c-.2-.71-3.3-2-6-2z" opacity=".3" />
+                                            <circle cx="12" cy="8" opacity=".3" r="2" />
+                                            <path d="M12 14c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4zm-6 4c.22-.72 3.31-2 6-2 2.7 0 5.8 1.29 6 2H6zm6-6c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0-6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2z" />
+                                        </svg>
+                                        <div class="mt-1">Profile</div>
+                                    </a>
+                                    <a class="dropdown-item d-flex" href="~/Auth/Home">
+                                        <svg class="header-icon me-3" x="1008" y="1248" viewBox="0 0 24 24" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false">
+                                            <path d="M0 0h24v24H0V0zm0 0h24v24H0V0z" fill="none" />
+                                            <path d="M6 20h12V10H6v10zm2-6h3v-3h2v3h3v2h-3v3h-2v-3H8v-2z" opacity=".3" />
+                                            <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM8.9 6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2H8.9V6zM18 20H6V10h12v10zm-7-1h2v-3h3v-2h-3v-3h-2v3H8v2h3z" />
+                                        </svg>
+                                        <div class="mt-1">Sign Out</div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="app-sidebar__overlay" data-bs-toggle="sidebar"></div>
+    <div class="sticky">
+        <aside class="app-sidebar sidebar-scroll">
+            <div class="main-sidebar-header active">
+                <a class="desktop-logo logo-light active"><img src="~/assets/images/users/emujlogo_long.png" class="main-logo" alt="logo"></a>
+                <a class="desktop-logo logo-dark active"><img src="~/assets/images/users/emujlogo_longwhite.png" class="main-logo" alt="logo"></a>
+                <a class="logo-icon mobile-logo icon-light active"><img src="~/assets/images/users/emujlogo_webicon.png" alt="logo"></a>
+                <a class="logo-icon mobile-logo icon-dark active"><img src="~/assets/images/users/emujlogo_webicon.png" alt="logo"></a>
+            </div>
+            <div class="main-sidemenu">
+                <div class="app-sidebar__user">
+                    <div class="dropdown user-pro-body text-center">
+                        <div class="user-info text-center">
+                            <div class="text-center">
+                                <span id="tempekNamaUsr" class="text-center user pb-0 font-weight-bold"></span>
+                                <div></div>
+                                <span class="text-center user-semi-title" id="tempeUsrDesig"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-left disabled" id="slide-left"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z" /></svg></div>
+                <ul class="side-menu">
+                    <li class="slide">
+                        <a class="side-menu__item" href="javascript:void(0)">
+                            <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                                <polyline points="13 2 13 9 20 9"></polyline>
+                            </svg>
+                            <span class="side-menu__label">Daily Task</span>
+                        </a>
+                        <ul class="slide-menu" style="display: block;">
+                            <li class="sub-slide">
+                                <a class="sub-side-menu__item" href="/DailyReport/R1Form"><span class="sub-side-menu__label">Form</span></a>
+                            </li>
+                            <li class="sub-slide">
+                                <a class="sub-side-menu__item" href="/DailyReport/R1FormList"><span class="sub-side-menu__label">Form List</span></a>
+                            </li>
+                            <li class="sub-slide">
+                                <a class="sub-side-menu__item" href="/DailyReport/DailyReport"><span class="sub-side-menu__label">Daily Report</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item" href="javascript:void(0)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="side-menu__icon">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                            </svg>
+                            <span class="side-menu__label">Weekly Task</span>
+                        </a>
+                        <ul class="slide-menu" style="display: block;">
+                            <li class="sub-slide">
+                                <a class="sub-side-menu__item" href="/DailyReport/R1WeeklyProgramme"><span class="sub-side-menu__label">R1 Weekly Programme</span></a>
+                            </li>
+                            <li class="sub-slide">
+                                <a class="sub-side-menu__item" href="/DailyReport/R2WeeklyProgramme"><span class="sub-side-menu__label">R2 Weekly Programme</span></a>
+                            </li>
+                            <li class="sub-slide">
+                                <a class="sub-side-menu__item" href="/DailyReport/Checklist"><span class="sub-side-menu__label">Checklist</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item" href="javascript:void(0)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="side-menu__icon">
+                                <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+                            </svg>
+                            <span class="side-menu__label">Gang</span>
+                        </a>
+                        <ul class="slide-menu" style="display: block;">
+                            <li class="side-menu-label1">
+                                <a href="javascript:void(0)">Apps</a>
+                            </li>
+                            <li class="sub-slide">
+                                <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="/Gang/GangList"><span class="sub-side-menu__label">Gang List</span></a>
+                            </li>
+                            <li class="sub-slide">
+                                <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="/Gang/GangRegistration"><span class="sub-side-menu__label">Gang Registration</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item" href="javascript:void(0)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="side-menu__icon">
+                                <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z" />
+                            </svg>
+                            <span class="side-menu__label">User</span>
+                        </a>
+                        <ul class="slide-menu" style="display: block;">
+                            <li class="side-menu-label1">
+                                <a href="javascript:void(0)">Apps</a>
+                            </li>
+                            <li class="sub-slide">
+                                <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="/User/UserList"><span class="sub-side-menu__label">User List</span></a>
+                            </li>
+                            <li class="sub-slide">
+                                <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="/User/UserRegistration"><span class="sub-side-menu__label">User Registration</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item" data-bs-toggle="slide" href="/Home/Inventory">
+                            <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                            <span class="side-menu__label">Inventory</span>
+                        </a>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item" data-bs-toggle="slide" href="/Home/Manual">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="side-menu__icon">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                            </svg>
+                            <span class="side-menu__label">Manual</span>
+                        </a>
+                    </li>
+
+                </ul>
+                <div class="app-sidebar-help">
+                    <div class="dropdown text-center">
+                        <div class="help d-flex">
+                            <a href="javascript:void(0)" class="nav-link p-0 help-dropdown" data-bs-toggle="dropdown">
+                                <span class="font-weight-bold">Help Info</span> <i class="fa fa-angle-down ms-2"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow p-4">
+                                <div class="sidebar-dropdown-divider pb-3">
+                                    <h4 class="font-weight-bold">Any inquiries</h4>
+                                    <a class="d-block" href="javascript:void(0)">Siti Adibah Samsuddin</a>
+                                    <a class="d-block" href="javascript:void(0)">sitiadibah@ktmb.com.my</a>
+                                    <a class="d-block" href="javascript:void(0)">PABX 1505</a>
+                                </div>
+                                @*<div class="sidebar-dropdown-divider pb-3 pt-3 mb-3">
+                                        <p class="mb-1">Your Fax Number</p>
+                                        <a class="font-weight-bold" href="javascript:void(0)">88 8888 8888</a>
+                                    </div>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-right" id="slide-right"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z" /></svg></div>
+            </div>
+        </aside>
+    </div>
+    <!-- main-sidebar -->
+    <!-- app-content start-->
+    <div class="app-content content mt-0 ">
+        @RenderBody()
+        <!--Footer-->
+        <div class="modal fade modProfUsr" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title mt-0" id="exampleModalLabel">Profile User</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body  met-pro-bg">
+                                        <div class="met-profile">
+                                            <div class="row">
+                                                <div class="col-lg-7 align-self-center mb-3 mb-lg-0">
+                                                    <div class="met-profile-main">
+                                                        <div class="met-profile-main-pic"><i data-feather="users" class="align-self-center icon-lg icon-dual-purple"></i></div>
+                                                        <div class="met-profile_user-detail">
+                                                            <h5 class="met-user-name" id="profModNama">....</h5>
+                                                            <p class="mb-0 met-user-name-post" id="profModJwtn">-</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-5 ml-auto">
+                                                    <ul class="list-unstyled personal-detail">
+                                                        <li class="mt-2"><i class="dripicons-store text-info font-18 mt-2 mr-2"></i> <b>Department</b> : <span id="profModJbtn">-</span></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Footer-->
+    <!-- Back to top -->
+    <a href="#top" id="back-to-top">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z" /></svg>
+    </a>
+
+    <!-- Jquery js-->
+
+    <script src="~/assets/js/vendors/jquery.min.js"></script>
+
+
+    <script src="~/assets/js/custom.js"></script>
+
+    <script src="~/assets/js/jquery.min.js"></script>
+    <script src="~/assets/plugins/bootstrap/js/popper.min.js"></script>
+    <script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/assets/js/vendors/circle-progress.min.js"></script>
+    <script src="~/assets/plugins/rating/jquery.rating-stars.js"></script>
+    <script src="~/assets/plugins/p-scrollbar/p-scrollbar.js"></script>
+    <script src="~/assets/plugins/sidemenu/sidemenu.js"></script>
+    <script src="~/assets/js/sticky.js"></script>
+    <script src="~/assets/plugins/moment/moment.js"></script>
+    <script src="~/assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="~/assets/js/daterange.js"></script>
+    <script src="~/assets/plugins/jvectormap/jquery.vmap.js"></script>
+    <script src="~/assets/plugins/jvectormap/jquery.vmap.world.js"></script>
+    <script src="~/assets/plugins/jvectormap/jquery.vmap.sampledata.js"></script>
+    <script src="~/assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/plugins/datatable/js/dataTables.bootstrap5.js"></script>
+    <script src="~/assets/plugins/datatable/js/dataTables.buttons.min.js"></script>
+    <script src="~/assets/plugins/datatable/js/buttons.bootstrap5.min.js"></script>
+    <script src="~/assets/js/datatables.js"></script>
+    <script src="~/assets/js/select2.js"></script>
+    <script src="~/assets/plugins/counters/counterup.min.js"></script>
+    <script src="~/assets/plugins/counters/waypoints.min.js"></script>
+
+    <script src="~/assets/js/themeColors.js"></script>
+    <script src="~/assets/js/switcher-styles.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="~/assets/js/jquery.min.js"></script>
+    <script src="~/assets/js/jquery-ui.min.js"></script>
+    <script src="~/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/js/metismenu.min.js"></script>
+    <script src="~/assets/js/waves.js"></script>
+    <script src="~/assets/js/feather.min.js"></script>
+    <script src="~/assets/js/jquery.slimscroll.min.js"></script>
+    <script src="~/assets/plugins/sweet-alert2/sweetalert2.min.js"></script>
+    <script src="~/assets/pages/jquery.sweet-alert.init.js"></script>
+    <script src="~/assets/pages/jquery.animate.init.js"></script>
+    <script src="~/assets/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/assets/plugins/datatables/dataTables.buttons.min.js"></script>
+    <script src="~/assets/plugins/datatables/buttons.bootstrap4.min.js"></script>
+    <script src="~/assets/plugins/datatables/jszip.min.js"></script>
+    <script src="~/assets/plugins/datatables/pdfmake.min.js"></script>
+    <script src="~/assets/plugins/datatables/vfs_fonts.js"></script>
+    <script src="~/assets/plugins/datatables/buttons.html5.min.js"></script>
+    <script src="~/assets/plugins/datatables/buttons.print.min.js"></script>
+    <script src="~/assets/plugins/datatables/buttons.colVis.min.js"></script>
+    <script src="~/assets/plugins/moment/moment.js"></script>
+    <script src="~/assets/js/app.js"></script>
+    <script src="~/assets/scripts/semua.js"></script>
+
+    @RenderSection("scripts", false)
+</body>
+
+</html>

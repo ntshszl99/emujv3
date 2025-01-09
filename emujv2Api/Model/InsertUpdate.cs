@@ -25,7 +25,7 @@ namespace emujv2Api.Model
             CommonFunc Conn = new CommonFunc();
             Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
 
-            SqlStr.Append(" DELETE FROM gang_details WHERE staff_no = @StaffId ");
+            SqlStr.Append(" DELETE FROM gang_desc WHERE staff_no = @StaffId ");
 
             ParamTmp.Add("@StaffId", StaffId);
 
@@ -89,7 +89,7 @@ namespace emujv2Api.Model
             CommonFunc Conn = new CommonFunc();
             Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
 
-            SqlStr.Append(" UPDATE login_staff ");
+            SqlStr.Append(" UPDATE staff_login ");
             SqlStr.Append(" SET usrlevel = @UserLevel, ");
             SqlStr.Append(" staff_status = @Status, ");
             SqlStr.Append(" upd_date = CONVERT(varchar(10), GETDATE(), 103) + ' ' + REPLACE(CONVERT(varchar(5), GETDATE(), 108), ':', '') ");
@@ -178,7 +178,7 @@ namespace emujv2Api.Model
 
             SqlStr.Clear();
             SqlStr.Append(" SELECT staff_no ");
-            SqlStr.Append(" FROM gang_details WHERE staff_status = 'VALID' AND gang_id IN (");
+            SqlStr.Append(" FROM gang_desc WHERE staff_status = 'VALID' AND gang_id IN (");
 
             if (formCons.Gang != null && formCons.Gang.Any())
             {
@@ -238,7 +238,7 @@ namespace emujv2Api.Model
 
             SqlStr.Clear();
             SqlStr.Append(" SELECT staff_no ");
-            SqlStr.Append(" FROM gang_details WHERE staff_status = 'VALID' AND gang_id IN (");
+            SqlStr.Append(" FROM gang_desc WHERE staff_status = 'VALID' AND gang_id IN (");
 
             if (formCons.Gang != null && formCons.Gang.Any())
             {
@@ -298,7 +298,7 @@ namespace emujv2Api.Model
             CommonFunc Conn = new CommonFunc();
             Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
 
-            SqlStr.Append(" INSERT INTO login_staff ");
+            SqlStr.Append(" INSERT INTO staff_login ");
             SqlStr.Append(" ([login_id] ");
             SqlStr.Append(" ,[staff_id] ");
             SqlStr.Append(" ,[dept] ");
@@ -347,7 +347,7 @@ namespace emujv2Api.Model
             CommonFunc Conn = new CommonFunc();
             Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
 
-            SqlStr.Append(" UPDATE gang_details ");
+            SqlStr.Append(" UPDATE gang_desc ");
             SqlStr.Append(" SET staff_status = UPPER(@StatusCuti), ");
             SqlStr.Append(" upd_date = CONVERT(VARCHAR(10), GETDATE(), 103) + ' ' + CONVERT(VARCHAR(8), GETDATE(), 108) + ' ' + RIGHT(CONVERT(VARCHAR(20), GETDATE(), 22), 2) ");
             SqlStr.Append(" WHERE staff_no = @Userid ");
@@ -372,8 +372,8 @@ namespace emujv2Api.Model
 
             StringBuilder SqlStr = new StringBuilder();
             SqlStr.Append("SELECT ");
-            SqlStr.Append("(SELECT COUNT(*) FROM gang_details WHERE staff_no = @StaffId) AS staffSecCount, ");
-            SqlStr.Append("(SELECT COUNT(*) FROM STAFFSECTION WHERE no_perkh = @StaffId) AS StaffCount");
+            SqlStr.Append("(SELECT COUNT(*) FROM gang_desc WHERE staff_no = @StaffId) AS staffSecCount, ");
+            SqlStr.Append("(SELECT COUNT(*) FROM staff_section WHERE no_perkh = @StaffId) AS StaffCount");
 
             ParamTmp.Add("@StaffId", staffId ?? (object)DBNull.Value);
 
@@ -428,7 +428,7 @@ namespace emujv2Api.Model
                     StringBuilder SqlStr = new StringBuilder();
                     Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
 
-                    SqlStr.Append(" INSERT INTO gang_details ");
+                    SqlStr.Append(" INSERT INTO gang_desc ");
                     SqlStr.Append(" ([gang_id] ");
                     SqlStr.Append(", [staff_no] ");
                     SqlStr.Append(", [staff_name] ");
@@ -463,7 +463,7 @@ namespace emujv2Api.Model
                     StringBuilder SqlStrNew = new StringBuilder();
                     Dictionary<string, Object> ParamTmpNew = new Dictionary<string, Object>();
 
-                    SqlStrNew.Append(" INSERT INTO STAFFSECTION ");
+                    SqlStrNew.Append(" INSERT INTO staff_section ");
                     SqlStrNew.Append(" ([no_perkh] ");
                     SqlStrNew.Append(", [no_muj] ");
                     SqlStrNew.Append(", [no_section]) ");
@@ -487,7 +487,7 @@ namespace emujv2Api.Model
                     StringBuilder SqlStrNewer = new StringBuilder();
                     Dictionary<string, Object> ParamTmpNewer = new Dictionary<string, Object>();
 
-                    SqlStrNewer.Append(" INSERT INTO gang_details ");
+                    SqlStrNewer.Append(" INSERT INTO gang_desc ");
                     SqlStrNewer.Append(" ([gang_id] ");
                     SqlStrNewer.Append(", [staff_no] ");
                     SqlStrNewer.Append(", [staff_name] ");
@@ -658,7 +658,7 @@ namespace emujv2Api.Model
 
             SqlStr.Clear();
             SqlStr.Append(" SELECT staff_no ");
-            SqlStr.Append(" FROM gang_details WHERE staff_status = 'VALID' AND gang_id IN (");
+            SqlStr.Append(" FROM gang_desc WHERE staff_status = 'VALID' AND gang_id IN (");
 
             if (formCons.Gang != null && formCons.Gang.Any())
             {
@@ -721,7 +721,7 @@ namespace emujv2Api.Model
 
             SqlStr.Clear();
             SqlStr.Append(" SELECT staff_no ");
-            SqlStr.Append(" FROM gang_details WHERE staff_status != 'VALID' AND gang_id IN (");
+            SqlStr.Append(" FROM gang_desc WHERE staff_status != 'VALID' AND gang_id IN (");
 
             if (formCons.Gang != null && formCons.Gang.Any())
             {

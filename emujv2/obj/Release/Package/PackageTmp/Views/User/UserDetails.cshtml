@@ -1,0 +1,230 @@
+﻿
+@{
+    ViewBag.Title = "UserDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/assets/plugins/morris/morris.css">
+
+<div class="app-content main-content">
+    <div class="side-app">
+        <div class="container-fluid main-container">
+            <div class="row">
+
+                <div class="col-lg-12 col-xl-6 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="card-body ">
+                            <h4 class="card-title">Staff Details</h4>
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <td class="py-2 px-2">
+                                                <span class="font-weight-semibold w-50">Staff ID </span>
+                                            </td>
+                                            <td class="py-2 px-2" id="userID">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 px-2">
+                                                <span class="font-weight-semibold w-50">Name </span>
+                                            </td>
+                                            <td class="py-2 px-2" id="staffName">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 px-2">
+                                                <span class="font-weight-semibold w-50">Department </span>
+                                            </td>
+                                            <td class="py-2 px-2" id="deptName">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 px-2">
+                                                <span class="font-weight-semibold w-50">Position </span>
+                                            </td>
+                                            <td class="py-2 px-2" id="userDesig">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 px-2">
+                                                <span class="font-weight-semibold">Level </span>
+                                            </td>
+                                            <td class="py-2 px-2" id="userLevel">-</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-xl-6 col-md-12 col-sm-12">
+                    <form id="formStaff" method="post" autocomplete="off">
+                        <div class="card">
+                            <div class="card-body ">
+                                <h1 class="card-title">Update Staff Details</h1>
+                                <div class="table-responsive">
+                                    <table class="table mb-0">
+                                        <tbody>
+                                            <tr>
+                                                <td class="py-2 px-2">
+                                                    <span class="font-weight-semibold">Change User Level </span>
+                                                </td>
+                                                <td>
+                                                    <select class="py-2 px-2 form-control" id="uesrlevel">
+                                                        <option value="-0">Select User Level</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-10 ml-auto">
+                                        <button type="button" id="SaveData" name="" class="btn btn-pill btn-primary position-topright">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script src="~/assets/scripts/dashboard.js"></script>
+    <script src="~/assets/plugins/morris/morris.min.js"></script>
+    <script src="~/assets/plugins/raphael/raphael.min.js"></script>
+    @*<script src="~/assets/pages/jquery.morris.init.js"></script>*@
+    <script src="~/assets/scripts/semua.js"></script>
+    <script type="text/javascript">
+
+            checkSess();
+            checkStore();
+            listUserLevel();
+
+            uriR = window.location.pathname;
+            ptgs = uriR.split("/");
+            idx = ptgs[4];
+            userDetail(idx);
+
+
+            //$('#SaveData').click(function () {
+            //    errorMsg = 0;
+            //    var ayat = "Please select staff level : ";
+
+            //    var ulevel = $.trim($("#usrlevel").val());
+            //    //var ustatus = $.trim($("#usrstatus").val());
+
+            //    if (ulevel == "-0") {
+            //        errorMsg++, ayat += "<br/> *Staff Level";
+            //    }
+
+            //    if (errorMsg == 0) { simpanUserDetails(); }
+            //    else {
+            //        swarning(ayat);
+            //    }
+
+            //});
+
+
+        function userDetail(idx) {
+            $.ajax({
+                url: linkDepan + "GetUserDetail?StaffId=" + idx,
+                type: 'GET',
+                dataType: 'json',
+                data: {},
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    $("a#Bback").attr('href', '../User/' + (data.EMplid));
+                    $("#userID").html('' + (data.Emplid));
+                    $("#staffName").html((data.Nama));
+                    $("#deptName").html((data.JobDesc));
+                    $("#userDesig").html((data.RegDesc));
+                    $("#userLevel").html((data.ref_level_name));
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+        function simpanUserDetails() {
+            var dataForm = $("#formStaff").serializeArray();
+            var data = new FormData();
+
+            $(dataForm).each(function (i, field) {
+                data.append(field.name, field.value);
+            });
+
+            console.log(dataForm);
+            $.ajax({
+                url: linkDepan + "UpdateStaffDetails",
+                @* type: 'POST',
+                data: JSON.stringify(getFormData(dataForm)),
+                    dataType: "json",
+                        contentType: 'application/json',*@
+                        type: 'POST',
+                            data: data,
+                                mimeType: "multipart/form-data",
+                                    contentType: false,
+                                        processData: false,
+                                            beforeSend: function (request) {
+                                                request.setRequestHeader("Token", localStorage.getItem('main'));
+                                            },
+            success: function (data) {
+                var data = JSON.parse(data);
+                console.log(data);
+                if (data.status == "0") {
+                    salertSave();
+                    $('#formStaff').trigger("reset");
+                }
+                else if (data.status == "99") {
+                    swarning('Invalid Invoice Date');
+                }
+            },
+            error: function (xhr) {
+                swarning();
+            },
+            complete: function () {
+            }
+        });
+        }
+
+
+        // list user level
+        function listUserLevel() {
+            $.ajax({
+                url: linkDepan + "GetUserLevelList",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.ref_level_no + "'>" + value.ref_level_name + "</option>";
+                        });
+                        $('#usrlevel').append(auxArr.join(''));
+                    } else {
+                        $("#usrlevel").addClass(" is-invalid");
+
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () {
+                }
+            });
+        }
+
+       
+    </script>
+}
+
+

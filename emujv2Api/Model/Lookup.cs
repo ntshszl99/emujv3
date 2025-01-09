@@ -36,7 +36,7 @@ namespace emujv2Api.Model
 
 
             SqlStr.Append(" Select status, b.usrlevel ");
-            SqlStr.Append(" from HR_MAIN as a, [muj].[dbo].[login_staff] as b");
+            SqlStr.Append(" from HR_MAIN as a, [muj].[dbo].[staff_login] as b");
             SqlStr.Append(" where a.Emplid = b.staff_id ");
             SqlStr.Append(" and b.staff_id = @Emplid ");
             SqlStr.Append(" and status = @Status ");
@@ -118,7 +118,7 @@ namespace emujv2Api.Model
             string Salah = "";
             CommonFunc Conn = new CommonFunc();
 
-            SqlStr.Append(" Select a.usrlevel, b.ref_level_name From login_staff a inner join Ref_userlevel b on a.usrlevel = b.ref_level_no ");
+            SqlStr.Append(" Select a.usrlevel, b.ref_level_name From staff_login a inner join Ref_userlevel b on a.usrlevel = b.ref_level_no ");
             SqlStr.Append(" Where staff_id = @Emplid ");
             SqlStr.Append(" And staff_status = 'active' ");
 
@@ -150,7 +150,7 @@ namespace emujv2Api.Model
             CommonFunc Conn = new CommonFunc();
 
             SqlStr.Append(" select a.staff_id, a.kmuj, a.muj, c.section_id, c.section_name, b.kmuj_id, b.kmuj_name, d.region_id, d.region_name, d.region_nameE  ");
-            SqlStr.Append(" from login_staff as a, kmuj as b, section as c, region as d ");
+            SqlStr.Append(" from staff_login as a, kmuj as b, section as c, region as d ");
             SqlStr.Append(" where a.muj = b.kmuj_value ");
             SqlStr.Append(" and a.kmuj = c.section_val ");
             SqlStr.Append(" and b.region_id = d.region_id ");
@@ -193,7 +193,7 @@ namespace emujv2Api.Model
             CommonFunc Conn = new CommonFunc();
 
             SqlStr.Append(" select a.kmuj_name, b.region_nameE, b.region_name, b.region_id, c.staff_id ");
-            SqlStr.Append(" from kmuj as a, region as b, login_staff as c ");
+            SqlStr.Append(" from kmuj as a, region as b, staff_login as c ");
             SqlStr.Append(" where b.region_id = a.region_id ");
             SqlStr.Append(" and c.section = b.region_nameE  ");
             SqlStr.Append(" and staff_id = @Emplid");
@@ -362,7 +362,7 @@ namespace emujv2Api.Model
             SqlStr.Append("JOIN DailyAttendances e ON a.rpt_code = e.rpt_code ");
             SqlStr.Append("LEFT JOIN [HR_MAIN].[dbo].[HR_MAIN] ls ON LTRIM(RTRIM(e.staff_attd_no)) = LTRIM(RTRIM(ls.Emplid)) ");
             SqlStr.Append("LEFT JOIN daily_form_attendancelistno f ON LTRIM(RTRIM(f.staff_attdno_no)) = LTRIM(RTRIM(ls.Emplid)) ");
-            SqlStr.Append("LEFT JOIN gang_details gd ON LTRIM(RTRIM(f.staff_attdno_no)) = LTRIM(RTRIM(gd.staff_no)) ");
+            SqlStr.Append("LEFT JOIN gang_desc gd ON LTRIM(RTRIM(f.staff_attdno_no)) = LTRIM(RTRIM(gd.staff_no)) ");
             SqlStr.Append("WHERE ");
             SqlStr.Append("    CONVERT(datetime, a.daily_date, 103) >= @MulaTarikh ");
             SqlStr.Append("    AND CONVERT(datetime, a.daily_date, 103) <= @AkhirTarikh ");
@@ -525,7 +525,7 @@ namespace emujv2Api.Model
                 // Second query
                 StringBuilder SqlStr2 = new StringBuilder();
                 SqlStr2.Append("SELECT staff_name, staff_id, dept, usrlevel, staff_status ");
-                SqlStr2.Append("FROM login_staff ");
+                SqlStr2.Append("FROM staff_login ");
                 SqlStr2.Append("WHERE staff_id <> @no_staff ");
                 SqlStr2.Append("ORDER BY id DESC");
 
@@ -599,7 +599,7 @@ namespace emujv2Api.Model
             SqlStr.Append(" select a.Emplid, a.Nama,  ");
             SqlStr.Append(" (select concat(a.JobDesc, ' | ', a.Grade)) as JobDesc, ");
             SqlStr.Append(" a.LocDesc, a.RegDesc, c.ref_level_name, b.staff_status ");
-            SqlStr.Append(" from[HR_MAIN].[dbo].[HR_MAIN] as a, login_staff as b, Ref_userlevel as c ");
+            SqlStr.Append(" from[HR_MAIN].[dbo].[HR_MAIN] as a, staff_login as b, Ref_userlevel as c ");
             SqlStr.Append(" where a.Emplid = b.staff_id ");
             SqlStr.Append(" and b.usrlevel = c.ref_level_no ");
             SqlStr.Append(" order by a.Emplid asc ");
@@ -676,7 +676,7 @@ namespace emujv2Api.Model
             Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
 
             SqlStr.Append(" SELECT staff_id, dept, b.ref_level_name, staff_name, position, staff_status, section ");
-            SqlStr.Append(" FROM login_staff, Ref_userlevel as b ");
+            SqlStr.Append(" FROM staff_login, Ref_userlevel as b ");
             SqlStr.Append(" where usrlevel = b.ref_level_no ");
             SqlStr.Append(" and staff_id = @StaffId ");
 
@@ -697,7 +697,7 @@ namespace emujv2Api.Model
             Dictionary<string, Object> ParamTmp = new Dictionary<string, Object>();
 
             SqlStr.Append(" SELECT staff_no, staff_name, section_id, upd_by, upd_date, position, staff_status ");
-            SqlStr.Append(" FROM gang_details ");
+            SqlStr.Append(" FROM gang_desc ");
             SqlStr.Append(" where staff_no = @StaffId ");
 
             ParamTmp.Add("@StaffId", StaffId);
@@ -717,7 +717,7 @@ namespace emujv2Api.Model
 
 
             SqlStr.Append(" select b.Emplid, e.kmuj_name, d.section_name, b.Nama, b.JobGrade, UPPER(b.JobDesc) as JobDesc, UPPER(f.cuti_name) as cuti_name ");
-            SqlStr.Append(" from gang_details as a, [HR_MAIN].[dbo].[HR_MAIN] as b, STAFFSECTION as c, section as d, kmuj as e, Ref_Cuti as f, Gang as g ");
+            SqlStr.Append(" from gang_desc as a, [HR_MAIN].[dbo].[HR_MAIN] as b, staff_section as c, section as d, kmuj as e, Ref_Cuti as f, Gang as g ");
             SqlStr.Append(" where b.Emplid = ");
             SqlStr.Append(" (select distinct(c.no_perkh) ");
             SqlStr.Append(" where e.kmuj_name = @Kmuj ");
@@ -757,7 +757,7 @@ namespace emujv2Api.Model
                 var gangArray = Gang.Split(',');
 
                 SqlStr.Append(" select b.Emplid, e.kmuj_name, d.section_name, b.Nama, b.JobGrade, UPPER(b.JobDesc) as JobDesc, (select concat('Gang ', a.gang_id)) as Gang, UPPER(f.cuti_name) as cuti_name ");
-                SqlStr.Append(" from gang_details as a, [HR_MAIN].[dbo].[HR_MAIN] as b, STAFFSECTION as c, section as d, kmuj as e, Ref_Cuti as f, Gang as g ");
+                SqlStr.Append(" from gang_desc as a, [HR_MAIN].[dbo].[HR_MAIN] as b, staff_section as c, section as d, kmuj as e, Ref_Cuti as f, Gang as g ");
                 SqlStr.Append(" where b.Emplid = ");
                 SqlStr.Append(" (select distinct(c.no_perkh) ");
                 SqlStr.Append(" where d.section_name = @Section ");
@@ -809,10 +809,11 @@ namespace emujv2Api.Model
 
             SqlStr.Append(" select concat(count(*), ' pax') as count ");
             SqlStr.Append(" from (select b.Emplid, e.kmuj_name, d.section_name, b.Nama, b.JobGrade, UPPER(b.JobDesc) as JobDesc, UPPER(f.cuti_name) as cuti_name ");
-            SqlStr.Append(" from gang_details as a, [HR_MAIN].[dbo].[HR_MAIN] as b, STAFFSECTION as c, section as d, kmuj as e, Ref_Cuti as f, Gang as g ");
+            SqlStr.Append(" from gang_desc as a, [HR_MAIN].[dbo].[HR_MAIN] as b, staff_section as c, section as d, kmuj as e, Ref_Cuti as f, Gang as g ");
             SqlStr.Append(" where b.Emplid = ");
             SqlStr.Append(" (select distinct(c.no_perkh) ");
             SqlStr.Append(" where d.section_name = @Section ");
+            SqlStr.Append(" and cuti_name = 'VALID' ");
             SqlStr.Append(" and c.no_muj = e.kmuj_value ");
             SqlStr.Append(" and c.no_section = d.section_val ");
             SqlStr.Append(" and d.section_kmuj = e.kmuj_value ) ");

@@ -1,0 +1,405 @@
+﻿
+@{
+    ViewBag.Title = "R2WeeklyProgramme";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="app-content main-content">
+    <div class="side-app">
+        <div class="container-fluid main-container">
+            <!--Page header-->
+            <div class="page-header">
+                <div class="page-leftheader">
+                    <h4 class="page-title">Weekly Programme (R2)</h4>
+                </div>
+            </div>
+            <div class="" id="contentAdmin">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3 m-0">
+                            <div class="row">
+                                <div class="col-4">
+                                    <label class="mt-3 form-label">KMUJ</label>
+                                    <select id="kmuj" class="form-control form-select select2">
+                                        <option value="-0">Select KMUJ</option>
+                                    </select>
+                                </div>
+                                <div class="col-4">
+                                    <label class="mt-3 form-label">Section</label>
+                                    <select id="section" class="form-control form-select select2">
+                                        <option value="-0">Select Section</option>
+                                    </select>
+                                </div>
+                                <div class="col-4">
+                                    <label class="mt-3 form-label">Date (From - To)</label>
+                                    <div class="input-group">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text"><i class=" mt-1 mb-1 fa fa-solid fa fa-calendar font-20"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" id="txtDate" name="txtDate" required="required" autocomplete="off" />
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="col-lg-12">
+                                        <div class="col 4">
+                                            <div id="selectedValues" class="mb-3"></div>
+                                        </div>
+                                        <div class="table-responsive table-lg">
+                                            <table id="tableRep" class="table table-bordered text-nowrap hover">
+                                                <thead></thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                        <table class="table table-bordered table-striped mt-5">
+                                            <thead>
+                                                <tr class="text-center">
+                                                    <th scope="col">Description</th>
+                                                    <th scope="col">Value</th>
+                                                    <th scope="col">Percentage</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Total Man-Hours for the Gangs</td>
+                                                    <td><span id="totalHours"></span> Mhrs</td>
+                                                    <td>-</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>On Track Works</td>
+                                                    <td><span id="totalOnTrackWorks"></span> Mhrs</td>
+                                                    <td><span id="perOnTrack"></span> Mhrs</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Off Track Works</td>
+                                                    <td><span id="totalOffTrackWorks"></span> Mhrs</td>
+                                                    <td><span id="perOffTrack"></span> Mhrs</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Others</td>
+                                                    <td><span id="totalSpecificCategories"></span> Mhrs</td>
+                                                    <td><span id="perOthers"></span> Mhrs</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Total</td>
+                                                    <td><span id="veryLastTotal"></span> %</td>
+                                                    <td>-</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Inspected by RE / CPWI on</td>
+                                                    <td>-</td>
+                                                    <td>-</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script src="~/assets/scripts/dashboard.js"></script>
+    <script src="~/assets/plugins/daterangepicker/daterangepicker.js"></script>
+    <script src="~/assets/plugins/select2/select2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            checkSess();
+            listSection();
+            listKMUJ();
+            $('#txtDate').daterangepicker({
+                singleDatePicker: true,
+                autoUpdateInput: false,
+                minYear: 2021,
+            }, function (start) {
+                var end = start.clone().add(6, 'days');
+
+                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+                console.log(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+
+                var sdate = start.format('YYYY-MM-DD'); 
+                var edate = end.format('YYYY-MM-DD');
+                localStorage.setItem("selHar", sdate);
+                localStorage.setItem("selHarE", edate);
+
+                var kmj = $("#kmuj option:selected").text();
+                localStorage.setItem("selKmj", kmj);
+
+                var scn = $("#section option:selected").text();
+                localStorage.setItem("selScn", scn);
+
+                salertSave('Loading...');
+                listReports(localStorage.getItem("selKmj"), localStorage.getItem("selScn"), sdate, edate);
+                updateSelectedValues();
+
+                // Update the input field with the selected date range
+                $('#txtDate').val(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM/YYYY'));
+            });
+
+
+            $("#kmuj, #section").on('change', function () {
+                checkStore();
+
+                var sdate = localStorage.getItem("selHar");
+                var edate = localStorage.getItem("selHarE");
+
+                var kmj = $("#kmuj option:selected").text();
+                localStorage.setItem("selKmj", kmj);
+
+                var scn = $("#section option:selected").text();
+                localStorage.setItem("selScn", scn);
+
+                listReports(localStorage.getItem("selKmj"), localStorage.getItem("selScn"), sdate, edate);
+                updateSelectedValues();
+            });
+
+        });
+
+        function updateSelectedValues() {
+            var kmuj = localStorage.getItem("selKmj");
+            var section = localStorage.getItem("selScn");
+            var sdate = localStorage.getItem("selHar");
+            var edate = localStorage.getItem("selHarE");
+
+            var selectedValuesHtml = `
+                                 <p><strong>KMUJ:</strong> ${kmuj}</p>
+                                 <p><strong>Section:</strong> ${section}</p>
+                                 <p><strong>Date (From - To):</strong> ${sdate} - ${edate}</p>`;
+            $('#selectedValues').html(selectedValuesHtml);
+        }
+
+        function listSection() {
+            $.ajax({
+                url: linkDepan + "GetSectionList",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.section_id + "'>" + value.section_name + "</option>";
+                        });
+                        $('#section').append(auxArr.join(''));
+                    } else {
+                        $("#section").addClass(" is-invalid");
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () { }
+            });
+        }
+
+        function listKMUJ() {
+            $.ajax({
+                url: linkDepan + "KMUJList",
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+                    if (data.length >= 1) {
+                        auxArr = [];
+                        $.each(data, function (index, value) {
+                            auxArr[index] = "<option value='" + value.kmuj_id + "'>" + value.kmuj_name + "</option>";
+                        });
+                        $('#kmuj').append(auxArr.join(''));
+                    } else {
+                        $("#kmuj").addClass(" is-invalid");
+                    }
+                },
+                error: function (xhr) {
+                    swarning();
+                },
+                complete: function () { }
+            });
+        }
+
+        function listReports(kmuj, section, sdate, edate) {
+            $.ajax({
+                url: linkDepan + "GetKerja?&Kmuj=" + kmuj + "&Section=" + section + "&SDate=" + sdate + "&Edate=" + edate,
+                type: 'GET',
+                dataType: 'json',
+                beforeSend: function (request) {
+                    request.setRequestHeader("Token", localStorage.getItem('main'));
+                },
+                success: function (data) {
+
+                    console.log("Raw Data Received from Server:", data);
+
+                    if (!data || !Array.isArray(data) || !data.length) {
+                        console.error('No valid data returned from the server.');
+                        return;
+                    }
+
+                    let finalData = [];
+                    let uniqueDates = new Set();
+
+                    data.forEach(item => {
+                        let row = {
+                            work_cat_id: item.work_cat_id,
+                            work_cat_name: item.work_cat_name,
+                            work_name: item.work_name,
+                            TotalTime: (isNaN(parseFloat(item.TotalTime)) || parseFloat(item.TotalTime) === 0) ? '' : parseFloat(item.TotalTime).toFixed(2) // Return empty string if TotalTime is 0
+                        };
+
+                        Object.keys(item).forEach(dateKey => {
+                            if (!["work_cat_id", "work_cat_name", "work_name", "TotalTime"].includes(dateKey)) {
+                                const value = isNaN(parseFloat(item[dateKey])) || parseFloat(item[dateKey]) === 0 ? '' : parseFloat(item[dateKey]).toFixed(2); // Return empty string if the value is 0
+                                row[dateKey] = value;
+                                uniqueDates.add(dateKey);
+                            }
+                        });
+
+                        finalData.push(row);
+                    });
+
+                    let sortedDates = Array.from(uniqueDates).sort();
+                    let totalRow = { work_cat_id: '', work_cat_name: 'TOTAL', work_name: '', TotalTime: 0 };
+
+                    sortedDates.forEach(date => {
+                        let dateSum = finalData.reduce((sum, row) => sum + (parseFloat(row[date]) || 0), 0);
+                        totalRow[date] = dateSum.toFixed(2);
+                        totalRow.TotalTime += parseFloat(dateSum.toFixed(2));
+                    });
+
+                    finalData.push(totalRow);
+
+                    console.log("Processed Final Data:", finalData);
+
+                    let specificCategories = [14, 15, 16, 17];
+
+                    // Calculations for summary
+
+                    //total man-hours
+                    let totalManHoursForGangs = finalData.reduce((sum, row) => {
+                        return row.work_cat_name !== 'Total' ? sum + (parseFloat(row.TotalTime) || 0) : sum;
+                    }, 0).toFixed(2);
+
+                    //onTrack
+                    let totalOnTrackWorks = finalData.reduce((sum, row) => {
+                        return (!specificCategories.includes(row.work_cat_id) &&
+                            row.work_cat_id !== 5 &&
+                            row.work_cat_id !== 'Total') ? sum + (parseFloat(row.TotalTime) || 0) : sum;
+                    }, 0).toFixed(2);
+
+                    //offTrack
+                    let offTrackWorksTotal = finalData.reduce((sum, row) => {
+                        return (row.work_cat_id === 5) ? sum + (parseFloat(row.TotalTime) || 0) : sum;
+                    }, 0).toFixed(2);
+
+                    //Others
+                    let totalTimeForSpecificCategories = finalData.reduce((sum, row) => {
+                        return (specificCategories.includes(row.work_cat_id)) ? sum + (parseFloat(row.TotalTime) || 0) : sum;
+                    }, 0).toFixed(2);
+
+                    //total
+                    let veryLastTotal = totalManHoursForGangs;
+
+                    let perOnTrack = (parseFloat(totalOnTrackWorks) / parseFloat(totalManHoursForGangs) * 100).toFixed(2);
+                    let perOffTrack = (parseFloat(offTrackWorksTotal) / parseFloat(totalManHoursForGangs) * 100).toFixed(2);
+                    let perOthers = (parseFloat(totalTimeForSpecificCategories) / parseFloat(totalManHoursForGangs) * 100).toFixed(2);
+
+                    // Display the calculated totals
+                    document.getElementById("totalSpecificCategories").innerText = totalTimeForSpecificCategories;
+                    document.getElementById("totalOffTrackWorks").innerText = offTrackWorksTotal;
+                    document.getElementById("totalOnTrackWorks").innerText = totalOnTrackWorks;
+                    document.getElementById("totalHours").innerText = totalManHoursForGangs;
+                    document.getElementById("veryLastTotal").innerText = veryLastTotal;
+                    document.getElementById("perOnTrack").innerText = perOnTrack;
+                    document.getElementById("perOffTrack").innerText = perOffTrack;
+                    document.getElementById("perOthers").innerText = perOthers;
+
+                    // DataTable setup
+                    let columns = [
+                        { data: "work_cat_id", title: "No" },
+                        { data: "work_cat_name", title: "Category" },
+                        { data: "work_name", title: "Work Description" }
+                    ];
+
+                    sortedDates.forEach(date => {
+                        columns.push({
+                            data: date,
+                            defaultContent: "0",
+                            title: date
+                        });
+                    });
+
+                    columns.push({ data: "TotalTime", title: "Total Time" });
+
+                    // DataTable setup with the rowspan for Category and "No" (work_cat_id) column
+                    if ($.fn.DataTable.isDataTable('#tableRep')) {
+                        $('#tableRep').DataTable().clear().destroy(); 
+                    }
+                    $('#tableRep').DataTable({
+                        ordering: false,
+                        paging: false,
+                        dom: 'Bfrtip',
+                        buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+                        responsive: true,
+                        data: finalData,
+                        columns: columns,
+                        rowCallback: function (row, data, index) {
+                            const categoryCell = $('td', row).eq(1); 
+                            const workDescCell = $('td', row).eq(2); 
+                            const noCell = $('td', row).eq(0);
+                            const categoryName = categoryCell.text();
+
+                            // rowspan cat_work_name
+                            if (index === 0 || finalData[index].work_cat_name !== finalData[index - 1].work_cat_name) {
+                                let rowspan = 1;
+                                for (let i = index + 1; i < finalData.length && finalData[i].work_cat_name === categoryName; i++) {
+                                    rowspan++;
+                                }
+                                categoryCell.attr('rowspan', rowspan);
+                                categoryCell.css('text-align', 'left'); 
+                                categoryCell.css('vertical-align', 'middle'); 
+                            } else {
+                                categoryCell.hide();
+                            }
+
+                            // rowspan cat_work_id
+                            if (index === 0 || finalData[index].work_cat_id !== finalData[index - 1].work_cat_id) {
+                                let rowspan = 1;
+                                for (let i = index + 1; i < finalData.length && finalData[i].work_cat_id === data.work_cat_id; i++) {
+                                    rowspan++;
+                                }
+                                noCell.attr('rowspan', rowspan);
+                                noCell.css('text-align', 'center'); 
+                                noCell.css('vertical-align', 'middle');
+                            } else {
+                                noCell.hide();
+                            }
+
+                            // align
+                            workDescCell.css('text-align', 'left'); 
+                            workDescCell.css('vertical-align', 'top'); 
+                        }
+                    });
+                },
+                error: function (xhr) {
+                    console.error("Error fetching data:", xhr);
+                }
+            });
+        }
+
+        
+
+    </script>
+    }
+
+
+
+
+
+
+
+

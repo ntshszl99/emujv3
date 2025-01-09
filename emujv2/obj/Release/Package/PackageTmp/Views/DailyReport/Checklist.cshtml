@@ -1,0 +1,94 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="app-content main-content">
+    <div class="side-app">
+        <div class="container-fluid main-container">
+
+            <!--Page header-->
+            <div class="page-header">
+                <div class="page-leftheader">
+                    <h4 class="page-title">Checklist</h4>
+                </div>
+            </div>
+            <!--End Page header-->
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <div id="content" class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Checklist</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3 m-0">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label class="mt-3 form-label">Year</label>
+                                        <select class="form-control form-select select2">
+                                            <option value="">Select Year</option>
+                                            <option value="1">2023</option>
+                                            <option value="1">2022</option>
+                                            <option value="1">2021</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="mt-3 form-label">Month</label>
+                                        <select class="form-control form-select select2">
+                                            <option value="">Select Month</option>
+                                            <option value="1">January</option>
+                                            <option value="2">February</option>
+                                            <option value="3">March</option>
+                                            <option value="4">April</option>
+                                            <option value="5">May</option>
+                                            <option value="6">June</option>
+                                            <option value="7">July</option>
+                                            <option value="8">August</option>
+                                            <option value="9">September</option>
+                                            <option value="10">October</option>
+                                            <option value="11">November</option>
+                                            <option value="12">December</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- end app-content-->
+
+
+
+@section scripts{
+    <script src="~/assets/scripts/dashboard.js"></script>
+    <script src="~/assets/plugins/morris/morris.min.js"></script>
+    <script src="~/assets/plugins/raphael/raphael.min.js"></script>
+    <script src="~/assets/plugins/select2/select2.min.js"></script>
+    <script src="~/assets/scripts/semua.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            checkSess();
+            checkStore();
+
+
+            if (localStorage.getItem("lvlI") === "2" || localStorage.getItem("lvlI") === "3" || localStorage.getItem("lvlI") === "4" || localStorage.getItem("lvlI") === "6") {
+                $("#content").hide();
+
+            }
+            else {
+                $("#content").show();
+            }
+
+        });
+
+
+
+    </script>
+}

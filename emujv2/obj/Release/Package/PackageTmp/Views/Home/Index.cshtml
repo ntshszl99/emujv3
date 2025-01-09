@@ -1,0 +1,106 @@
+﻿R@{ ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_layout.cshtml"; }
+
+<link rel="stylesheet" href="~/assets/plugins/morris/morris.css">
+
+<div class="app-content main-content">
+    <div class="side-app">
+        <div class="container-fluid main-container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Staff Details</h4>
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <td class="py-2 px-2">
+                                                <span class="font-weight-semibold w-50">Staff ID </span>
+                                            </td>
+                                            <td class="py-2 px-2" id="tempekUsrId">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 px-2">
+                                                <span class="font-weight-semibold w-50">Name </span>
+                                            </td>
+                                            <td class="py-2 px-2" id="Nama">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 px-2">
+                                                <span class="font-weight-semibold w-50">Designation </span>
+                                            </td>
+                                            <td class="py-2 px-2" id="UsrDesig">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 px-2">
+                                                <span class="font-weight-semibold">Location </span>
+                                            </td>
+                                            <td class="py-2 px-2" id="tempekDeptLoc">-</td>
+                                        </tr>                                     
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Others</h4>
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <td class="py-2 px-2">
+                                                <span class="font-weight-semibold">Year of Services</span>
+                                            </td>
+                                            <td class="py-2 px-2" id="tempekYrs">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 px-2">
+                                                <span class="font-weight-semibold">IC Number</span>
+                                            </td>
+                                            <td class="py-2 px-2" id="tempekIC">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 px-2">
+                                                <span class="font-weight-semibold">Age </span>
+                                            </td>
+                                            <td class="py-2 px-2" id="tempekAge">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 px-2">
+                                                <span class="font-weight-semibold">Phone Number</span>
+                                            </td>
+                                            <td class="py-2 px-2" id="tempekNombor">-</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script src="~/assets/scripts/dashboard.js"></script>
+    <script src="~/assets/plugins/morris/morris.min.js"></script>
+    <script src="~/assets/plugins/raphael/raphael.min.js"></script>
+    @*<script src="~/assets/pages/jquery.morris.init.js"></script>*@
+    <script src="~/assets/scripts/semua.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            checkSess();
+            checkStore();
+
+        });
+
+       
+    </script>
+}
